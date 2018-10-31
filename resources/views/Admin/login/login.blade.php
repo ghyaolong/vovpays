@@ -30,6 +30,11 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<style>
+    .toast-top-center{
+        margin-top: 50px;
+    }
+</style>
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo" style="margin:0 auto;text-aligin:center;">
@@ -52,7 +57,7 @@
                         <input type="text" name="captcha" maxlength="6" required placeholder="请输入验证码" autocomplete="off" class="form-control">
                     </div>
                     <div class="col-xs-6 text-right">
-                        <img src="{{ captcha_src('flat') }}" alt="图形验证码" class="lau-sign-captcha" onclick="this.src='/captcha/flat?'+Math.random()">
+                        <img src="{{ captcha_src('flat') }}" alt="图形验证码" id="captcha" class="lau-sign-captcha" onclick="this.src='/captcha/flat?'+Math.random()">
                     </div>
                 </div>
             </div>
@@ -149,23 +154,19 @@
         }).on('success.form.bv', function(e) {
                 e.preventDefault();
                 var $form = $(e.target);
-                // $.post($form.attr('action'), $form.serialize(), function(result) {
-                //     console.log(result);
-                // }, 'json');
+                $.post($form.attr('action'), $form.serialize(), function(result) {
+                    if(result.status)
+                    {
+                        toastr.success(result.msg);
+                        setInterval(function(){
+                            window.location.href = '/admin';
+                        },500);
+                    }else{
+                        $('#captcha').click();
+                        toastr.error(result.msg);
+                    }
+                }, 'json');
 
-                $.ajax({
-                    type: "POST",
-                    url: $form.attr('action'),
-                    data:$form.serialize(),
-                    dataType:'json',
-                    success: function(res) {
-                        console.log(res);
-                        alert(res.msg);
-                    },
-                    error : function (xhr) {
-                        console.log(xhr.responseJSON);
-                    },
-                });
 
             });
     });

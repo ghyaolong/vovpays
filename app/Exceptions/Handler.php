@@ -3,9 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
-use App\Common\Enum\HttpCode;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,8 +51,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+
+        // 登录验证
         if ($exception instanceof AuthenticationException) {
-            if ($request->expectsJson()) return ajaxError('您未登录', HttpCode::UNAUTHORIZED);
+            // 判断是否返回json
+            if ($request->expectsJson()) return ajaxError('您未登录');
+
             if ( in_array('admin', $exception->guards() ))
             {
                 return redirect('/admin/login');
@@ -60,9 +65,19 @@ class Handler extends ExceptionHandler
             }elseif( in_array('user', $exception->guards()) ) {
                 return redirect('/user/login');
             }
+        }else if( $exception instanceof ValidationException) { // 表单验证错误
+            if( $request->expectsJson() )
+            {
+                $error = array_flatten($exception->errors());
+                return ajaxError(array_get($error,0));
+            }
 
+        }else if($exception instanceof TokenMismatchException) {
+            if( $request->expectsJson() )
+            {
+                return ajaxError('非法操作');
+            }
         }
-
         return parent::render($request, $exception);
     }
 }

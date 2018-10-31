@@ -11,7 +11,7 @@
 Route::group([], function () {
     Route::get('login', 'LoginController@show')->name('admin.login');
     Route::post('login', 'LoginController@login')->name('admin.login');
-
+    Route::get('dropout', 'LoginController@destroy')->name('admin.dropout');
     Route::group(['middleware' => 'auth:admin'], function () {
 
         Route::get('menu', 'IndexController@getMenu')->name('admin.menu');

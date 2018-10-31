@@ -12,21 +12,11 @@ class LoginController extends Controller
 
     protected $redirectTo = '/admin';
 
-    public function __construct()
-    {
-
-    }
-
     /**
     * 显示后台登录模板
     */
     public function show()
     {
-        if( !session()->get('danger') )
-        {
-            session()->flash('success', '欢迎来到后台管理系统！');
-        }
-
         return view('admin.login.login');
     }
 
@@ -39,15 +29,13 @@ class LoginController extends Controller
             'captcha'  => 'required|captcha',
         ],[
             'captcha.required' => '验证码不能为空',
-            'captcha.captcha' => '请输入正确的验证码',
+            'captcha.captcha'  => '请输入正确的验证码',
         ]);
 
         if ($this->guard()->attempt($request->only('username','password'))) {
-            session()->flash('success', '欢迎来到后台管理系统！');
-            return redirect()->intended(route('admin'));
+            return ajaxSuccess('登录成功，欢迎来到管理系统！');
         }else{
-            session()->flash('danger', '很抱歉，您的用户名和密码不匹配');
-            return redirect()->back()->withInput();
+            return ajaxError('用户名或者密码错误');
         }
     }
 
