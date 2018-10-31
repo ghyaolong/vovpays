@@ -4,7 +4,7 @@
         <!-- 侧边栏用户 -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                <img src="{{ asset('AdminLTE/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 {{--<p>{{ Auth::user()->username }}</p>--}}
@@ -66,120 +66,6 @@
                     <li><a href="#"><i class="fa fa-circle-o"></i> 资金变动记录</a></li>
                 </ul>
             </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-laptop"></i>
-                    <span>结账管理</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 普通结算</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 结算记录</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-edit"></i> <span>Forms</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Editors</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-table"></i> <span>Tables</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Data tables</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-calendar"></i> <span>Calendar</span>
-                    <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
-              <small class="label pull-right bg-blue">17</small>
-            </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                    <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
-            </span>
-                </a>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-folder"></i> <span>Examples</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Invoice</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Profile</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Login</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Register</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-share"></i> <span>Multilevel</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-circle-o"></i> Level One
-                            <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                            <li class="treeview">
-                                <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                </ul>
-            </li>
-            <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-            <li class="header">LABELS</li>
-            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>交易管理</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>API管理</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
         </ul>
     </section>
 </aside>
