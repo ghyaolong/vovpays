@@ -7,8 +7,7 @@
                 <img src="{{ asset('AdminLTE/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                {{--<p>{{ Auth::user()->username }}</p>--}}
-                <p>admin</p>
+                <p>{{ Auth::user()->username }}</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> 欢迎登录</a>
             </div>
         </div>
@@ -17,54 +16,29 @@
         <!-- 左侧导航条 -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">主导航</li>
-            <li class="active treeview">
+            <li>
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>后台首页</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                    <i class="fa fa-tachometer"></i>
+                    <span>后台首页</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li class="active"><a href="#"><i class="fa fa-circle-o"></i> 首页1</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 首页2</a></li>
-                </ul>
             </li>
-            <li class="treeview">
+            <li>
                 <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>权限控制</span>
-                    <span class="pull-right-container">
-              <span class="label label-primary pull-right">3</span>
-            </span>
+                    <i class="fa fa-paper-plane"></i>
+                    <span>权限管理</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 角色管理</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 菜单管理</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 管理员管理</a></li>
-                </ul>
             </li>
             <li>
                 <a href="{{ url('admin/user/userpay') }}">
-                    <i class="fa fa-th"></i> <span>商户设置</span>
-                    <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
+                    <i class="fa fa-user"></i>
+                    <span>商户管理</span>
                 </a>
             </li>
-            <li class="treeview">
+            <li>
                 <a href="#">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>账户管理</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                    <i class="fa fa-cog"></i>
+                    <span>系统设置</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 个人信息</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 银行卡管理</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 认证信息</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 资金变动记录</a></li>
-                </ul>
             </li>
         </ul>
     </section>
