@@ -36,3 +36,24 @@ function ajaxError(string $errMsg = 'error' ,int $httpCode = 200)
     ];
     return response()->json($return, $httpCode);
 }
+
+/**
+ * @param $data
+ * @param string $lefthtml
+ * @param int $pid
+ * @param int $lvl
+ * @return array
+ */
+function tree($data , $lefthtml = '|— ' , $pid=0 , $lvl=1)
+{
+    $arr = [];
+    foreach ($data as $k => $v) {
+        if ($v['pid'] == $pid) {
+            $v['ltitle'] = str_repeat($lefthtml, $lvl) . $v['title'];
+            $arr[] = $v;
+            unset($data[$k]);
+            $arr = array_merge($arr, tree($data, $lefthtml, $v['id'], $lvl + 1));
+        }
+    }
+    return $arr;
+}

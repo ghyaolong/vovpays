@@ -3,14 +3,20 @@
 namespace App\Http\Admin\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Services\LoginLogoutService;
 
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
     protected $redirectTo = '/admin';
+    protected $loginLogoutService;
+
+    public function __construct(LoginLogoutService $loginLogoutService)
+    {
+        $this->loginLogoutService = $loginLogoutService;
+    }
 
     /**
     * 显示后台登录模板
@@ -21,6 +27,10 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -32,33 +42,26 @@ class LoginController extends Controller
             'captcha.captcha'  => '请输入正确的验证码',
         ]);
 
-        if ($this->guard()->attempt($request->only('username','password'))) {
-            return ajaxSuccess('登录成功，欢迎来到管理系统！');
+        $check_data = $request->only('username','password');
+        $result = $this->loginLogoutService->Login('admin',$check_data);
+        if($result)
+        {
+            return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
         }else{
-            return ajaxError('用户名或者密码错误');
+            return ajaxSuccess('用户名或密码错误，请重新输入！');
         }
+
     }
 
 
     /**
-     * 退出登录
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request)
     {
-        $this->guard()->logout();
-
-        $request->session()->forget($this->guard()->getName());
-
-        $request->session()->regenerate();
+        $this->loginLogoutService->destroy($request,'admin');
 
         return redirect()->route('admin.login');
-    }
-
-    /**
-    * 使用 admin guard
-    */
-    protected function guard()
-    {
-        return Auth::guard('admin');
     }
 }

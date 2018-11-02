@@ -9,7 +9,7 @@
 namespace App\Repositories;
 use App\Models\Admin;
 
-class AdminRepository
+class AdminsRepository
 {
 
     protected $admin;
@@ -23,11 +23,12 @@ class AdminRepository
         $this->admin = $admin;
     }
 
-
-    public function getAdmin(string $name)
+    /**
+     * 获取所有管理员
+     * @return mixed
+     */
+    public function getAdminList()
     {
-        return $this->admin
-            ->where('username', $name)
-            ->first();
+        return $this->admin->get();
     }
 }

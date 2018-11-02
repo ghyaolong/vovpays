@@ -13,14 +13,11 @@ Route::group([], function () {
     Route::post('login', 'LoginController@login')->name('admin.login');
     Route::get('dropout', 'LoginController@destroy')->name('admin.dropout');
     Route::group(['middleware' => 'auth:admin'], function () {
-
-        Route::get('menu', 'IndexController@getMenu')->name('admin.menu');
-
         Route::get('/', 'IndexController@index')->name('admin');
-        Route::get('main', 'IndexController@main')->name('admin.main');
+        //权限菜单
         Route::get('rules','RulesController@index')->name('rules.index');
         Route::post('rules','RulesController@store')->name('rules.store');
         Route::put('rules','RulesController@edit')->name('rules.edit');
-        Route::get('rules','RulesController@destroy')->name('rules.destroy');
+        Route::delete('rules','RulesController@destroy')->name('rules.destroy');
     });
 });

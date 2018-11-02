@@ -17,13 +17,13 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">主导航</li>
             <li>
-                <a href="#">
+                <a href="{{ route('admin') }}">
                     <i class="fa fa-tachometer"></i>
                     <span>后台首页</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('rules.index') }}">
                     <i class="fa fa-paper-plane"></i>
                     <span>权限管理</span>
                 </a>

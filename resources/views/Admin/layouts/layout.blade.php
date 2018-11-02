@@ -28,12 +28,10 @@
             <div class="content-wrapper">
                 <!-- 内容导航 -->
                 <section class="content-header">
-                    <h1>
-                        后台首页
-                    </h1>
+                    <h1>{{ $title }}</h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-                        <li class="active">后台首页</li>
+                        <li><a href="{{ route('admin') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
+                        <li class="active">{{ $title }}</li>
                     </ol>
                 </section>
                 <!-- 内容导航结束 -->
