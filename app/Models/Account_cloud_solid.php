@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Rule extends Model
+class Account_cloud_solid extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -14,10 +14,11 @@ class Rule extends Model
     protected $guarded = ['id','created_at','updated_at'];
 
     /**
-     * 获得此菜单所属的角色。
+     * 一对多反向 固码配置表
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function roles()
+    public function AccountCloud()
     {
-        return $this->belongsToMany('App\Models\Role');
+        return $this->belongsTo('App\models\Account_clouds');
     }
 }

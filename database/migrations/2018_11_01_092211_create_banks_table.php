@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateRolesTable extends Migration
+class CreateBanksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,14 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',10)->comment('角色名称');
+            $table->string('bankName',40)->comment('银行名称');
+            $table->string('ico')->nullbale()->comment('银行logo');
+            $table->unsignedTinyInteger('status')->default(0)->comment('状态：0禁用，1启用');
             $table->timestamps();
         });
-
-        DB::statement("ALTER TABLE `pay_roles` comment '角色表'");
+        DB::statement("ALTER TABLE `pay_banks` comment '银行列表'");
     }
 
     /**
@@ -30,6 +31,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('banks');
     }
 }

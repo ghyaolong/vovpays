@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateRulesTable extends Migration
 {
@@ -26,6 +27,8 @@ class CreateRulesTable extends Migration
             $table->boolean('is_show')->default(1)->comment('是否显示');
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE `pay_rules` comment '菜单表'");
     }
 
     /**

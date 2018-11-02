@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateAdminRoleTable extends Migration
 {
@@ -20,6 +21,8 @@ class CreateAdminRoleTable extends Migration
             $table->index(['role_id', 'admin_id']);
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE `pay_admin_role` comment '管理元角色'");
     }
 
     /**

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateRoleRuleTable extends Migration
 {
@@ -20,6 +21,8 @@ class CreateRoleRuleTable extends Migration
             $table->index(['role_id','rule_id']);
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE `pay_role_rule` comment '权限表'");
     }
 
     /**
