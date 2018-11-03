@@ -13,7 +13,7 @@
     .layui-form-item .layui-form-checkbox[lay-skin="primary"]{margin-top:0;}
     .layui-form-switch {width:54px;margin-top:0px;}
 </style>
-@extends('admin.layouts.layout')
+@extends('Admin.Layouts.layout')
 @section('content')
     <div class="main" style="padding-left: 0px;">
         <div class="div-nav">

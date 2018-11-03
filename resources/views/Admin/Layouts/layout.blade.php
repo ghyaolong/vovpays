@@ -21,9 +21,9 @@
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper" style="padding: 0px;">
             <!-- 顶部内容 -->
-            @include('Admin.commons._header')
+            @include('Admin.Commons._header')
             <!-- 左侧导航 -->
-            @include('Admin.commons._left')
+            @include('Admin.Commons._left')
             <!-- 右侧内容 -->
             <div class="content-wrapper">
                 <!-- 内容导航 -->
@@ -43,7 +43,7 @@
             </div>
             <!--右侧内容结束-->
             <!--底部-->
-            @include('Admin.commons._footer')
+            @include('Admin.Commons._footer')
         </div>
 
         <script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>

@@ -1,4 +1,4 @@
-@include('admin.layouts.header')
+@include('Admin.Layouts.header')
     <div class="row">
         <div class="col-md-12">
             <div class="ibox float-e-margins">
@@ -128,7 +128,7 @@
         </div>
 
     </div>
-@include('admin.layouts.footer')
+@include('Admin.Layouts.footer')
 <script>
     layui.use(['form','table',  'laydate', 'layer'], function () {
         var form = layui.form
