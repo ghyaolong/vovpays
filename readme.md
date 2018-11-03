@@ -1,4 +1,4 @@
-## Laravel 5.5.* + Mysql 7 
+## Laravel 5.5.* + Mysql 5.7 + PHP 7.2.* 
 
 ##安装步骤
 1. 下载或克隆项目，进入项目根目录执行``composer install``,等待框架安装
@@ -7,3 +7,7 @@
 
 ##使用扩展包：
 1. 验证码 [mews/captcha](https://github.com/mewebstudio/captcha)
+
+
+##使用前端资源：
+1. AdminLTE
