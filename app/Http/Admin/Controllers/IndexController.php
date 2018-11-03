@@ -10,7 +10,7 @@ class IndexController extends Controller
     {
         $title = '主页';
         $description = '';
-        return view('admin.Index.index', compact('title', 'description'));
+        return view('Admin.Index.index', compact('title', 'description'));
     }
 
 }
