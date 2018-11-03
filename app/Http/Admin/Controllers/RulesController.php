@@ -20,6 +20,6 @@ class RulesController extends Controller
         $description = '权限列表';
 
         $list = $this->menuService->getMenuList();
-        return view('admin.Rule.index',compact('title','description', 'list'));
+        return view('Admin.Rule.index',compact('title','description', 'list'));
     }
 }
