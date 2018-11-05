@@ -12,47 +12,65 @@
     <link rel="stylesheet" href="{{ asset('AdminLTE/bower_components/Ionicons/css/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/skins/_all-skins.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     @yield('css')
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-    <body class="hold-transition skin-blue sidebar-mini">
-        <div class="wrapper" style="padding: 0px;">
-            <!-- 顶部内容 -->
-            @include('Admin.Commons._header')
-            <!-- 左侧导航 -->
-            @include('Admin.Commons._left')
-            <!-- 右侧内容 -->
-            <div class="content-wrapper">
-                <!-- 内容导航 -->
-                <section class="content-header">
-                    <h1>{{ $title }}</h1>
-                    <ol class="breadcrumb">
-                        <li><a href="{{ route('admin') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
-                        <li class="active">{{ $title }}</li>
-                    </ol>
-                </section>
-                <!-- 内容导航结束 -->
-                <!-- 主内容 -->
-                <section class="content">
-                @yield('content')
-                </section>
-                <!-- /.主内容结束 -->
-            </div>
-            <!--右侧内容结束-->
-            <!--底部-->
-            @include('Admin.Commons._footer')
+<style>
+    .toast-top-right{
+        margin-top: 110px;
+    }
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper" style="padding: 0px;">
+        <!-- 顶部内容 -->
+        @include('Admin.Commons._header')
+        <!-- 左侧导航 -->
+        @include('Admin.Commons._left')
+        <!-- 右侧内容 -->
+        <div class="content-wrapper">
+            <!-- 内容导航 -->
+            <section class="content-header">
+                <h1>{{ $title }}</h1>
+                <ol class="breadcrumb">
+                    <li><a href="{{ route('admin') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
+                    <li class="active">{{ $title }}</li>
+                </ol>
+            </section>
+            <!-- 内容导航结束 -->
+            <!-- 主内容 -->
+            <section class="content">
+            @yield('content')
+            </section>
+            <!-- /.主内容结束 -->
         </div>
-
-        <script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
-        <script src="{{ asset('AdminLTE/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
-        <script>
-            $.widget.bridge('uibutton', $.ui.button);
-        </script>
-        <script src="{{ asset('AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
-        @yield('scripts')
-    </body>
+        <!--右侧内容结束-->
+        <!--底部-->
+        @include('Admin.Commons._footer')
+    </div>
+</body>
+<script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('AdminLTE/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
+<script>
+    $(function(){
+        toastr.options = {
+            closeButton: false,
+            debug: false,
+            progressBar: false,
+            positionClass: "toast-top-right",
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            timeOut: "3000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut"
+        };
+    })
+</script>
+@yield('scripts')
 </html>

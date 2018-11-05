@@ -19,5 +19,6 @@ Route::group([], function () {
         Route::post('rules','RulesController@store')->name('rules.store');
         Route::put('rules','RulesController@edit')->name('rules.edit');
         Route::delete('rules','RulesController@destroy')->name('rules.destroy');
+        Route::post('rules/saveCheck','RulesController@saveCheck')->name('rules.saveCheck');
     });
 });

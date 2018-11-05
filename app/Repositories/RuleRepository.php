@@ -43,11 +43,22 @@ class RuleRepository
 
     /**
      * 删除
-     * @param string $where
+     * @param string $id
      * @return mixed
      */
-    public function del(string $where){
-        return $this->rule->where($where)->delete();
+    public function del(string $id){
+        return $this->rule->whereId($id)->delete();
+    }
+
+    /**
+     * 修改状态--是否验证
+     * @param string $id
+     * @param array $data
+     * @return mixed
+     */
+    public function updateCheck(string $id , array $data)
+    {
+        return $this->rule->whereId($id)->update($data);
     }
 
 }

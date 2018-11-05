@@ -1,4 +1,9 @@
 @extends('Admin.Layouts.layout')
+
+@section("css")
+<link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
+@endsection
+
 @section('content')
     <section class="content">
         <div class="row">
@@ -27,7 +32,9 @@
                                 <td>{{ $v['ltitle'] }}</td>
                                 <td>{{ $v['uri'] }}</td>
                                 <td>{{ $v['rule'] }}</td>
-                                <td></td>
+                                <td>
+                                    <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['is_check'] == 1) checked @endif >
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-sm">添加子菜单</button>
                                     <button type="button" class="btn btn-warning btn-sm">编辑</button>
@@ -47,3 +54,40 @@
         <!-- /.row -->
     </section>
 @endsection('content')
+@section("scripts")
+<script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
+<script>
+    $(function () {
+        $('.switch-state').bootstrapSwitch({
+            onText:'是',
+            offText:'否' ,
+            onColor:"primary",
+            offColor:"danger",
+            size:"small",
+            onSwitchChange:function(event,state) {
+                var id =  $(event.currentTarget).data('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/rules/saveCheck',
+                    data:{'status':state,'id':id},
+                    dataType:'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success:function(data){
+                        if(data.status)
+                        {
+                            toastr.success(data.msg);
+                        }else{
+                            toastr.error(data.msg);
+                        }
+                    },
+                    error:function(XMLHttpRequest,textStatus){
+                        toastr.error('系统错误');
+                    }
+                })
+            }
+        })
+    })
+</script>
+@endsection
