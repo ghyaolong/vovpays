@@ -61,4 +61,14 @@ class RuleRepository
         return $this->rule->whereId($id)->update($data);
     }
 
+    /**
+     * 根据id查询
+     * @param string $id
+     * @return mixed
+     */
+    public function findId(string $id)
+    {
+        return $this->rule->find($id);
+    }
+
 }

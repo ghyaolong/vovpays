@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\RuleRepository;
+use App\Exceptions\CustomServiceException;
 
 class RuleService
 {
@@ -23,9 +24,37 @@ class RuleService
         return tree($result);
     }
 
+    /**
+     * 是否验证
+     * @param string $id
+     * @param string $status
+     * @return mixed
+     */
     public function updateCheck(string $id, string $status)
     {
         $data['is_check'] = $status;
         return $this->ruleRepository->updateCheck($id,$data);
+    }
+
+    /**
+     * 菜单添加
+     * @param array $data
+     * @return mixed
+     */
+    public function add(array $data)
+    {
+        if($data['pid'] != '0')
+        {
+            $exists = $this->ruleRepository->findId($data['pid']);
+            if( !$exists)
+            {
+                throw new CustomServiceException('父级菜单不存在！');
+            }
+            $data['level'] = $exists->level + 1;
+        }else{
+            $data['level'] = 1;
+        }
+
+        return $this->ruleRepository->add($data);
     }
 }
