@@ -13,4 +13,5 @@
 1. AdminLTE
 2. toastr.js
 3. sweetalert
+4. bootstrap-switch
 
