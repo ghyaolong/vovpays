@@ -77,6 +77,8 @@ class Handler extends ExceptionHandler
             {
                 return ajaxError('非法操作');
             }
+        }else if($exception instanceof CustomServiceException){ // services自定义报错
+            return ajaxError($exception->getMessage());
         }
         return parent::render($request, $exception);
     }
