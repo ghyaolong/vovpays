@@ -12,4 +12,5 @@
 ##使用前端资源：
 1. AdminLTE
 2. toastr.js
+3. sweetalert
 
