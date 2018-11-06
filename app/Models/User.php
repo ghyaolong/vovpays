@@ -79,4 +79,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Withdraw');
     }
+
+    /**
+     * 一对一关联商户定时统计表。
+     */
+    public function Statistical()
+    {
+        return $this->hasOne('App\Models\Statistical');
+    }
 }

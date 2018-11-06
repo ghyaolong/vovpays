@@ -2,7 +2,6 @@
 
 namespace App\Http\Admin\Controllers;
 
-use App\Models\Rule;
 use App\Services\RuleService;
 use Illuminate\Http\Request;
 
@@ -19,10 +18,20 @@ class RulesController extends Controller
     public function index()
     {
         $title = '权限管理';
-        $description = '权限列表';
 
         $list = $this->ruleService->getRuleList();
-        return view('Admin.Rule.index',compact('title','description', 'list'));
+        return view('Admin.Rule.index',compact('title', 'list'));
+    }
+
+    /**
+     * 获取需要编辑的菜单
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit($id)
+    {
+        $rule =$this->ruleService->findId($id);
+        return ajaxSuccess('获取成功',$rule);
     }
 
     /**
@@ -40,13 +49,25 @@ class RulesController extends Controller
             'uri.required'   => '菜单路由不能为空',
         ]);
 
-        $result = $this->ruleService->add($request->all());
-
-        if($result)
+        // id 存在更新。不存在添加
+        if($request->id)
         {
-            return ajaxSuccess('添加菜单成功！');
+            $result = $this->ruleService->update($request->id, $request->all());
+
+            if($result)
+            {
+                return ajaxSuccess('修改成功！');
+            }else{
+                return ajaxError('修改失败！');
+            }
         }else{
-            return ajaxError('添加菜单失败！');
+            $result = $this->ruleService->add($request->all());
+            if($result)
+            {
+                return ajaxSuccess('添加菜单成功！');
+            }else{
+                return ajaxError('添加菜单失败！');
+            }
         }
     }
 
@@ -61,14 +82,23 @@ class RulesController extends Controller
 
         $result = $this->ruleService->updateCheck($request->id, $status);
 
-
         if($result)
         {
             return ajaxSuccess('修改成功！');
         }else{
-            return ajaxSuccess('修改失败！');
+            return ajaxError('修改失败！');
         }
     }
 
+    public function destroy(Request $request)
+    {
+        $result = $this->ruleService->destroy($request->id);
+        if($result)
+        {
+            return ajaxSuccess('删除成功！');
+        }else{
+            return ajaxError('删除失败！');
+        }
+    }
 
 }

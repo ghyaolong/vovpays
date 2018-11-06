@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/skins/_all-skins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/sweetalert/sweetalert.css') }}">
     @yield('css')
 </head>
 <style>
@@ -55,6 +56,7 @@
 <script src="{{ asset('plugins/bootstrapValidator/bootstrapValidator.min.js') }}"></script>
 <script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
+<script src="{{ asset('plugins/sweetalert/sweetalert.min.js') }}"></script>
 <script>
     $(function(){
         toastr.options = {
@@ -63,7 +65,7 @@
             progressBar: false,
             positionClass: "toast-top-right",
             onclick: null,
-            showDuration: "300",
+            showDuration: "3000",
             hideDuration: "1000",
             timeOut: "3000",
             extendedTimeOut: "1000",

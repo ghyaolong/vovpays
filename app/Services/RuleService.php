@@ -57,4 +57,44 @@ class RuleService
 
         return $this->ruleRepository->add($data);
     }
+
+    /**
+     * 根据id获取
+     * @param string $id
+     * @return array
+     */
+    public function findId(string $id)
+    {
+        $rule = $this->ruleRepository->findId($id);
+        return $rule->toArray();
+    }
+
+    public function update(string $id, array $data)
+    {
+
+        if($data['pid'] != '0')
+        {
+            $exists = $this->ruleRepository->findId($data['pid']);
+            if( !$exists)
+            {
+                throw new CustomServiceException('父级菜单不存在！');
+            }
+            $data['level'] = $exists->level + 1;
+        }else{
+            $data['level'] = 1;
+        }
+
+        $data = array_except($data, ['id','_token']);
+
+        return $this->ruleRepository->update($id, $data);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function destroy($id)
+    {
+        return $this->ruleRepository->del($id);
+    }
 }

@@ -17,7 +17,7 @@ Route::group([], function () {
         //权限菜单
         Route::get('rules','RulesController@index')->name('rules.index');
         Route::post('rules','RulesController@store')->name('rules.store');
-        Route::put('rules','RulesController@edit')->name('rules.edit');
+        Route::get('rules/{id}/edit', 'RulesController@edit')->name('rules.edit');
         Route::delete('rules','RulesController@destroy')->name('rules.destroy');
         Route::post('rules/saveCheck','RulesController@saveCheck')->name('rules.saveCheck');
     });

@@ -36,8 +36,8 @@
                                         <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['is_check'] == 1) checked @endif >
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-warning btn-sm">编辑</button>
-                                        <button type="button" class="btn btn-danger btn-sm">删除</button>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="edit('菜单编辑',{{ $v['id'] }})">编辑</button>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -62,6 +62,7 @@
                     </div>
                     <div class="modal-body" style="overflow: auto;">
                         <form id="ruleForm" action="{{ route('rules.store') }}" class="form-horizontal" role="form">
+                            <input type="hidden" name="id">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">父级菜单</label>
@@ -105,7 +106,7 @@
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">排序</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="sort" placeholder="排序">
+                                    <input type="text" class="form-control" value="0" name="sort" placeholder="排序">
                                     <span class="help-block"><i class="fa fa-info-circle"></i>值越大排名越靠前</span>
                                 </div>
                             </div>
@@ -114,8 +115,8 @@
                                 <div class="col-xs-9">
 
                                     <select class="form-control" name="is_check">
+                                        <option value="1">是</option>
                                         <option value="0">否</option>
-                                        <option value="1" selected="selected">是</option>
                                     </select>
                                 </div>
                             </div>
@@ -135,6 +136,8 @@
     <script>
         $(function () {
             formValidator();
+
+            // 状态修改
             $('.switch-state').bootstrapSwitch({
                 onText:'是',
                 offText:'否' ,
@@ -151,22 +154,23 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success:function(data){
-                            if(data.status)
+                        success:function(result){
+                            if(result.status)
                             {
-                                toastr.success(data.msg);
+                                toastr.success(result.msg);
                             }else{
                                 $('#addModel').modal('hide');
-                                toastr.error(data.msg);
+                                toastr.error(result.msg);
                             }
                         },
                         error:function(XMLHttpRequest,textStatus){
-                            toastr.error('系统错误');
+                            toastr.error('通信失败');
                         }
                     })
                 }
             })
 
+            // 模态关闭
             $('#addModel').on('hidden.bs.modal', function() {
                 $("#ruleForm").data('bootstrapValidator').destroy();
                 $('#ruleForm').data('bootstrapValidator', null);
@@ -176,6 +180,9 @@
 
         })
 
+        /**
+         * 提交
+         */
         function save(_this){
             //开启验证
             $('#ruleForm').data('bootstrapValidator').validate();
@@ -191,7 +198,7 @@
                     $('#addModel').modal('hide');
                     setInterval(function(){
                         window.location.reload();
-                    },500);
+                    },1000);
 
                     toastr.success(result.msg);
                 }else{
@@ -203,6 +210,9 @@
 
         }
 
+        /**
+         * 表单验证
+         */
         function formValidator()
         {
             $('#ruleForm').bootstrapValidator({
@@ -227,17 +237,102 @@
                                 message: '菜单路由不能为空!'
                             }
                         }
+                    },
+                    sort: {
+                        validators:{
+                            notEmpty: {
+                                message: '排序不能为空!'
+                            },
+                            regexp: { //正则校验
+                                regexp: /^[0-9]+$/,
+                                message:'排序只能是数字'
+                            },
+                        }
                     }
                 }
             });
         }
 
+        /**
+         * 显示模态框
+         */
         function showModel(title)
         {
             $('.modal-title').html(title);
             $('#addModel').modal('show');
         }
 
+        /**
+         * 编辑
+         * @param id
+         * @param title
+         */
+        function edit(title, id)
+        {
+            $.ajax({
+                type: 'get',
+                url: '/admin/rules/'+id+'/edit',
+                dataType:'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(result){
+                    if(result.status == 1)
+                    {
+                        $("input[name='title']").val(result.data['title']);
+                        $("input[name='uri']").val(result.data['uri']);
+                        $("input[name='rule']").val(result.data['rule']);
+                        $("input[name='icon']").val(result.data['icon']);
+                        $("input[name='sort']").val(result.data['sort']);
+                        $("select[name='is_check']").val(result.data['is_check']);
+                        $("select[name='pid']").val(result.data['pid']);
+                        $("input[name='id']").val(result.data['id']);
+                        $('.modal-title').html(title);
+                        $('#addModel').modal('show');
+                    }
+                },
+                error:function(XMLHttpRequest,textStatus){
+                    toastr.error('通信失败');
+                }
+            })
+        }
+
+        /**
+         * 删除
+         * @param _this
+         */
+        function del(_this,id){
+            swal({
+                title: "您确定要删除吗？",
+                text: "删除后不能恢复！",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            }, function(){
+                $.ajax({
+                    type: 'delete',
+                    url: '/admin/rules',
+                    data:{'id':id},
+                    dataType:'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success:function(result){
+                        if(result.status)
+                        {
+                            swal(result.msg, "菜单已被删除。","success")
+                        }else{
+                            swal(result.msg, "菜单没有被删除。","error")
+                        }
+
+                    },
+                    error:function(XMLHttpRequest,textStatus){
+                        toastr.error('通信失败');
+                    }
+                })
+            });
+        }
     </script>
 @endsection
 

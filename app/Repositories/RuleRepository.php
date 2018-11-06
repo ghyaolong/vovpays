@@ -33,12 +33,12 @@ class RuleRepository
 
     /**
      * 修改
-     * @param string $where
+     * @param string $id
      * @param array $data
      * @return mixed
      */
-    public function update(string $where, array $data){
-        return $this->rule->where($where)->update($data);
+    public function update(string $id, array $data){
+        return $this->rule->whereId($id)->update($data);
     }
 
     /**
