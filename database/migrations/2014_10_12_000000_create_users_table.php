@@ -22,9 +22,6 @@ class CreateUsersTable extends Migration
             $table->char('phone',11)->nullable()->comment('电话号码');
             $table->unsignedTinyInteger('group')->default(1)->comment('用户组表示,1用户，2代理商');
             $table->unsignedInteger('parentId')->default(0)->comment('归属代理ID');
-            $table->decimal('balance',11,2)->default(0)->comment('余额');
-            $table->decimal('freezeBalance',11,2)->default(0)->comment('冻结金额');
-            $table->decimal('handlingFeeBalance',11,2)->default(0)->comment('充值余额');
             $table->string('PaymentPassword')->comment('支付密码');
             $table->string('merchant',10)->unique()->comment('商户号');
             $table->string('apiKey')->unique()->comment('密钥');
