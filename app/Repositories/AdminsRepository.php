@@ -27,7 +27,7 @@ class AdminsRepository
      * 获取所有管理员
      * @return mixed
      */
-    public function getAdminList()
+    public function getAdminsList()
     {
         return $this->admin->get();
     }

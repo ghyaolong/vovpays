@@ -17,7 +17,7 @@ class RulesController extends Controller
 
     public function index()
     {
-        $title = '权限管理';
+        $title = '菜单管理';
 
         $list = $this->ruleService->getRuleList();
         return view('Admin.Rule.index',compact('title', 'list'));

@@ -19,7 +19,6 @@ class CreateRoleRuleTable extends Migration
             $table->unsignedInteger('role_id')->comment('角色ID');
             $table->unsignedInteger('rule_id')->comment('菜单ID');
             $table->index(['role_id','rule_id']);
-            $table->timestamps();
         });
 
         DB::statement("ALTER TABLE `pay_role_rule` comment '权限表'");

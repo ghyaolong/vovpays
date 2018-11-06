@@ -2,15 +2,15 @@
 
 namespace App\Repositories;
 
-use App\Models\Rule;
+use App\Models\Role;
 
-class RuleRepository
+class RoleRepository
 {
-    protected $rule;
+    protected $role;
 
-    public function __construct(Rule $rule)
+    public function __construct(Role $role)
     {
-        $this->rule = $rule;
+        $this->role = $role;
     }
 
     /**
@@ -19,16 +19,28 @@ class RuleRepository
      */
     public function getList()
     {
-        return $this->rule->orderBy('sort', 'desc')->get();
+        return $this->role->get();
     }
 
     /**
-     * 获取所有指定字段
+     * 根据角色获取菜单id
+     * @param int $role_id
+     * @return array
+     */
+    public function getRoleRules(int $role_id)
+    {
+        return $this->role->find($role_id)->rules()->pluck('rules.id')->toArray();
+    }
+
+    /**
+     * 同步关联更新角色权限
+     * @param int $role_id
+     * @param array|null $data
      * @return mixed
      */
-    public function getListField()
+    public function syncUpdateRoleRule( int $role_id ,array $data = null)
     {
-        return $this->rule->select('id', 'title', 'pid')->orderBy('sort', 'desc')->get();
+        return $this->findId($role_id)->rules()->sync($data);
     }
 
     /**
@@ -37,7 +49,7 @@ class RuleRepository
      * @return mixed
      */
     public function add(array $data){
-        return $this->rule->create($data);
+        return $this->role->create($data);
     }
 
     /**
@@ -47,7 +59,7 @@ class RuleRepository
      * @return mixed
      */
     public function update(string $id, array $data){
-        return $this->rule->whereId($id)->update($data);
+        return $this->role->whereId($id)->update($data);
     }
 
     /**
@@ -56,7 +68,7 @@ class RuleRepository
      * @return mixed
      */
     public function del(string $id){
-        return $this->rule->whereId($id)->delete();
+        return $this->role->whereId($id)->delete();
     }
 
     /**
@@ -67,7 +79,7 @@ class RuleRepository
      */
     public function updateCheck(string $id , array $data)
     {
-        return $this->rule->whereId($id)->update($data);
+        return $this->role->whereId($id)->update($data);
     }
 
     /**
@@ -77,7 +89,7 @@ class RuleRepository
      */
     public function findId(string $id)
     {
-        return $this->rule->find($id);
+        return $this->role->find($id);
     }
 
 }

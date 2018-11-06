@@ -22,11 +22,19 @@
                     <span>后台首页</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('rules.index') }}">
+            <li class="treeview">
+                <a href="#">
                     <i class="fa fa-paper-plane"></i>
-                    <span>权限管理</span>
+                    <span>权限控制</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('rules.index') }}"><i class="fa fa-circle-o"></i>菜单管理</a></li>
+                    <li><a href="{{ route('roles.index') }}"><i class="fa fa-circle-o"></i>角色管理</a></li>
+                    <li><a href="{{ route('admins.index') }}"><i class="fa fa-circle-o"></i>管理员管理</a></li>
+                </ul>
             </li>
             <li>
                 <a href="{{ url('admin/user/userpay') }}">

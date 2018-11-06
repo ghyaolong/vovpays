@@ -57,3 +57,26 @@ function tree($data , $lefthtml = '|— ' , $pid=0 , $lvl=1)
     }
     return $arr;
 }
+
+/**
+ * @param array $data
+ * @param array $checked
+ * @param int $pid
+ * @return array
+ */
+function ztreeData(array $data, array $checked, int $pid = 0)
+{
+    $arr = [];
+    foreach ($data as $k => $v) {
+        if ($v['pid'] == $pid) {
+            if (in_array($v['id'], $checked)) {
+                $v['checked'] = true;
+            }
+            $v['open'] = true;
+            $arr[] = $v;
+            unset($data[$k]);
+            $arr = array_merge($arr, ztreeData($data, $checked, $v['id']));
+        }
+    }
+    return $arr;
+}

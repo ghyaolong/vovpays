@@ -10,7 +10,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <button type="button" class="btn btn-primary" onclick="showModel('添加菜单')">添加菜单</button>
+                        <button type="button" class="btn btn-primary" onclick="showModel('添加管理员')">添加管理员</button>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -18,10 +18,10 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>菜单名称</th>
-                                <th>菜单路由</th>
-                                <th>菜单动作</th>
-                                <th>是否验证</th>
+                                <th>用户名</th>
+                                <th>用户角色</th>
+                                <th>邮箱</th>
+                                <th>电话</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -29,11 +29,12 @@
                             @foreach($list as $v)
                                 <tr>
                                     <td>{{ $v['id'] }}</td>
-                                    <td>{{ $v['ltitle'] }}</td>
-                                    <td>{{ $v['uri'] }}</td>
-                                    <td>{{ $v['rule'] }}</td>
+                                    <td>{{ $v['username'] }}</td>
+                                    <td></td>
+                                    <td>{{ $v['email'] }}</td>
+                                    <td>{{ $v['phone'] }}</td>
                                     <td>
-                                        <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['is_check'] == 1) checked @endif >
+                                        <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif >
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" onclick="edit('菜单编辑',{{ $v['id'] }})">编辑</button>

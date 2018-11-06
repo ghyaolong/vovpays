@@ -12,8 +12,8 @@ class AdminsService
         $this->adminsRepository = $adminsRepository;
     }
 
-    public function getAdminList()
+    public function getAdminsList()
     {
-        return $this->adminsRepository->getAdminList();
+        return $this->adminsRepository->getAdminsList();
     }
 }

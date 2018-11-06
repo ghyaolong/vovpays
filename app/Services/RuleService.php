@@ -25,6 +25,15 @@ class RuleService
     }
 
     /**
+     * 获取所有菜单的指定字段
+     * @return array
+     */
+    public function getRuleListField()
+    {
+        return $this->ruleRepository->getListField()->toArray();
+    }
+
+    /**
      * 是否验证
      * @param string $id
      * @param string $status

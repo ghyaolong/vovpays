@@ -28,9 +28,6 @@ class RoleRuleTableSeeder extends Seeder
             ['role_id' => 1, 'rule_id' => 12,'created_at'=> $now, 'updated_at'=> $now],
             ['role_id' => 1, 'rule_id' => 13,'created_at'=> $now, 'updated_at'=> $now],
             ['role_id' => 1, 'rule_id' => 14,'created_at'=> $now, 'updated_at'=> $now],
-            ['role_id' => 1, 'rule_id' => 15,'created_at'=> $now, 'updated_at'=> $now],
-            ['role_id' => 1, 'rule_id' => 16,'created_at'=> $now, 'updated_at'=> $now],
-            ['role_id' => 1, 'rule_id' => 17,'created_at'=> $now, 'updated_at'=> $now],
         ]);
     }
 }
