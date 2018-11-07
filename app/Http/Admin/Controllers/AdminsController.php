@@ -91,7 +91,7 @@ class AdminsController extends Controller
      */
     public function edit($id)
     {
-        $rule =$this->adminsService->findId($id);
+        $rule =$this->adminsService->findIdRole($id);
         return ajaxSuccess('获取成功',$rule);
     }
 

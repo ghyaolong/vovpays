@@ -75,7 +75,7 @@ class AdminsService
      * @param string $id
      * @return array
      */
-    public function findId(string $id)
+    public function findIdRole(string $id)
     {
         $rule           = $this->adminsRepository->findId($id);
         $rule_array     = $rule->toArray();
