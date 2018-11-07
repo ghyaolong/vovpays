@@ -77,8 +77,11 @@ class AdminsService
      */
     public function findId(string $id)
     {
-        $rule = $this->adminsRepository->findId($id);
-        return $rule->toArray();
+        $rule           = $this->adminsRepository->findId($id);
+        $rule_array     = $rule->toArray();
+        $roles_id_array = $rule->roles()->pluck('roles.id')->toArray();
+        $rule_array['role_id'] = $roles_id_array[0];
+        return $rule_array;
     }
 
     /**

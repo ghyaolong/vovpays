@@ -5,127 +5,122 @@
 @endsection
 
 @section('content')
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <button type="button" class="btn btn-primary" onclick="showModel('添加管理员')">添加管理员</button>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="example2" class="table table-condensed table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>用户名</th>
-                                <th>用户角色</th>
-                                <th>邮箱</th>
-                                <th>电话</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($list as $v)
-                                <tr>
-                                    <td>{{ $v['id'] }}</td>
-                                    <td>{{ $v['username'] }}</td>
-                                    <td><span class="label label-success">{{ $v->roles()->pluck('name')[0] }}</span></td>
-                                    <td>{{ $v['email'] }}</td>
-                                    <td>{{ $v['phone'] }}</td>
-                                    <td>
-                                        <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif >
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="edit('管理员编辑',{{ $v['id'] }})">编辑</button>
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <button type="button" class="btn btn-primary" onclick="showModel('添加管理员')">添加管理员</button>
             </div>
-            <!-- /.col -->
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example2" class="table table-condensed table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>用户名</th>
+                        <th>用户角色</th>
+                        <th>邮箱</th>
+                        <th>电话</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($list as $v)
+                        <tr>
+                            <td>{{ $v['id'] }}</td>
+                            <td>{{ $v['username'] }}</td>
+                            <td><span class="label label-success">{{ $v->roles()->pluck('name')[0] }}</span></td>
+                            <td>{{ $v['email'] }}</td>
+                            <td>{{ $v['phone'] }}</td>
+                            <td>
+                                <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif >
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="edit('管理员编辑',{{ $v['id'] }})">编辑</button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
         </div>
-        <!-- /.row -->
-    </section>
-
-    <section>
-        <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="margin-top: 123px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" style="overflow: auto;">
+                <form id="adminsForm" action="{{ route('admins.store') }}" class="form-horizontal" role="form">
+                    <input type="hidden" name="id">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">用户名</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="username" placeholder="用户名">
+                        </div>
                     </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="adminsForm" action="{{ route('admins.store') }}" class="form-horizontal" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">用户名</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="username" placeholder="用户名">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">密码</label>
-                                <div class="col-xs-9">
-                                    <input type="password" class="form-control" name="password" placeholder="密码">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">确认密码</label>
-                                <div class="col-xs-9">
-                                    <input type="password" class="form-control" name="password_confirmation" placeholder="确认密码">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">邮箱</label>
-                                <div class="col-xs-9">
-                                    <input type="email" class="form-control" name="email" placeholder="邮箱">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">电话</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="电话">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">角色</label>
-                                <div class="col-xs-9">
-                                    <select class="form-control selectpicker" name="role_id">
-                                        @foreach($role_list as $v)
-                                            <option value="{{ $v['id'] }}">{{ $v['name'] }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">状态</label>
-                                <div class="col-xs-9">
-
-                                    <select class="form-control" name="status">
-                                        <option value="1">是</option>
-                                        <option value="0">否</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">密码</label>
+                        <div class="col-xs-9">
+                            <input type="password" class="form-control" name="password" placeholder="密码">
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">确认密码</label>
+                        <div class="col-xs-9">
+                            <input type="password" class="form-control" name="password_confirmation" placeholder="确认密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">邮箱</label>
+                        <div class="col-xs-9">
+                            <input type="email" class="form-control" name="email" placeholder="邮箱">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">电话</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="phone" placeholder="电话">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">角色</label>
+                        <div class="col-xs-9">
+                            <select class="form-control selectpicker" name="role_id">
+                                @foreach($role_list as $v)
+                                    <option value="{{ $v['id'] }}">{{ $v['name'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">状态</label>
+                        <div class="col-xs-9">
+
+                            <select class="form-control" name="status">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 @endsection('content')
 @section("scripts")
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
@@ -360,6 +355,7 @@
                         $("input[name='phone']").val(result.data['phone']);
                         $("input[name='email']").val(result.data['email']);
                         $("select[name='status']").val(result.data['status']);
+                        $("select[name='role_id']").val(result.data['role_id']);
                         $("input[name='id']").val(result.data['id']);
                         $("input[name='password']").val(result.data['password']);
                         $("input[name='password_confirmation']").val(result.data['password']);
