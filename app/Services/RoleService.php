@@ -17,9 +17,9 @@ class RoleService
      * 获取所有
      * @return array
      */
-    public function getRoleList()
+    public function getAll()
     {
-        return $this->roleRepository->getList();
+        return $this->roleRepository->getAll();
     }
 
     /**

@@ -19,7 +19,7 @@ class RulesController extends Controller
     {
         $title = '菜单管理';
 
-        $list = $this->ruleService->getRuleList();
+        $list = $this->ruleService->getAll();
         return view('Admin.Rule.index',compact('title', 'list'));
     }
 

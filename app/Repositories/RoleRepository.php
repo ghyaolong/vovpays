@@ -17,7 +17,7 @@ class RoleRepository
      * 获取所有
      * @return mixed
      */
-    public function getList()
+    public function getAll()
     {
         return $this->role->get();
     }

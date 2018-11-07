@@ -16,9 +16,9 @@ class AdminsService
      * 所有
      * @return mixed
      */
-    public function getAdminsList()
+    public function getAll()
     {
-        return $this->adminsRepository->getAdminsList();
+        return $this->adminsRepository->getAll();
     }
 
     /**

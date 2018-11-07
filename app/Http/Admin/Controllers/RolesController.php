@@ -22,7 +22,7 @@ class RolesController extends Controller
     {
         $title = '角色管理';
 
-        $list = $this->roleService->getRoleList();
+        $list = $this->roleService->getAll();
         return view('Admin.Role.index',compact('title', 'list'));
     }
 

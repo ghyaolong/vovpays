@@ -18,9 +18,9 @@ class RuleService
      * 获取所有菜单，生成树状
      * @return array
      */
-    public function getRuleList()
+    public function getAll()
     {
-        $result = $this->ruleRepository->getList();
+        $result = $this->ruleRepository->getAll();
         return tree($result);
     }
 

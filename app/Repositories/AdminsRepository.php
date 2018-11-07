@@ -33,10 +33,10 @@ class AdminsRepository
     }
 
     /**
-     * 获取所有管理员
+     * 获取所有
      * @return mixed
      */
-    public function getAdminsList()
+    public function getAll()
     {
         return $this->admin->get();
     }

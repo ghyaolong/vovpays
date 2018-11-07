@@ -29,8 +29,8 @@ class AdminsController extends Controller
     {
         $title = '管理员管理';
 
-        $list = $this->adminsService->getAdminsList();
-        $role_list = $this->roleService->getRoleList();
+        $list = $this->adminsService->getAll();
+        $role_list = $this->roleService->getAll();
         return view('Admin.Admins.index',compact('title', 'list','role_list'));
     }
 
