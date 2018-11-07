@@ -21,6 +21,14 @@
     .toast-top-right{
         margin-top: 110px;
     }
+    body{
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+    .wrapper{
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
 </style>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper" style="padding: 0px;">
@@ -40,7 +48,7 @@
             </section>
             <!-- 内容导航结束 -->
             <!-- 主内容 -->
-            <section class="content">
+            <section class="content" style="display:none">
             @yield('content')
             </section>
             <!-- /.主内容结束 -->
@@ -74,6 +82,8 @@
             showMethod: "fadeIn",
             hideMethod: "fadeOut"
         };
+        $('.content').hide().fadeIn(1000);
+        $('body').css('overflow-y','auto');
     })
 </script>
 @yield('scripts')
