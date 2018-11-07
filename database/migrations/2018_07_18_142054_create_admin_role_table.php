@@ -19,7 +19,6 @@ class CreateAdminRoleTable extends Migration
             $table->unsignedInteger('admin_id')->comment('用户ID');
             $table->unsignedInteger('role_id')->comment('角色ID');
             $table->index(['role_id', 'admin_id']);
-            $table->timestamps();
         });
 
         DB::statement("ALTER TABLE `pay_admin_role` comment '管理元角色'");

@@ -13,9 +13,8 @@ class AdminRoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = Carbon::now()->toDateTimeString();
         DB::table('admin_role')->insert([
-            ['admin_id' => 1, 'role_id' => 1,'created_at'=> $now, 'updated_at'=> $now],
+            ['admin_id' => 1, 'role_id' => 1],
         ]);
     }
 }
