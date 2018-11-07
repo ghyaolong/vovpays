@@ -54,6 +54,12 @@ class RoleService
         return $rule->toArray();
     }
 
+    /**
+     * 更新
+     * @param string $id
+     * @param array $data
+     * @return mixed
+     */
     public function update(string $id, array $data)
     {
         $data = array_except($data, ['id','_token']);

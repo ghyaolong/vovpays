@@ -22,6 +22,7 @@
                                 <th>用户角色</th>
                                 <th>邮箱</th>
                                 <th>电话</th>
+                                <th>状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -30,14 +31,14 @@
                                 <tr>
                                     <td>{{ $v['id'] }}</td>
                                     <td>{{ $v['username'] }}</td>
-                                    <td></td>
+                                    <td><span class="label label-success">{{ $v->roles()->pluck('name')[0] }}</span></td>
                                     <td>{{ $v['email'] }}</td>
                                     <td>{{ $v['phone'] }}</td>
                                     <td>
                                         <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif >
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="edit('菜单编辑',{{ $v['id'] }})">编辑</button>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="edit('管理员编辑',{{ $v['id'] }})">编辑</button>
                                         <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
                                     </td>
                                 </tr>
@@ -62,60 +63,54 @@
                         <h4 class="modal-title"></h4>
                     </div>
                     <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="{{ route('rules.store') }}" class="form-horizontal" role="form">
+                        <form id="adminsForm" action="{{ route('admins.store') }}" class="form-horizontal" role="form">
                             <input type="hidden" name="id">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">父级菜单</label>
+                                <label for="" class="col-xs-3 control-label">用户名</label>
                                 <div class="col-xs-9">
-                                    <select class="form-control selectpicker" name="pid">
-                                        <option value="0">ROOT</option>
-                                        @foreach($list as $v)
-                                            <option value="{{ $v['id'] }}">{{ $v['ltitle'] }}</option>
+                                    <input type="text" class="form-control" name="username" placeholder="用户名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">密码</label>
+                                <div class="col-xs-9">
+                                    <input type="password" class="form-control" name="password" placeholder="密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">确认密码</label>
+                                <div class="col-xs-9">
+                                    <input type="password" class="form-control" name="password_confirmation" placeholder="确认密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">邮箱</label>
+                                <div class="col-xs-9">
+                                    <input type="email" class="form-control" name="email" placeholder="邮箱">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">电话</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" name="phone" placeholder="电话">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">角色</label>
+                                <div class="col-xs-9">
+                                    <select class="form-control selectpicker" name="role_id">
+                                        @foreach($role_list as $v)
+                                            <option value="{{ $v['id'] }}">{{ $v['name'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">菜单名称</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="title" placeholder="菜单名称">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">菜单路由</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="uri" placeholder="菜单路由">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">菜单动作</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="rule" placeholder="菜单动作">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">菜单图标</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="icon" placeholder="菜单图标">
-                                    <span class="help-block">
-                                    <i class="fa fa-info-circle"></i>图标地址
-                                    <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons</a>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">排序</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" value="0" name="sort" placeholder="排序">
-                                    <span class="help-block"><i class="fa fa-info-circle"></i>值越大排名越靠前</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">是否验证</label>
+                                <label for="" class="col-xs-3 control-label">状态</label>
                                 <div class="col-xs-9">
 
-                                    <select class="form-control" name="is_check">
+                                    <select class="form-control" name="status">
                                         <option value="1">是</option>
                                         <option value="0">否</option>
                                     </select>
@@ -140,8 +135,8 @@
 
             // 状态修改
             $('.switch-state').bootstrapSwitch({
-                onText:'是',
-                offText:'否' ,
+                onText:'启用',
+                offText:'禁用' ,
                 onColor:"primary",
                 offColor:"danger",
                 size:"small",
@@ -149,7 +144,7 @@
                     var id =  $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/admin/rules/saveCheck',
+                        url: '/admin/admins/saveStatus',
                         data:{'status':state,'id':id},
                         dataType:'json',
                         headers: {
@@ -173,9 +168,9 @@
 
             // 模态关闭
             $('#addModel').on('hidden.bs.modal', function() {
-                $("#ruleForm").data('bootstrapValidator').destroy();
-                $('#ruleForm').data('bootstrapValidator', null);
-                $('#ruleForm').get(0).reset();
+                $("#adminsForm").data('bootstrapValidator').destroy();
+                $('#adminsForm').data('bootstrapValidator', null);
+                $('#adminsForm').get(0).reset();
                 formValidator();
             });
 
@@ -186,13 +181,13 @@
          */
         function save(_this){
             //开启验证
-            $('#ruleForm').data('bootstrapValidator').validate();
-            if(!$('#ruleForm').data('bootstrapValidator').isValid()){
+            $('#adminsForm').data('bootstrapValidator').validate();
+            if(!$('#adminsForm').data('bootstrapValidator').isValid()){
                 return ;
             }
             _this.removeAttr('onclick');
 
-            var $form = $('#ruleForm');
+            var $form = $('#adminsForm');
             $.post($form.attr('action'), $form.serialize(), function(result) {
                 if(result.status)
                 {
@@ -216,7 +211,7 @@
          */
         function formValidator()
         {
-            $('#ruleForm').bootstrapValidator({
+            $('#adminsForm').bootstrapValidator({
                 message: '输入值不合法',
                 feedbackIcons: {
                     valid: 'glyphicon glyphicon-ok',
@@ -224,30 +219,111 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    title: {
-                        message: '菜单名称不合法',
+                    username: {
                         validators: {
                             notEmpty: {
-                                message: '菜单名称不能为空！'
+                                message: '用户名不能为空!'
                             },
-                        }
-                    },
-                    uri: {
-                        validators: {
-                            notEmpty: {
-                                message: '菜单路由不能为空!'
+                            stringLength: {
+                                min: 5,
+                                max: 20,
+                                message: '用户名长度%s~%s个字符!'
+                            },
+                            regexp: { //正则校验
+                                regexp: /^[A-Z_a-z0-9]+$/,
+                                message:'只能使用数字和字母!'
+                            },
+                            remote: {
+                                url: "admins/check",
+                                message: "用户名已存在!",
+                                type: "post",
+                                data: function(){ // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value" : $("input[name='username']").val().trim(),
+                                        "type"  : 'username',
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id"    : $('input[name="id"]').val()
+                                    };
+                                }
                             }
                         }
                     },
-                    sort: {
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空!'
+                            },
+                            stringLength: {
+                                min: 6,
+                                message: '密码最小长度%s个字符!'
+                            },
+                            different: { // 比较是否不同，否的话校验不通过
+                                field: 'username', // 和userName字段比较
+                                message: '密码不能与用户名相同!'
+                            }
+                        }
+                    },
+                    password_confirmation: {
+                        validators: {
+                            notEmpty: {
+                                message: '确认密码不能为空!'
+                            },
+                            identical: { // 比较是否相同，否的话校验不通过
+                                field: 'password', // 和password字段比较
+                                message: '两次密码输入不一致!'
+                            }
+                        }
+                    },
+                    email: {
                         validators:{
                             notEmpty: {
-                                message: '排序不能为空!'
+                                message: '邮箱不能为空!'
+                            },
+                            emailAddress: { // 可以不用自己写正则
+                                message: '邮箱格式不正确!'
+                            },
+                            remote: {
+                                url: "admins/check",
+                                message: "邮箱已存在!",
+                                type: "post",
+                                data: function(){ // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value" : $("input[name='email']").val().trim(),
+                                        "type"  : "email",
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id"    : $('input[name="id"]').val()
+                                    };
+                                }
+                            }
+                        }
+                    },
+                    phone: {
+                        validators:{
+                            notEmpty: {
+                                message: '电话不能为空!'
+                            },
+                            stringLength: {
+                                min: 11,
+                                max: 11,
+                                message: '电话长度%s~%s个字符！'
                             },
                             regexp: { //正则校验
                                 regexp: /^[0-9]+$/,
-                                message:'排序只能是数字'
+                                message:'电话格式不正确!'
                             },
+                            remote: {
+                                url: "admins/check",
+                                message: "电话已存在!",
+                                type: "post",
+                                data: function(){ // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value" : $("input[name='phone']").val().trim(),
+                                        "type"  : 'phone',
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id"    : $('input[name="id"]').val()
+                                    };
+                                }
+                            }
                         }
                     }
                 }
@@ -272,7 +348,7 @@
         {
             $.ajax({
                 type: 'get',
-                url: '/admin/rules/'+id+'/edit',
+                url: '/admin/admins/'+id+'/edit',
                 dataType:'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -280,14 +356,13 @@
                 success:function(result){
                     if(result.status == 1)
                     {
-                        $("input[name='title']").val(result.data['title']);
-                        $("input[name='uri']").val(result.data['uri']);
-                        $("input[name='rule']").val(result.data['rule']);
-                        $("input[name='icon']").val(result.data['icon']);
-                        $("input[name='sort']").val(result.data['sort']);
-                        $("select[name='is_check']").val(result.data['is_check']);
-                        $("select[name='pid']").val(result.data['pid']);
+                        $("input[name='username']").val(result.data['username']);
+                        $("input[name='phone']").val(result.data['phone']);
+                        $("input[name='email']").val(result.data['email']);
+                        $("select[name='status']").val(result.data['status']);
                         $("input[name='id']").val(result.data['id']);
+                        $("input[name='password']").val(result.data['password']);
+                        $("input[name='password_confirmation']").val(result.data['password']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
                     }
@@ -313,7 +388,7 @@
             }, function(){
                 $.ajax({
                     type: 'delete',
-                    url: '/admin/rules',
+                    url: '/admin/admins',
                     data:{'id':id},
                     dataType:'json',
                     headers: {
@@ -323,9 +398,9 @@
                         if(result.status)
                         {
                             _this.parents('tr').empty();
-                            swal(result.msg, "菜单已被删除。","success")
+                            swal(result.msg, "管理员已被删除。","success")
                         }else{
-                            swal(result.msg, "菜单没有被删除。","error")
+                            swal(result.msg, "管理员没有被删除。","error")
                         }
 
                     },

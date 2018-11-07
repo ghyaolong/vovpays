@@ -33,5 +33,7 @@ Route::group([], function () {
         Route::post('admins','AdminsController@store')->name('admins.store');
         Route::get('admins/{id}/edit', 'AdminsController@edit')->name('admins.edit');
         Route::delete('admins','AdminsController@destroy')->name('admins.destroy');
+        Route::post('admins/saveStatus','AdminsController@saveStatus')->name('admins.saveStatus');
+        Route::post('admins/check','AdminsController@checkUnique')->name('admins.check');
     });
 });

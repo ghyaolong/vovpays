@@ -112,7 +112,9 @@ class RolesController extends Controller
 
 
     /**
+     * 权限分配
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function storeRules(Request $request)
     {

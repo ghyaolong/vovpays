@@ -54,40 +54,40 @@ class RoleRepository
 
     /**
      * 修改
-     * @param string $id
+     * @param int $id
      * @param array $data
      * @return mixed
      */
-    public function update(string $id, array $data){
+    public function update(int $id, array $data){
         return $this->role->whereId($id)->update($data);
     }
 
     /**
      * 删除
-     * @param string $id
+     * @param int $id
      * @return mixed
      */
-    public function del(string $id){
+    public function del(int $id){
         return $this->role->whereId($id)->delete();
     }
 
     /**
      * 修改状态--是否验证
-     * @param string $id
+     * @param int $id
      * @param array $data
      * @return mixed
      */
-    public function updateCheck(string $id , array $data)
+    public function updateCheck(int $id , array $data)
     {
         return $this->role->whereId($id)->update($data);
     }
 
     /**
      * 根据id查询
-     * @param string $id
+     * @param int $id
      * @return mixed
      */
-    public function findId(string $id)
+    public function findId(int $id)
     {
         return $this->role->find($id);
     }
