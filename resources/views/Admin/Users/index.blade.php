@@ -34,7 +34,8 @@
                                 <select class="form-control" id="status" name="status">
                                     <option value="-1" @if(!isset($query['status']) || $query['status'] =='-1') selected  @endif >会员状态</option>
                                     <option value="1" @if(isset($query['status']) && $query['status'] =='1') selected  @endif >启用</option>
-                                    <option value="0" @if(isset($query['status']) && $query['status'] =='2') selected  @endif>禁用</option>
+                                    <option value="0" @if(isset($query['status']) && $query['status'] =='0') selected  @endif>禁用</option>
+                                    <option value="2" @if(isset($query['status']) && $query['status'] =='2') selected  @endif>已删除</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
@@ -154,8 +155,9 @@
                         <div class="col-xs-9">
 
                             <select class="form-control" name="status">
-                                <option value="1">是</option>
-                                <option value="0">否</option>
+                                <option value="1">启用</option>
+                                <option value="0">禁用</option>
+                                <option value="2">删除</option>
                             </select>
                         </div>
                     </div>
@@ -428,7 +430,7 @@
             }, function(){
                 $.ajax({
                     type: 'delete',
-                    url: '/admin/admins',
+                    url: '/admin/users',
                     data:{'id':id},
                     dataType:'json',
                     headers: {
@@ -438,9 +440,9 @@
                         if(result.status)
                         {
                             _this.parents('tr').empty();
-                            swal(result.msg, "管理员已被删除。","success")
+                            swal(result.msg, "会员已被删除。","success")
                         }else{
-                            swal(result.msg, "管理员没有被删除。","error")
+                            swal(result.msg, "会员没有被删除。","error")
                         }
 
                     },

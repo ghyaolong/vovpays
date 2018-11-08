@@ -178,4 +178,14 @@ class UserService
 
         return $this->usersRepository->searchPage($sql, $where, $page);
     }
+
+    /**
+     * 伪删除
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy(int $id)
+    {
+        return $this->usersRepository->update($id,['status'=>2]);
+    }
 }

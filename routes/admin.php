@@ -36,7 +36,7 @@ Route::group([], function () {
         Route::delete('admins','AdminsController@destroy')->name('admins.destroy');
         Route::post('admins/saveStatus','AdminsController@saveStatus')->name('admins.saveStatus');
         Route::post('admins/check','AdminsController@checkUnique')->name('admins.check');
-        //商户管理
+        //会员管理
         Route::get('users','UsersController@index')->name('users.index');
         Route::post('users','UsersController@store')->name('users.store');
         Route::get('users/{id}/edit', 'UsersController@edit')->name('users.edit');
