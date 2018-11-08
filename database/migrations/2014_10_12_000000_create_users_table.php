@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('username',30)->unique()->comment('用户名');
             $table->string('password')->comment('密码');
-            $table->string('email',30)->comment('邮箱');
+            $table->string('email',30)->unique()->comment('邮箱');
             $table->char('phone',11)->nullable()->comment('电话号码');
             $table->unsignedTinyInteger('group_type')->default(1)->comment('用户组表示,1用户，2代理商');
             $table->unsignedInteger('parentId')->default(0)->comment('归属代理ID');
