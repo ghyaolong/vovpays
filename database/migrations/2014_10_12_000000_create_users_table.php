@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->comment('密码');
             $table->string('email',30)->comment('邮箱');
             $table->char('phone',11)->nullable()->comment('电话号码');
-            $table->unsignedTinyInteger('groupType')->default(1)->comment('用户组表示,1用户，2代理商');
+            $table->unsignedTinyInteger('group_type')->default(1)->comment('用户组表示,1用户，2代理商');
             $table->unsignedInteger('parentId')->default(0)->comment('归属代理ID');
             $table->string('agentName',30)->nullable()->comment('代理名称');
             $table->string('payPassword')->comment('支付密码');
