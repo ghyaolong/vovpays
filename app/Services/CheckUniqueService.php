@@ -2,14 +2,17 @@
 
 namespace App\Services;
 use App\Repositories\AdminsRepository;
+use App\Repositories\UsersRepository;
 
 class CheckUniqueService
 {
     protected $adminsRepository;
+    protected $usersRepository;
 
-    public function __construct(AdminsRepository $adminsRepository)
+    public function __construct(AdminsRepository $adminsRepository, UsersRepository $usersRepository)
     {
         $this->adminsRepository = $adminsRepository;
+        $this->usersRepository  = $usersRepository;
     }
 
 
@@ -48,7 +51,28 @@ class CheckUniqueService
                         $result = $this->adminsRepository->findPhone($value);
                     }
                 }
-
+                break;
+            case 'users':
+                if($id)
+                {
+                    if($field == 'email')
+                    {
+                        $result = $this->usersRepository->findEmailNotId($value, $id);
+                    }else if($field == 'username'){
+                        $result = $this->usersRepository->findUsernameNotId($value, $id);
+                    }else if($field == 'phone'){
+                        $result = $this->usersRepository->findPhoneNotId($value, $id);
+                    }
+                }else{
+                    if($field == 'email')
+                    {
+                        $result = $this->usersRepository->findEmail($value);
+                    }else if($field == 'username'){
+                        $result = $this->usersRepository->findUsername($value);
+                    }else if($field == 'phone'){
+                        $result = $this->usersRepository->findPhone($value);
+                    }
+                }
                 break;
             default :
                 $result = '';

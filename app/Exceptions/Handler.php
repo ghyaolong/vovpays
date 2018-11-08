@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\QueryException;
 
 class Handler extends ExceptionHandler
 {
@@ -30,12 +31,9 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
-     *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception  $exception
-     * @return void
+     * @param Exception $exception
+     * @return mixed|void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -51,7 +49,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-
         // 登录验证
         if ($exception instanceof AuthenticationException) {
             // 判断是否返回json
@@ -79,6 +76,12 @@ class Handler extends ExceptionHandler
             }
         }else if($exception instanceof CustomServiceException){ // services自定义报错
             return ajaxError($exception->getMessage());
+        }else if($exception instanceof QueryException){
+            if( $request->expectsJson() )
+            {
+                $exceptionArr = explode('(',$exception->getMessage());
+                return ajaxError($exceptionArr[0]);
+            }
         }
         return parent::render($request, $exception);
     }

@@ -5,131 +5,127 @@
 @endsection
 
 @section('content')
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <button type="button" class="btn btn-primary" onclick="showModel('添加菜单')">添加菜单</button>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="example2" class="table table-condensed table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>菜单名称</th>
-                                <th>菜单路由</th>
-                                <th>菜单动作</th>
-                                <th>是否验证</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($list as $v)
-                                <tr>
-                                    <td>{{ $v['id'] }}</td>
-                                    <td>{{ $v['ltitle'] }}</td>
-                                    <td>{{ $v['uri'] }}</td>
-                                    <td>{{ $v['rule'] }}</td>
-                                    <td>
-                                        <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['is_check'] == 1) checked @endif >
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="edit('菜单编辑',{{ $v['id'] }})">编辑</button>
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <button type="button" class="btn btn-primary" onclick="showModel('添加菜单')">添加菜单</button>
             </div>
-            <!-- /.col -->
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example2" class="table table-condensed table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>菜单名称</th>
+                        <th>菜单路由</th>
+                        <th>菜单动作</th>
+                        <th>是否验证</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($list as $v)
+                        <tr>
+                            <td>{{ $v['id'] }}</td>
+                            <td>{{ $v['ltitle'] }}</td>
+                            <td>{{ $v['uri'] }}</td>
+                            <td>{{ $v['rule'] }}</td>
+                            <td>
+                                <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['is_check'] == 1) checked @endif >
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="edit('菜单编辑',{{ $v['id'] }})">编辑</button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
         </div>
-        <!-- /.row -->
-    </section>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
 
-    <section>
-        <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
+<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="margin-top: 123px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" style="overflow: auto;">
+                <form id="ruleForm" action="{{ route('rules.store') }}" class="form-horizontal" role="form">
+                    <input type="hidden" name="id">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">父级菜单</label>
+                        <div class="col-xs-9">
+                            <select class="form-control selectpicker" name="pid">
+                                <option value="0">ROOT</option>
+                                @foreach($list as $v)
+                                    <option value="{{ $v['id'] }}">{{ $v['ltitle'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="{{ route('rules.store') }}" class="form-horizontal" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">父级菜单</label>
-                                <div class="col-xs-9">
-                                    <select class="form-control selectpicker" name="pid">
-                                        <option value="0">ROOT</option>
-                                        @foreach($list as $v)
-                                            <option value="{{ $v['id'] }}">{{ $v['ltitle'] }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">菜单名称</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="title" placeholder="菜单名称">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">菜单路由</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="uri" placeholder="菜单路由">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">菜单动作</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="rule" placeholder="菜单动作">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">菜单图标</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="icon" placeholder="菜单图标">
-                                    <span class="help-block">
-                                    <i class="fa fa-info-circle"></i>图标地址
-                                    <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons</a>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">排序</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" value="0" name="sort" placeholder="排序">
-                                    <span class="help-block"><i class="fa fa-info-circle"></i>值越大排名越靠前</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">是否验证</label>
-                                <div class="col-xs-9">
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">菜单名称</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="title" placeholder="菜单名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">菜单路由</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="uri" placeholder="菜单路由">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">菜单动作</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="rule" placeholder="菜单动作">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">菜单图标</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="icon" placeholder="菜单图标">
+                            <span class="help-block" style="font-size: 12px;">
+                                <i class="fa fa-info-circle"></i>图标地址
+                                <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/icons</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">排序</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" value="0" name="sort" placeholder="排序">
+                            <span class="help-block" style="font-size: 12px;"><i class="fa fa-info-circle"></i>值越大排名越靠前</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">是否验证</label>
+                        <div class="col-xs-9">
 
-                                    <select class="form-control" name="is_check">
-                                        <option value="1">是</option>
-                                        <option value="0">否</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                            </div>
-                        </form>
+                            <select class="form-control" name="is_check">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 @endsection('content')
 @section("scripts")
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>

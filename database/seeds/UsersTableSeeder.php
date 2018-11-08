@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             'password'  => bcrypt ('vovpay'),
             'email'     => 'vovpay@vovpay.com',
             'phone'     => '18888888888',
-            'PaymentPassword' => bcrypt ('123456'),
+            'payPassword' => bcrypt ('123456'),
             'merchant'  => str_random(10),
             'apiKey'    => bcrypt(str_random(10)),
             'created_at'=> $now,

@@ -5,26 +5,24 @@
 @endsection
 
 @section("content")
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box box-info">
-                    <!-- form start -->
-                    <form class="form-horizontal" action="{{ Route('setRules',array('id'=>$role_id)) }}" id="MyForm">
-                        <ul id="treeDemo" class="ztree"></ul>
-                        <!-- /.box-body -->
-                        <div class="box-footer">
-                            <button type="button" class="btn btn-info" onclick="save()">提交</button>
-                        </div>
-                        <!-- /.box-footer -->
-                    </form>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-info">
+            <!-- form start -->
+            <form class="form-horizontal" action="{{ Route('setRules',array('id'=>$role_id)) }}" id="MyForm">
+                <ul id="treeDemo" class="ztree"></ul>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="button" class="btn btn-info" onclick="save()">提交</button>
                 </div>
-                <!-- /.box -->
-            </div>
-            <!-- /.col -->
+                <!-- /.box-footer -->
+            </form>
         </div>
-        <!-- /.row -->
-    </section>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
 @endsection
 @section("scripts")
     <script src="{{ asset('plugins/zTree/js/jquery.ztree.core.min.js') }}"></script>

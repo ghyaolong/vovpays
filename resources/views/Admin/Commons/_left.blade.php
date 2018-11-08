@@ -37,9 +37,9 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ url('admin/user/userpay') }}">
+                <a href="{{ route('users.index') }}">
                     <i class="fa fa-user"></i>
-                    <span>商户管理</span>
+                    <span>会员管理</span>
                 </a>
             </li>
             <li>

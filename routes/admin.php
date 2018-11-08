@@ -14,6 +14,7 @@ Route::group([], function () {
     Route::get('dropout', 'LoginController@destroy')->name('admin.dropout');
     Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/', 'IndexController@index')->name('admin');
+        Route::get('main', 'IndexController@main')->name('admin.main');
         //菜单
         Route::get('rules','RulesController@index')->name('rules.index');
         Route::post('rules','RulesController@store')->name('rules.store');
@@ -35,5 +36,12 @@ Route::group([], function () {
         Route::delete('admins','AdminsController@destroy')->name('admins.destroy');
         Route::post('admins/saveStatus','AdminsController@saveStatus')->name('admins.saveStatus');
         Route::post('admins/check','AdminsController@checkUnique')->name('admins.check');
+        //商户管理
+        Route::get('users','UsersController@index')->name('users.index');
+        Route::post('users','UsersController@store')->name('users.store');
+        Route::get('users/{id}/edit', 'UsersController@edit')->name('users.edit');
+        Route::delete('users','UsersController@destroy')->name('users.destroy');
+        Route::post('users/saveStatus','UsersController@saveStatus')->name('users.saveStatus');
+        Route::post('users/check','UsersController@checkUnique')->name('users.check');
     });
 });

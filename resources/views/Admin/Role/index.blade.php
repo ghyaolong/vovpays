@@ -1,76 +1,72 @@
 @extends('Admin.Layouts.layout')
 @section('content')
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <button type="button" class="btn btn-primary" onclick="showModel('添加角色')">添加角色</button>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="example2" class="table table-condensed table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>角色名称</th>
-                                <th>权限分配</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($list as $v)
-                                <tr>
-                                    <td>{{ $v['id'] }}</td>
-                                    <td>{{ $v['name'] }}</td>
-                                    <td>
-                                        <a href="{{ route('getRules',array('id'=>$v['id'])) }}" class="btn btn-primary btn-sm">权限编辑</a>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="edit('角色编辑',{{ $v['id'] }})">编辑</button>
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <button type="button" class="btn btn-primary" onclick="showModel('添加角色')">添加角色</button>
             </div>
-            <!-- /.col -->
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example2" class="table table-condensed table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>角色名称</th>
+                        <th>权限分配</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($list as $v)
+                        <tr>
+                            <td>{{ $v['id'] }}</td>
+                            <td>{{ $v['name'] }}</td>
+                            <td>
+                                <a href="{{ route('getRules',array('id'=>$v['id'])) }}" class="btn btn-primary btn-sm">权限编辑</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="edit('角色编辑',{{ $v['id'] }})">编辑</button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
         </div>
-        <!-- /.row -->
-    </section>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
 
-    <section>
-        <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
+<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="margin-top: 123px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" style="overflow: auto;">
+                <form id="ruleForm" action="{{ route('roles.store') }}" class="form-horizontal" role="form">
+                    <input type="hidden" name="id">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">角色名称</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="name" placeholder="角色名称">
+                        </div>
                     </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="{{ route('roles.store') }}" class="form-horizontal" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">角色名称</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="name" placeholder="角色名称">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                            </div>
-                        </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 @endsection('content')
 @section("scripts")
     <script>
