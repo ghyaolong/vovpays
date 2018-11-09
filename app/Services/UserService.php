@@ -123,6 +123,9 @@ class UserService
                 $data['agentName']= '';
             }
         }
+        $data['group_type']  = $data['groupType'];
+        $data = array_except($data,'groupType');
+
         return $this->usersRepository->update($id, $data);
     }
 

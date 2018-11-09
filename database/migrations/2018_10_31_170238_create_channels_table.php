@@ -23,8 +23,6 @@ class CreateChannelsTable extends Migration
             $table->string('channelCode',20)->comment('通道编码');
             $table->string('payGateway')->comment('支付网关地址');
             $table->string('searchUrl')->comment('查询网关地址');
-            $table->string('successUrl')->comment('同步通知地址');
-            $table->string('notifyUrl')->comment('异步通知地址');
             $table->decimal('runRate',9,6)->default(0)->comment('运营费率');
             $table->decimal('costRate',9,6)->default(0)->comment('成本费率');
             $table->string('refererDomain',20)->nullable()->comment('防封域名');

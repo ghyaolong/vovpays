@@ -1,0 +1,129 @@
+<?php
+
+namespace App\Services;
+
+use App\Repositories\ChannelsRepository;
+use App\Exceptions\CustomServiceException;
+
+class ChannelService
+{
+    protected $channelsRepository;
+
+    public function __construct(ChannelsRepository $channelsRepository)
+    {
+        $this->channelsRepository = $channelsRepository;
+    }
+
+    /**
+     * 添加
+     * @param array $data
+     * @return mixed
+     */
+    public function add(array $data)
+    {
+        // 去掉无用数据
+        $data = array_except($data, ['id','_token']);
+        return $this->channelsRepository->add($data);
+    }
+
+    /**
+     * 根据id获取
+     * @param string $id
+     * @return array
+     */
+    public function findId(string $id)
+    {
+        $channels = $this->channelsRepository->findId($id);
+        return $channels->toArray();
+    }
+
+    /**
+     *
+     * @param int $page
+     * @return mixed
+     */
+    public function getAllPage(int $page)
+    {
+        $sql   = '1=1';
+        $where = [];
+
+        return $this->channelsRepository->searchPage($sql, $where, $page);
+    }
+
+    /**
+     * 更新
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function update(int $id, array $data)
+    {
+        $data = array_except($data, ['id','_token','password_confirmation']);
+
+        return $this->channelsRepository->update($id, $data);
+    }
+
+    /**
+     * 获取所有不带分页
+     * @return mixed
+     */
+    public function getAll()
+    {
+        $sql   = '';
+        $where = [];
+        return $this->channelsRepository->searchAll($sql, $where);
+    }
+
+    /**
+     * 状态变更
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function updateStatus(int $id, array $data){
+
+        return $this->channelsRepository->update($id, $data);
+    }
+
+    public function searchPage(array $data, int $page)
+    {
+        $sql   = ' 1=1 ';
+        $where = [];
+
+        if( isset($data['merchant']) && $data['merchant'])
+        {
+            $sql .= 'and merchant = ?';
+            $where['merchant'] = $data['merchant'];
+        }
+
+        if( isset($data['username']) && $data['username'])
+        {
+            $sql .= ' and username = ?';
+            $where['username'] = $data['username'];
+        }
+
+        if( isset($data['groupType']) && $data['groupType'] != '-1')
+        {
+            $sql .= ' and group_type = ?';
+            $where['group_type'] = $data['groupType'];
+        }
+
+        if( isset($data['status']) && $data['status'] != '-1')
+        {
+            $sql .= ' and status = ?';
+            $where['status'] = $data['status'];
+        }
+
+        return $this->channelsRepository->searchPage($sql, $where, $page);
+    }
+
+    /**
+     * 伪删除
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy(int $id)
+    {
+        return $this->channelsRepository->update($id,['status'=>2]);
+    }
+}

@@ -128,9 +128,9 @@ class UsersController extends Controller
         $result = $this->checkUniqueService->check('users', $request->type, $request->value, $request->id);
 
         if($result){
-            return  response()->json(array('valid'=>true));
+            return  response()->json(array("valid"=>"true"));
         }else{
-            return  response()->json(array('valid'=>false));
+            return  response()->json(array("valid"=>"false"));
         }
     }
 

@@ -93,7 +93,7 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body" style="overflow: auto;">
-                <form id="adminsForm" action="{{ route('users.store') }}" class="form-horizontal" role="form">
+                <form id="usersForm" action="{{ route('users.store') }}" class="form-horizontal" role="form">
                     <input type="hidden" name="id">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -117,7 +117,7 @@
                     <div class="form-group">
                         <label for="" class="col-xs-3 control-label">邮箱</label>
                         <div class="col-xs-9">
-                            <input type="email" class="form-control" name="email" placeholder="邮箱">
+                            <input type="text" class="form-control" name="email" placeholder="邮箱">
                         </div>
                     </div>
                     <div class="form-group">
@@ -212,9 +212,9 @@
 
             // 模态关闭
             $('#addModel').on('hidden.bs.modal', function() {
-                $("#adminsForm").data('bootstrapValidator').destroy();
-                $('#adminsForm').data('bootstrapValidator', null);
-                $('#adminsForm').get(0).reset();
+                $("#usersForm").data('bootstrapValidator').destroy();
+                $('#usersForm').data('bootstrapValidator', null);
+                $('#usersForm').get(0).reset();
                 formValidator();
             });
 
@@ -224,10 +224,14 @@
          * 提交
          */
         function save(_this){
-            formValidator();
+            // formValidator();
+            $('#usersForm').data('bootstrapValidator').validate();
+            if(!$('#usersForm').data('bootstrapValidator').isValid()){
+                return ;
+            }
             _this.removeAttr('onclick');
 
-            var $form = $('#adminsForm');
+            var $form = $('#usersForm');
             $.post($form.attr('action'), $form.serialize(), function(result) {
                 if(result.status)
                 {
@@ -251,7 +255,7 @@
          */
         function formValidator()
         {
-            $('#adminsForm').bootstrapValidator({
+            $('#usersForm').bootstrapValidator({
                 message: '输入值不合法',
                 feedbackIcons: {
                     valid: 'glyphicon glyphicon-ok',
@@ -284,7 +288,8 @@
                                         "_token": $('meta[name="csrf-token"]').attr('content'),
                                         "id"    : $('input[name="id"]').val()
                                     };
-                                }
+                                },
+                                delay:500,
                             }
                         }
                     },
@@ -333,7 +338,8 @@
                                         "_token": $('meta[name="csrf-token"]').attr('content'),
                                         "id"    : $('input[name="id"]').val()
                                     };
-                                }
+                                },
+                                delay:500,
                             }
                         }
                     },
@@ -362,7 +368,8 @@
                                         "_token": $('meta[name="csrf-token"]').attr('content'),
                                         "id"    : $('input[name="id"]').val()
                                     };
-                                }
+                                },
+                                delay:500,
                             }
                         }
                     }
@@ -400,7 +407,7 @@
                         $("input[name='phone']").val(result.data['phone']);
                         $("input[name='email']").val(result.data['email']);
                         $("select[name='status']").val(result.data['status']);
-                        $("select[name='groupType']").val(result.data['groupType']);
+                        $("select[name='groupType']").val(result.data['group_type']);
                         $("select[name='parentId']").val(result.data['parentId']);
                         $("input[name='id']").val(result.data['id']);
                         $("input[name='password']").val(result.data['password']);

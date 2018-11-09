@@ -43,5 +43,21 @@ Route::group([], function () {
         Route::delete('users','UsersController@destroy')->name('users.destroy');
         Route::post('users/saveStatus','UsersController@saveStatus')->name('users.saveStatus');
         Route::post('users/check','UsersController@checkUnique')->name('users.check');
+        //通道管理
+        Route::get('channels','ChannelsController@index')->name('channels.index');
+        Route::post('channels','ChannelsController@store')->name('channels.store');
+        Route::get('channels/{id}/edit', 'ChannelsController@edit')->name('channels.edit');
+        Route::delete('channels','ChannelsController@destroy')->name('channels.destroy');
+        Route::post('channels/saveStatus','ChannelsController@saveStatus')->name('channels.saveStatus');
+        Route::post('channels/check','ChannelsController@checkUnique')->name('channels.check');
+        Route::post('channels/savePlanType','ChannelsController@savePlanType')->name('channels.savePlanType');
+        //支付方式管理
+        Route::get('channelPayments','channelPaymentsController@index')->name('channelPayments.index');
+        Route::post('channelPayments','channelPaymentsController@store')->name('channelPayments.store');
+        Route::get('channelPayments/{id}/edit', 'channelPaymentsController@edit')->name('channelPayments.edit');
+        Route::delete('channelPayments','channelPaymentsController@destroy')->name('channelPayments.destroy');
+        Route::post('channelPayments/saveStatus','channelPaymentsController@saveStatus')->name('channelPayments.saveStatus');
+        Route::post('channelPayments/check','channelPaymentsController@checkUnique')->name('channelPayments.check');
+        Route::post('channelPayments/savePlanType','channelPaymentsController@savePlanType')->name('channelPayments.savePlanType');
     });
 });

@@ -43,6 +43,18 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('channels.index') }}">
+                    <i class="fa fa-exchange"></i>
+                    <span>通道管理</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('channelPayments.index') }}">
+                    <i class="fa fa-credit-card"></i>
+                    <span>支付方式管理</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <i class="fa fa-cog"></i>
                     <span>系统设置</span>
