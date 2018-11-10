@@ -89,7 +89,7 @@ class UserService
      */
     public function getAllGroupPage(int $group_id, int $page)
     {
-        $sql = ' group_type = ?';
+        $sql = ' group_type = ? and status <> 2';
         $where['group_type'] = $group_id;
         return $this->usersRepository->searchPage($sql, $where, $page);
     }
