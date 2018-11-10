@@ -71,7 +71,7 @@ class ChannelService
     {
         $sql   = ' 1=1 ';
         $where = [];
-        return $this->channelsRepository->searchAll($sql, $where);
+        return $this->channelsRepository->search($sql, $where);
     }
 
     /**

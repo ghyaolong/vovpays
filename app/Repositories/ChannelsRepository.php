@@ -50,9 +50,20 @@ class ChannelsRepository
      * @param array $where
      * @return mixed
      */
-    public function searchAll(string $sql, array $where)
+    public function search(string $sql, array $where)
     {
         return $this->channel->whereRaw($sql, $where)->get();
+    }
+
+    /**
+     * 查询单条
+     * @param string $sql
+     * @param array $where
+     * @return mixed
+     */
+    public function searchOne(string $sql, array $where)
+    {
+        return $this->channel->whereRaw($sql, $where)->first();
     }
 
     /**
@@ -81,6 +92,6 @@ class ChannelsRepository
      */
     public function findId(string $id)
     {
-        return $this->channel->find($id);
+        return $this->channel->wherId($id)->first();
     }
 }
