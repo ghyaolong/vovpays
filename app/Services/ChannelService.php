@@ -64,12 +64,12 @@ class ChannelService
     }
 
     /**
-     * 获取所有不带分页
+     * 获取所有不带分页,
      * @return mixed
      */
     public function getAll()
     {
-        $sql   = ' 1=1 ';
+        $sql   = ' status <> 5 ';
         $where = [];
         return $this->channelsRepository->search($sql, $where);
     }
