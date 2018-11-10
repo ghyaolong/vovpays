@@ -14,4 +14,5 @@
 2. toastr.js
 3. sweetalert
 4. bootstrap-switch
+5. bootstrap-fileinput-4.5.1
 

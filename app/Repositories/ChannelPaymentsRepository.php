@@ -7,20 +7,20 @@
  */
 
 namespace App\Repositories;
-use App\Models\Channel;
+use App\Models\Channel_payment;
 
-class ChannelsRepository
+class ChannelPaymentsRepository
 {
 
-    protected $channel;
+    protected $channel_payment;
 
     /**
      * UsersRepository constructor.
-     * @param Channel $channel
+     * @param Channel_payment $channel_payment
      */
-    public function __construct( Channel $channel)
+    public function __construct( Channel_payment $channel_payment)
     {
-        $this->channel = $channel;
+        $this->channel_payment = $channel_payment;
     }
 
     /**
@@ -32,7 +32,7 @@ class ChannelsRepository
      */
     public function searchPage(string $sql, array $where, int $page)
     {
-        return $this->channel->whereRaw($sql, $where)->paginate($page);
+        return $this->channel_payment->whereRaw($sql, $where)->paginate($page);
     }
 
     /**
@@ -41,7 +41,7 @@ class ChannelsRepository
      * @return mixed
      */
     public function add(array $data){
-        return $this->channel->create($data);
+        return $this->channel_payment->create($data);
     }
 
     /**
@@ -52,7 +52,7 @@ class ChannelsRepository
      */
     public function searchAll(string $sql, array $where)
     {
-        return $this->channel->whereRaw($sql, $where)->get();
+        return $this->channel_payment->whereRaw($sql, $where)->get();
     }
 
     /**
@@ -62,7 +62,7 @@ class ChannelsRepository
      * @return mixed
      */
     public function update(int $id, array $data){
-        return $this->channel->whereId($id)->update($data);
+        return $this->channel_payment->whereId($id)->update($data);
     }
 
     /**
@@ -71,7 +71,7 @@ class ChannelsRepository
      * @return mixed
      */
     public function del(int $id){
-        return $this->channel->whereId($id)->delete();
+        return $this->channel_payment->whereId($id)->delete();
     }
 
     /**
@@ -81,6 +81,6 @@ class ChannelsRepository
      */
     public function findId(string $id)
     {
-        return $this->channel->find($id);
+        return $this->channel_payment->find($id);
     }
 }

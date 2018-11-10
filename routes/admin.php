@@ -59,5 +59,6 @@ Route::group([], function () {
         Route::post('channelPayments/saveStatus','channelPaymentsController@saveStatus')->name('channelPayments.saveStatus');
         Route::post('channelPayments/check','channelPaymentsController@checkUnique')->name('channelPayments.check');
         Route::post('channelPayments/savePlanType','channelPaymentsController@savePlanType')->name('channelPayments.savePlanType');
+        Route::post('channelPayments/upload','channelPaymentsController@upload')->name('channelPayments.upload');
     });
 });

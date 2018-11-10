@@ -2,16 +2,15 @@
 
 namespace App\Services;
 
-use App\Repositories\ChannelsRepository;
-use App\Exceptions\CustomServiceException;
+use App\Repositories\ChannelPaymentsRepository;
 
-class ChannelService
+class ChannelPaymentsService
 {
-    protected $channelsRepository;
+    protected $channelPaymentsRepository;
 
-    public function __construct(ChannelsRepository $channelsRepository)
+    public function __construct(ChannelPaymentsRepository $channelPaymentsRepository)
     {
-        $this->channelsRepository = $channelsRepository;
+        $this->channelPaymentsRepository = $channelPaymentsRepository;
     }
 
     /**
@@ -22,8 +21,10 @@ class ChannelService
     public function add(array $data)
     {
         // 去掉无用数据
-        $data = array_except($data, ['id','_token']);
-        return $this->channelsRepository->add($data);
+        $data['ico'] = $data['fileIco'];
+        $data = array_except($data, ['id','_token','fileIco']);
+
+        return $this->channelPaymentsRepository->add($data);
     }
 
     /**
@@ -33,7 +34,7 @@ class ChannelService
      */
     public function findId(string $id)
     {
-        $channels = $this->channelsRepository->findId($id);
+        $channels = $this->channelPaymentsRepository->findId($id);
         return $channels->toArray();
     }
 
@@ -47,7 +48,7 @@ class ChannelService
         $sql   = '1=1';
         $where = [];
 
-        return $this->channelsRepository->searchPage($sql, $where, $page);
+        return $this->channelPaymentsRepository->searchPage($sql, $where, $page);
     }
 
     /**
@@ -58,9 +59,10 @@ class ChannelService
      */
     public function update(int $id, array $data)
     {
-        $data = array_except($data, ['id','_token','password_confirmation']);
+        $data['ico'] = $data['fileIco'];
+        $data = array_except($data, ['id','_token','fileIco']);
 
-        return $this->channelsRepository->update($id, $data);
+        return $this->channelPaymentsRepository->update($id, $data);
     }
 
     /**
@@ -71,7 +73,7 @@ class ChannelService
     {
         $sql   = ' 1=1 ';
         $where = [];
-        return $this->channelsRepository->searchAll($sql, $where);
+        return $this->channelPaymentsRepository->searchAll($sql, $where);
     }
 
     /**
@@ -82,8 +84,9 @@ class ChannelService
      */
     public function updateStatus(int $id, array $data){
 
-        return $this->channelsRepository->update($id, $data);
+        return $this->channelPaymentsRepository->update($id, $data);
     }
+
 
     /**
      * 伪删除
