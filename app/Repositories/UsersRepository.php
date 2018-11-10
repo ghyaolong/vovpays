@@ -28,7 +28,7 @@ class UsersRepository
     }
 
     /**
-     * 查询
+     * 查询带分页
      * @param string $sql
      * @param array $where
      * @param int $page
@@ -36,7 +36,29 @@ class UsersRepository
      */
     public function searchPage(string $sql, array $where, int $page)
     {
-        return $this->user->whereRaw($sql, $where)->paginate($page);
+        return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
+    }
+
+    /**
+     * 查询不带分页
+     * @param string $sql
+     * @param array $where
+     * @return mixed
+     */
+    public function search(string $sql, array $where)
+    {
+        return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->get();
+    }
+
+    /**
+     * 查询一条
+     * @param string $sql
+     * @param array $where
+     * @return mixed
+     */
+    public function searchOne(string $sql, array $where)
+    {
+        return $this->user->whereRaw($sql, $where)->first();
     }
 
     /**
@@ -46,27 +68,6 @@ class UsersRepository
      */
     public function add(array $data){
         return $this->user->create($data);
-    }
-
-    /**
-     * 获取所有分页
-     * @param int $group_id
-     * @param int $page
-     * @return mixed
-     */
-    public function getAllPage(int $group_id, int $page)
-    {
-        return $this->user->whereGroupType($group_id)->paginate($page);
-    }
-
-    /**
-     * 获取所有
-     * @param int $group_id
-     * @return mixed
-     */
-    public function getAll(int $group_id)
-    {
-        return $this->user->whereGroupType($group_id)->get();
     }
 
     /**
@@ -89,79 +90,6 @@ class UsersRepository
     }
 
     /**
-     * 根据id查询
-     * @param string $id
-     * @return mixed
-     */
-    public function findId(string $id)
-    {
-        return $this->user->find($id);
-    }
-
-    /**
-     * 根据邮箱查询
-     * @param string $email
-     * @return mixed
-     */
-    public function findEmail(string $email)
-    {
-        return $this->user->whereEmail($email)->first();
-    }
-
-    /**
-     * 根据用户名查询
-     * @param string $username
-     * @return mixed
-     */
-    public function findUsername(string $username)
-    {
-        return $this->user->whereUsername($username)->first();
-    }
-
-    /**
-     * 根据电话查询
-     * @param string $phone
-     * @return mixed
-     */
-    public function findPhone(string $phone)
-    {
-        return $this->user->wherePhone($phone)->first();
-    }
-
-    /**
-     * 根据电话排除指定id
-     * @param string $phone
-     * @param int $id
-     * @return mixed
-     */
-    public function findPhoneNotId(string $phone, int $id)
-    {
-        return $this->user->wherePhone($phone)->where('id','<>',$id)->first();
-    }
-
-    /**
-     * 根据用户名排除指定id
-     * @param string $username
-     * @param int $id
-     * @return mixed
-     */
-    public function findUsernameNotId(string $username, int $id)
-    {
-        return $this->user->whereUsername($username)->where('id','<>',$id)->first();
-    }
-
-    /**
-     * 根据邮箱排除指定id
-     * @param string $email
-     * @param int $id
-     * @return mixed
-     */
-    public function findEmailNotId(string $email, int $id)
-    {
-        return $this->user->whereEmail($email)->where('id','<>',$id)->first();
-    }
-
-    /**
      * 检测id和密码是否存在
      * @param string $password
      * @param int $id
@@ -172,16 +100,6 @@ class UsersRepository
         return $this->user->whereId($id)->wherePassword($password)->exists();
     }
 
-    /**
-     * 根据id和用户标识
-     * @param int $id
-     * @param int $group
-     * @return mixed
-     */
-    public function findIdGroup(int $id, int $group)
-    {
-        return $this->user->whereId($id)->whereGroupType($group)->first();
-    }
 
     /**
      * 同步更新用户统计表

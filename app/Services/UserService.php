@@ -34,7 +34,10 @@ class UserService
         // 用户选着上级代理的时候，检测上级代理是否存在
         if( $data['parentId'] != '0')
         {
-            $agent = $this->usersRepository->findIdGroup($data['parentId'],2);
+            $sql = 'id=? and group_type=?';
+            $where['id'] = $data['parentId'];
+            $where['group_type'] = 2;
+            $agent = $this->usersRepository->searchOne($sql,$where);
             if($agent)
             {
                 $data['agentName']= $agent->username;
@@ -72,7 +75,9 @@ class UserService
      */
     public function findId(string $id)
     {
-        $users = $this->usersRepository->findId($id);
+        $sql = 'id=?';
+        $where['id'] = $id;
+        $users = $this->usersRepository->searchOne($sql, $where);
         return $users->toArray();
     }
 
@@ -82,9 +87,11 @@ class UserService
      * @param int $page
      * @return mixed
      */
-    public function getAllPage(int $group_id, int $page)
+    public function getAllGroupPage(int $group_id, int $page)
     {
-        return $this->usersRepository->getAllPage($group_id, $page);
+        $sql = ' group_type = ?';
+        $where['group_type'] = $group_id;
+        return $this->usersRepository->searchPage($sql, $where, $page);
     }
 
     /**
@@ -114,7 +121,10 @@ class UserService
         // 用户选着上级代理的时候，检测上级代理是否存在
         if( $data['parentId'] != '0')
         {
-            $agent = $this->usersRepository->findIdGroup($data['parentId'],2);
+            $sql = 'id=? and group_type=?';
+            $where['id'] = $data['parentId'];
+            $where['group_type'] = 2;
+            $agent = $this->usersRepository->searchOne($sql,$where);
             if($agent)
             {
                 $data['agentName']= $agent->username;
@@ -134,9 +144,11 @@ class UserService
      * @param int $group_id
      * @return mixed
      */
-    public function getAll(int $group_id)
+    public function getGroupAll(int $group_id)
     {
-        return $this->usersRepository->getAll($group_id);
+        $sql = ' group_type = ?';
+        $where['group_type'] = $group_id;
+        return $this->usersRepository->search($sql, $where);
     }
 
     /**
@@ -150,6 +162,12 @@ class UserService
         return $this->usersRepository->update($id, $data);
     }
 
+    /**
+     * 查询
+     * @param array $data
+     * @param int $page
+     * @return mixed
+     */
     public function searchPage(array $data, int $page)
     {
         $sql   = ' 1=1 ';

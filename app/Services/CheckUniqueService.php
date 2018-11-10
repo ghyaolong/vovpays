@@ -57,26 +57,40 @@ class CheckUniqueService
                 {
                     if($field == 'email')
                     {
-                        $result = $this->usersRepository->findEmailNotId($value, $id);
+                        $sql = "id <> $id and email = ?";
+                        $where['email'] = $value;
+
                     }else if($field == 'username'){
-                        $result = $this->usersRepository->findUsernameNotId($value, $id);
+                        $sql = "id <> $id and username = ?";
+                        $where['username'] = $value;
+
                     }else if($field == 'phone'){
-                        $result = $this->usersRepository->findPhoneNotId($value, $id);
+                        $sql = "id <> $id and phone = ?";
+                        $where['phone'] = $value;
                     }
                 }else{
                     if($field == 'email')
                     {
-                        $result = $this->usersRepository->findEmail($value);
+                        $sql = " email = ?";
+                        $where['email'] = $value;
+
                     }else if($field == 'username'){
-                        $result = $this->usersRepository->findUsername($value);
+
+                        $sql = " username = ?";
+                        $where['username'] = $value;
+
                     }else if($field == 'phone'){
-                        $result = $this->usersRepository->findPhone($value);
+
+                        $sql = " phone = ?";
+                        $where['phone'] = $value;
                     }
                 }
                 break;
             default :
-                $result = '';
+                return false;
         }
+
+        $result = $this->usersRepository->searchOne($sql, $where);
         return $result = $result ? false : true;
     }
 

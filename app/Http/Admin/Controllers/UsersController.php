@@ -31,10 +31,10 @@ class UsersController extends Controller
         {
             $list = $this->userService->searchPage($query, 10);
         }else{
-            $list = $this->userService->getAllPage(1,10);
+            $list = $this->userService->getAllGroupPage(1,10);
         }
 
-        $agent_list = $this->userService->getAll(2);
+        $agent_list = $this->userService->getGroupAll(2);
         return view('Admin.Users.index',compact('title', 'list', 'query', 'agent_list'));
     }
 
