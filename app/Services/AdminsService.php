@@ -18,7 +18,9 @@ class AdminsService
      */
     public function getAll()
     {
-        return $this->adminsRepository->getAll();
+        $sql   = '1=1';
+        $where = [];
+        return $this->adminsRepository->search($sql,$where);
     }
 
     /**
@@ -77,7 +79,9 @@ class AdminsService
      */
     public function findIdRole(string $id)
     {
-        $rule           = $this->adminsRepository->findId($id);
+        $sql         = 'id=?';
+        $where['id'] = $id;
+        $rule           = $this->adminsRepository->searchOne($sql,$where);
         $rule_array     = $rule->toArray();
         $roles_id_array = $rule->roles()->pluck('roles.id')->toArray();
         $rule_array['role_id'] = $roles_id_array[0];

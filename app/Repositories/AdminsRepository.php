@@ -33,13 +33,28 @@ class AdminsRepository
     }
 
     /**
-     * 获取所有
+     * 查询不带分页
+     * @param string $sql
+     * @param array $where
      * @return mixed
      */
-    public function getAll()
+    public function search(string $sql, array $where)
     {
-        return $this->admin->get();
+        return $this->admin->whereRaw($sql, $where)->orderBy('id', 'desc')->get();
     }
+
+    /**
+     * 查询带分页
+     * @param string $sql
+     * @param array $where
+     * @param int $page
+     * @return mixed
+     */
+    public function searchPage(string $sql, array $where, int $page)
+    {
+        return $this->admin->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
+    }
+
 
     /**
      * 修改
@@ -52,6 +67,17 @@ class AdminsRepository
     }
 
     /**
+     * 查询一条
+     * @param string $sql
+     * @param array $where
+     * @return mixed
+     */
+    public function searchOne(string $sql, array $where)
+    {
+        return $this->admin->whereRaw($sql, $where)->first();
+    }
+
+    /**
      * 删除
      * @param int $id
      * @return mixed
@@ -60,78 +86,13 @@ class AdminsRepository
         return $this->admin->whereId($id)->delete();
     }
 
-
     /**
-     * 根据邮箱查询
-     * @param string $email
-     * @return mixed
-     */
-    public function findEmail(string $email)
-    {
-        return $this->admin->whereEmail($email)->first();
-    }
-
-    /**
-     * 根据用户名查询
-     * @param string $username
-     * @return mixed
-     */
-    public function findUsername(string $username)
-    {
-        return $this->admin->whereUsername($username)->first();
-    }
-
-    /**
-     * 根据电话查询
-     * @param string $phone
-     * @return mixed
-     */
-    public function findPhone(string $phone)
-    {
-        return $this->admin->wherePhone($phone)->first();
-    }
-
-    /**
-     * 根据id查询
-     * @param string $id
-     * @return mixed
-     */
-    public function findId(string $id)
-    {
-        return $this->admin->find($id);
-    }
-
-    /**
-     * 根据电话排除指定id
-     * @param string $phone
      * @param int $id
      * @return mixed
      */
-    public function findPhoneNotId(string $phone, int $id)
+    public function findId(int $id)
     {
-        return $this->admin->wherePhone($phone)->where('id','<>',$id)->first();
-    }
-
-    /**
-     * 根据用户名排除指定id
-     * @param string $username
-     * @param int $id
-     * @return mixed
-     */
-    public function findUsernameNotId(string $username, int $id)
-    {
-        return $this->admin->whereUsername($username)->where('id','<>',$id)->first();
-    }
-
-    /**
-     * 根据邮箱排除指定id
-     * @param string $email
-     * @param int $id
-     * @return mixed
-     */
-    public function findEmailNotId(string $email, int $id)
-    {
-        return $this->admin->whereEmail($email)->where('id','<>',$id)->first();
+        return $this->admin->whereId($id)->first();
     }
 
     /**

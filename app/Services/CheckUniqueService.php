@@ -35,22 +35,37 @@ class CheckUniqueService
                 {
                     if($field == 'email')
                     {
-                        $result = $this->adminsRepository->findEmailNotId($value, $id);
+                        $sql = "id <> $id and email = ?";
+                        $where['email'] = $value;
+
                     }else if($field == 'username'){
-                        $result = $this->adminsRepository->findUsernameNotId($value, $id);
+
+                        $sql = "id <> $id and username = ?";
+                        $where['username'] = $value;
+
                     }else if($field == 'phone'){
-                        $result = $this->adminsRepository->findPhoneNotId($value, $id);
+
+                        $sql = "id <> $id and phone = ?";
+                        $where['phone'] = $value;
                     }
                 }else{
                     if($field == 'email')
                     {
-                        $result = $this->adminsRepository->findEmail($value);
+                        $sql = " email = ?";
+                        $where['email'] = $value;
+
                     }else if($field == 'username'){
-                        $result = $this->adminsRepository->findUsername($value);
+
+                        $sql = " username = ?";
+                        $where['username'] = $value;
+
                     }else if($field == 'phone'){
-                        $result = $this->adminsRepository->findPhone($value);
+
+                        $sql = " phone = ?";
+                        $where['phone'] = $value;
                     }
                 }
+                $result = $this->adminsRepository->searchOne($sql, $where);
                 break;
             case 'users':
                 if($id)
@@ -85,12 +100,12 @@ class CheckUniqueService
                         $where['phone'] = $value;
                     }
                 }
+                $result = $this->usersRepository->searchOne($sql, $where);
                 break;
             default :
                 return false;
         }
 
-        $result = $this->usersRepository->searchOne($sql, $where);
         return $result = $result ? false : true;
     }
 
