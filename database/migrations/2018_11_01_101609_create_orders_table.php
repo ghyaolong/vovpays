@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->comment('商户id');
-            $table->unsignedInteger('agent_id')->comment('归属代理');
+            $table->unsignedInteger('agent_id')->default(0)->comment('归属代理：0没有代理');
             $table->unsignedInteger('channel_id')->comment('通道id');
             $table->unsignedInteger('channel_payment_id')->comment('支付方式id');
             $table->char('orderNo',20)->unique()->comment('系统订单号');
@@ -32,7 +32,7 @@ class CreateOrdersTable extends Migration
             $table->string('successUrl')->comment('商户同步通知地址');
             $table->string('channelName')->comment('通道名称');
             $table->string('paymentName')->comment('支付方式名称');
-            $table->string('extend',1000)->comment('扩展字段，存储json');
+            $table->string('extend',1000)->default('{}')->comment('扩展字段，存储json');
             $table->unsignedTinyInteger('status')->default(0)->comment('订单状态：0发起支付，1发起失败，2未支付，3支付成功，4支付异常，5伪删除');
             $table->timestamps();
         });

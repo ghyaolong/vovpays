@@ -55,6 +55,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('orders.index') }}">
+                    <i class="fa fa-reorder"></i>
+                    <span>订单管理</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <i class="fa fa-cog"></i>
                     <span>系统设置</span>

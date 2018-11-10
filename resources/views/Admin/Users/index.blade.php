@@ -25,7 +25,6 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" id="groupType" name="groupType">
-                                    <option value="-1" @if(!isset($query['groupType']) || $query['groupType'] =='-1') selected  @endif >会员类型</option>
                                     <option value="1" @if(isset($query['groupType']) && $query['groupType'] =='1') selected  @endif>商户</option>
                                     <option value="2" @if(isset($query['groupType']) && $query['groupType'] =='2') selected  @endif>代理商</option>
                                 </select>
