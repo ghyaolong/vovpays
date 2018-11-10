@@ -92,6 +92,6 @@ class ChannelsRepository
      */
     public function findId(string $id)
     {
-        return $this->channel->wherId($id)->first();
+        return $this->channel->whereId($id)->first();
     }
 }
