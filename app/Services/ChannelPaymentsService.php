@@ -71,7 +71,7 @@ class ChannelPaymentsService
      */
     public function getAll()
     {
-        $sql   = ' 1=1 ';
+        $sql   = ' status <> 2 ';
         $where = [];
         return $this->channelPaymentsRepository->searchAll($sql, $where);
     }
