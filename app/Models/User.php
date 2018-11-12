@@ -35,6 +35,15 @@ class User extends Authenticatable
     }
 
     /**
+     * 一对多 订单按天统计表
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function OrderDayCount()
+    {
+        return $this->hasMany('App\Models\Order_day_count');
+    }
+
+    /**
      * 一对多 云端固码配置
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

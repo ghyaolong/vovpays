@@ -16,7 +16,7 @@ class AdminsTableSeeder extends Seeder
         $now = Carbon::now()->toDateTimeString();
         DB::table('admins')->insert([
             'username'  => 'admin',
-            'password'  => bcrypt ('admin'),
+            'password'  => bcrypt ('admin888'),
             'email'     => 'admin@admin.com',
             'phone'     => '18888888888',
             'verify'    => '',

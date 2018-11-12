@@ -5,6 +5,73 @@
 @endsection
 @section('content')
 <div class="row">
+        <!-- ./col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-aqua">
+                <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+
+                <div class="info-box-content">
+
+						<span class="progress-description" style="padding-top: 10px;">
+							订单金额 </span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="info-box-number">0.00 元</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-aqua">
+                <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
+
+                <div class="info-box-content">
+
+						<span class="progress-description" style="padding-top: 10px;">
+							手续费 </span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="info-box-number">0.00 元</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-aqua">
+                <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+
+                <div class="info-box-content">
+
+						<span class="progress-description" style="padding-top: 10px;">
+							平台收入 </span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="info-box-number">0 笔</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-aqua">
+                <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+
+                <div class="info-box-content">
+
+						<span class="progress-description" style="padding-top: 10px;">
+							代理收入 </span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="info-box-number">0 笔</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ./col -->
+
     <div class="col-xs-12">
         <div class="box">
             <a href="{{ route('orders.index') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
@@ -45,9 +112,9 @@
                                 <option value="0" @if(isset($query['status']) && $query['status'] =='0') selected  @endif>发起支付</option>
                                 <option value="1" @if(isset($query['status']) && $query['status'] =='1') selected  @endif >发起失败</option>
                                 <option value="2" @if(isset($query['status']) && $query['status'] =='2') selected  @endif>未支付</option>
-                                <option value="2" @if(isset($query['status']) && $query['status'] =='3') selected  @endif>支付成功</option>
-                                <option value="2" @if(isset($query['status']) && $query['status'] =='4') selected  @endif>支付异常</option>
-                                <option value="2" @if(isset($query['status']) && $query['status'] =='5') selected  @endif>已删除</option>
+                                <option value="3" @if(isset($query['status']) && $query['status'] =='3') selected  @endif>支付成功</option>
+                                <option value="4" @if(isset($query['status']) && $query['status'] =='4') selected  @endif>支付异常</option>
+                                <option value="5" @if(isset($query['status']) && $query['status'] =='5') selected  @endif>已删除</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
@@ -180,8 +247,9 @@
 
             $('#daterange-btn').daterangepicker(
                     {
-                        timePicker : true,
-                        timePicker24Hour : true,
+                        dateLimit:{days:30},
+                        timePicker : false,
+                        timePicker24Hour : false,
                         linkedCalendars : false,
                         autoUpdateInput : false,
                         ranges : {
