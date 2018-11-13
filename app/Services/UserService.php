@@ -77,8 +77,7 @@ class UserService
     {
         $sql = 'id=?';
         $where['id'] = $id;
-        $users = $this->usersRepository->searchOne($sql, $where);
-        return $users->toArray();
+        return $this->usersRepository->searchOne($sql, $where);
     }
 
     /**

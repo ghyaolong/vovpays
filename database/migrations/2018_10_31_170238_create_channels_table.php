@@ -26,7 +26,7 @@ class CreateChannelsTable extends Migration
             $table->decimal('runRate',9,6)->default(0)->comment('运营费率');
             $table->decimal('costRate',9,6)->default(0)->comment('成本费率');
             $table->string('refererDomain',20)->nullable()->comment('防封域名');
-            $table->unsignedTinyInteger('status')->default(0)->comment('状态:0禁用，1启用');
+            $table->unsignedTinyInteger('status')->default(0)->comment('状态:0禁用，1启用，2删除');
             $table->unsignedTinyInteger('planType')->default(0)->comment('结算方式：0：T+0，1：T+1');
             $table->unsignedInteger('channelQuota')->default(0)->comment('通道限额：0不限额');
             $table->decimal('tradeAmount')->default(0)->comment('交易成功金额');

@@ -21,7 +21,6 @@ class CreateUserRatesTable extends Migration
             $table->unsignedInteger('channel_payment_id')->comment('支付id');
             $table->decimal('rate',9,6)->default(0)->comment('商户费率：为0时走通道运营费率');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态：0禁用。1启用');
-            $table->timestamps();
         });
         DB::statement("ALTER TABLE `pay_user_rates` comment '商户费率表'");
     }
