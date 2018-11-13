@@ -43,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapAgentRoutes();
 
+        $this->mapUserRoutes();
+
         //
     }
 
@@ -89,5 +91,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('web')
             ->namespace('App\Http\Admin\Controllers')
             ->group(base_path('routes/admin.php'));
+    }
+
+    protected function mapUserRoutes()
+    {
+        Route::prefix('user')
+            ->middleware('web')
+            ->namespace('App\Http\User\Controllers')
+            ->group(base_path('routes/user.php'));
     }
 }
