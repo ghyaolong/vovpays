@@ -67,12 +67,13 @@ class ChannelPaymentsService
 
     /**
      * 获取所有不带分页
+     * @param string $sql
+     * @param array $where
      * @return mixed
      */
-    public function getAll()
+    public function getAll( string $sql = '', array $where = [])
     {
-        $sql   = ' status <> 2 ';
-        $where = [];
+        $sql   = ' status <> 2 '.$sql;
         return $this->channelPaymentsRepository->searchAll($sql, $where);
     }
 

@@ -68,6 +68,7 @@
                                 <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif >
                             </td>
                             <td>
+                                <a href="{{ route('users.channel', array('id'=>$v['id'])) }}" class="btn btn-success btn-sm">通道设置</a>
                                 <button type="button" class="btn btn-primary btn-sm" onclick="edit('会员编辑',{{ $v['id'] }})">编辑</button>
                                 <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>
                             </td>
@@ -169,6 +170,7 @@
         </div>
     </div>
 </div>
+
 @endsection('content')
 @section("scripts")
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
@@ -381,7 +383,7 @@
          */
         function showModel(title)
         {
-            $('.modal-title').html(title);
+            $('#addModel .modal-title').html(title);
             $('#addModel').modal('show');
         }
 

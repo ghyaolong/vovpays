@@ -44,7 +44,7 @@ class ChannelService
      */
     public function getAllPage(int $page)
     {
-        $sql   = '1=1';
+        $sql   = 'status <> 2';
         $where = [];
 
         return $this->channelsRepository->searchPage($sql, $where, $page);
@@ -69,8 +69,8 @@ class ChannelService
      */
     public function getAll()
     {
-        $sql   = ' status <> 5 ';
-        $where = [];
+        $sql   = ' status <> ? ';
+        $where['status'] = 2;
         return $this->channelsRepository->search($sql, $where);
     }
 
