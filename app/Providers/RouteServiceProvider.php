@@ -43,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapAgentRoutes();
 
+        $this->mapPayRoutes();
+
         //
     }
 
@@ -89,5 +91,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('web')
             ->namespace('App\Http\Admin\Controllers')
             ->group(base_path('routes/admin.php'));
+    }
+
+    protected function mapPayRoutes()
+    {
+        Route::prefix('pay')
+            ->middleware('web')
+            ->namespace('App\Http\Pay\Controllers')
+            ->group(base_path('routes/pay.php'));
     }
 }
