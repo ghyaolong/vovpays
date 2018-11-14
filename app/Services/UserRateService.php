@@ -57,9 +57,9 @@ class UserRateService
             // 获取代理开启的支付产品
             $sql = 'user_id=?';
             $where['user_id'] = $user->parentId;
-            $user_rate_list = $this->userRateRepository->search($sql, $where);
+            $agent_rate_list = $this->userRateRepository->search($sql, $where);
             // 以支付方式id为key 转为数组
-            $user_rate_array = $user_rate_list->keyBy('channel_payment_id')->toArray();
+            $agent_rate_array = $agent_rate_list->keyBy('channel_payment_id')->toArray();
 
             // 获取所有已启用支付方式
             $sql = ' and status=?';
@@ -67,17 +67,31 @@ class UserRateService
             $channelPayment_list = $this->channelPaymentsService->getAll($sql,$channelWhere);
             $channelPayment_array = $channelPayment_list->keyBy('id')->toArray();
 
+            // unset 代理不存在的支付方式
             foreach ($channelPayment_array as $key=>$item)
             {
-                if( !isset($user_rate_array[$key]))
+                if( !isset($agent_rate_array[$key]))
                 {
                     unset($channelPayment_array[$key]);
                 }else{
-                    $channelPayment_array[$key]['status'] = @$user_rate_array[$key]['status'] ?: 0 ;
-                    $channelPayment_array[$key]['rate'] = @floatval($user_rate_array[$key]['rate']) ?: 0 ;
+                    $channelPayment_array[$key]['status'] = @$agent_rate_array[$key]['status'] ?: 0 ;
+                    $channelPayment_array[$key]['rate'] = @floatval($agent_rate_array[$key]['rate']) ?: 0 ;
                 }
             }
 
+            // 获取用户自身存在的支付方式
+            $sql = 'user_id=?';
+            $where['user_id'] = $user_id;
+            $user_rate_list = $this->userRateRepository->search($sql, $where);
+            // 以支付方式id为key 转为数组
+            $user_rate_array = $user_rate_list->keyBy('channel_payment_id')->toArray();
+
+            // 替换值为商户的值
+            foreach ($channelPayment_array as $key=>$value)
+            {
+                $channelPayment_array[$key]['status'] = @$user_rate_array[$key]['status'] ?: 0 ;
+                $channelPayment_array[$key]['rate'] = @floatval($user_rate_array[$key]['rate']) ?: 0 ;
+            }
         }
         return $channelPayment_array;
     }
@@ -163,18 +177,17 @@ class UserRateService
             $sql = 'user_id = ? and channel_payment_id = ? ';
             $where['user_id'] = $user->parentId;
             $where['channel_payment_id'] = $pay_id;
-            $agentRate = $this->userRateRepository->search($sql, $where);
+            $agentRate = $this->userRateRepository->searchOne($sql, $where);
             if(!$agentRate)
             {
                 throw new CustomServiceException('该用户的上级代理未开通该支付产品！');
             }
 
-            if( $rate != 0 && $rate < $agentRate['rate'] )
+            if( $rate != 0 && $rate < $agentRate->rate )
             {
                 throw new CustomServiceException('会员费率不能小于上级代理的费率');
             }
         }
-
 
         $sql2 = 'user_id = ? and channel_payment_id = ?';
         $where2['user_id'] = $user_id;
