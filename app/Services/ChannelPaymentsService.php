@@ -96,6 +96,6 @@ class ChannelPaymentsService
      */
     public function destroy(int $id)
     {
-        return $this->channelsRepository->update($id,['status'=>2]);
+        return $this->channelPaymentsRepository->del($id);
     }
 }
