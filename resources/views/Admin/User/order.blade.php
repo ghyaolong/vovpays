@@ -4,62 +4,6 @@
     <table class="table">
         <tr>
             <td>
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <form class="navbar-form navbar-left" action="">
-                                {{--{{ csrf_field() }}--}}
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="pay_memberid" placeholder="请输入商户号">
-                                </div>&nbsp;&nbsp;
-
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="pay_orderid" placeholder="请输入商户订单号">
-                                </div>&nbsp;&nbsp;
-
-                                <div class="form-group">
-                                    <input type="date" class="form-control" name="pay_applydate" placeholder="创建起始时间">
-                                </div>
-                                --
-                                <div class="form-group">
-                                    <input type="date" class="form-control" name="pay_applydate1" placeholder="创建起始时间">
-                                </div>&nbsp;&nbsp;
-
-                                <div class="form-group">
-                                    <select name="pay_bankname" id="" class="form-control">
-                                        <option value="">全部银行</option>
-                                        {{--<option value="中国银行">中国银行</option>--}}
-                                        {{--<option value="农业银行">农业银行</option>--}}
-                                        {{--<option value="工商银行">工商银行</option>--}}
-                                        {{--<option value="建设银行">建设银行</option>--}}
-                                        {{--<option value="招商银行">招商银行</option>--}}
-                                        {{--<option value="支付宝H5">支付宝H5</option>--}}
-                                    </select>
-                                </div>&nbsp;&nbsp;
-
-                                <div class="form-group">
-                                    <select name="pay_zh_tongdao" id="" class="form-control">
-                                        <option value="">全部通道</option>
-                                        <option value="同心支付">同心支付</option>
-                                        <option value="中天e支付">中天e支付</option>
-                                    </select>
-                                </div>&nbsp;&nbsp;
-
-                                <div class="form-group">
-                                    <select name="queryed" id="" class="form-control">
-                                        <option value="">全部状态</option>
-                                        <option value="1">成功</option>
-                                        <option value="0">未处理</option>
-                                    </select>
-                                </div>&nbsp;&nbsp;
-                                <button type="submit" class="btn btn-info glyphicon glyphicon-search ">搜索</button>&nbsp;&nbsp;
-                                <button type="submit" class="btn btn-danger glyphicon glyphicon-export ">导出数据</button>
-                            </form>
-
-                        </div><!-- /.navbar-collapse -->
-                    </div><!-- /.container-fluid -->
-                </nav>
             </td>
         </tr>
 
@@ -82,6 +26,61 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body">
+                        <div class="container-fluid">
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <form class="navbar-form navbar-left" action="">
+                                    {{--{{ csrf_field() }}--}}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="pay_memberid" placeholder="请输入商户号">
+                                    </div>&nbsp;&nbsp;
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="pay_orderid" placeholder="请输入商户订单号">
+                                    </div>&nbsp;&nbsp;
+
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" name="pay_applydate" placeholder="创建起始时间">
+                                    </div>
+                                    --
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" name="pay_applydate1" placeholder="创建起始时间">
+                                    </div>&nbsp;&nbsp;
+
+                                    <div class="form-group">
+                                        <select name="pay_bankname" id="" class="form-control">
+                                            <option value="">全部银行</option>
+                                            {{--<option value="中国银行">中国银行</option>--}}
+                                            {{--<option value="农业银行">农业银行</option>--}}
+                                            {{--<option value="工商银行">工商银行</option>--}}
+                                            {{--<option value="建设银行">建设银行</option>--}}
+                                            {{--<option value="招商银行">招商银行</option>--}}
+                                            {{--<option value="支付宝H5">支付宝H5</option>--}}
+                                        </select>
+                                    </div>&nbsp;&nbsp;
+
+                                    <div class="form-group">
+                                        <select name="pay_zh_tongdao" id="" class="form-control">
+                                            <option value="">全部通道</option>
+                                            <option value="同心支付">同心支付</option>
+                                            <option value="中天e支付">中天e支付</option>
+                                        </select>
+                                    </div>&nbsp;&nbsp;
+
+                                    <div class="form-group">
+                                        <select name="queryed" id="" class="form-control">
+                                            <option value="">全部状态</option>
+                                            <option value="1">成功</option>
+                                            <option value="0">未处理</option>
+                                        </select>
+                                    </div>&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-info glyphicon glyphicon-search ">搜索</button>&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-danger glyphicon glyphicon-export ">导出数据</button>
+                                </form>
+
+                            </div><!-- /.navbar-collapse -->
+                        </div><!-- /.container-fluid -->
+                        <br>
                         <table id="example2" class="table table-condensed table-bordered table-hover">
                             {{--<tr style="background:#dddddd;color: #777777">--}}
                             <tr>

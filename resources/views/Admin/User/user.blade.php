@@ -7,43 +7,6 @@
     <table id="example2" class="table table-condensed">
         <tr>
             <th>
-                <div class="container-fluid">
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="background: #ffffff">
-                        <form class="navbar-form navbar-left" action="">
-                            {{--{{ csrf_field() }}--}}
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="pay_memberid" placeholder="商户号">
-                            </div>&nbsp;&nbsp;
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="pay_orderid" placeholder="用户名">
-                            </div>&nbsp;&nbsp;
-
-                            <div class="form-group">
-                                <select name="pay_zh_tongdao" id="" class="form-control">
-                                    <option value="">状态</option>
-                                    <option value="">已激活</option>
-                                    <option value="">未激活</option>
-                                    <option value="">禁用</option>
-                                </select>
-                            </div>&nbsp;&nbsp;
-
-                            <div class="form-group">
-                                <select name="queryed" id="" class="form-control">
-                                    <option value="">认证</option>
-                                    <option value="1">未认证</option>
-                                    <option value="0">等待审核</option>
-                                    <option value="0">认证用户</option>
-                                </select>
-                            </div>&nbsp;&nbsp;
-                            <button type="submit" class="btn btn-info glyphicon glyphicon-search ">搜索</button>&nbsp;&nbsp;
-                            <button type="submit" class="btn btn-danger glyphicon glyphicon-export ">导出数据</button>
-                        </form>
-
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-
             </th>
         </tr>
     </table>
@@ -54,6 +17,44 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body">
+
+                        <div class="container-fluid">
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
+                                 style="background: #ffffff">
+                                <form class="navbar-form navbar-left" action="{{route('user.user')}}" method="post">
+                                    {{ csrf_field() }}
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="merchant" placeholder="商户号">
+                                    </div>&nbsp;&nbsp;
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="username" placeholder="用户名">
+                                    </div>&nbsp;&nbsp;
+
+                                    <div class="form-group">
+                                        <select name="status" id="" class="form-control">
+                                            <option value="">状态</option>
+                                            <option value="1">正常</option>
+                                            <option value="0">禁用</option>
+                                            <option value="2">已删除</option>
+                                        </select>
+                                    </div>&nbsp;&nbsp;
+
+                                    <div class="form-group">
+                                        <select name="queryed" id="" class="form-control">
+                                            <option value="1">商户</option>
+                                            <option value="0">代理商</option>
+                                        </select>
+                                    </div>&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-info glyphicon glyphicon-search ">搜索</button>&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-danger glyphicon glyphicon-export ">导出数据
+                                    </button>
+                                </form>
+
+                            </div><!-- /.navbar-collapse -->
+                        </div><!-- /.container-fluid -->
+                        <br>
                         <table id="example2" class="table table-condensed table-bordered table-hover">
                             <thead>
                             <tr>
@@ -70,40 +71,41 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>9</td>
-                                {{--<td><a href="{{ route('user') }}" target="_blank">10009</a></td>--}}
-                                <td><a href="" target="_blank">10009</a></td>
-                                <td>zhpay</td>
-                                <td>普通商户</td>
-                                <td>总管理员</td>
-                                <td>
-                                    {{--<input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['is_check'] == 1) checked @endif >--}}
-                                    <input class="switch-state" name="status" data-id="1" type="checkbox" @if(1) checked @endif >
-                                </td>
-                                <td>
-                                    <span class="label label-success">已认证</span>
-                                </td>
-                                <td>
-                                    可提现：1000 冻结：0.4
-                                </td>
-                                <td>2018-10-17</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-primary btn-sm" onclick="withdrawal('提现设置','#')">提现
-                                        </button>
-                                        <button class="btn btn-primary btn-sm" onclick="editTd('编辑通道','#',800)">通道
-                                        </button>
-                                        <button class="btn btn-primary btn-sm" onclick="rate('编辑费率')">费率</button>
-                                        <button class="btn btn-primary btn-sm" onclick="editPwd('编辑密码')">密码</button>
-                                        <button class="btn btn-primary btn-sm" onclick="edit('编辑')">编辑</button>
-                                        <button class="btn btn-primary btn-sm" onclick="del($(this),9)">删除</button>
-
-                                    </div>
-                                </td>
-                            </tr>
+                            @foreach($users as $user)
+                                <tr>
+                                    <td>{{$user->id}}</td>
+                                    <td><a href="" target="_blank">{{$user->merchant}}</a></td>
+                                    <td>{{$user->username}}</td>
+                                    <td>普通商户</td>
+                                    <td>总管理员</td>
+                                    <td>
+                                        <input class="switch-state" name="status" data-id="1" type="checkbox"
+                                               @if($user->status==1) checked @endif >
+                                    </td>
+                                    <td>
+                                        <span class="label label-success">已认证</span>
+                                    </td>
+                                    <td>
+                                        可提现：1000 冻结：0.4
+                                    </td>
+                                    <td>{{$user->created_at}}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm" onclick="withdrawal('提现设置','#')">提现
+                                            </button>
+                                            <button class="btn btn-primary btn-sm" onclick="editTd('编辑通道','#',800)">通道
+                                            </button>
+                                            <button class="btn btn-primary btn-sm" onclick="rate('编辑费率')">费率</button>
+                                            <button class="btn btn-primary btn-sm" onclick="editPwd('编辑密码')">密码</button>
+                                            <button class="btn btn-primary btn-sm" onclick="edit('编辑',{{$user->id}})">编辑</button>
+                                            <button class="btn btn-primary btn-sm" onclick="del($(this),{{$user->id}})">删除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
+                        {{$users->appends($data)->links()}}
                     </div>
                 </div>
             </div>
@@ -126,7 +128,8 @@
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">姓名</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-inline" name="username" placeholder="姓名" style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-inline" name="username" placeholder="姓名"
+                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -143,7 +146,8 @@
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">身份证号</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="rule" placeholder="身份证号" style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-control" name="rule" placeholder="身份证号"
+                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -155,31 +159,37 @@
                                         <option value=""></option>
                                         <option value=""></option>
                                     </select>
-                                    <input type="text" class="form-inline" name="icon" placeholder="银行卡号" style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-inline" name="icon" placeholder="银行卡号"
+                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">出生日期</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" value="0" name="sort" placeholder="1970-01-01" style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-control" value="0" name="sort"
+                                           placeholder="1970-01-01"
+                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">手机号码</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="手机号码" style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-control" name="phone" placeholder="手机号码"
+                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">联系QQ</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="联系QQ" style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-control" name="phone" placeholder="联系QQ"
+                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">Email</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="Email" style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-control" name="phone" placeholder="Email"
+                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -207,7 +217,8 @@
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">联系地址</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="联系地址" style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-control" name="phone" placeholder="联系地址"
+                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -435,7 +446,7 @@
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
     <script>
         $(function () {
-            formValidator();
+            // formValidator();
 
             // 状态修改
             $('.switch-state').bootstrapSwitch({
