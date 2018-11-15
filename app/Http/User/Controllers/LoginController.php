@@ -102,6 +102,4 @@ class LoginController extends Controller
             return ajaxSuccess('系统繁忙，请稍后重试！');
         }
     }
-
-
 }
