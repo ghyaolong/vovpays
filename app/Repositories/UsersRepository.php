@@ -50,6 +50,11 @@ class UsersRepository
         return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->get();
     }
 
+    public function findId(int $id)
+    {
+        return $this->user->whereId($id)->first();
+    }
+
     /**
      * 查询一条
      * @param string $sql
