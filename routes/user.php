@@ -9,6 +9,21 @@
 
 //Auth::routes();
 Route::group([], function ($router) {
+    Route::get('login','LoginController@show')->name('user.login');
+    Route::post('login','LoginController@login')->name('user.login');
+    Route::get('registerShow','LoginController@registerShow')->name('user.registerShow');
+    Route::post('register','LoginController@register')->name('user.register');
+    Route::get('dropout', 'LoginController@destroy')->name('user.dropout');
+
+    Route::group(['middleware' => 'auth:user'], function () {
+        Route::get('/', 'HomeController@index')->name('user');
+        Route::get('user', 'HomeController@user')->name('user.user');
+        Route::get('settlement','HomeController@settlement')->name('user.settlement');
+        Route::get('bank','HomeController@bank')->name('user.bank');
+        Route::get('order','OrderController@show')->name('user.order');
+        Route::get('record','OrderController@show')->name('user.record');
+    });
+
 //    $router->get('login', 'LoginController@showLoginForm')->name('login');
 //    $router->post('login', 'LoginController@login');
 //    $router->post('logout', 'LoginController@logout')->name('logout');
