@@ -70,14 +70,24 @@ class UserService
 
     /**
      * 根据id获取
-     * @param string $id
+     * @param int $id
      * @return array
      */
-    public function findId(string $id)
+    public function findId(int $id)
     {
-        $sql = 'id=?';
-        $where['id'] = $id;
-        return $this->usersRepository->searchOne($sql, $where);
+        return $this->usersRepository->findId($id);
+    }
+
+    /**
+     * 根据商户号获取
+     * @param string $merchant
+     * @return array
+     */
+    public function findMerchant(string $merchant)
+    {
+        $sql = 'merchant = ?';
+        $where['merchant'] = $merchant;
+        return $this->usersRepository->searchOne($sql,$where);
     }
 
     /**
