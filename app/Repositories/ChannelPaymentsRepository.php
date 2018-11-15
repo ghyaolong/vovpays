@@ -36,6 +36,17 @@ class ChannelPaymentsRepository
     }
 
     /**
+     * 查询单条
+     * @param string $sql
+     * @param array $where
+     * @return mixed
+     */
+    public function searchOne(string $sql, array $where)
+    {
+        return $this->channel_payment->whereRaw($sql, $where)->first();
+    }
+
+    /**
      * 添加
      * @param array $data
      * @return mixed
