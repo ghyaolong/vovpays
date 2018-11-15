@@ -30,11 +30,11 @@ class HomeController extends Controller
     }
 
     //用户列表展示
-    public function user()
+    public function user(Request $request)
     {
-//        $users = $this->userService->getAll(1);
-//        var_dump($users);exit;
-        return view('admin.user.user',compact('users'));
+        $data = $request->input();
+        $users = $this->userService->searchPage($data, 10);
+        return view('admin.user.user', compact('users', 'data'));
     }
 
     //提现页面

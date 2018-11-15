@@ -17,7 +17,7 @@ Route::group([], function ($router) {
 
     Route::group(['middleware' => 'auth:user'], function () {
         Route::get('/', 'HomeController@index')->name('user');
-        Route::get('user', 'HomeController@user')->name('user.user');
+        Route::any('user', 'HomeController@user')->name('user.user');
         Route::get('settlement','HomeController@settlement')->name('user.settlement');
         Route::get('bank','HomeController@bank')->name('user.bank');
         Route::get('order','OrderController@show')->name('user.order');
