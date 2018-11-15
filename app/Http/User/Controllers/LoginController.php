@@ -64,6 +64,7 @@ class LoginController extends Controller
         ]);
 
         $check_data = $request->only('username','password');
+//        var_dump($check_data);exit;
         $result = $this->loginLogoutService->Login('user',$check_data);
         if($result)
         {
