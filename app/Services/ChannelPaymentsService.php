@@ -57,7 +57,7 @@ class ChannelPaymentsService
      */
     public function findPaymentCode(string $code)
     {
-        $sql   = 'paymentCode=?';
+        $sql   = 'paymentCode=? and status=1';
         $where['paymentCode'] = $code;
         return $this->channelPaymentsRepository->searchOne($sql, $where);
     }
