@@ -33,7 +33,7 @@
                                     </div>&nbsp;&nbsp;
 
                                     <div class="form-group">
-                                        <select name="status" id="" class="form-control">
+                                        <select name="status" id="status" class="form-control">
                                             <option value="">状态</option>
                                             <option value="1">正常</option>
                                             <option value="0">禁用</option>
@@ -58,7 +58,6 @@
                         <table id="example2" class="table table-condensed table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>#</th>
                                 <th>商户号</th>
                                 <th>用户名</th>
                                 <th>用户类型</th>
@@ -73,13 +72,12 @@
                             <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <td>{{$user->id}}</td>
                                     <td><a href="" target="_blank">{{$user->merchant}}</a></td>
                                     <td>{{$user->username}}</td>
                                     <td>普通商户</td>
                                     <td>总管理员</td>
                                     <td>
-                                        <input class="switch-state" name="status" data-id="1" type="checkbox"
+                                        <input class="switch-state" name="status" data-id="{{$user->id}}" type="checkbox"
                                                @if($user->status==1) checked @endif >
                                     </td>
                                     <td>
@@ -114,111 +112,79 @@
 
     {{--编辑模态--}}
     <section>
-        <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="static">
+        <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog" style="margin-top: 123px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title"></h4>
                     </div>
                     <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="" class="form-horizontal" role="form">
+                        <form id="usersForm" action="{{ route('users.store') }}" class="form-horizontal" role="form">
                             <input type="hidden" name="id">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">姓名</label>
+                                <label for="" class="col-xs-3 control-label">用户名</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-inline" name="username" placeholder="姓名"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">性别</label>
+                                <label for="" class="col-xs-3 control-label">密码</label>
                                 <div class="col-xs-9">
-                                    <select name="sex" class="form-control" id="exampleInputAmount"
-                                            style="width: 150px">
-                                        <option value="">请选择</option>
-                                        <option value="">男</option>
-                                        <option value="">女</option>
+                                    <input type="password" class="form-control" name="password" placeholder="密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">确认密码</label>
+                                <div class="col-xs-9">
+                                    <input type="password" class="form-control" name="password_confirmation" placeholder="确认密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">邮箱</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" name="email" placeholder="邮箱">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">电话</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" name="phone" placeholder="电话">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-xs-3 control-label">用户组</label>
+                                <div class="col-xs-9">
+
+                                    <select class="form-control" name="groupType">
+                                        <option value="1">商户</option>
+                                        <option value="2">代理商</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">身份证号</label>
+                                <label for="" class="col-xs-3 control-label">上级代理</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="rule" placeholder="身份证号"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">银行卡号</label>
-                                <div class="col-xs-9">
-                                    <select name="bank" class="form-inline" id="exampleInputAmount"
-                                            style="width: 150px">
-                                        <option value="">请选择开户行</option>
-                                        <option value=""></option>
-                                        <option value=""></option>
+                                    <select class="form-control selectpicker" name="parentId">
+                                        <option value="0">无</option>
+                                        @foreach($agent_list as $v)
+                                            <option value="{{ $v['id'] }}">{{ $v['username'] }}</option>
+                                        @endforeach
                                     </select>
-                                    <input type="text" class="form-inline" name="icon" placeholder="银行卡号"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
+                                    <span class="help-block" style="color: #FF0000; font-size: 12px;">
+                                <i class="fa fa-info-circle"></i>用户组为代理商，上级代理选着无
+                            </span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">出生日期</label>
+                                <label for="" class="col-xs-3 control-label">状态</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" value="0" name="sort"
-                                           placeholder="1970-01-01"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">手机号码</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="手机号码"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">联系QQ</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="联系QQ"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">Email</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="Email"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">用户级别:</label>
-                                <div class="col-xs-9">
-                                    <select name="sex" class="form-control" id="exampleInputAmount"
-                                            style="width: 150px">
-                                        <option value="">请选择</option>
-                                        <option value=""></option>
-                                        <option value=""></option>
+
+                                    <select class="form-control" name="status">
+                                        <option value="1">启用</option>
+                                        <option value="0">禁用</option>
+                                        <option value="2">删除</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">所属代理商</label>
-                                <div class="col-xs-9">
-                                    <select name="sex" class="form-control" id="exampleInputAmount"
-                                            style="width: 150px">
-                                        <option value="">请选择</option>
-                                        <option value=""></option>
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">联系地址</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="联系地址"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -459,7 +425,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/admin/rules/saveCheck',
+                        url: '/admin/users/saveStatus',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -494,9 +460,40 @@
         /**
          * 显示模态框
          */
-        function edit(title) {
-            $('.modal-title').html(title);
-            $('#editModel').modal('show');
+        // function edit(title) {
+        //     $('.modal-title').html(title);
+        //     $('#editModel').modal('show');
+        // }
+
+        function edit(title, id)
+        {
+            $.ajax({
+                type: 'get',
+                url: '/admin/users/'+id+'/edit',
+                dataType:'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(result){
+                    if(result.status == 1)
+                    {
+                        $("#username").val(result.data['username']);
+                        $("input[name='phone']").val(result.data['phone']);
+                        $("input[name='email']").val(result.data['email']);
+                        $("select[name='status']").val(result.data['status']);
+                        $("select[name='groupType']").val(result.data['group_type']);
+                        $("select[name='parentId']").val(result.data['parentId']);
+                        $("input[name='id']").val(result.data['id']);
+                        $("input[name='password']").val(result.data['password']);
+                        $("input[name='password_confirmation']").val(result.data['password']);
+                        $('.modal-title').html(title);
+                        $('#addModel').modal('show');
+                    }
+                },
+                error:function(XMLHttpRequest,textStatus){
+                    toastr.error('通信失败');
+                }
+            })
         }
 
         function editPwd(title) {
@@ -549,7 +546,7 @@
         }
 
 
-        function del(_this, id) {
+        function del(_this,id){
             swal({
                 title: "您确定要删除吗？",
                 text: "删除后不能恢复！",
@@ -557,24 +554,26 @@
                 showCancelButton: true,
                 closeOnConfirm: false,
                 showLoaderOnConfirm: true,
-            }, function () {
+            }, function(){
                 $.ajax({
                     type: 'delete',
-                    url: '/admin/rules',
-                    data: {'id': id},
-                    dataType: 'json',
+                    url: '/user/users',
+                    data:{'id':id},
+                    dataType:'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function (result) {
-                        if (result.status) {
-                            swal(result.msg, "菜单已被删除。", "success")
-                        } else {
-                            swal(result.msg, "菜单没有被删除。", "error")
+                    success:function(result){
+                        if(result.status)
+                        {
+                            _this.parents('tr').empty();
+                            swal(result.msg, "会员已被删除。","success")
+                        }else{
+                            swal(result.msg, "会员没有被删除。","error")
                         }
 
                     },
-                    error: function (XMLHttpRequest, textStatus) {
+                    error:function(XMLHttpRequest,textStatus){
                         toastr.error('通信失败');
                     }
                 })
