@@ -4,23 +4,25 @@ namespace App\Common;
 
 class RespCode
 {
-    const SUCCESS = ['respCode'=>'200', 'msg'=>'请求成功'];
+
+    const DECRYPT_FAILED = ['respCode'=>'502', 'msg'=>'数据解密失败'];
+    const CHECK_SIGN_FAILED = ['respCode'=>'503', 'msg'=>'数据验签失败'];
+    const PARAMETER_ERROR = ['respCode'=>'400', 'msg'=>'缺少必填参数'];
+    const MERCHANT_NOT_EXIST = ['respCode'=>'10002', 'msg'=>'商户信息不存在'];
+    const TRADE_BIZ_NOT_OPEN = ['respCode'=>'20002', 'msg'=>'支付方式不存在或未开通'];
+    const CHANNEL_NOT_EXIST = ['respCode'=>'20001', 'msg'=>'交易通道不存在或未开通'];
+    const MCH_BIZ_NOT_OPEN = ['respCode'=>'10003', 'msg'=>'商户业务未开通'];
     const RESOURCE_NOT_FOUND = ['404', 'msg'=>'资源未找到'];
+
+
+    const SUCCESS = ['respCode'=>'200', 'msg'=>'请求成功'];
     const FAILED = ['respCode'=>'500', 'msg'=>'处理失败'];
     const WARN = ['respCode'=>'-1', 'msg'=>'网络异常，请稍后重试'];
     const PARAS_ERR = ['respCode'=>'-1', 'msg'=>'参数错误'];
-    const PARAMETER_ERROR = ['respCode'=>'400', 'msg'=>'缺少必填参数'];
     const UNAUTHORIZED = ['respCode'=>'401', 'msg'=>'未授权的访问'];
-    const ANALYSIS_FAILED = ['respCode'=>'502', 'msg'=>'数据解析失败'];
-    const DECRYPT_FAILED = ['respCode'=>'502', 'msg'=>'数据解密失败'];
-    const CHECK_SIGN_FAILED = ['respCode'=>'503', 'msg'=>'数据验签失败'];
     const MERCHANT_ALREADY_EXIST = ['respCode'=>'10001', 'msg'=>'商户信息已存在'];
-    const MERCHANT_NOT_EXIST = ['respCode'=>'10002', 'msg'=>'商户信息不存在'];
-    const MCH_BIZ_NOT_OPEN = ['respCode'=>'10003', 'msg'=>'商户业务未开通'];
     const MCH_WAIT_EXAMINE = ['respCode'=>'10004', 'msg'=>'商户业务审核中'];
     const ORGRATE_NOT_EXIST = ['respCode'=>'10005', 'msg'=>'代理费率信息不存在'];
-    const CHANNEL_NOT_EXIST = ['respCode'=>'20001', 'msg'=>'交易通道不存在或未开通'];
-    const TRADE_BIZ_NOT_OPEN = ['respCode'=>'20002', 'msg'=>'支付方式不存在或未开通'];
     const TRADE_ORDER_EXIST = ['respCode'=>'20003', 'msg'=>'交易订单号重复'];
     const TRADE_ORDER_NOT_EXIST = ['respCode'=>'20004', 'msg'=>'交易订单不存在'];
     const TRADE_ORDER_STATUS_EX = ['respCode'=>'20005', 'msg'=>'交易订单状态异常'];
