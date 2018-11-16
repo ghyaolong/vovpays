@@ -8,12 +8,12 @@ use App\Services\UserRateService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Common\RespCode;
-use App\Services\Tool\AesService;
+use App\Tool\AES;
 
 class PayController extends Controller
 {
 
-    protected $aesService;
+    protected $AES;
     protected $userService;
     protected $channelPaymentsService;
     protected $channelService;
@@ -21,12 +21,12 @@ class PayController extends Controller
     protected $return_type; // 返回类型true:json，false:页面
     protected $content;     // 解密后的数据
 
-    public function __construct(AESService $aesService, UserService $userService,
+    public function __construct(AES $AES, UserService $userService,
                                 ChannelPaymentsService $channelPaymentsService, ChannelService $channelService,
                                 UserRateService $userRateService)
     {
         parent::__construct();
-        $this->aesService = $aesService;
+        $this->AES = $AES;
         $this->userService = $userService;
         $this->channelPaymentsService = $channelPaymentsService;
         $this->channelService = $channelService;
@@ -48,7 +48,7 @@ class PayController extends Controller
 
         // 测试串：R4YuWygi/yWivAtmCwrsyDOMteNxbls4OHQ3/h+xjOAn9DPnC4PUvlf7PCy0HpHomyrKHrk0cnAjp0MZRvzAh5SLBZxIo7Y3/Y+Aq7xryjOgpumPoducA95mZqf9UXTlRDj0DQTpjUFv3NFM3p0d7Q9wZmmVbuVYV4BdgF4g9IS0CA4NjY1ph0VHpoOb2dCnxj/3T06x/JcqMQzRzExIg69tqXsnpUgE8SM7wY2PMvheCd8tPVuV4bDYtWbNrgtCOVAdpYj6JQgl84CT480y+aad5o9CsdyVPrrf/hFPHVA=
         // AES数据解密
-        $sign_str = $this->aesService->decrypt($request->cipherData,env('AES_KEY'));
+        $sign_str = $this->AES->decrypt($request->cipherData,env('AES_KEY'));
         if(!$sign_str)
         {
             return json_encode(RespCode::DECRYPT_FAILED);
