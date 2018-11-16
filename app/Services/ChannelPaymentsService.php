@@ -47,8 +47,19 @@ class ChannelPaymentsService
     {
         $sql   = '1=1';
         $where = [];
-
         return $this->channelPaymentsRepository->searchPage($sql, $where, $page);
+    }
+
+    /**
+     * 根据编码
+     * @param string $code
+     * @return mixed
+     */
+    public function findPaymentCode(string $code)
+    {
+        $sql   = 'paymentCode=? and status=1';
+        $where['paymentCode'] = $code;
+        return $this->channelPaymentsRepository->searchOne($sql, $where);
     }
 
     /**
