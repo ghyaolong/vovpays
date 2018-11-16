@@ -37,6 +37,14 @@ class ChannelService
         return $channels->toArray();
     }
 
+
+    public function findIdStatus(int $id)
+    {
+        $sql = 'id=? and status=1';
+        $where['id'] = $id;
+        return $this->channelsRepository->searchOne($sql,$where);
+    }
+
     /**
      *
      * @param int $page
