@@ -18,6 +18,8 @@ Route::group([], function ($router) {
     Route::group(['middleware' => 'auth:user'], function () {
         Route::get('/', 'HomeController@index')->name('user');
         Route::any('user', 'HomeController@user')->name('user.user');
+        Route::post('editPassword', 'HomeController@editPassword')->name('user.editPassword');
+        Route::delete('users','HomeController@destroy')->name('user.destroy');
         Route::get('settlement','HomeController@settlement')->name('user.settlement');
         Route::get('bank','HomeController@bank')->name('user.bank');
         Route::get('order','OrderController@show')->name('user.order');

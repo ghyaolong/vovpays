@@ -33,8 +33,14 @@ class HomeController extends Controller
     public function user(Request $request)
     {
         $data = $request->input();
-        $users = $this->userService->searchPage($data, 10);
-        return view('admin.user.user', compact('users', 'data'));
+        if (count($data)) {
+            $users = $this->userService->searchPage($data, 10);
+        } else {
+            $users = $this->userService->getAllGroupPage(1, 10);
+        }
+
+        $agent_list = $this->userService->getGroupAll(2);
+        return view('Admin.User.user', compact('users', 'data', 'agent_list'));
     }
 
     //提现页面
@@ -47,5 +53,22 @@ class HomeController extends Controller
     public function bank()
     {
         return view('admin.user.bank');
+    }
+    //删除
+    public function destroy(Request $request)
+    {
+        $result = $this->userService->destroy($request->id);
+        if ($result) {
+            return ajaxSuccess('删除成功！');
+        } else {
+            return ajaxError('删除失败！');
+        }
+    }
+
+    //修改密码
+    public function editPassword(Request $request)
+    {
+        var_dump($request->input());
+        exit;
     }
 }

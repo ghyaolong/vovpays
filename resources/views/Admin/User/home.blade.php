@@ -29,7 +29,7 @@
                                         <label class="col-sm-4 control-label">登录名</label>
                                         <div class="col-sm-8">
                                             <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-{{--                                                {{$member->username}}--}}
+                                                {{Auth::user()->username}}
                                             </label>
                                         </div>
                                     </div>
@@ -37,7 +37,7 @@
                                         <label class="col-sm-4 control-label">商户ID</label>
                                         <div class="col-sm-8">
                                             <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-{{--                                                {{$member->id}}--}}
+                                                {{Auth::user()->merchant}}
                                             </label>
                                         </div>
                                     </div>
@@ -45,7 +45,7 @@
                                         <label class="col-sm-4 control-label">APIKEY</label>
                                         <div class="col-sm-8">
                                             <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-{{--                                                {{$member->apikey}}--}}
+                                                {{Auth::user()->apiKey}}
                                             </label>
                                         </div>
                                     </div>
@@ -69,7 +69,6 @@
                                         <label class="col-sm-4 control-label">登陆时间</label>
                                         <div class="col-sm-8">
                                             <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-{{--                                                {{$member->time}}--}}
                                             </label>
                                         </div>
                                     </div>
