@@ -51,7 +51,7 @@
             <li>
                 <a href="{{ route('channelPayments.index') }}">
                     <i class="fa fa-credit-card"></i>
-                    <span>支付方式管理</span>
+                    <span>支付方式</span>
                 </a>
             </li>
             <li>
