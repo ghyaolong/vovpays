@@ -17,7 +17,7 @@ class BankCardService
 
     public function __construct(BankCardRepository $bankCardRepository)
     {
-        $this->bankCardRepository=$bankCardRepository;
+        $this->bankCardRepository = $bankCardRepository;
     }
 
     /**
@@ -29,5 +29,60 @@ class BankCardService
     public function add(array $data)
     {
         return $this->bankCardRepository->add($data);
+    }
+
+    /*
+     * 得到该用户名下的所有银行卡
+     * @param int $id
+     */
+    public function getAll(int $id)
+    {
+        $sql = 'user_id=?';
+        $where['user_id'] = $id;
+        return $this->bankCardRepository->search($sql, $where);
+    }
+
+    /**
+     * 删除
+     * @param int $id
+     * @return mixed
+     */
+
+    public function destroy(int $id)
+    {
+        return $this->bankCardRepository->del($id);
+    }
+
+    /**
+     * 获取一条数据
+     * @param int $id
+     * @return mixed
+     */
+    public function findId(int $id)
+    {
+        return $this->bankCardRepository->findId($id);
+    }
+
+    /**
+     * 编辑
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function update(int $id,array $data)
+    {
+        $data = array_except($data, ['id', '_token', 'user_id']);
+        return $this->bankCardRepository->update($id,$data);
+    }
+
+    /**
+     * 变更状态
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function updateStatus(int $id,array $data)
+    {
+        return $this->bankCardRepository->update($id,$data);
     }
 }

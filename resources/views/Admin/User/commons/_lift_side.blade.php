@@ -26,7 +26,7 @@
             <li class="active treeview">
 
 
-            <li><a href="{{route('user.bank')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
+            <li><a href="{{route('user.bankCard',Auth::user()->id)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
 
             </li>
 

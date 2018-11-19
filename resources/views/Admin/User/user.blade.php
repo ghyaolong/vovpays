@@ -57,7 +57,7 @@
                         <br>
                         <table id="example2" class="table table-condensed table-bordered table-hover">
                             <thead>
-                            <tr>
+                            <tr style="font-size: 16px;height: 43px">
                                 <th>商户号</th>
                                 <th>用户名</th>
                                 <th>用户类型</th>

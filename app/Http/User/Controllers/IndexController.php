@@ -49,12 +49,6 @@ class IndexController extends Controller
         return view('admin.user.settlement');
     }
 
-    //银行卡管理
-    public function bank()
-    {
-        return view('admin.user.bank');
-    }
-
     //删除
     public function destroy(Request $request)
     {

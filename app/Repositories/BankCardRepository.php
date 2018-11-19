@@ -28,7 +28,49 @@ class BankCardRepository
 
     public function add(array $data)
     {
-        $this->bankCard->create($data);
+        return $this->bankCard->create($data);
+    }
+
+    /**
+     * 查询列表，不分页
+     * @param string $sql
+     * @param array $where
+     * @return mixed
+     */
+    public function search(string $sql, array $where)
+    {
+        return $this->bankCard->whereRaw($sql,$where)->get();
+    }
+
+    /**
+     * 删除
+     * @param int $id
+     * @return mixed
+     */
+    public function del(int $id)
+    {
+        return $this->bankCard->whereId($id)->delete();
+    }
+
+    /**
+     * 获取一条数据
+     * @param int $id
+     * @return mixed
+     */
+    public function findId(int $id)
+    {
+        return $this->bankCard->whereId($id)->first();
+    }
+
+    /**
+     * 编辑
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function update(int $id,array $data)
+    {
+        return $this->bankCard->whereId($id)->update($data);
     }
 
 }

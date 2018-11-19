@@ -21,12 +21,15 @@ Route::group([], function ($router) {
         Route::post('editPassword', 'IndexController@editPassword')->name('user.editPassword');
         Route::delete('users','IndexController@destroy')->name('user.destroy');
         Route::get('settlement','IndexController@settlement')->name('user.settlement');
-        Route::get('bank','IndexController@bank')->name('user.bank');
         Route::get('order','OrderController@show')->name('user.order');
         Route::get('record','OrderController@show')->name('user.record');
         Route::get('recharge','OrderController@recharge')->name('user.recharge');
-        Route::post('addBankCard','BankCardController@add')->name('user.addBankCard');
+        Route::post('store','BankCardController@store')->name('user.store');
         Route::get('main','IndexController@main')->name('user.main');
+        Route::get('bankCard/{id}','BankCardController@bankCard')->name('user.bankCard');
+        Route::delete('del','BankCardController@destroy')->name('users.destroy');
+        Route::get('{id}/edit','BankCardController@edit')->name('users.edit');
+        Route::post('saveStatus','BankCardController@saveStatus')->name('users.saveStatus');
     });
 
 });

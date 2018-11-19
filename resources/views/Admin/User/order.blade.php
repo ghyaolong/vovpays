@@ -154,7 +154,7 @@
                     </div><!-- /.container-fluid -->
                     <br>
                     <table id="example2" class="table table-condensed table-bordered table-hover">
-                        <tr>
+                        <tr style="font-size: 15px;height: 40px">
                             <th>#</th>
                             <th>商户号</th>
                             <th>系统订单</th>
