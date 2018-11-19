@@ -5,7 +5,7 @@ namespace App\Http\User\Controllers;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class IndexController extends Controller
 {
     protected $userService;
 
@@ -54,6 +54,7 @@ class HomeController extends Controller
     {
         return view('admin.user.bank');
     }
+
     //删除
     public function destroy(Request $request)
     {
@@ -68,7 +69,20 @@ class HomeController extends Controller
     //修改密码
     public function editPassword(Request $request)
     {
-        var_dump($request->input());
-        exit;
+        $data = $request->input();
+        $id = $request->input('id');
+        $result = $this->userService->updatePassword($id,$data);
+
+        if ($result) {
+            return ajaxSuccess('密码修改成功！');
+        } else {
+            return ajaxError('原密码错误，修改失败！');
+        }
+    }
+
+    //开发者
+    public function main()
+    {
+        return view('admin.user.main');
     }
 }

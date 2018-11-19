@@ -166,6 +166,9 @@
                             <th>商户收入</th>
                             <th>操作</th>
                         </tr>
+                        <tr>
+                            <td colspan="10" style="text-align: center">没有找到匹配数据</td>
+                        </tr>
                         <tbody>
                         @foreach($orders as $v)
                             <tr>
@@ -186,18 +189,7 @@
                             </tr>
                         @endforeach
                         </tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>收款</td>
-                            <td style="color:saddlebrown">20180665225855222222</td>
-                            <td>10009</td>
-                            <td style="color: green">15.00</td>
-                            <td>0.90</td>
-                            <td style="color: red">14.10</td>
-                            <td>0</td>
-                            <td>2018-11-5 16:15:13</td>
-                            <td>___</td>
-                        </tr>
+
                     </table>
                 </div>
             </div>

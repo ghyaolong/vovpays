@@ -46,10 +46,8 @@ class OrderController extends Controller
         return view('Admin.User.order',compact('orders', 'data', 'chanel_list','payments_list'));
     }
 
-    public function index()
+    public function recharge()
     {
-        echo 12;
-        exit;
-        return view('home');
+        return view('Admin.User.recharge');
     }
 }

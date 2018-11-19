@@ -7,8 +7,10 @@
  */
 
 namespace App\Repositories;
+
 use App\Models\User;
 use App\Models\Statistical;
+use Illuminate\Support\Facades\Hash;
 
 class UsersRepository
 {
@@ -21,10 +23,10 @@ class UsersRepository
      * @param User $user
      * @param Statistical $statistical
      */
-    public function __construct( User $user, Statistical $statistical)
+    public function __construct(User $user, Statistical $statistical)
     {
-        $this->user         = $user;
-        $this->statistical  = $statistical;
+        $this->user = $user;
+        $this->statistical = $statistical;
     }
 
     /**
@@ -71,7 +73,8 @@ class UsersRepository
      * @param array $data
      * @return mixed
      */
-    public function add(array $data){
+    public function add(array $data)
+    {
         return $this->user->create($data);
     }
 
@@ -81,7 +84,8 @@ class UsersRepository
      * @param array $data
      * @return mixed
      */
-    public function update(int $id, array $data){
+    public function update(int $id, array $data)
+    {
         return $this->user->whereId($id)->update($data);
     }
 
@@ -90,7 +94,8 @@ class UsersRepository
      * @param int $id
      * @return mixed
      */
-    public function del(int $id){
+    public function del(int $id)
+    {
         return $this->user->whereId($id)->delete();
     }
 
@@ -103,6 +108,13 @@ class UsersRepository
     public function findIdPasswordExists(int $id, string $password)
     {
         return $this->user->whereId($id)->wherePassword($password)->exists();
+    }
+
+    public function contrastPassword(int $id, string $password)
+    {
+        $result = $this->user->whereId($id)->first();
+        $oldPassword = $result->password;
+        return Hash::check($password, $oldPassword);
     }
 
 

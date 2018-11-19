@@ -33,7 +33,7 @@
                         <li class="user-body">
                             <div class="row">
                                 <div class="col-xs-4 text-center">
-                                    <a onclick="editPwd('编辑密码')">修改密码</a>
+                                    <a href="#" onclick="editPwd('编辑密码')">修改密码</a>
                                 </div>
                                 <div class="col-xs-4 text-center">
 
@@ -87,7 +87,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
+                            <button type="submit" class="btn btn-primary">提交</button>
                         </div>
                     </form>
                 </div>
@@ -148,10 +148,15 @@
                 if (result.status) {
                     toastr.success(result.msg);
                     setInterval(function () {
-                        window.location.href = '/user/login';
+                        window.location.href = '/user';
                     }, 500);
                 }
             }, 'json');
         });
     });
+
+    function editPwd(title) {
+        $('.modal-title').html(title);
+        $('#editPwdModel').modal('show');
+    }
 </script>

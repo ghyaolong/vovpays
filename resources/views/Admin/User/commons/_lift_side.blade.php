@@ -8,6 +8,7 @@
             <li class="header">商户管理</li>
             <li class="active treeview">
             <li><a href="{{route('user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>后台主页</span></a></li>
+            <li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>
             <li><a href="{{route('user.user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>用户管理</span></a></li>
             </li>
 
@@ -30,7 +31,7 @@
             </li>
 
             <li class="header">账号轮询</li>
-            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>支付宝账户</span></a></li>
+            <li><a href="{{route('user.main')}}"><i class="fa fa-circle-o text-red"></i> <span>开发者</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>微信账户</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>百度钱包账户</span></a></li>
 

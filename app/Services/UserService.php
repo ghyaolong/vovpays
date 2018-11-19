@@ -22,44 +22,40 @@ class UserService
     public function add(array $data)
     {
         // 去掉无用数据
-        $data = array_except($data, ['id','_token','password_confirmation']);
+        $data = array_except($data, ['id', '_token', 'password_confirmation']);
 
         // 用户标识等于代理商的时候,没有上级代理
-        if($data['groupType'] == '2')
-        {
+        if ($data['groupType'] == '2') {
             $data['parentId'] = 0;
-            $data['agentName']= '';
+            $data['agentName'] = '';
         }
 
         // 用户选着上级代理的时候，检测上级代理是否存在
-        if( $data['parentId'] != '0')
-        {
+        if ($data['parentId'] != '0') {
             $sql = 'id=? and group_type=?';
             $where['id'] = $data['parentId'];
             $where['group_type'] = 2;
-            $agent = $this->usersRepository->searchOne($sql,$where);
-            if($agent)
-            {
-                $data['agentName']= $agent->username;
-            }else{
+            $agent = $this->usersRepository->searchOne($sql, $where);
+            if ($agent) {
+                $data['agentName'] = $agent->username;
+            } else {
                 $data['parentId'] = 0;
-                $data['agentName']= '';
+                $data['agentName'] = '';
             }
         }
-        $data['group_type']  = $data['groupType'];
-        $data['password']    = bcrypt($data['password']);
+        $data['group_type'] = $data['groupType'];
+        $data['password'] = bcrypt($data['password']);
         $data['payPassword'] = bcrypt('123456');
-        $data['merchant']    = getMerchant(1); // 生成一个假的商户号
-        $data['apiKey']      = md5(getOrderId());
-        $data =array_except($data,'groupType');
+        $data['merchant'] = getMerchant(1); // 生成一个假的商户号
+        $data['apiKey'] = md5(getOrderId());
+        $data = array_except($data, 'groupType');
         $user = $this->usersRepository->add($data);
 
-        if(!$user)
-        {
+        if (!$user) {
             throw new CustomServiceException('会员添加失败！');
         }
         $merchant = getMerchant($user->id);
-        $this->usersRepository->update($user->id,['merchant'=>$merchant]);
+        $this->usersRepository->update($user->id, ['merchant' => $merchant]);
 
         // 添加的时候同步更新用户统计表
         $statistical['agent_id'] = $user->parentId;
@@ -87,7 +83,7 @@ class UserService
     {
         $sql = 'merchant = ?';
         $where['merchant'] = $merchant;
-        return $this->usersRepository->searchOne($sql,$where);
+        return $this->usersRepository->searchOne($sql, $where);
     }
 
     /**
@@ -111,41 +107,60 @@ class UserService
      */
     public function update(int $id, array $data)
     {
-        $data = array_except($data, ['id','_token','password_confirmation']);
-        $exists = $this->usersRepository->findIdPasswordExists($id,$data['password']);
-        if($exists)
-        {
+        $data = array_except($data, ['id', '_token', 'password_confirmation']);
+        $exists = $this->usersRepository->findIdPasswordExists($id, $data['password']);
+        if ($exists) {
             $data = array_except($data, 'password');
-        }else{
+        } else {
             $data['password'] = bcrypt($data['password']);
         }
 
         // 用户标识等于代理商的时候,没有上级代理
-        if($data['groupType'] == '2')
-        {
+        if ($data['groupType'] == '2') {
             $data['parentId'] = 0;
-            $data['agentName']= '';
+            $data['agentName'] = '';
         }
 
         // 用户选着上级代理的时候，检测上级代理是否存在
-        if( $data['parentId'] != '0')
-        {
+        if ($data['parentId'] != '0') {
             $sql = 'id=? and group_type=?';
             $where['id'] = $data['parentId'];
             $where['group_type'] = 2;
-            $agent = $this->usersRepository->searchOne($sql,$where);
-            if($agent)
-            {
-                $data['agentName']= $agent->username;
-            }else{
+            $agent = $this->usersRepository->searchOne($sql, $where);
+            if ($agent) {
+                $data['agentName'] = $agent->username;
+            } else {
                 $data['parentId'] = 0;
-                $data['agentName']= '';
+                $data['agentName'] = '';
             }
         }
-        $data['group_type']  = $data['groupType'];
-        $data = array_except($data,'groupType');
+        $data['group_type'] = $data['groupType'];
+        $data = array_except($data, 'groupType');
 
         return $this->usersRepository->update($id, $data);
+    }
+
+    /**
+     * 更新密码
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+
+    public function updatePassword(int $id, array $data)
+    {
+        $data = array_except($data, ['id', '_token', 'rpassword']);
+        //检测ID 密码是否存在
+        $exists = $this->usersRepository->contrastPassword($id, $data['password']);
+
+        if ($exists) {
+            $data['password'] = bcrypt($data['newPassword']);
+            unset($data['newPassword']);
+            return $this->usersRepository->update($id, $data);
+        } else {
+            return false;
+        }
+
     }
 
     /**
@@ -166,7 +181,8 @@ class UserService
      * @param array $data
      * @return mixed
      */
-    public function updateStatus(int $id, array $data){
+    public function updateStatus(int $id, array $data)
+    {
 
         return $this->usersRepository->update($id, $data);
     }
@@ -179,29 +195,25 @@ class UserService
      */
     public function searchPage(array $data, int $page)
     {
-        $sql   = ' 1=1 ';
+        $sql = ' 1=1 ';
         $where = [];
 
-        if( isset($data['merchant']) && $data['merchant'])
-        {
+        if (isset($data['merchant']) && $data['merchant']) {
             $sql .= 'and merchant = ?';
             $where['merchant'] = $data['merchant'];
         }
 
-        if( isset($data['username']) && $data['username'])
-        {
+        if (isset($data['username']) && $data['username']) {
             $sql .= ' and username = ?';
             $where['username'] = $data['username'];
         }
 
-        if( isset($data['groupType']) && $data['groupType'] != '-1')
-        {
+        if (isset($data['groupType']) && $data['groupType'] != '-1') {
             $sql .= ' and group_type = ?';
             $where['group_type'] = $data['groupType'];
         }
 
-        if( isset($data['status']) && $data['status'] != '-1')
-        {
+        if (isset($data['status']) && $data['status'] != '-1') {
             $sql .= ' and status = ?';
             $where['status'] = $data['status'];
         }
@@ -216,6 +228,6 @@ class UserService
      */
     public function destroy(int $id)
     {
-        return $this->usersRepository->update($id,['status'=>2]);
+        return $this->usersRepository->update($id, ['status' => 2]);
     }
 }
