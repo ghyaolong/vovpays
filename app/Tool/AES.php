@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Tool;
 
-class AesService
+class AES
 {
     /**
      * 加密
