@@ -119,54 +119,51 @@
                         </button>
                     </div>
                 </div>
-                <br>
+                <div class="box-body">
+                    <form class="navbar-form navbar-left" action="">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
+                                   placeholder="订单时间" name="orderTime"
+                                   @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="paymentId" name="paymentId">
+                                <option value="-1">支付方式</option>
+                                <option value="">支付宝</option>
+                                <option value="">微信</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="underOrderNo" placeholder="订单号">
+                        </div>
+                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
+                    </form>
+                    <br>
+                    <br>
+                    <br>
 
+                    <div class="container-fluid">
+                        <table id="example2" class="table table-condensed table-bordered table-hover">
+                            <tr style="color: #999999">
+                                <th>支付通道</th>
+                                <th>订单号</th>
+                                <th>商户号</th>
+                                <th>实付金额</th>
+                                <th>支付时间</th>
+                                <th>订单状态</th>
+                                <th>操作</th>
+                            </tr>
 
-                <form class="navbar-form navbar-left" action="">
-                    {{--{{ csrf_field() }}--}}
-                    <div class="form-group">
-                        <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
-                               placeholder="订单时间" name="orderTime"
-                               @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
+                            <tr>
+                                <td colspan="7" style="text-align: center">没有找到匹配数据</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <select class="form-control" id="paymentId" name="paymentId">
-                            <option value="-1">支付方式</option>
-                            <option value="">支付宝</option>
-                            <option value="">微信</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="underOrderNo" placeholder="订单号">
-                    </div>
-                    <button type="submit" class="btn btn-info glyphicon glyphicon-search ">搜索</button>&nbsp;&nbsp;
-                    <button type="submit" class="btn btn-danger glyphicon glyphicon-export ">导出数据</button>
-                </form>
-                <br>
-                <br>
-                <br>
 
-                <div class="container-fluid">
-                    <table id="example2" class="table table-condensed table-bordered table-hover">
-                        <tr>
-                            <th>支付通道</th>
-                            <th>订单号</th>
-                            <th>商户号</th>
-                            <th>实付金额</th>
-                            <th>支付时间</th>
-                            <th>订单状态</th>
-                            <th>操作</th>
-                        </tr>
-
-                        <tr>
-                            <td colspan="7" style="text-align: center">没有找到匹配数据</td>
-                        </tr>
-                    </table>
                 </div>
-
             </div>
         </div>
-
     </div>
 @endsection
 @section("scripts")

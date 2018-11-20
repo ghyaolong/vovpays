@@ -26,7 +26,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('admin.user.home');
+        return view('Admin.User.home');
     }
 
     //用户列表展示
@@ -43,13 +43,11 @@ class IndexController extends Controller
         return view('Admin.User.user', compact('users', 'data', 'agent_list'));
     }
 
-    //提现页面
-    public function settlement()
-    {
-        return view('admin.user.settlement');
-    }
 
-    //删除
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Request $request)
     {
         $result = $this->userService->destroy($request->id);
@@ -77,6 +75,6 @@ class IndexController extends Controller
     //开发者
     public function main()
     {
-        return view('admin.user.main');
+        return view('Admin.User.main');
     }
 }

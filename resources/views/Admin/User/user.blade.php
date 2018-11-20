@@ -15,104 +15,124 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-body">
+                <div class="box box-primary box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">用户列表</h3>
 
-                        <div class="container-fluid">
-                            <!-- Collect the nav links, forms, and other content for toggling -->
-                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
-                                 style="background: #ffffff">
-                                <form class="navbar-form navbar-left" action="{{route('user.user')}}" method="post">
-                                    {{ csrf_field() }}
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="merchant" placeholder="商户号">
-                                    </div>&nbsp;&nbsp;
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
 
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="username" placeholder="用户名">
-                                    </div>&nbsp;&nbsp;
+                        <div class="box-body">
 
-                                    <div class="form-group">
-                                        <select name="status" id="status" class="form-control">
-                                            <option value="">状态</option>
-                                            <option value="1">正常</option>
-                                            <option value="0">禁用</option>
-                                            <option value="2">已删除</option>
-                                        </select>
-                                    </div>&nbsp;&nbsp;
+                            <div class="container-fluid">
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
+                                     style="background: #ffffff">
+                                    <form class="navbar-form navbar-left" action="{{route('user.user')}}" method="post">
+                                        {{ csrf_field() }}
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="merchant" placeholder="商户号">
+                                        </div>&nbsp;&nbsp;
 
-                                    <div class="form-group">
-                                        <select name="queryed" id="" class="form-control">
-                                            <option value="1">商户</option>
-                                            <option value="0">代理商</option>
-                                        </select>
-                                    </div>&nbsp;&nbsp;
-                                    <button type="submit" class="btn btn-info glyphicon glyphicon-search ">搜索</button>&nbsp;&nbsp;
-                                    <button type="submit" class="btn btn-danger glyphicon glyphicon-export ">导出数据
-                                    </button>
-                                </form>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="username" placeholder="用户名">
+                                        </div>&nbsp;&nbsp;
 
-                            </div><!-- /.navbar-collapse -->
-                        </div><!-- /.container-fluid -->
-                        <br>
-                        <table id="example2" class="table table-condensed table-bordered table-hover">
-                            <thead>
-                            <tr style="font-size: 16px;height: 43px">
-                                <th>商户号</th>
-                                <th>用户名</th>
-                                <th>用户类型</th>
-                                <th>上级用户</th>
-                                <th>状态</th>
-                                <th>认证</th>
-                                <th>账户总额</th>
-                                <th>注册时间</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($users as $user)
-                                <tr>
-                                    <td><a href="" target="_blank">{{$user->merchant}}</a></td>
-                                    <td>{{$user->username}}</td>
-                                    <td>普通商户</td>
-                                    <td>总管理员</td>
-                                    <td>
-                                        <input class="switch-state" name="status" data-id="{{$user->id}}" type="checkbox"
-                                               @if($user->status==1) checked @endif >
-                                    </td>
-                                    <td>
-                                        <span class="label label-success">已认证</span>
-                                    </td>
-                                    <td>
-                                        可提现：1000 冻结：0.4
-                                    </td>
-                                    <td>{{$user->created_at}}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary btn-sm" onclick="withdrawal('提现设置','#')">提现
-                                            </button>
-                                            <button class="btn btn-primary btn-sm" onclick="editTd('编辑通道','#',800)">通道
-                                            </button>
-                                            <button class="btn btn-primary btn-sm" onclick="rate('编辑费率')">费率</button>
-                                            <button class="btn btn-primary btn-sm" onclick="editPwd('编辑密码')">密码</button>
-                                            <button class="btn btn-primary btn-sm" onclick="edit('编辑',{{$user->id}})">编辑</button>
-                                            <button class="btn btn-primary btn-sm" onclick="del($(this),{{$user->id}})">删除</button>
-                                        </div>
-                                    </td>
+                                        <div class="form-group">
+                                            <select name="status" id="status" class="form-control">
+                                                <option value="">状态</option>
+                                                <option value="1">正常</option>
+                                                <option value="0">禁用</option>
+                                                <option value="2">已删除</option>
+                                            </select>
+                                        </div>&nbsp;&nbsp;
+
+                                        <div class="form-group">
+                                            <select name="queryed" id="" class="form-control">
+                                                <option value="1">商户</option>
+                                                <option value="0">代理商</option>
+                                            </select>
+                                        </div>&nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
+                                    </form>
+
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                            <br>
+                            <table id="example2" class="table table-condensed table-bordered table-hover">
+                                <thead>
+                                <tr style="font-size: 16px;height: 43px">
+                                    <th>商户号</th>
+                                    <th>用户名</th>
+                                    <th>用户类型</th>
+                                    <th>上级用户</th>
+                                    <th>状态</th>
+                                    <th>认证</th>
+                                    <th>账户总额</th>
+                                    <th>注册时间</th>
+                                    <th>操作</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        {{$users->appends($data)->links()}}
+                                </thead>
+                                <tbody>
+                                @foreach($users as $user)
+                                    <tr>
+                                        <td><a href="" target="_blank">{{$user->merchant}}</a></td>
+                                        <td>{{$user->username}}</td>
+                                        <td>普通商户</td>
+                                        <td>总管理员</td>
+                                        <td>
+                                            <input class="switch-state" name="status" data-id="{{$user->id}}"
+                                                   type="checkbox"
+                                                   @if($user->status==1) checked @endif >
+                                        </td>
+                                        <td>
+                                            <span class="label label-success">已认证</span>
+                                        </td>
+                                        <td>
+                                            可提现：1000 冻结：0.4
+                                        </td>
+                                        <td>{{$user->created_at}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary btn-sm" onclick="withdrawal('提现设置','#')">
+                                                    提现
+                                                </button>
+                                                <button class="btn btn-primary btn-sm" onclick="editTd('编辑通道','#',800)">
+                                                    通道
+                                                </button>
+                                                <button class="btn btn-primary btn-sm" onclick="rate('编辑费率')">费率
+                                                </button>
+                                                <button class="btn btn-primary btn-sm" onclick="editPwd('编辑密码')">密码
+                                                </button>
+                                                <button class="btn btn-primary btn-sm"
+                                                        onclick="edit('编辑',{{$user->id}})">
+                                                    编辑
+                                                </button>
+                                                <button class="btn btn-primary btn-sm"
+                                                        onclick="del($(this),{{$user->id}})">
+                                                    删除
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            {{$users->appends($data)->links()}}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 
     {{--编辑模态--}}
     <section>
-        <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog" style="margin-top: 123px">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -125,7 +145,8 @@
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">用户名</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                                    <input type="text" class="form-control" id="username" name="username"
+                                           placeholder="用户名">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -137,7 +158,8 @@
                             <div class="form-group">
                                 <label for="" class="col-xs-3 control-label">确认密码</label>
                                 <div class="col-xs-9">
-                                    <input type="password" class="form-control" name="password_confirmation" placeholder="确认密码">
+                                    <input type="password" class="form-control" name="password_confirmation"
+                                           placeholder="确认密码">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -465,18 +487,16 @@
         //     $('#editModel').modal('show');
         // }
 
-        function edit(title, id)
-        {
+        function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/admin/users/'+id+'/edit',
-                dataType:'json',
+                url: '/admin/users/' + id + '/edit',
+                dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success:function(result){
-                    if(result.status == 1)
-                    {
+                success: function (result) {
+                    if (result.status == 1) {
                         $("#username").val(result.data['username']);
                         $("input[name='phone']").val(result.data['phone']);
                         $("input[name='email']").val(result.data['email']);
@@ -490,7 +510,7 @@
                         $('#addModel').modal('show');
                     }
                 },
-                error:function(XMLHttpRequest,textStatus){
+                error: function (XMLHttpRequest, textStatus) {
                     toastr.error('通信失败');
                 }
             })
@@ -546,7 +566,7 @@
         }
 
 
-        function del(_this,id){
+        function del(_this, id) {
             swal({
                 title: "您确定要删除吗？",
                 text: "删除后不能恢复！",
@@ -554,26 +574,25 @@
                 showCancelButton: true,
                 closeOnConfirm: false,
                 showLoaderOnConfirm: true,
-            }, function(){
+            }, function () {
                 $.ajax({
                     type: 'delete',
                     url: '/user/users',
-                    data:{'id':id},
-                    dataType:'json',
+                    data: {'id': id},
+                    dataType: 'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success:function(result){
-                        if(result.status)
-                        {
+                    success: function (result) {
+                        if (result.status) {
                             _this.parents('tr').empty();
-                            swal(result.msg, "会员已被删除。","success")
-                        }else{
-                            swal(result.msg, "会员没有被删除。","error")
+                            swal(result.msg, "会员已被删除。", "success")
+                        } else {
+                            swal(result.msg, "会员没有被删除。", "error")
                         }
 
                     },
-                    error:function(XMLHttpRequest,textStatus){
+                    error: function (XMLHttpRequest, textStatus) {
                         toastr.error('通信失败');
                     }
                 })

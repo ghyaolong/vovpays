@@ -49,7 +49,7 @@ class LoginController extends Controller
 
     public function show()
     {
-        return view('admin.user.login');
+        return view('Admin.User.login');
     }
 
     public function login(Request $request)
@@ -87,7 +87,7 @@ class LoginController extends Controller
     //登陆页面
     public function registerShow()
     {
-        return view('admin.user.register');
+        return view('Admin.User.register');
     }
 
     public function register(Request $request)

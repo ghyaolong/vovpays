@@ -27,7 +27,7 @@ class BankCardController extends Controller
     public function bankCard($id)
     {
         $lists = $this->bankCardService->getAll($id);
-        return view('admin.user.bankCard', compact('lists'));
+        return view('Admin.User.bankCard', compact('lists'));
     }
 
 

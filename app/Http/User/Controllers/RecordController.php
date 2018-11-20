@@ -26,7 +26,7 @@ class RecordController extends Controller
     public function show()
     {
         $orders = Order::all();
-        return view('admin.user.record', compact('orders'));
+        return view('Admin.User.record', compact('orders'));
     }
 
     public function index()

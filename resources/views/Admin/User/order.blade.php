@@ -72,125 +72,119 @@
             </div>
         </div>
 
-        <!-- ./col -->
-        <div class="col-xs-12">
-            <div class="box">
+        <div class="col-md-12">
+            <div class="box box-primary box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">订单记录</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
                 <div class="box-body">
-                    <div class="container-fluid">
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <form class="navbar-form navbar-left" action="">
-                                {{--{{ csrf_field() }}--}}
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="orderNo" placeholder="系统订单">
-                                </div>&nbsp;&nbsp;
+                    <!-- ./col -->
+                    <form class="navbar-form navbar-left" action="">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
+                                   placeholder="订单时间" name="orderTime"
+                                   @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
+                        </div>
 
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="underOrderNo" placeholder="商户订单">
-                                </div>&nbsp;&nbsp;
+                        <div class="form-group">
+                            <select class="form-control" id="channelId" name="channelId">
+                                <option value="-1">选着通道</option>
+                                @foreach($chanel_list as $v )
+                                    <option value="{{ $v['id'] }}">{{ $v['channelName'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="paymentId" name="paymentId">
+                                <option value="-1">选着支付方式</option>
+                                @foreach($payments_list as $v )
+                                    <option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="status" name="status">
+                                <option value="-1"
+                                        @if(!isset($query['status']) || $query['status'] =='-1') selected @endif >
+                                    订单状态
+                                </option>
+                                <option value="0"
+                                        @if(isset($query['status']) && $query['status'] =='0') selected @endif>
+                                    发起支付
+                                </option>
+                                <option value="1"
+                                        @if(isset($query['status']) && $query['status'] =='1') selected @endif >
+                                    发起失败
+                                </option>
+                                <option value="2"
+                                        @if(isset($query['status']) && $query['status'] =='2') selected @endif>
+                                    未支付
+                                </option>
+                                <option value="3"
+                                        @if(isset($query['status']) && $query['status'] =='3') selected @endif>
+                                    支付成功
+                                </option>
+                                <option value="4"
+                                        @if(isset($query['status']) && $query['status'] =='4') selected @endif>
+                                    支付异常
+                                </option>
+                                <option value="5"
+                                        @if(isset($query['status']) && $query['status'] =='5') selected @endif>
+                                    已删除
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="orderNo" placeholder="系统订单">
+                        </div>&nbsp;&nbsp;
 
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="商户号" name="userNo"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
-                                           placeholder="订单时间" name="orderTime"
-                                           @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="channelId" name="channelId">
-                                        <option value="-1">选着通道</option>
-                                        @foreach($chanel_list as $v )
-                                            <option value="{{ $v['id'] }}">{{ $v['channelName'] }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="paymentId" name="paymentId">
-                                        <option value="-1">选着支付方式</option>
-                                        @foreach($payments_list as $v )
-                                            <option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="status" name="status">
-                                        <option value="-1"
-                                                @if(!isset($query['status']) || $query['status'] =='-1') selected @endif >
-                                            订单状态
-                                        </option>
-                                        <option value="0"
-                                                @if(isset($query['status']) && $query['status'] =='0') selected @endif>
-                                            发起支付
-                                        </option>
-                                        <option value="1"
-                                                @if(isset($query['status']) && $query['status'] =='1') selected @endif >
-                                            发起失败
-                                        </option>
-                                        <option value="2"
-                                                @if(isset($query['status']) && $query['status'] =='2') selected @endif>
-                                            未支付
-                                        </option>
-                                        <option value="3"
-                                                @if(isset($query['status']) && $query['status'] =='3') selected @endif>
-                                            支付成功
-                                        </option>
-                                        <option value="4"
-                                                @if(isset($query['status']) && $query['status'] =='4') selected @endif>
-                                            支付异常
-                                        </option>
-                                        <option value="5"
-                                                @if(isset($query['status']) && $query['status'] =='5') selected @endif>
-                                            已删除
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-info glyphicon glyphicon-search ">搜索</button>&nbsp;&nbsp;
-                                <button type="submit" class="btn btn-danger glyphicon glyphicon-export ">导出数据</button>
-                            </form>
-
-                        </div><!-- /.navbar-collapse -->
-                    </div><!-- /.container-fluid -->
-                    <br>
-                    <table id="example2" class="table table-condensed table-bordered table-hover">
-                        <tr style="font-size: 15px;height: 40px">
-                            <th>#</th>
-                            <th>商户号</th>
-                            <th>系统订单</th>
-                            <th>商户订单</th>
-                            <th>订单金额</th>
-                            <th>手续费</th>
-                            <th>平台收入</th>
-                            <th>代理收入</th>
-                            <th>商户收入</th>
-                            <th>操作</th>
-                        </tr>
-                        <tr>
-                            <td colspan="10" style="text-align: center">没有找到匹配数据</td>
-                        </tr>
-                        <tbody>
-                        @foreach($orders as $v)
-                            <tr>
-                                <td>{{ $v['id'] }}</td>
-                                <td>{{ $v['username'] }}</td>
-                                <td>{{ $v['orderNo'] }}</td>
-                                <td>{{ $v['underOrderNo'] }}</td>
-                                <td>{{ $v['orderRate'] }}</td>
-                                <td>{{ $v['sysAmount'] }}</td>
-                                <td>{{ $v['agentAmount'] }}</td>
-                                <td>{{ $v['userAmount'] }}</td>
-                                <td>{{ $v['orderRate'] }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-success btn-sm"
-                                            onclick="info('订单详情',{{ $v['id'] }})">详情
-                                    </button>
-                                </td>
+                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
+                    </form>
+                    <div class="box-body" style="margin-top: 45px">
+                        <table id="example2" class="table table-condensed table-bordered table-hover">
+                            <tr style="color: #999999">
+                                <th>通道名称</th>
+                                <th>支付方式</th>
+                                <th>商户号</th>
+                                <th>系统订单号</th>
+                                <th>订单金额</th>
+                                <th>手续费</th>
+                                <th>支付时间</th>
+                                <th>订单状态</th>
+                                <th>操作</th>
                             </tr>
-                        @endforeach
-                        </tbody>
+                            <tr>
+                                <td colspan="10" style="text-align: center">没有找到匹配数据</td>
+                            </tr>
+                            <tbody>
+                            @foreach($orders as $v)
+                                <tr>
+                                    <td>{{ $v['username'] }}</td>
+                                    <td>{{ $v['orderNo'] }}</td>
+                                    <td>{{ $v['underOrderNo'] }}</td>
+                                    <td>{{ $v['orderRate'] }}</td>
+                                    <td>{{ $v['sysAmount'] }}</td>
+                                    <td>{{ $v['agentAmount'] }}</td>
+                                    <td>{{ $v['userAmount'] }}</td>
+                                    <td>{{ $v['orderRate'] }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-sm"
+                                                onclick="info('订单详情',{{ $v['id'] }})">详情
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
 
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@
                             <img src="/AdminLTE/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
 
                             <p>
-                                {{ Auth::user()->username }} - 网站开发者
+                                {{ Auth::user()->username }}
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -87,7 +87,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
                         </div>
                     </form>
                 </div>
@@ -141,22 +141,41 @@
                     }
                 },
             }
-        }).on('success.form.bv', function (e) {
-            e.preventDefault();
-            var $form = $(e.target);
-            $.post($form.attr('action'), $form.serialize(), function (result) {
-                if (result.status) {
-                    toastr.success(result.msg);
-                    setInterval(function () {
-                        window.location.href = '/user';
-                    }, 500);
-                }
-            }, 'json');
-        });
+        })
     });
 
     function editPwd(title) {
         $('.modal-title').html(title);
         $('#editPwdModel').modal('show');
     }
+
+    /**
+     * 提交
+     */
+    function save(_this) {
+        // formValidator();
+        $('#ruleForm').data('bootstrapValidator').validate();
+        if (!$('#ruleForm').data('bootstrapValidator').isValid()) {
+            return;
+        }
+        _this.removeAttr('onclick');
+
+        var $form = $('#ruleForm');
+        $.post($form.attr('action'), $form.serialize(), function (result) {
+            if (result.status) {
+                $('#editPwdModel').modal('hide');
+                setInterval(function () {
+                    window.location.reload();
+                }, 1000);
+
+                toastr.success(result.msg);
+            } else {
+                $('#editPwdModel').modal('hide');
+                _this.attr("onclick", "save($(this))");
+                toastr.error(result.msg);
+            }
+        }, 'json');
+
+    }
+
 </script>
