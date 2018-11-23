@@ -16,7 +16,7 @@
             <li class="active treeview">
 
             <li><a href="{{route('user.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易明细查询</span></a></li>
-            <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>提现结算</span></a>
+            <li><a href="{{route('user.clearing',Auth::user()->id)}}"><i class="fa fa-circle-o text-aqua"></i> <span>提现结算</span></a>
             </li>
             <li><a href="{{route('user.withdraws')}}"><i class="fa fa-circle-o text-aqua"></i> <span>提现记录</span></a></li>
 

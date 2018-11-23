@@ -9,19 +9,22 @@
 namespace App\Http\User\Controllers;
 
 
+use App\Services\BankCardService;
 use App\Services\WithdrawsService;
 
 class WithdrawsController extends Controller
 {
     protected $withdrawsService;
+    protected $bankCardService;
 
     /**
      * WithdrawsController constructor.
      * @param WithdrawsService $withdrawsService
      */
-    public function __construct(WithdrawsService $withdrawsService)
+    public function __construct(WithdrawsService $withdrawsService,BankCardService $bankCardService)
     {
         $this->withdrawsService=$withdrawsService;
+        $this->bankCardService=$bankCardService;
     }
 
     public function index()
@@ -30,8 +33,9 @@ class WithdrawsController extends Controller
     }
 
     //结算申请
-    public function clearing()
+    public function clearing($id)
     {
-        return view('Admin.User.clearing');
+        $list = $this->bankCardService->getAll($id);
+        return view('Admin.User.clearing',compact('list'));
     }
 }

@@ -76,15 +76,15 @@
 
     @else
         <div style="margin: 100px 200px;width: 800px;height: 300px">
-            <div class="">
+            <div class="col-sm-12 col-xs-12">
                 <div style="margin-top:150px;margin-left: 450px">
                     <img src="/AdminLTE/dist/img/addcard.png">
                 </div>
-                <div class="" style="margin-top:50px;margin-left: 430px;font-size: 20px;color: #999999">
+                <div class="col-sm-12" style="margin-top:20px;margin-left: 410px;font-size: 20px;color: #999999">
                     您还没有提款银行卡,添加一张吧
                 </div>
 
-                <div class="box-header">
+                <div class="box-header" style="margin-top:50px;margin-left: 500px">
                     <button type="button" class="btn btn-primary" onclick="showModel('添加银行卡')">添加银行卡</button>
                 </div>
             </div>
@@ -100,7 +100,6 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-
                     <form id="bankForm" action="{{ route('user.store') }}" class="form-horizontal" role="form"
                           method="post">
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">

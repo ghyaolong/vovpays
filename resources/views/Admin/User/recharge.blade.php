@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="box-body" style="height: 200px">
+                <div class="box-body">
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="info-box bg-aqua">
                             <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
@@ -70,9 +70,9 @@
                 </div>
 
 
-                <div class="box-body" style="height: 200px;padding:20px 150px;font-size: 15px">
+                <div class="box-body" style="font-size: 15px">
 
-                    <form class="form-inline">
+                    <form class="form-inline" style="margin: auto 60px">
                         <div class="form-group">
                             <label for="exampleInputName2">充值金额:</label>&emsp;
                             <select name="" class="form-control">
@@ -131,7 +131,6 @@
                             <select class="form-control" id="paymentId" name="paymentId">
                                 <option value="-1">支付方式</option>
                                 <option value="">支付宝</option>
-                                <option value="">微信</option>
                             </select>
                         </div>
                         <div class="form-group">

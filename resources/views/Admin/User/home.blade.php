@@ -24,7 +24,7 @@
                         <div class="box-body">
 
                             <form class="form-horizontal">
-                                <div class="box-body" style="height: 321px;">
+                                <div class="box-body">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">登录名</label>
                                         <div class="col-sm-8">
@@ -90,7 +90,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="box-body" style="height: 340px;">
+                        <div class="box-body">
                             <form class="form-horizontal" id="info">
                                 <input type="hidden" id="UserID2" name="UserID2" value="24508">
                                 <div class="box-body">
@@ -143,7 +143,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="box-body" style="height: 340px;">
+                        <div class="box-body">
                             <form id="pwdForm" action="{{route('user.editPassword')}}" class="form-horizontal" role="form" method="post">
                                 <input type="hidden" name="id" value="{{Auth::user()->id}}">
                                 {{ csrf_field() }}
@@ -163,9 +163,9 @@
                                             <input type="password" class="form-control" id="UserPwd2" name="newPassword" placeholder="请输入新密码">
                                         </div>
                                     </div>
-                                    <br>
 
-                                    <div class="form-group">
+
+                                    <div class="form-group" style="margin-top: 25px">
                                         <label for="" class="col-sm-4 control-label">确认新密码</label>
                                         <div class="col-sm-8">
                                             <input type="password" class="form-control" id="UserPwd3" name="rpassword" placeholder="请再次输入新密码">
