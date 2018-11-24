@@ -7,8 +7,7 @@
 @section('content')
     <div class="row">
         <div class="col-xs-12">
-            {{--<div class="box">--}}
-            {{--<div class="box-body">--}}
+
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">结算记录</h3>
@@ -92,39 +91,21 @@
                                 <th>申请时间</th>
                                 <th>处理时间</th>
                             </tr>
-                            {{--@foreach($orders as $order)--}}
-                            {{--<tr>--}}
-                            {{--<td>{{$order->id}}</td>--}}
-                            {{--<td>{{$order->pay_status?'充值':'收款'}}</td>--}}
-                            {{--<td>{{$order->pay_memberid}}</td>--}}
-                            {{--<td style="color: green">{{$order->pay_amount}}</td>--}}
-                            {{--<td>{{$order->pay_poundage}}</td>--}}
-                            {{--<td style="color: red">{{$order->pay_actualamount}}</td>--}}
-                            {{--<td>{{$order->num}}</td>--}}
-                            {{--<td>{{date('Y-m-d H:i:s',$order->pay_applydate)}}</td>--}}
-                            {{--<td>{{$order->pay_successdate?'':'___'}}</td>--}}
-                            {{--<td>{{$order->pay_zh_tongdao}}</td>--}}
-                            {{--<td>{{$order->pay_bankname}}</td>--}}
-                            {{--<td>{{$order->pay_tjurl}}</td>--}}
-                            {{--<td style="color: orange">{{$order->queryed?'成功':'未处理'}}</td>--}}
-                            {{--<td>--}}
-                            {{--<a href="{{route('')}}">查看</a>--}}
-                            {{--<a href="https://www.bilibili.com">查看</a>--}}
-                            {{--</td>--}}
-                            {{--</tr>--}}
-                            {{--@endforeach--}}
-                            <tr>
-                                <td>1</td>
-                                <td>user_id</td>
-                                <td>bankName</td>
-                                <td>withdrawAmount</td>
-                                <td>withdrawRate</td>
-                                <td>toAmount</td>
-                                <td>status</td>
-                                <td>created_at</td>
-                                <td>updated_at</td>
-                            </tr>
+                            @foreach($list as $v)
+                                <tr>
+                                    <td>{{$v->id}}</td>
+                                    <td>{{$v->user_id+10000}}</td>
+                                    <td>{{$v->bankName}}</td>
+                                    <td>{{$v->withdrawAmount}}</td>
+                                    <td>{{$v->withdrawRate}}</td>
+                                    <td>{{$v->toAmount}}</td>
+                                    <td>{{$v->status?'已结算':'未处理'}}</td>
+                                    <td>{{$v->created_at}}</td>
+                                    <td>__ __ __</td>
+                                </tr>
+                            @endforeach
                         </table>
+                        {{$list->links()}}
                     </div>
                 </div>
             </div>

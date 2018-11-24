@@ -33,7 +33,8 @@ Route::group([], function ($router) {
         Route::post('saveStatus','BankCardController@saveStatus')->name('users.saveStatus');
         //提现
         Route::get('clearing/{id}','WithdrawsController@clearing')->name('user.clearing');
-        Route::get('withdraws','WithdrawsController@index')->name('user.withdraws');
+        Route::post('apply','WithdrawsController@store')->name('user.apply');
+        Route::get('withdraws/{id}','WithdrawsController@index')->name('user.withdraws');
     });
 
 });

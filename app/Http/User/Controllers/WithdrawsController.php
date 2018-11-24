@@ -11,6 +11,7 @@ namespace App\Http\User\Controllers;
 
 use App\Services\BankCardService;
 use App\Services\WithdrawsService;
+use Illuminate\Http\Request;
 
 class WithdrawsController extends Controller
 {
@@ -21,21 +22,39 @@ class WithdrawsController extends Controller
      * WithdrawsController constructor.
      * @param WithdrawsService $withdrawsService
      */
-    public function __construct(WithdrawsService $withdrawsService,BankCardService $bankCardService)
+    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService)
     {
-        $this->withdrawsService=$withdrawsService;
-        $this->bankCardService=$bankCardService;
+        $this->withdrawsService = $withdrawsService;
+        $this->bankCardService = $bankCardService;
+
     }
 
-    public function index()
+    public function index($id)
     {
-        return view('Admin.User.withdraws');
+        $list = $this->withdrawsService->getAllPage($id, 10);
+        return view('Admin.User.withdraws', compact('list'));
     }
 
-    //结算申请
+
     public function clearing($id)
     {
         $list = $this->bankCardService->getAll($id);
-        return view('Admin.User.clearing',compact('list'));
+        $clearings = $this->withdrawsService->getAllPage($id, 10);
+        return view('Admin.User.clearing', compact('list', 'clearings'));
+    }
+
+    /**
+     * 申请结算
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request)
+    {
+        $result = $this->withdrawsService->add($request->input());
+        if ($result) {
+            return ajaxSuccess('结算申请中，请留意您的账单变化！');
+        } else {
+            return ajaxError('发起申请失败，请稍后重试！');
+        }
     }
 }

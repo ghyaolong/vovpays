@@ -17,12 +17,14 @@
                 </div>
 
                 <div class="box-body" id="bank">
-                    <form class="form-horizontal" id="form1">
+                    <form class="form-horizontal" id="form1" method="post" action="{{route('user.apply')}}">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="user_id" name="user_id">
                         <div class="form-group">
                             <label for="" class="col-sm-3 control-label">提现金额</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="withdrawAmount" placeholder="请输入提现金额"
-                                       value="0.00">
+                                <input type="text" class="form-control" id="withdrawAmount" placeholder="0.00"
+                                       name="withdrawAmount" value="0.00">
                             </div>
                         </div>
                         <div class="form-group">
@@ -35,30 +37,36 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label">持卡人</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="accountName" disabled="disabled">
+                                <input type="text" class="form-control" id="accountName" name="accountName1"
+                                       disabled="disabled">
+                                <input type="hidden" class="form-control" id="accountName" name="accountName">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-xs-3 control-label">银行名称</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="bankName" disabled="disabled">
+                                <input type="text" class="form-control" id="bankName" name="branchName1"
+                                       disabled="disabled">
+                                <input type="hidden" class="form-control" id="bankName" name="bankName">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-xs-3 control-label">银行卡号</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="bankCardNo" disabled="disabled">
+                                <input type="text" class="form-control" id="bankCardNo" name="bankCardNo1"
+                                       disabled="disabled">
+                                <input type="hidden" class="form-control" id="bankCardNo" name="bankCardNo">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-xs-3 control-label">提款密码</label>
                             <div class="col-xs-9">
-                                <input type="password" class="form-control" id="applyPws">
+                                <input type="password" class="form-control" id="applyPws" name="payPassword">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-6">
-                                <a class="btn btn-danger pull-right" id="applyBtn">&nbsp;申&nbsp;请&nbsp;</a>
+                                <a class="btn btn-danger pull-right" id="applyBtn" onclick="save1($(this))">&nbsp;申&nbsp;请&nbsp;</a>
                             </div>
                             <div class="col-xs-6">
                                 <input type="reset" class="btn btn-warning" value="&nbsp;重&nbsp;置&nbsp;">
@@ -71,7 +79,7 @@
         </div>
 
 
-        {{--结算申请--}}
+        {{--结算记录--}}
         <div class="col-md-8">
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
@@ -95,12 +103,20 @@
                             <th>状态</th>
                             <th>提现时间</th>
                         </tr>
-                        <tr>
-                            <td colspan="7">没有找到匹配的记录</td>
-                        </tr>
+                        @foreach($clearings as $vv)
+                            <tr>
+                                <th>{{$vv->bankName}}</th>
+                                <th>4114698698569856</th>
+                                <th>{{$vv->withdrawAmount}}</th>
+                                <th>{{$vv->withdrawRate}}</th>
+                                <th>{{$vv->toAmount}}</th>
+                                <th>{{$vv->status?'未处理':'处理中'}}</th>
+                                <th>{{$vv->created_at}}</th>
+                            </tr>
+                        @endforeach
                     </table>
+                    {{$clearings->links()}}
                 </div>
-
             </div>
         </div>
 
@@ -145,7 +161,6 @@
                     </table>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
                     </div>
                 </div>
             </div>
@@ -202,6 +217,31 @@
         /**
          * 提交
          */
+
+        function save1(_this) {
+            // formValidator();
+            $('#form1').data('bootstrapValidator').validate();
+            if (!$('#form1').data('bootstrapValidator').isValid()) {
+                return;
+            }
+            _this.removeAttr('onclick');
+
+            var $form = $('#form1');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if (result.status) {
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                    toastr.success(result.msg);
+                } else {
+                    _this.attr("onclick", "save1($(this))");
+                    toastr.error(result.msg);
+                }
+            }, 'json');
+
+        }
+
         function save(_this) {
             // formValidator();
             $('#bankForm').data('bootstrapValidator').validate();
@@ -269,6 +309,64 @@
 
 
         /**
+         * 结算申请，条件控制
+         */
+        $().ready(function () {
+            $('#form1').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    withdrawAmount: {
+                        validators: {
+                            notEmpty: {
+                                message: '提现金额不能为空'
+                            },
+                            regexp: {
+                                regexp: /^[1-9]\d{2,}[\.]?\d*/,
+                                message: '提现金额最小100'
+                            }
+
+                        }
+                    },
+                    bankName1: {
+                        validators: {
+                            notEmpty: {
+                                message: '您未选择银行卡！'
+                            },
+                        }
+                    },
+                    accountName1: {
+                        validators: {
+                            notEmpty: {
+                                message: '您未选择银行卡！'
+                            },
+                        }
+                    },
+                    bankCardNo1: {
+                        validators: {
+                            notEmpty: {
+                                message: '您未选择银行卡！'
+                            }
+                        },
+                    },
+                    payPassword:{
+                        validators:{
+                            notEmpty: {
+                                message: '提款密码不能为空！'
+                            }
+                        }
+                    }
+                }
+            })
+        });
+
+
+
+        /**
          * 显示模态框
          * @param title
          */
@@ -300,7 +398,7 @@
                         $("input[id='bankName']").val(result.data['branchName']);
                         $("input[id='bankCardNo']").val(result.data['bankCardNo']);
                         $("input[id='accountName']").val(result.data['accountName']);
-                        // $("input[name='status']").val(result.data['status']);
+                        $("input[id='user_id']").val(result.data['user_id']);
                         // $("input[name='id']").val(result.data['id']);
                         // $('.modal-title').html(title);
                         // $('#bank').modal('show');
