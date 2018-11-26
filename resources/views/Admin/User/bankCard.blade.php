@@ -49,8 +49,9 @@
                                         <td>{{$list->accountName}}</td>
                                         <td>{{$list->bankCardNo}}</td>
                                         <td>
-                                            <input class="switch-state" data-id="{{ $list['id'] }}" type="checkbox"
-                                                   @if($list['status'] == 1) checked @endif >
+                                            <input class="switch-state" data-id="{{ $list['id'] }}"
+                                                   data-user_id="{{ $list['user_id'] }}" type="checkbox"
+                                                   @if($list['status'] == 1) checked @endif>
                                         </td>
                                         <td>上次修改:{{$list->updated_at}}</td>
                                         <td>
@@ -156,10 +157,11 @@
                 size: "small",
                 onSwitchChange: function (event, state) {
                     var id = $(event.currentTarget).data('id');
+                    var user_id = $(event.currentTarget).data('user_id');
                     $.ajax({
                         type: 'POST',
                         url: '/user/saveStatus',
-                        data: {'status': state, 'id': id},
+                        data: {'status': state, 'id': id, 'user_id': user_id},
                         dataType: 'json',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

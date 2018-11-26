@@ -69,10 +69,10 @@ class BankCardService
      * @param array $data
      * @return mixed
      */
-    public function update(int $id,array $data)
+    public function update(int $id, array $data)
     {
         $data = array_except($data, ['id', '_token', 'user_id']);
-        return $this->bankCardRepository->update($id,$data);
+        return $this->bankCardRepository->update($id, $data);
     }
 
     /**
@@ -81,8 +81,20 @@ class BankCardService
      * @param array $data
      * @return mixed
      */
-    public function updateStatus(int $id,array $data)
+    public function updateStatus(int $id, array $data)
     {
-        return $this->bankCardRepository->update($id,$data);
+
+        if ($data['status'] == '0') {
+
+            return $this->bankCardRepository->update($id, $data);
+
+        } elseif($this->bankCardRepository->findStatus($data['user_id'])) {
+
+            return false;
+
+        }else{
+            return $this->bankCardRepository->update($id, $data);
+        }
+
     }
 }

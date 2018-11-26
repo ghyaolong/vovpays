@@ -20,41 +20,23 @@
                 </div>
 
                 <div class="box-body">
-                    <form class="navbar-form navbar-left" action="">
+                    <form class="navbar-form navbar-left" action="{{route('user.withdraws')}}" method="post">
                         {{ csrf_field() }}
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <div class="form-group">
                             <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
                                    placeholder="提现时间" name="orderTime"
                                    @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="orderNo" placeholder="系统订单">
-                        </div>&nbsp;&nbsp;
 
                         <div class="form-group">
-                            <input type="text" class="form-control" name="underOrderNo" placeholder="商户订单">
-                        </div>&nbsp;&nbsp;
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="商户号" name="userNo"/>
-                        </div>
-
-                        {{--<div class="form-group">--}}
-                        {{--<select class="form-control" id="channelId" name="channelId">--}}
-                        {{--<option value="-1">选着通道</option>--}}
-                        {{--@foreach($chanel_list as $v )--}}
-                        {{--<option value="{{ $v['id'] }}">{{ $v['channelName'] }}</option>--}}
-                        {{--@endforeach--}}
-                        {{--</select>--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group">--}}
-                        {{--<select class="form-control" id="paymentId" name="paymentId">--}}
-                        {{--<option value="-1">选着支付方式</option>--}}
+                        <select class="form-control" id="paymentId" name="paymentId">
+                        <option value="-1">支付方式</option>
                         {{--@foreach($payments_list as $v )--}}
                         {{--<option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>--}}
                         {{--@endforeach--}}
-                        {{--</select>--}}
-                        {{--</div>--}}
+                        </select>
+                        </div>
                         <div class="form-group">
                             <select class="form-control" id="status" name="status">
                                 <option value="0"
@@ -105,7 +87,7 @@
                                 </tr>
                             @endforeach
                         </table>
-                        {{$list->links()}}
+                        {{$list->appends($data)->links()}}
                     </div>
                 </div>
             </div>

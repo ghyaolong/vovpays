@@ -29,17 +29,24 @@ class WithdrawsController extends Controller
 
     }
 
-    public function index($id)
+    public function index(Request $request)
     {
-        $list = $this->withdrawsService->getAllPage($id, 10);
-        return view('Admin.User.withdraws', compact('list'));
+        $data=[];
+        if (count($request->input()) > 1) {
+            $data=$request->input();
+            $list = $this->withdrawsService->searchPage($data, 10);
+        }else{
+            $list=$this->withdrawsService->getAllPage(10);
+        }
+
+        return view('Admin.User.withdraws', compact('list','data'));
     }
 
 
     public function clearing($id)
     {
         $list = $this->bankCardService->getAll($id);
-        $clearings = $this->withdrawsService->getAllPage($id, 10);
+        $clearings = $this->withdrawsService->getAllPage(6);
         return view('Admin.User.clearing', compact('list', 'clearings'));
     }
 

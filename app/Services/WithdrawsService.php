@@ -32,11 +32,46 @@ class WithdrawsService
         $userRate = $this->userRateService->getFindUidPayId($data['user_id'], 1);
         $rate = $userRate['rate'];
         //提现手续费
-        $data['withdrawRate']=$data['withdrawAmount']*$rate;
+        $data['withdrawRate'] = $data['withdrawAmount'] * $rate;
         //到账金额
-        $data['toAmount']=$data['withdrawAmount']-$data['withdrawRate'];
+        $data['toAmount'] = $data['withdrawAmount'] - $data['withdrawRate'];
 
         return $this->withdrawsService->add($data);
+    }
+
+
+    /**
+     * 搜索分页
+     * @param array $data
+     * @param int $page
+     * @return mixed
+     */
+    public function searchPage(array $data, int $page)
+    {
+//        dd($data);exit;
+        $sql = '1=1';
+        $time=explode(" - ",$data['orderTime']);
+
+        if (isset($data['user_id']) && $data['user_id']) {
+            $sql .= ' and user_id = ?';
+            $where['user_id'] = $data['user_id'];
+        }
+
+        if (isset($time[0]) && $time[0]) {
+            $sql .= ' and created_at >= ?';
+            $where['created_at'] = $time[0];
+        }
+
+        if (isset($time[1]) && $time[1]) {
+            $sql .= ' and created_at <= ?';
+            $where['updated_at'] = $time[1];
+        }
+
+        if (isset($data['status']) && $data['status'] != '-1') {
+            $sql .= ' and status = ?';
+            $where['status'] = $data['status'];
+        }
+        return $this->withdrawsService->searchPage($sql, $where, $page);
     }
 
     /**
@@ -45,10 +80,10 @@ class WithdrawsService
      * @param int $page
      * @return mixed
      */
-    public function getAllPage(int $id, int $page)
+    public function getAllPage(int $page)
     {
-        $sql = '1=1';
-        $where['user_id'] = $id;
+        $sql = ' user_id=2 ';
+        $where = [];
         return $this->withdrawsService->searchPage($sql, $where, $page);
     }
 }

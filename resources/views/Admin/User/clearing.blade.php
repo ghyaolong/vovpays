@@ -144,7 +144,7 @@
                         @foreach($list as $v)
                             <tr>
                                 <td>
-                                    <input type="radio" onclick="edit('编辑',{{$v->id}})" data-dismiss="modal">
+                                    <input type="radio" onclick="edit('编辑',{{$v->id}})" @if($v->status==0) disabled="disabled" @endif data-dismiss="modal">
                                 </td>
                                 <td>{{$v->branchName}}</td>
                                 <td>{{$v->bankCardNo}}</td>

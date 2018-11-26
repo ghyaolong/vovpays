@@ -34,7 +34,8 @@ Route::group([], function ($router) {
         //提现
         Route::get('clearing/{id}','WithdrawsController@clearing')->name('user.clearing');
         Route::post('apply','WithdrawsController@store')->name('user.apply');
-        Route::get('withdraws/{id}','WithdrawsController@index')->name('user.withdraws');
+//        Route::any('withdraws/{id}','WithdrawsController@index')->name('user.withdraws');
+        Route::any('withdraws','WithdrawsController@index')->name('user.withdraws');
     });
 
 });

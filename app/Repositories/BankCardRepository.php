@@ -63,6 +63,16 @@ class BankCardRepository
     }
 
     /**
+     * 获取状态
+     * @param int $user_id
+     * @return mixed
+     */
+    public function findStatus(int $user_id)
+    {
+        return $this->bankCard->whereUserId($user_id)->whereStatus('1')->first();
+    }
+
+    /**
      * 编辑
      * @param int $id
      * @param array $data
