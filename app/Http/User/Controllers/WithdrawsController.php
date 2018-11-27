@@ -29,24 +29,41 @@ class WithdrawsController extends Controller
 
     }
 
+    /**
+     * 查询分页
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
-        $data=[];
+        $query=$request->input();
+        $data = [];
+
         if (count($request->input()) > 1) {
-            $data=$request->input();
+
+            $data = $request->input();
+
             $list = $this->withdrawsService->searchPage($data, 10);
-        }else{
-            $list=$this->withdrawsService->getAllPage(10);
+
+        } else {
+
+            $list = $this->withdrawsService->getAllPage(10);
         }
 
-        return view('Admin.User.withdraws', compact('list','data'));
+        return view('Admin.User.withdraws', compact('list', 'data','query'));
     }
 
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function clearing($id)
     {
         $list = $this->bankCardService->getAll($id);
+
         $clearings = $this->withdrawsService->getAllPage(6);
+
         return view('Admin.User.clearing', compact('list', 'clearings'));
     }
 
@@ -58,9 +75,13 @@ class WithdrawsController extends Controller
     public function store(Request $request)
     {
         $result = $this->withdrawsService->add($request->input());
+
         if ($result) {
+
             return ajaxSuccess('结算申请中，请留意您的账单变化！');
+
         } else {
+
             return ajaxError('发起申请失败，请稍后重试！');
         }
     }

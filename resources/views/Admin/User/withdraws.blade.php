@@ -30,12 +30,12 @@
                         </div>
 
                         <div class="form-group">
-                        <select class="form-control" id="paymentId" name="paymentId">
-                        <option value="-1">支付方式</option>
-                        {{--@foreach($payments_list as $v )--}}
-                        {{--<option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>--}}
-                        {{--@endforeach--}}
-                        </select>
+                            <select class="form-control" id="paymentId" name="paymentId">
+                                <option value="-1">支付方式</option>
+                                {{--@foreach($payments_list as $v )--}}
+                                {{--<option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>--}}
+                                {{--@endforeach--}}
+                            </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" id="status" name="status">
@@ -73,19 +73,25 @@
                                 <th>申请时间</th>
                                 <th>处理时间</th>
                             </tr>
-                            @foreach($list as $v)
+                            @if(isset($list[0]))
+                                @foreach($list as $v)
+                                    <tr>
+                                        <td>{{$v->id}}</td>
+                                        <td>{{$v->user_id+10000}}</td>
+                                        <td>{{$v->bankName}}</td>
+                                        <td>{{$v->withdrawAmount}}</td>
+                                        <td>{{$v->withdrawRate}}</td>
+                                        <td>{{$v->toAmount}}</td>
+                                        <td>{{$v->status?'已结算':'未处理'}}</td>
+                                        <td>{{$v->created_at}}</td>
+                                        <td>__ __ __</td>
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td>{{$v->id}}</td>
-                                    <td>{{$v->user_id+10000}}</td>
-                                    <td>{{$v->bankName}}</td>
-                                    <td>{{$v->withdrawAmount}}</td>
-                                    <td>{{$v->withdrawRate}}</td>
-                                    <td>{{$v->toAmount}}</td>
-                                    <td>{{$v->status?'已结算':'未处理'}}</td>
-                                    <td>{{$v->created_at}}</td>
-                                    <td>__ __ __</td>
+                                    <td colspan="9" style="color: #999999">没有找到匹配数据</td>
                                 </tr>
-                            @endforeach
+                            @endif
                         </table>
                         {{$list->appends($data)->links()}}
                     </div>

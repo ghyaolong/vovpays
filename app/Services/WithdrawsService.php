@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Repositories\WithdrawsRepository;
+use Illuminate\Support\Facades\Auth;
 
 class WithdrawsService
 {
@@ -27,7 +28,6 @@ class WithdrawsService
     {
         // 去掉无用数据
         $data = array_except($data, ['_token', 'bankCardNo', 'accountName', 'payPassword']);
-
         //获取费率
         $userRate = $this->userRateService->getFindUidPayId($data['user_id'], 1);
         $rate = $userRate['rate'];
@@ -48,7 +48,6 @@ class WithdrawsService
      */
     public function searchPage(array $data, int $page)
     {
-//        dd($data);exit;
         $sql = '1=1';
         $time=explode(" - ",$data['orderTime']);
 
@@ -82,8 +81,9 @@ class WithdrawsService
      */
     public function getAllPage(int $page)
     {
-        $sql = ' user_id=2 ';
-        $where = [];
+        $user_id=Auth::user()->id;
+        $sql = " user_id = {$user_id} ";
+        $where=[];
         return $this->withdrawsService->searchPage($sql, $where, $page);
     }
 }
