@@ -57,6 +57,11 @@ class UsersRepository
         return $this->user->whereId($id)->first();
     }
 
+    public function findUser(string $username)
+    {
+        return $this->user->whereUsername($username)->first();
+    }
+
     /**
      * 查询一条
      * @param string $sql

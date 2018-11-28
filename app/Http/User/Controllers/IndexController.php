@@ -77,4 +77,10 @@ class IndexController extends Controller
     {
         return view('Admin.User.main');
     }
+
+    //验证器
+    public function validator()
+    {
+        return view('Admin.User.validator');
+    }
 }

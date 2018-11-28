@@ -75,6 +75,16 @@ class UserService
     }
 
     /**
+     * 根据username获取
+     * @param string $username
+     * @return mixed
+     */
+    public function findUser(string $username)
+    {
+        return $this->usersRepository->findUser($username);
+    }
+
+    /**
      * 根据商户号获取
      * @param string $merchant
      * @return array
@@ -96,6 +106,19 @@ class UserService
     {
         $sql = ' group_type = ? and status <> 2';
         $where['group_type'] = $group_id;
+        return $this->usersRepository->searchPage($sql, $where, $page);
+    }
+
+    /**
+     * 根据标识$parent_id获取用户分页
+     * @param int $parent_id
+     * @param int $page
+     * @return mixed
+     */
+    public function getAllParentPage(int $parentId, int $page)
+    {
+        $sql = 'parentId=? and status <>2';
+        $where['parentId'] = $parentId;
         return $this->usersRepository->searchPage($sql, $where, $page);
     }
 

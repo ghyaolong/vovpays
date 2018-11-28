@@ -53,10 +53,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-//        'agent' => [
-//            'driver' => 'session',
-//            'provider' => 'agents',
-//        ],
+        'agent' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -85,10 +85,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
-//        'agents' => [
-//            'driver' => 'eloquent',
-//            'provider' => App\Models\Agents::class,
-//        ],
+        'agents' => [
+            'driver' => 'eloquent',
+            'provider' => App\Models\User::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
