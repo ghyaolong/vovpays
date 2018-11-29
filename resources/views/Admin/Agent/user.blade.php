@@ -6,7 +6,7 @@
 @section('content')
 
     <section class="content">
-        <div class="row">
+        <div class="row" style="margin-top: 20px">
             <p style="margin-left: 16px;margin-bottom: 20px">
                 <button type="submit" class="btn btn-primary" onclick="showModel('添加商户')">添加商户</button>
             </p>

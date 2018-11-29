@@ -36,7 +36,6 @@
     <div class="content-wrapper">
         <!-- 内容导航 -->
         <section class="content-header">
-            <h1>@yield("title",'后台主页')</h1>
             <ol class="breadcrumb">
                 <li><a href="{{ route('user') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
                 <li class="active">@yield("title",'后台主页')</li>

@@ -6,7 +6,7 @@
 @endsection
 @section('content')
 
-    <div class="row">
+    <div class="row" style="margin-top: 20px">
         <!-- ./col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-aqua">

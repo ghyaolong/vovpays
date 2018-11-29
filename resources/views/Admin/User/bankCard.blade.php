@@ -6,7 +6,7 @@
 @section('content')
 
     @if(isset($lists[0]))
-        <div class="row" style="margin: 70px 0px">
+        <div class="row" style="margin-top: 20px">
             <div class="col-xs-12 col-md-12">
 
 

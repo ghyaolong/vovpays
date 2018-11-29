@@ -4,16 +4,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}"/>
 @endsection
 @section('content')
-    <table id="example2" class="table table-condensed">
-        <tr>
-            <th>
-            </th>
-        </tr>
-    </table>
-    <br>
 
     <section class="content">
-        <div class="row">
+        <div class="row" style="margin-top: 20px">
             <div class="col-xs-12">
                 <div class="box box-primary box-solid">
                     <div class="box-header with-border">

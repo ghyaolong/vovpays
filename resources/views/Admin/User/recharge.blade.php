@@ -5,7 +5,7 @@
           href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endsection
 @section('content')
-    <div class="row">
+    <div class="row" style="margin-top: 20px">
 
         <div class="col-md-6">
             <div class="box box-primary box-solid">

@@ -1,7 +1,7 @@
 @extends("Admin.User.commons.layout")
 @section('title','结算管理')
 @section('content')
-    <div class="row">
+    <div class="row" style="margin-top: 20px">
 
         {{--结算申请--}}
         <div class="col-md-4">
