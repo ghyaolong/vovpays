@@ -24,9 +24,13 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+//    public function index()
+//    {
+//        return view('Admin.User.home');
+//    }
     public function index()
     {
-        return view('Admin.User.home');
+        return view('Admin.User.index');
     }
 
     //用户列表展示

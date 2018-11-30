@@ -5,10 +5,11 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
 
-            <li class="header">推广管理</li>
+            <li class="header">账户管理</li>
 
             <li class="active treeview">
-            <li><a href="{{route('agent.extension')}}"><i class="fa fa-circle-o text-aqua"></i> <span>推广地址</span></a></li>
+            {{--<li><a href="{{route('agent.extension')}}"><i class="fa fa-circle-o text-aqua"></i> <span>推广地址</span></a></li>--}}
+            <li><a href="{{route('agent.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>主页</span></a></li>
             </li>
 
             <li class="header">商户管理</li>

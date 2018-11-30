@@ -64,6 +64,16 @@ class BankCardService
     }
 
     /**
+     * 获取状态为1的银行卡
+     * @param int $user_id
+     * @return mixed
+     */
+    public function findStatus(int $user_id)
+    {
+        return $this->bankCardRepository->findStatus($user_id);
+    }
+
+    /**
      * 编辑
      * @param int $id
      * @param array $data

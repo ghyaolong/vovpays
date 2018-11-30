@@ -44,6 +44,11 @@ class UserController extends Controller
         return view('Admin.Agent.user', compact('list', 'data'));
     }
 
+    /**
+     * 添加
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function add(Request $request)
     {
         $result = $this->userService->add($request->input());
@@ -53,10 +58,28 @@ class UserController extends Controller
         } else {
             return ajaxError('商户添加失败!');
         }
-
-
+        
     }
 
+    /**
+     * 下属商户状态修改
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveStatus(Request $request)
+    {
+        $data['status'] = $request->status == 'true' ? '1' : '0';
+
+        $result = $this->userService->updateStatus($request->id, $data);
+
+        if($result)
+        {
+            return ajaxSuccess('修改成功！');
+        }else{
+            return ajaxError('修改失败！');
+        }
+        
+    }
     /**
      * 唯一验证
      * @param Request $request
@@ -64,7 +87,6 @@ class UserController extends Controller
      */
     public function checkUnique(Request $request)
     {
-//        var_dump($request->type);exit;
         $result = $this->checkUniqueService->check('users', $request->type, $request->value, $request->id);
 
         if($result){

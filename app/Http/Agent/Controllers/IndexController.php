@@ -10,19 +10,21 @@ namespace App\Http\Agent\Controllers;
 
 
 use App\Services\AgentService;
+use App\Services\BankCardService;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
-    protected $agentService;
+    protected $bankCardService;
 
     /**
      * IndexController constructor.
-     * @param AgentService $agentService
+     * @param BankCardService $bankCardService
      */
-//    public function __construct(AgentService $agentService)
-//    {
-//        $this->agentService = $agentService;
-//    }
+    public function __construct(BankCardService $bankCardService)
+    {
+        $this->bankCardService = $bankCardService;
+    }
 
 
     /**
@@ -31,7 +33,12 @@ class IndexController extends Controller
      */
     public function show()
     {
-        return view('Admin.Agent.index');
+        $uid=Auth::user()->id;
+        $list = $this->bankCardService->findStatus($uid);
+//        dd($list->bankCardNo);exit;
+        $list->bankCardNo=substr_replace($list->bankCardNo," **** **** **** ",3,12);
+//        dd($list->bankCardNo);exit;
+        return view('Admin.Agent.index',compact('list'));
     }
 
     /**

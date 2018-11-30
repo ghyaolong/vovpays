@@ -232,7 +232,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/admin/users/saveStatus',
+                        url: '/agent/saveStatus',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {

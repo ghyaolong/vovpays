@@ -18,6 +18,7 @@ Route::group([], function ($router) {
     Route::group(['middleware' => 'auth:user'], function () {
         //用户管理，密码
         Route::get('/', 'IndexController@index')->name('user');
+        Route::get('index', 'IndexController@index')->name('user.index');
         Route::any('user', 'IndexController@user')->name('user.user');
         Route::post('editPassword', 'IndexController@editPassword')->name('user.editPassword');
         Route::delete('users','IndexController@destroy')->name('user.destroy');
