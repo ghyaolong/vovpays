@@ -41,14 +41,6 @@ class IndexController extends Controller
         return view('Admin.Agent.index',compact('list'));
     }
 
-    /**
-     * 推广地址
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function extension()
-    {
-        return view('Admin.Agent.extension');
-    }
 
     /**
      * 商户费率

@@ -30,6 +30,7 @@ Route::group([], function ($router) {
         Route::get('order', 'OrderController@index')->name('agent.order');
 
         Route::get('bankCard', 'BankCardController@index')->name('agent.bankCard');
+        Route::post('store','BankCardController@store')->name('agent.store');
 
         //提现
         Route::get('clearing','WithdrawsController@clearing')->name('agent.clearing');

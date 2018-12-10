@@ -1,546 +1,320 @@
 @extends("Admin.User.commons.layout")
-@section('title','用户管理')
-@section('css')
-    <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}"/>
-@endsection
+@section('title','账户管理')
 @section('content')
+    <style>
+        ul.uul {
+            margin-top: 20px;
+            margin-left: 0px;
+        }
 
-    <section class="content">
-        <div class="row" style="margin-top: 20px">
-            <div class="col-xs-12">
-                <div class="box box-primary box-solid">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">用户列表</h3>
+        li.lli {
+            padding: 0px;
+            font-size: 40px;
+            line-height: 33px;
+            align-content: center;
+            color: #A4A1FB;
+        }
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
+        b.bbt {
+            font-size: 15px;
+            color: black;
+            font-weight: bold;
+            line-height: 1px;
+        }
+
+        span.spa {
+            line-height: 3px;
+            font-size: 13px;
+            color: #999999;
+        }
+
+        div.col-md-9 {
+            border-radius: 6px
+        }
+
+        textarea {
+            resize: none;
+        }
+    </style>
+    <div class="row" style="margin: 10px 100px">
+
+        {{--我的钱包--}}
+        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
+            <p style="font-size: 18px;margin: 15px;display: inline-block">
+                我的钱包
+            </p>
+            <a href=""><i class="glyphicon glyphicon-cog" style="color: #999999;float: right;margin: 15px"></i></a>
+
+            <div class="row">
+
+                <p class="col-md-8 col-sm-8 col-xs-8" style="margin-left: 15px;">
+                    账户余额（元）
+                </p>
+
+                <b class="col-md-3 col-sm-3 col-xs-3"
+                   style="font-size: 15px;color: #3CC480;">￥50,000
+                </b>
+                <div style="border-bottom: #cccccc solid 1px;height: 25px;width:350px;margin: auto 20px">
+                </div>
+                <div style="text-align: center">
+                    <img src="/AdminLte/dist/img/agent/48.png" alt="" style="margin-top: 20px">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div style="height: 130px; width: 460px;margin: auto 20px;padding-top: 50px">
+                    <ul class="">
+
+                        <li class="lli col-md-6" style="">
+                            <span style="font-size: 15px;color: #666666;line-height: 1px">可提现金额</span><br>
+                            <span style="font-size: 13px;color: #999999;line-height: 1px">￥18，570</span>
+                        </li>
+
+                        <li class="lli col-md-6">
+                            <span style="font-size: 15px;color: #666666;line-height: 1px">待解冻金额</span><br>
+                            <span style="font-size: 13px;color: #999999;line-height: 1px">￥18.81</span>
+                        </li>
+
+                    </ul>
+                    <hr style="border-top:none ;border-bottom: #cccccc solid 1px;width: 350px;margin-right: 110px;height: 10px">
+                </div>
+                <input class="btn btn-default" type="button" value="申请提现"
+                       style="color: #3B86FF;border: #3B86FF solid 1px;height: 50px;width: 180px;background: #ffffff;margin: 20px 100px;font-size: 15px"/>
+            </div>
+
+        </div>
+
+        {{--基础信息--}}
+        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
+            <p style="font-size: 18px;margin: 15px;display: inline-block">
+                基础信息
+            </p>
+            <a href=""><i class="glyphicon glyphicon-cog" style="color: #999999;float: right;margin: 15px"></i></a>
+
+            <div class="row">
+                <p class="col-md-6" style="font-size: 28px;margin:15px 15px 0px 15px;display: inline-block">
+                    2541.66RMB
+                </p>
+
+                <img src="/AdminLte/dist/img/agent/tjt.png" alt="" style="margin-top: 15px">
+
+                <span class="glyphicon glyphicon-arrow-up"
+                      style="font-size: 11px;margin:-15px 0 0 30px;color: #3CC480">13.8%</span>
+            </div>
+
+
+            <ul class="uul">
+                <li class="lli">
+                    <b class="bbt">姓名</b><br>
+                    <span class="spa">Don.t</span>
+                </li>
+
+
+                <li class="lli  col-md-6" style="float: right;">
+                    <b class="bbt">身份证号码</b><br>
+                    <span class="spa">50022119870903541x</span>
+                </li>
+
+                <li class="lli">
+                    <b class="bbt">手机</b><br>
+                    <span class="spa">17749920375</span>
+                </li>
+
+
+                <li class="lli col-md-6" style="float: right;">
+                    <b class="bbt">联系地址</b><br>
+                    <span class="spa">重庆市渝中区大坪长江支
+                        路10号</span>
+                </li>
+
+                <li class="lli">
+                    <b class="bbt">QQ</b><br>
+                    <span class="spa">33659854</span>
+                </li>
+
+
+                <li class="lli">
+                    <b class="bbt">Email</b><br>
+                    <span class="spa">1950796924@qq.com</span>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+        {{--最近登陆记录--}}
+        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
+            <p style="font-size: 18px;margin: 15px;">最近登陆记录</p>
+            <div class="row" style="text-align: center">
+                <img src="/AdminLte/dist/img/agent/dt.png" alt="">
+            </div>
+            <table class="table" style="width: 340px;margin: 20px 10px 0 10px;font-size: 13px">
+                <tr>
+                    <td>127.369.15.29</td>
+                    <td>贵州省贵阳市-电信ADSL</td>
+                </tr>
+                <tr>
+                    <td>113.248.148.40</td>
+                    <td>重庆市-电信</td>
+                </tr>
+                <tr>
+                    <td>113.248.148.40</td>
+                    <td>重庆市-电信</td>
+                </tr>
+                <tr>
+                    <td>113.248.148.40</td>
+                    <td>重庆市-电信</td>
+                </tr>
+                <tr>
+                    <td>113.248.148.40</td>
+                    <td>重庆市-电信</td>
+                </tr>
+            </table>
+            <hr style="margin-top: 0px">
+            <a href="" style="text-align: center;"><p>更多</p></a>
+        </div>
+
+        {{--商户费率--}}
+        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
+            <p style="font-size: 18px;margin: 15px;">商户费率</p>
+            <div class="row" style="text-align: center">
+                <img src="/AdminLte/dist/img/agent/sh.png" alt="" style="margin-top: 20px">
+            </div>
+            <table class="table" style="width: 340px;margin: 60px 10px 0 10px;font-size: 13px">
+                <tr style="color: #999999;background: #f5f6f9">
+                    <th>通道名称</th>
+                    <th>充值费率</th>
+                    <th>封顶费率</th>
+                </tr>
+                <tr>
+                    <td>支付宝直通</td>
+                    <td>0‰</td>
+                    <td>0‰</td>
+                </tr>
+                <tr>
+                    <td>京东PC</td>
+                    <td>25‰</td>
+                    <td>0‰</td>
+                </tr>
+                <tr>
+                    <td>支付宝H5</td>
+                    <td>25‰</td>
+                    <td>0‰</td>
+                </tr>
+            </table>
+        </div>
+
+        {{--银行卡管理--}}
+        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
+            <p style="font-size: 18px;margin: 15px;">银行卡管理</p>
+
+            <div class="col-md-9"
+                 style="background:linear-gradient(#A3A0FB,#74A8FF);height: 137px;margin-left:45px;margin-top: 20px">
+                <ul>
+                    <li style="font-size: 16px;color: #FFFFFF;margin-top: 15px;margin-left: -15px">{{$list->branchName}}</li>
+                </ul>
+                <ul class="list-inline" style="text-align: center;margin-top: 30px">
+                    <li style="font-size: 19px;color: #FFFFFF;">{{$list->bankCardNo}}</li>
+                </ul>
+            </div>
+
+            <div class="row" style="text-align: center;font-size: 18px">
+                <p class="col-md-12" style="margin: 18px auto;color: #999999">上次修改:{{$list->updated_at}}</p>
+                <p class="col-md-12" style="">这是你的默认提现 <br> 银行卡</p>
+
+                <span class="col-md-12" style="text-align: center">
+                    <a class="col-md-4 btn btn-info"
+                       style="margin: 50px 90px;width: 185px;height: 50px;font-size: 15px;background: #3B86FF"
+                       onclick="showModel('添加银行卡')"><p
+                                style="margin-top: 8px">添加</p></a>
+                </span>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    {{--模态框--}}
+    <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;">
+                    <form id="bankForm" action="{{ route('user.store') }}" class="form-horizontal" role="form"
+                          method="post">
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                        <input type="hidden" name="id">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">银行名称:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="" placeholder="请输入银行名称" value="中国银行">
+                            </div>
                         </div>
-                    </div>
-
-                        <div class="box-body">
-
-                            <div class="container-fluid">
-                                <!-- Collect the nav links, forms, and other content for toggling -->
-                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
-                                     style="background: #ffffff">
-                                    <form class="navbar-form navbar-left" action="{{route('user.user')}}" method="post">
-                                        {{ csrf_field() }}
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="merchant" placeholder="商户号">
-                                        </div>&nbsp;&nbsp;
-
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="username" placeholder="用户名">
-                                        </div>&nbsp;&nbsp;
-
-                                        <div class="form-group">
-                                            <select name="status" id="status" class="form-control">
-                                                <option value="">状态</option>
-                                                <option value="1">正常</option>
-                                                <option value="0">禁用</option>
-                                                <option value="2">已删除</option>
-                                            </select>
-                                        </div>&nbsp;&nbsp;
-
-                                        <div class="form-group">
-                                            <select name="queryed" id="" class="form-control">
-                                                <option value="1">商户</option>
-                                                <option value="0">代理商</option>
-                                            </select>
-                                        </div>&nbsp;&nbsp;
-                                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
-                                    </form>
-
-                                </div><!-- /.navbar-collapse -->
-                            </div><!-- /.container-fluid -->
-                            <br>
-                            <table id="example2" class="table table-condensed table-bordered table-hover">
-                                <thead>
-                                <tr style="font-size: 16px;height: 43px">
-                                    <th>商户号</th>
-                                    <th>用户名</th>
-                                    <th>用户类型</th>
-                                    <th>上级用户</th>
-                                    <th>状态</th>
-                                    <th>认证</th>
-                                    <th>账户总额</th>
-                                    <th>注册时间</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($users as $user)
-                                    <tr>
-                                        <td><a href="" target="_blank">{{$user->merchant}}</a></td>
-                                        <td>{{$user->username}}</td>
-                                        <td>普通商户</td>
-                                        <td>总管理员</td>
-                                        <td>
-                                            <input class="switch-state" name="status" data-id="{{$user->id}}"
-                                                   type="checkbox"
-                                                   @if($user->status==1) checked @endif >
-                                        </td>
-                                        <td>
-                                            <span class="label label-success">已认证</span>
-                                        </td>
-                                        <td>
-                                            可提现：1000 冻结：0.4
-                                        </td>
-                                        <td>{{$user->created_at}}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button class="btn btn-primary btn-sm" onclick="withdrawal('提现设置','#')">
-                                                    提现
-                                                </button>
-                                                <button class="btn btn-primary btn-sm" onclick="editTd('编辑通道','#',800)">
-                                                    通道
-                                                </button>
-                                                <button class="btn btn-primary btn-sm" onclick="rate('编辑费率')">费率
-                                                </button>
-                                                <button class="btn btn-primary btn-sm" onclick="editPwd('编辑密码')">密码
-                                                </button>
-                                                <button class="btn btn-primary btn-sm"
-                                                        onclick="edit('编辑',{{$user->id}})">
-                                                    编辑
-                                                </button>
-                                                <button class="btn btn-primary btn-sm"
-                                                        onclick="del($(this),{{$user->id}})">
-                                                    删除
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            {{$users->appends($data)->links()}}
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">支行名称:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="branchName" placeholder="请输入支行名称">
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-    </section>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">开户名:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="accountName" placeholder="请输入开户名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">银行卡号:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="bankCardNo" placeholder="请输入银行卡号">
+                            </div>
+                        </div>
 
-    {{--编辑模态--}}
-    <section>
-        <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="usersForm" action="{{ route('users.store') }}" class="form-horizontal" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">用户名</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" id="username" name="username"
-                                           placeholder="用户名">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">密码</label>
-                                <div class="col-xs-9">
-                                    <input type="password" class="form-control" name="password" placeholder="密码">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">确认密码</label>
-                                <div class="col-xs-9">
-                                    <input type="password" class="form-control" name="password_confirmation"
-                                           placeholder="确认密码">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">邮箱</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="email" placeholder="邮箱">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">电话</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="phone" placeholder="电话">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">用户组</label>
-                                <div class="col-xs-9">
-
-                                    <select class="form-control" name="groupType">
-                                        <option value="1">商户</option>
-                                        <option value="2">代理商</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">上级代理</label>
-                                <div class="col-xs-9">
-                                    <select class="form-control selectpicker" name="parentId">
-                                        <option value="0">无</option>
-                                        @foreach($agent_list as $v)
-                                            <option value="{{ $v['id'] }}">{{ $v['username'] }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="help-block" style="color: #FF0000; font-size: 12px;">
-                                <i class="fa fa-info-circle"></i>用户组为代理商，上级代理选着无
-                            </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">状态</label>
-                                <div class="col-xs-9">
-
-                                    <select class="form-control" name="status">
-                                        <option value="1">启用</option>
-                                        <option value="0">禁用</option>
-                                        <option value="2">删除</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    {{--密码模态--}}
-    <section>
-        <div class="modal fade" id="editPwdModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="" class="form-horizontal" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">登陆密码:</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-inline" name="title" placeholder="修改登陆密码"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
-                                    <span style="color: #999999">不修改密码，请留空</span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label for="" class="col-xs-3 control-label">支付密码:</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-inline" name="uri" placeholder="修改支付密码"
-                                           style="width: 150px;height: 35px;margin-right: 10px">
-                                    <span style="color: #999999">不修改密码，请留空</span>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{--费率--}}
-    <section>
-        <div class="modal fade" id="rateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="" class="form-horizontal" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <table class="table table-hover table-bordered">
-                                <tr style="background: #eeeeee">
-                                    <th>支付产品</th>
-                                    <th>交易费率</th>
-                                </tr>
-                                <tr>
-                                    <td>支付宝H5</td>
-                                    <td><input type="text" class="form-control" placeholder="0.00" style="width: 90px">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>微信</td>
-                                    <td><input type="text" class="form-control" placeholder="0.00" style="width: 90px">
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{--通道--}}
-    <section>
-        <div class="modal fade" id="editTdModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content" style="width: 800px">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="" class="form-horizontal" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <table class="table table-hover">
-                                <tr>
-                                    <th>接口名称</th>
-                                    <th>接口状态</th>
-                                    <th>操作</th>
-                                </tr>
-                                <tr>
-                                    <td>支付宝H5</td>
-                                    <td><input class="switch-state" data-id="1" type="checkbox" checked></td>
-                                    <td>
-                                        <select name="" class="form-control" id="exampleInputAmount"
-                                                style="width: 196px">
-                                            <option value="">请选择</option>
-                                            <option value="">XX支付</option>
-                                            <option value="">XX支付</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>微信</td>
-                                    <td>
-                                        <input class="switch-state" data-id="1" type="checkbox" checked>
-                                    </td>
-                                    <td>
-                                        <select name="" class="form-control" id="exampleInputAmount"
-                                                style="width: 196px">
-                                            <option value="">请选择</option>
-                                            <option value="">XX支付</option>
-                                            <option value="">XX支付</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{--提现--}}
-    <section>
-        <div class="modal fade" id="withdrawalModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content" style="width: 800px;height: 500px">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="" class="form-inline" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px">单笔最小金额:</div>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="0.00">
-                            </div>
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px">单笔最大金额:</div>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="0.00">
-                            </div>
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px">当日总金额:</div>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="0.00">
-                            </div>
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px">当日总次数:</div>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="0">
-                            </div>
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px;border-right:1px">
-                                    结算方式:
-                                </div>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="0">
-                                {{--<input type="radio" class="" id="exampleInputAmount">T+0--}}
-                                {{--<input type="radio" class="" id="exampleInputAmount">T+1--}}
-                            </div>
-                            <br>
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px">手续费类型:</div>
-                                <select name="" class="form-control" id="exampleInputAmount" style="width: 196px">
-                                    <option value="" class="form-control" id="exampleInputAmount">请选择</option>
-                                    <option value="" class="form-control" id="exampleInputAmount" selected>按比例结算
-                                    </option>
-                                    <option value="" class="form-control" id="exampleInputAmount">按单笔结算</option>
-                                </select>
-                            </div>
-                            <br>
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px">提款比例(%):</div>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="%">
-                            </div>
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px">单笔提款收取:</div>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="0.00">
-                            </div>
-                            <div class="input-group" style="margin: 10px 5px">
-                                <div class="input-group-addon" style="width: 120px;height: 34px">提款状态:</div>
-                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="0.00">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 @endsection
+
+
 @section("scripts")
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
-    <script>
-        $(function () {
-            // formValidator();
+    <script type="text/javascript">
 
-            // 状态修改
-            $('.switch-state').bootstrapSwitch({
-                onText: '正常',
-                offText: '禁用',
-                onColor: "primary",
-                offColor: "danger",
-                size: "small",
-                onSwitchChange: function (event, state) {
-                    var id = $(event.currentTarget).data('id');
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/users/saveStatus',
-                        data: {'status': state, 'id': id},
-                        dataType: 'json',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function (result) {
-                            if (result.status) {
-                                toastr.success(result.msg);
-                            } else {
-                                $('#addModel').modal('hide');
-                                toastr.error(result.msg);
-                            }
-                        },
-                        error: function (XMLHttpRequest, textStatus) {
-                            toastr.error('通信失败');
-                        }
-                    })
-                }
-            })
-
-            // 模态关闭
-            $('#addModel').on('hidden.bs.modal', function () {
-                $("#ruleForm").data('bootstrapValidator').destroy();
-                $('#ruleForm').data('bootstrapValidator', null);
-                $('#ruleForm').get(0).reset();
-                formValidator();
-            });
-
-        })
-
-
-        /**
-         * 显示模态框
-         */
-        // function edit(title) {
-        //     $('.modal-title').html(title);
-        //     $('#editModel').modal('show');
-        // }
-
-        function edit(title, id) {
-            $.ajax({
-                type: 'get',
-                url: '/admin/users/' + id + '/edit',
-                dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (result) {
-                    if (result.status == 1) {
-                        $("#username").val(result.data['username']);
-                        $("input[name='phone']").val(result.data['phone']);
-                        $("input[name='email']").val(result.data['email']);
-                        $("select[name='status']").val(result.data['status']);
-                        $("select[name='groupType']").val(result.data['group_type']);
-                        $("select[name='parentId']").val(result.data['parentId']);
-                        $("input[name='id']").val(result.data['id']);
-                        $("input[name='password']").val(result.data['password']);
-                        $("input[name='password_confirmation']").val(result.data['password']);
-                        $('.modal-title').html(title);
-                        $('#addModel').modal('show');
-                    }
-                },
-                error: function (XMLHttpRequest, textStatus) {
-                    toastr.error('通信失败');
-                }
-            })
-        }
-
-        function editPwd(title) {
-            $('.modal-title').html(title);
-            $('#editPwdModel').modal('show');
-        }
-
-        function rate(title) {
-            $('.modal-title').html(title);
-            $('#rateModel').modal('show');
-        }
-
-        function editTd(title) {
-            $('.modal-title').html(title);
-            $('#editTdModel').modal('show');
-        }
-
-        function withdrawal(title) {
-            $('.modal-title').html(title);
-            $('#withdrawalModel').modal('show');
+        function jsCopy() {
+            var e = document.getElementById("contents");//对象是contents
+            e.select(); //选择对象
+            tag = document.execCommand("Copy"); //执行浏览器复制命令
+            if (tag) {
+                alert('复制内容成功');
+            }
         }
 
         /**
          * 提交
          */
         function save(_this) {
-            //开启验证
-            $('#ruleForm').data('bootstrapValidator').validate();
-            if (!$('#ruleForm').data('bootstrapValidator').isValid()) {
+            // formValidator();
+            $('#bankForm').data('bootstrapValidator').validate();
+            if (!$('#bankForm').data('bootstrapValidator').isValid()) {
                 return;
             }
             _this.removeAttr('onclick');
 
-            var $form = $('#ruleForm');
+            var $form = $('#bankForm');
             $.post($form.attr('action'), $form.serialize(), function (result) {
                 if (result.status) {
                     $('#addModel').modal('hide');
@@ -559,37 +333,53 @@
         }
 
 
-        function del(_this, id) {
-            swal({
-                title: "您确定要删除吗？",
-                text: "删除后不能恢复！",
-                type: "warning",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-            }, function () {
-                $.ajax({
-                    type: 'delete',
-                    url: '/user/users',
-                    data: {'id': id},
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (result) {
-                        if (result.status) {
-                            _this.parents('tr').empty();
-                            swal(result.msg, "会员已被删除。", "success")
-                        } else {
-                            swal(result.msg, "会员没有被删除。", "error")
+        $().ready(function () {
+            $('#bankForm').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    branchName: {
+                        validators: {
+                            notEmpty: {
+                                message: '支行名称不能为空!'
+                            },
                         }
-
                     },
-                    error: function (XMLHttpRequest, textStatus) {
-                        toastr.error('通信失败');
-                    }
-                })
-            });
+                    accountName: {
+                        validators: {
+                            notEmpty: {
+                                message: '开户名不能为空!'
+                            },
+                        }
+                    },
+                    bankCardNo: {
+                        validators: {
+                            notEmpty: {
+                                message: '银行卡号不能为空!'
+                            },
+                            regexp: {
+                                regexp: /^([1-9]{1})(\d{14}|\d{18})$/,
+                                message: '请输入正确的银行卡号！'
+                            }
+                        },
+                    },
+                }
+            })
+        });
+
+
+        /**
+         * 显示模态框
+         * @param title
+         */
+        function showModel(title) {
+            $('#addModel .modal-title').html(title);
+            $('#addModel').modal('show');
         }
+
     </script>
 @endsection

@@ -24,6 +24,7 @@ Route::group([], function ($router) {
         Route::delete('users','IndexController@destroy')->name('user.destroy');
         Route::get('main','IndexController@main')->name('user.main');
         Route::get('validator','IndexController@validator')->name('user.validator');
+        Route::get('api','IndexController@api')->name('user.api');
         //订单
         Route::get('order','OrderController@show')->name('user.order');
         Route::get('recharge','OrderController@recharge')->name('user.recharge');

@@ -2,21 +2,25 @@
 
 namespace App\Http\User\Controllers;
 
+use App\Services\BankCardService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
     protected $userService;
+    protected $bankCardService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, BankCardService $bankCardService)
     {
         $this->userService = $userService;
+        $this->bankCardService = $bankCardService;
     }
 
     /**
@@ -34,17 +38,12 @@ class IndexController extends Controller
     }
 
     //用户列表展示
-    public function user(Request $request)
+    public function user()
     {
-        $data = $request->input();
-        if (count($data)) {
-            $users = $this->userService->searchPage($data, 10);
-        } else {
-            $users = $this->userService->getAllGroupPage(1, 10);
-        }
-
-        $agent_list = $this->userService->getGroupAll(2);
-        return view('Admin.User.user', compact('users', 'data', 'agent_list'));
+        $uid = Auth::user()->id;
+        $list = $this->bankCardService->findStatus($uid);
+        $list->bankCardNo = substr_replace($list->bankCardNo, " **** **** **** ", 3, 12);
+        return view('Admin.User.user', compact('list'));
     }
 
 
@@ -67,7 +66,7 @@ class IndexController extends Controller
     {
         $data = $request->input();
         $id = $request->input('id');
-        $result = $this->userService->updatePassword($id,$data);
+        $result = $this->userService->updatePassword($id, $data);
 
         if ($result) {
             return ajaxSuccess('密码修改成功！');
@@ -86,5 +85,11 @@ class IndexController extends Controller
     public function validator()
     {
         return view('Admin.User.validator');
+    }
+
+    //API
+    public function api()
+    {
+        return view('Admin.User.api');
     }
 }

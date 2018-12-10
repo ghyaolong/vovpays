@@ -6,12 +6,9 @@
 @section('content')
     <div class="content-wrapper" style="padding: 0;margin: 0">
 
-
-
             <div class="row" style="margin-top: 20px;">
-                <div class="col-md-3 col-sm-10" style="height: 133px;background: #ffffff;margin-left: 130px;margin-top: 20px">
+                <div class="col-md-3 col-lg-3 col-sm-8  col-xs-8" style="height: 133px;background: #ffffff;margin-left: 130px;margin-top: 20px">
                     <p style="font-size: 15px;margin: 15px;color: #999999">今日收益</p>
-                    {{--<div class="row">--}}
                     <b class="col-md-6" style="font-size: 28px;display: inline-block">
                         32541.66RMB
                     </b>
@@ -20,14 +17,12 @@
 
                     <span class="glyphicon glyphicon-arrow-up"
                           style="font-size: 11px;margin:38px -180px;color: #3CC480">13.8%</span>
-                    {{--</div>--}}
                 </div>
 
 
                 <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-3 col-sm-10" style="height: 133px;background: #ffffff;margin-left: 35px">
+                    <div class="col-md-3 col-lg-3 col-sm-8  col-xs-8" style="height: 133px;background: #ffffff;margin-left: 35px;">
                         <p style="font-size: 15px;margin: 15px;color: #999999">待提现金额</p>
-                        {{--<div class="row">--}}
                         <b class="col-md-6" style="font-size: 28px;display: inline-block">
                             2541.66RMB
                         </b>
@@ -36,15 +31,13 @@
 
                         <span class="glyphicon glyphicon-arrow-up"
                               style="font-size: 11px;margin:38px -183px;color: #3CC480">13.8%</span>
-                        {{--</div>--}}
                     </div>
 
 
 
                     <div class="row">
-                        <div class="col-md-3 col-sm-10" style="height: 133px;background: #ffffff;margin-left: 35px">
+                        <div class="col-md-3 col-lg-3 col-sm-8 col-xs-8" style="height: 133px;background: #ffffff;margin-left: 35px">
                             <p style="font-size: 15px;margin: 15px;color: #999999">冻结金额</p>
-                            {{--<div class="row">--}}
                             <b class="col-md-6" style="font-size: 28px;display: inline-block">
                                 41.66RMB
                             </b>
@@ -53,14 +46,13 @@
 
                             <span class="glyphicon glyphicon-arrow-up"
                                   style="font-size: 11px;margin:38px -185px;color: #3CC480">13.8%</span>
-                            {{--</div>--}}
                         </div>
 
                     </div>
 
 
                     <div class="row">
-                        <div class="col-md-9 col-sm-9" style="width:1350px;background: #ffffff;margin:50px 160px">
+                        <div class="col-md-9 col-lg-9 col-sm-6" style="width:1350px;background: #ffffff;margin:50px 160px">
                             <p style="font-size: 16px;margin: 15px;color: #999999">最近订单</p>
 
                             <table class="table table-hover">
