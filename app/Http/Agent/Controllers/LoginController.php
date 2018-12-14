@@ -8,10 +8,10 @@
 
 namespace App\Http\Agent\Controllers;
 
-
 use App\Services\LoginLogoutService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController
 {
@@ -44,6 +44,8 @@ class LoginController
      */
     public function show()
     {
+        $user = Auth::guard('agent')->user();
+        if ($user) return redirect('agent');
         return view('Admin.Agent.login');
     }
 

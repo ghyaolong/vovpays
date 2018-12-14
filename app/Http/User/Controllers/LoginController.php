@@ -6,6 +6,7 @@ use App\Services\LoginLogoutService;
 use App\Services\UserService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,11 +37,8 @@ class LoginController extends Controller
      *
      * @return void
      */
-//    public function __construct()
-//    {
-//        $this->middleware('guest')->except('logout');
-//    }
-    public function __construct(UserService $userService,LoginLogoutService $loginLogoutService)
+
+    public function __construct(UserService $userService, LoginLogoutService $loginLogoutService)
     {
         $this->loginLogoutService=$loginLogoutService;
         $this->userService=$userService;
@@ -49,6 +47,8 @@ class LoginController extends Controller
 
     public function show()
     {
+        $user = Auth::guard('user')->user();
+        if ($user) return redirect('user');
         return view('Admin.User.login');
     }
 
@@ -83,7 +83,7 @@ class LoginController extends Controller
         return redirect()->route('user.login');
     }
 
-    //登陆页面
+    //注册页面
     public function registerShow()
     {
         return view('Admin.User.register');
