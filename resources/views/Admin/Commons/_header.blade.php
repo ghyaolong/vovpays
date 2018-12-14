@@ -3,9 +3,9 @@
     <!-- Logo -->
     <a href="#" class="logo">
         <!-- 侧边栏小标志 -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <span class="logo-mini"><img src="/images/logo/logo-ico.png" alt="User Image"></span>
         <!-- 常规状态的标志 -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-lg"><img src="/images/logo/logo.png" alt="User Image"></span>
     </a>
     <!-- 首部导航条 -->
     <nav class="navbar navbar-static-top">
