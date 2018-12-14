@@ -42,7 +42,10 @@ class IndexController extends Controller
     {
         $uid = Auth::user()->id;
         $list = $this->bankCardService->findStatus($uid);
-        $list->bankCardNo = substr_replace($list->bankCardNo, " **** **** **** ", 3, 12);
+        if ($list){
+            $list->bankCardNo = substr_replace($list->bankCardNo, " **** **** **** ", 3, 12);
+        }
+//        var_dump($list);exit;
         return view('User.Index.user', compact('list'));
     }
 
