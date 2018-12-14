@@ -28,10 +28,6 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-//    public function index()
-//    {
-//        return view('Admin.User.home');
-//    }
     public function index()
     {
         return view('User.Index.index');
