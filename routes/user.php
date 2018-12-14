@@ -27,6 +27,7 @@ Route::group([], function ($router) {
         Route::get('api','IndexController@api')->name('user.api');
         //订单
         Route::get('order','OrderController@show')->name('user.order');
+        Route::get('invoice','OrderController@invoice')->name('user.invoice');
         Route::get('recharge','OrderController@recharge')->name('user.recharge');
         //银行卡管理
         Route::post('store','BankCardController@store')->name('user.store');

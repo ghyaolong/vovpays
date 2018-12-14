@@ -43,7 +43,6 @@
             <p style="font-size: 18px;margin: 15px;display: inline-block">
                 我的钱包
             </p>
-            <a href=""><i class="glyphicon glyphicon-cog" style="color: #999999;float: right;margin: 15px"></i></a>
 
             <div class="row">
 
@@ -321,7 +320,6 @@
                     setInterval(function () {
                         window.location.reload();
                     }, 1000);
-
                     toastr.success(result.msg);
                 } else {
                     $('#addModel').modal('hide');

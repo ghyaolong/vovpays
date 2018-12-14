@@ -257,7 +257,7 @@
                     <b style="font-size: 18px;margin-left: 18px">￥465.60</b>
 
                     <div class="col-md-9"
-                         style="background:linear-gradient(#74A8FF,#72A8FF);border-radius: 6px;height: 137px;margin-left:45px;margin-top: 35px">
+                         style="background:linear-gradient(#3B86FF,#72A8FF);border-radius: 6px;height: 137px;margin-left:45px;margin-top: 35px">
                         <ul>
                             <li style="font-size: 16px;color: #FFFFFF;margin-top: 15px;margin-left: -15px">中国银行</li>
                         </ul>
@@ -292,7 +292,7 @@
                         <input class="btn btn-default" type="button" value="提交申请"
                                style="color: #ffffff;border: #3B86FF solid 1px;height: 50px;width: 185px;background:#3B86FF;margin: 25px 25px;font-size: 15px"/>
                         <input class="btn btn-default" type="reset" value="重置"
-                               style="color: #3B86FF;border: #3B86FF solid 1px;height: 50px;width: 133px;background: #ffffff;margin: 25px auto;font-size: 15px"/>
+                               style="color: #3B86FF;border: #3B86FF solid 1px;height: 50px;width: 133px;background: #ffffff;margin: 25px auto;font-size: 15px "/>
                     </form>
                 </div>
             </div>

@@ -50,4 +50,9 @@ class OrderController extends Controller
     {
         return view('Admin.User.recharge');
     }
+
+    public function invoice()
+    {
+        return view('Admin.User.invoice');
+    }
 }
