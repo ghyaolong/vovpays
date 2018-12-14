@@ -1,4 +1,4 @@
-@extends("Admin.Agent.commons.layout")
+@extends("Agent.Commons.layout")
 @section('title','账户管理')
 @section('content')
     <style>
@@ -96,32 +96,57 @@
         </div>
 
         {{--<div class="row">--}}
-        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
-            <p style="font-size: 18px;margin: 15px;">银行卡管理</p>
+        @if(isset($list))
+            <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
+                <p style="font-size: 18px;margin: 15px;">银行卡管理</p>
 
-            <div class="col-md-9"
-                 style="background:linear-gradient(#A3A0FB,#74A8FF);height: 137px;margin-left:45px;margin-top: 20px">
-                <ul>
-                    <li style="font-size: 16px;color: #FFFFFF;margin-top: 15px;margin-left: -15px">{{$list->branchName}}</li>
-                </ul>
-                <ul class="list-inline" style="text-align: center;margin-top: 30px">
-                    <li style="font-size: 19px;color: #FFFFFF;">{{$list->bankCardNo}}</li>
-                </ul>
-            </div>
+                <div class="col-md-9"
+                     style="background:linear-gradient(#A3A0FB,#74A8FF);height: 137px;margin-left:45px;margin-top: 20px">
+                    <ul>
+                        <li style="font-size: 16px;color: #FFFFFF;margin-top: 15px;margin-left: -15px">{{$list->branchName}}</li>
+                    </ul>
+                    <ul class="list-inline" style="text-align: center;margin-top: 30px">
+                        <li style="font-size: 19px;color: #FFFFFF;">{{$list->bankCardNo}}</li>
+                    </ul>
+                </div>
 
-            <div class="row" style="text-align: center;font-size: 18px">
-                <p class="col-md-12" style="margin: 18px auto;color: #999999">上次修改:{{$list->updated_at}}</p>
-                <p class="col-md-12" style="">这是你的默认提现 <br> 银行卡</p>
+                <div class="row" style="text-align: center;font-size: 18px">
+                    <p class="col-md-12" style="margin: 18px auto;color: #999999">上次修改:{{$list->updated_at}}</p>
+                    <p class="col-md-12" style="">这是你的默认提现 <br> 银行卡</p>
 
-                <span class="col-md-12" style="text-align: center">
+                    <span class="col-md-12" style="text-align: center">
                     <a class="col-md-4 btn btn-info"
-                       style="margin: 50px 90px;width: 185px;height: 50px;font-size: 15px;background: #3B86FF" onclick="showModel('添加银行卡')"><p
+                       style="margin: 50px 90px;width: 185px;height: 50px;font-size: 15px;background: #3B86FF"
+                       onclick="showModel('添加银行卡')"><p
                                 style="margin-top: 8px">添加</p></a>
                 </span>
 
 
+                </div>
             </div>
-        </div>
+
+        @else
+
+            <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
+                <p style="font-size: 18px;margin: 15px;">银行卡管理</p>
+
+
+                <div class="row" style="text-align: center;font-size: 18px">
+
+                    <p class="col-md-12" style="">这是你的默认提现 <br> 银行卡</p>
+
+                    <span class="col-md-12" style="text-align: center">
+                    <a class="col-md-4 btn btn-info"
+                       style="margin: 50px 90px;width: 185px;height: 50px;font-size: 15px;background: #3B86FF"
+                       onclick="showModel('添加银行卡')"><p
+                                style="margin-top: 8px">添加</p></a>
+                </span>
+
+
+                </div>
+            </div>
+
+        @endif
         {{--</div>--}}
 
         <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
@@ -176,7 +201,8 @@
                 {{--<hr class="col-md-8">--}}
 
 
-                <input class="btn btn-default" type="button" onclick="jsCopy();" value="复制" style="color: #3B86FF;border: #3B86FF solid 1px;height: 50px;width: 180px;background: #ffffff;margin: 50px 100px;font-size: 15px"/>
+                <input class="btn btn-default" type="button" onclick="jsCopy();" value="复制"
+                       style="color: #3B86FF;border: #3B86FF solid 1px;height: 50px;width: 180px;background: #ffffff;margin: 50px 100px;font-size: 15px"/>
             </div>
 
         </div>

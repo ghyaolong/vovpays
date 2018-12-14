@@ -1,4 +1,4 @@
-@extends("Admin.Agent.commons.layout")
+@extends("Agent.Commons.layout")
 @section('title','提现记录')
 @section("css")
     <link rel="stylesheet"

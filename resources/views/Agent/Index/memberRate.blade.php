@@ -1,4 +1,4 @@
-@extends("Admin.Agent.commons.layout")
+@extends("Agent.Commons.layout")
 @section('title','商户费率')
 @section("css")
     <link rel="stylesheet"
