@@ -43,16 +43,16 @@ class OrderController extends Controller
         $chanel_list    = $this->channelService->getAll();
         $payments_list  = $this->channelPaymentsService->getAll();
 
-        return view('Admin.User.order',compact('orders', 'data', 'chanel_list','payments_list'));
+        return view('User.Order.order',compact('orders', 'data', 'chanel_list','payments_list'));
     }
 
     public function recharge()
     {
-        return view('Admin.User.recharge');
+        return view('User.Recharge.recharge');
     }
 
     public function invoice()
     {
-        return view('Admin.User.invoice');
+        return view('User.invoice');
     }
 }

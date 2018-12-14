@@ -1,4 +1,4 @@
-@extends("Admin.User.commons.layout")
+@extends("Commons")
 @section('title','交易记录')
 @section('content')
 

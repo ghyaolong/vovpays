@@ -1,4 +1,4 @@
-@extends("Admin.User.commons.layout")
+@extends("User.Commons.layout")
 @section('title','首页管理')
 @section('css')
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">

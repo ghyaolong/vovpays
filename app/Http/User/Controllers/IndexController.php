@@ -34,7 +34,7 @@ class IndexController extends Controller
 //    }
     public function index()
     {
-        return view('Admin.User.index');
+        return view('User.Index.index');
     }
 
     //用户列表展示
@@ -43,7 +43,7 @@ class IndexController extends Controller
         $uid = Auth::user()->id;
         $list = $this->bankCardService->findStatus($uid);
         $list->bankCardNo = substr_replace($list->bankCardNo, " **** **** **** ", 3, 12);
-        return view('Admin.User.user', compact('list'));
+        return view('User.Index.user', compact('list'));
     }
 
 
@@ -78,18 +78,18 @@ class IndexController extends Controller
     //开发者
     public function main()
     {
-        return view('Admin.User.main');
+        return view('User.Index.main');
     }
 
     //验证器
     public function validator()
     {
-        return view('Admin.User.validator');
+        return view('User.Validator.validator');
     }
 
     //API
     public function api()
     {
-        return view('Admin.User.api');
+        return view('User.Api.api');
     }
 }

@@ -27,10 +27,10 @@
 <div class="wrapper">
 
     <!--header-->
-@include('admin.User.commons._header')
+@include('User.Commons._header')
 
 <!-- Left side column. contains the logo and sidebar -->
-@include('admin.User.commons._lift_side')
+@include('User.Commons._lift_side')
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -48,7 +48,7 @@
         </section>
     </div>
     <!--footer-->
-    @include('admin.User.commons._footer')
+    @include('User.Commons._footer')
 </div>
 </body>
 <script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>

@@ -49,7 +49,7 @@ class LoginController extends Controller
     {
         $user = Auth::guard('user')->user();
         if ($user) return redirect('user');
-        return view('Admin.User.login');
+        return view('User.Login.login');
     }
 
     public function login(Request $request)
@@ -86,7 +86,7 @@ class LoginController extends Controller
     //注册页面
     public function registerShow()
     {
-        return view('Admin.User.register');
+        return view('User.Login.register');
     }
 
     public function register(Request $request)

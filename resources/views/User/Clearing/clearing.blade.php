@@ -1,4 +1,4 @@
-@extends("Admin.User.commons.layout")
+@extends("User.Commons.layout")
 @section('title','结算管理')
 @section('content')
     {{--<div class="row" style="margin-top: 20px">--}}

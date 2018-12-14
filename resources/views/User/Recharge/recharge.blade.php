@@ -1,4 +1,4 @@
-@extends("Admin.User.commons.layout")
+@extends("User.Commons.layout")
 @section('title','用户充值')
 @section('css')
     <link rel="stylesheet"

@@ -1,4 +1,4 @@
-@extends("Admin.User.commons.layout")
+@extends("User.Commons.layout")
 @section('title','开发者')
 @section("css")
     <link rel="stylesheet"
