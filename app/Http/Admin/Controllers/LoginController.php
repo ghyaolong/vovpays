@@ -5,6 +5,7 @@ namespace App\Http\Admin\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Services\LoginLogoutService;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -23,6 +24,8 @@ class LoginController extends Controller
     */
     public function show()
     {
+        $user = Auth::guard('admin')->user();
+        if ($user) return redirect('admin');
         return view('Admin.Login.login');
     }
 

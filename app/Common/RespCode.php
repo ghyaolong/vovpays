@@ -4,14 +4,13 @@ namespace App\Common;
 
 class RespCode
 {
-
-    const DECRYPT_FAILED = ['respCode'=>'502', 'msg'=>'数据解密失败'];
-    const CHECK_SIGN_FAILED = ['respCode'=>'503', 'msg'=>'数据验签失败'];
-    const PARAMETER_ERROR = ['respCode'=>'400', 'msg'=>'缺少必填参数'];
+    const DECRYPT_FAILED     = ['respCode'=>'502', 'msg'=>'数据解密失败'];
+    const CHECK_SIGN_FAILED  = ['respCode'=>'503', 'msg'=>'数据验签失败'];
+    const PARAMETER_ERROR    = ['respCode'=>'400', 'msg'=>'缺少必填参数'];
     const MERCHANT_NOT_EXIST = ['respCode'=>'10002', 'msg'=>'商户信息不存在'];
     const TRADE_BIZ_NOT_OPEN = ['respCode'=>'20002', 'msg'=>'支付方式不存在或未开通'];
-    const CHANNEL_NOT_EXIST = ['respCode'=>'20001', 'msg'=>'交易通道不存在或未开通'];
-    const MCH_BIZ_NOT_OPEN = ['respCode'=>'10003', 'msg'=>'商户业务未开通'];
+    const CHANNEL_NOT_EXIST  = ['respCode'=>'20001', 'msg'=>'交易通道不存在或未开通'];
+    const MCH_BIZ_NOT_OPEN   = ['respCode'=>'10003', 'msg'=>'商户业务未开通'];
     const RESOURCE_NOT_FOUND = ['404', 'msg'=>'资源未找到'];
 
 
