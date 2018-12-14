@@ -46,7 +46,7 @@ class LoginController
     {
         $user = Auth::guard('agent')->user();
         if ($user) return redirect('agent');
-        return view('Admin.Agent.login');
+        return view('Agent.Login.login');
     }
 
     /**

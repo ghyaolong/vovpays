@@ -1,4 +1,4 @@
-@extends("Admin.Agent.commons.layout")
+@extends("Agent.Commons.layout")
 @section('title','个人信息')
 @section('css')
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">

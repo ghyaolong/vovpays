@@ -40,7 +40,7 @@ class OrderController extends Controller
         $chanel_list    = $this->channelService->getAll();
         $payments_list  = $this->channelPaymentsService->getAll();
 
-        return view('Admin.Agent.order',compact('title', 'list', 'query', 'chanel_list','payments_list'));
+        return view('Agent.Order.order',compact('title', 'list', 'query', 'chanel_list','payments_list'));
     }
 
 

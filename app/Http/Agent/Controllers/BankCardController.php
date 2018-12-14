@@ -30,7 +30,7 @@ class BankCardController extends Controller
     {
         $uid=Auth::user()->id;
         $lists = $this->bankCardService->getAll($uid);
-        return view('Admin.Agent.bankCard', compact('lists'));
+        return view('Agent.BankCard.bankCard', compact('lists'));
     }
 
 

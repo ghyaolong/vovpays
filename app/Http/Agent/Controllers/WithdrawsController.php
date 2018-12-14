@@ -51,7 +51,7 @@ class WithdrawsController extends Controller
             $list = $this->withdrawsService->getAllPage(10);
         }
 
-        return view('Admin.Agent.withdraws', compact('list', 'data', 'query'));
+        return view('Agent.Withdraws.withdraws', compact('list', 'data', 'query'));
     }
 
 
@@ -66,7 +66,7 @@ class WithdrawsController extends Controller
 
         $clearings = $this->withdrawsService->getAllPage(6);
 
-        return view('Admin.Agent.clearing', compact('list', 'clearings'));
+        return view('Agent.Withdraws.clearing', compact('list', 'clearings'));
     }
 
     /**

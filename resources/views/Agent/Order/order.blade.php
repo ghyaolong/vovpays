@@ -1,4 +1,4 @@
-@extends('Admin.Agent.commons.layout')
+@extends('Agent.Commons.layout')
 @section('title','交易记录')
 @section("css")
     <link rel="stylesheet" href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
