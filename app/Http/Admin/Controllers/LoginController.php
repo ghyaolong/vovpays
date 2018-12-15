@@ -44,10 +44,9 @@ class LoginController extends Controller
             'captcha.required' => '验证码不能为空',
             'captcha.captcha'  => '请输入正确的验证码',
         ]);
-        // 添加验证用户登录标识
-        $request->merge(['group_type' => '2']);
 
-        $check_data = $request->only('username','password','group_type');
+
+        $check_data = $request->only('username','password');
         $result = $this->loginLogoutService->Login('admin',$check_data);
         if($result)
         {

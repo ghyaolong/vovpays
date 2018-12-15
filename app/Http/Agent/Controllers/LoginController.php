@@ -13,10 +13,8 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController
+class LoginController extends Controller
 {
-
-//    use AuthenticatesAgent;
     /**
      * Where to redirect users after login.
      *
@@ -25,7 +23,6 @@ class LoginController
     protected $redirectTo = '/Agent';
     protected $loginLogoutService;
     protected $userService;
-
 
     /**
      * LoginController constructor.
@@ -56,15 +53,23 @@ class LoginController
      */
     public function login(Request $request)
     {
-        $check_data = $request->only('username', 'password');
-        $user = $this->userService->findUser($request->input('username'));
-        if ($user['group_type'] !== 2) {
-            return ajaxError('您不是代理商，无权登录！');
-        }
-        $result = $this->loginLogoutService->Login('agent', $check_data);
-        if ($result) {
+        $this->validate($request, [
+            'username' => 'required|string',
+            'password' => 'required',
+            'captcha'  => 'required|captcha',
+        ],[
+            'captcha.required' => '验证码不能为空',
+            'captcha.captcha'  => '请输入正确的验证码',
+        ]);
+        // 添加验证用户登录标识
+        $request->merge(['group_type' => '2']);
+
+        $check_data = $request->only('username','password','group_type');
+        $result = $this->loginLogoutService->Login('agent',$check_data);
+        if($result)
+        {
             return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
-        } else {
+        }else{
             return ajaxError('用户名或密码错误，请重新输入！');
         }
     }
