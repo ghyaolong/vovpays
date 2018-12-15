@@ -62,14 +62,16 @@ class LoginController extends Controller
             'captcha.required' => '验证码不能为空',
             'captcha.captcha'  => '请输入正确的验证码',
         ]);
+        // 添加验证用户登录标识
+        $request->merge(['group_type' => '1']);
 
-        $check_data = $request->only('username','password');
+        $check_data = $request->only('username','password','group_type');
         $result = $this->loginLogoutService->Login('user',$check_data);
         if($result)
         {
             return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
         }else{
-            return ajaxSuccess('用户名或密码错误，请重新输入！');
+            return ajaxError('用户名或密码错误，请重新输入！');
         }
     }
 
