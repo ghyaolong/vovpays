@@ -30,17 +30,8 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<style>
-    .toast-top-center{
-        margin-top: 50px;
-    }
-</style>
 <body class="hold-transition login-page">
 <div class="login-box">
-    {{--<div class="login-logo" style="margin:0 auto;text-aligin:center;">--}}
-       {{--<img src="{{ asset('images/logo/logo@2x.png') }}" style="width:240px"/>--}}
-    {{--</div>--}}
-    <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">欢迎回来！请登录到您的帐户。</p>
         <form action="{{ route('user.login') }}" method="post" id="logoForm">
@@ -66,14 +57,17 @@
                 <div class="col-xs-6">
                     <div class="checkbox icheck">
                         <label>
-                            <input id="test" name="remember" type="checkbox"> 记住我
+                            <a style="margin-left: 35px;" href="{{route('user.registerShow')}}">用户注册</a>
                         </label>
                     </div>
                 </div>
                 <!-- /.col -->
-                <div class="col-xs-4">
-                    <a style="margin: 0 auto;float:left;margin-top: 10px;margin-left: -35px;margin-right: 8px" class="center-block" href="{{route('user.registerShow')}}">用户注册</a>
-                    <a style="margin-top: 10px" class="center-block" href="">忘记密码</a>
+                <div class="col-xs-6">
+                    <div class="checkbox icheck">
+                        <label>
+                            <a style="margin-left: 35px;" class="center-block" href="">忘记密码</a>
+                        </label>
+                    </div>
                 </div>
                 <!-- /.col -->
             </div>
