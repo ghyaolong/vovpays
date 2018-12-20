@@ -85,13 +85,13 @@ class UserService
     }
 
     /**
-     * 根据商户号获取
+     * 根据商户号获取启用的商户
      * @param string $merchant
      * @return array
      */
     public function findMerchant(string $merchant)
     {
-        $sql = 'merchant = ?';
+        $sql = 'merchant = ? and status=1';
         $where['merchant'] = $merchant;
         return $this->usersRepository->searchOne($sql, $where);
     }

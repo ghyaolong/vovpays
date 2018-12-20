@@ -148,6 +148,21 @@ class UserRateService
     }
 
     /**
+     * 根据用户id和支付id获取商户启用的支付方式
+     * @param int $user_id
+     * @param int $pay_id
+     * @return mixed
+     */
+    public function getFindUidPayIdStatus(int $user_id, int $pay_id)
+    {
+        $sql = 'user_id = ? and channel_payment_id = ? and status=1';
+        $where['user_id'] = $user_id;
+        $where['channel_payment_id'] = $pay_id;
+        $userRate = $this->userRateRepository->searchOne($sql, $where);
+        return $userRate;
+    }
+
+    /**
      * 会员费率增加和编辑
      * @param int $user_id
      * @param int $channelId

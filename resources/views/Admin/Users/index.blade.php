@@ -47,6 +47,7 @@
                 <table id="example2" class="table table-condensed table-bordered table-hover">
                     <thead>
                     <tr>
+                        <th>#</th>
                         <th>商户号</th>
                         <th>用户名</th>
                         <th>上级代理</th>
@@ -59,6 +60,7 @@
                     <tbody>
                     @foreach($list as $v)
                         <tr>
+                            <td>{{ $v['id'] }}</td>
                             <td>{{ $v['merchant'] }}</td>
                             <td>{{ $v['username'] }}</td>
                             <td>{{ $v['agentName'] }}</td>

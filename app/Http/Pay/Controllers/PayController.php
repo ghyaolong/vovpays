@@ -19,10 +19,13 @@ class PayController extends Controller
     protected $channelService;
     protected $userRateService;
     protected $md5Verify;
-    protected $return_type; // 返回类型true:json，false:页面
-    protected $content;     // 解密后的数据
-    protected $md5_key;
+    protected $return_type;     // 返回类型true:json，false:页面
+    protected $content;         // 解密后的数据
     protected $verify_param_key = ['uid'=>'','order_no'=>'','price'=>'','tm'=>'','pay_code'=>'','notify_url'=>'','return_url'=>'','note'=>'','cuid'=>'','sign'=>''];
+    protected $userPayment;     // 用户支付方式
+    protected $user;            // 用户信息
+    protected $channel;         // 通道信息
+    protected $channelPayment;  // 支付方式信息
 
     public function __construct(AES $AES, UserService $userService,
                                 ChannelPaymentsService $channelPaymentsService, ChannelService $channelService,
@@ -67,15 +70,14 @@ class PayController extends Controller
             return json_encode($paramVerify);
         }
         // 获取用户
-        $user = $this->getUser($this->content['uid']);
-        if(!$user)
+        $this->user = $this->getUser($this->content['uid']);
+        if(!$this->user)
         {
             return json_encode(RespCode::MERCHANT_NOT_EXIST);
         }
 
-        $this->md5_key = $user->apiKey;
         // 数据验签
-        $sign = $this->md5Verify->getSign($this->content, $this->md5_key);
+        $sign = $this->md5Verify->getSign($this->content, $this->user->apiKey);
 
         if($sign != $this->content['sign'])
         {
@@ -83,33 +85,40 @@ class PayController extends Controller
         }
 
         // 获取支付方式
-        $channelPayment = $this->getChannelPayment($this->content['pay_code']);
-        if(!$channelPayment)
+        $this->channelPayment = $this->getChannelPayment($this->content['pay_code']);
+        if(!$this->channelPayment)
         {
             return json_encode(RespCode::TRADE_BIZ_NOT_OPEN);
         }
 
-        //获取通道
-        $channel = $this->getChannel($channelPayment->channel_id);
+        // 验证单笔限额
+        if($this->channelPayment->minAmount > $this->content['price'] || $this->channelPayment->maxAmount < $this->content['price'])
+        {
+            return json_encode(['respCode'=>'10007', 'msg'=>"交易金额范围为{$this->channelPayment->minAmount}-{$this->channelPayment->maxAmount}元"]);
+        }
 
-        if(!$channel)
+        //获取通道
+        $this->channel = $this->getChannel($this->channelPayment->channel_id);
+
+        if(!$this->channel)
         {
             return json_encode(RespCode::CHANNEL_NOT_EXIST);
         }
-        dd($channel);
         //获取商户支付方式
-        $userPayment = $this->getUserPayment($user->id, $channelPayment->id);
-        if(!$userPayment)
+        $this->userPayment = $this->getFindUidPayIdStatus($this->user->id, $this->channelPayment->id);
+        if(!$this->userPayment)
         {
             return json_encode(RespCode::MCH_BIZ_NOT_OPEN);
         }
+
         try{
-            $class = '\App\Services\Pay\TestService';
+            $class = '\App\Services\Pay\estService';
             if(!class_exists($class))
             {
                 throw new \Exception('');
             }
             $app = new $class;
+            dd($app->pay());
             $app->pay(['a'=>1]);
         }catch ( \Exception $e){
 
@@ -125,8 +134,8 @@ class PayController extends Controller
      */
     protected function getUser(string $merchant)
     {
-        $user = $this->userService->findMerchant($merchant);
-        return $user;
+        return $this->userService->findMerchant($merchant);
+
     }
 
     /**
@@ -155,9 +164,9 @@ class PayController extends Controller
      * @param int $pay_id
      * @return mixed
      */
-    protected function getUserPayment(int $uid, int $pay_id)
+    protected function getFindUidPayIdStatus(int $uid, int $pay_id)
     {
-        return $this->userRateService->getFindUidPayId($uid, $pay_id);
+        return $this->userRateService->getFindUidPayIdStatus($uid, $pay_id);
     }
 
     /**
