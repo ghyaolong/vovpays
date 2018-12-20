@@ -20,6 +20,10 @@ class CreateChannelPaymentsTable extends Migration
             $table->string('paymentName',30)->comment('支付名称');
             $table->string('paymentCode',10)->comment('支付编码');
             $table->string('ico')->nullable()->comment('支付方式logo');
+            $table->decimal('runRate',9,6)->default(0)->comment('运营费率');
+            $table->decimal('costRate',9,6)->default(0)->comment('成本费率');
+            $table->integer('minAmount')->default(0)->comment('单笔最小金额');
+            $table->integer('maxAmount')->default(0)->comment('单笔最大金额');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态：0关闭，1启用');
             $table->timestamps();
         });

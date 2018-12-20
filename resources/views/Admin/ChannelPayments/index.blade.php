@@ -21,6 +21,7 @@
                         <th>支付名称</th>
                         <th>支付编码</th>
                         <th>所属通道</th>
+                        <th>运营费率</th>
                         <th>支付Logo</th>
                         <th>支付状态</th>
                         <th>操作</th>
@@ -32,6 +33,7 @@
                             <td>{{ $v['paymentName'] }}</td>
                             <td>{{ $v['paymentCode'] }}</td>
                             <td>{{ @$v->Channel()->pluck('channelName')[0] }}</td>
+                            <td>{{ $v->runRate }}</td>
                             <td><img width="148" height="38" src="{{ asset($v['ico']) }}" alt=""></td>
                             <td><input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif ></td>
                             <td>
@@ -89,6 +91,36 @@
                                     <option value="{{ $v['id'] }}">{{ $v['channelName'] }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">运营费率</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="runRate" value="0" placeholder="运营费率">
+                            <span class="help-block" style="font-size: 12px;">
+                                <i class="fa fa-info-circle"></i>费率转为小数即可
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">成本费率</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="costRate" value="0"  placeholder="成本费率">
+                            <span class="help-block" style="font-size: 12px;">
+                                <i class="fa fa-info-circle"></i>费率转为小数即可
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">单笔最小金额</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="minAmount" value="0" placeholder="单笔最小金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-xs-3 control-label">单笔最大金额</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="maxAmount" value="0"  placeholder="单笔最大金额">
                         </div>
                     </div>
                     <div class="form-group">
@@ -208,29 +240,73 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    channelName: {
+                    paymentName: {
                         validators: {
                             notEmpty: {
-                                message: '通道名称不能为空!'
+                                message: '支付名称不能为空!'
                             },
                             stringLength: {
                                 max: 30,
-                                message: '通道名称最大长度%s个字符!'
+                                message: '支付名称最大长度%s个字符!'
                             }
                         }
                     },
-                    channelCode: {
+                    paymentCode: {
                         validators: {
                             notEmpty: {
-                                message: '通道编码不能为空!'
+                                message: '支付编码不能为空!'
                             },
                             stringLength: {
                                 max: 20,
-                                message: '密码最大长度%s个字符!'
+                                message: '支付编码最大长度%s个字符!'
                             },
                             regexp: { //正则校验
-                                regexp: /^[A-Za-z]+$/,
-                                message:'通道编码格式不正确!'
+                                regexp: /^[A-Za-z0-9]+$/,
+                                message:'支付编码格式不正确!'
+                            },
+                        }
+                    },
+                    runRate: {
+                        validators:{
+                            notEmpty: {
+                                message: '运营费率不能为空!'
+                            },
+                            regexp: { //正则校验
+                                regexp: /^[0-9]+([.]{1}[0-9]+){0,1}$/,
+                                message:'费率只能是整数或小数!'
+                            },
+                        }
+                    },
+                    costRate: {
+                        validators:{
+                            notEmpty: {
+                                message: '成本费率不能为空!'
+                            },
+                            regexp: { //正则校验
+                                regexp: /^[0-9]+([.]{1}[0-9]+){0,1}$/,
+                                message:'费率只能是整数或小数!'
+                            },
+                        }
+                    },
+                    minAmount: {
+                        validators:{
+                            notEmpty: {
+                                message: '单笔最小金额不能为空!'
+                            },
+                            regexp: { //正则校验
+                                regexp: /^[0-9]+$/,
+                                message:'金额只能是整数'
+                            },
+                        }
+                    },
+                    maxAmount: {
+                        validators:{
+                            notEmpty: {
+                                message: '单笔最大金额不能为空!'
+                            },
+                            regexp: { //正则校验
+                                regexp: /^[0-9]+$/,
+                                message:'金额只能是整数'
                             },
                         }
                     }
@@ -270,6 +346,10 @@
                         $("select[name='channel_id']").val(result.data['channel_id']);
                         $("input[name='id']").val(result.data['id']);
                         $("input[name='fileIco']").val(result.data['ico']);
+                        $("input[name='minAmount']").val(result.data['minAmount']);
+                        $("input[name='maxAmount']").val(result.data['maxAmount']);
+                        $("input[name='runRate']").val(result.data['runRate']);
+                        $("input[name='costRate']").val(result.data['costRate']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
                     }
@@ -305,9 +385,9 @@
                         if(result.status)
                         {
                             _this.parents('tr').empty();
-                            swal(result.msg, "会员已被删除。","success")
+                            swal(result.msg, "支付方式已被删除。","success")
                         }else{
-                            swal(result.msg, "会员没有被删除。","error")
+                            swal(result.msg, "支付方式没有被删除。","error")
                         }
 
                     },

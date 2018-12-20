@@ -21,7 +21,6 @@
                         <th>通道编码</th>
                         <th>接口状态</th>
                         <th>结算方式</th>
-                        <th>运营费率</th>
                         <th>通道限额</th>
                         <th>操作</th>
                     </tr>
@@ -33,7 +32,6 @@
                             <td>{{ $v['channelCode'] }}</td>
                             <td><input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif ></td>
                             <td><input class="switch-planType" data-id="{{ $v['id'] }}" type="checkbox" @if($v['planType'] == 1) checked @endif ></td>
-                            <td>{{ $v['runRate'] }}</td>
                             <td>{{ $v['channelQuota'] }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-sm" onclick="edit('通道编辑',{{ $v['id'] }})">编辑</button>
@@ -100,24 +98,6 @@
                         <div class="col-xs-9">
                             <input type="text" class="form-control" name="searchUrl" placeholder="查询地址">
                             <span class="help-block" style="font-size: 12px;"><i class="fa fa-info-circle"></i>地址必须带上http或https</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="col-xs-3 control-label">运营费率</label>
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" name="runRate" value="0" placeholder="运营费率">
-                            <span class="help-block" style="font-size: 12px;">
-                                <i class="fa fa-info-circle"></i>费率转为小数即可
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="col-xs-3 control-label">成本费率</label>
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" name="costRate" value="0"  placeholder="成本费率">
-                            <span class="help-block" style="font-size: 12px;">
-                                <i class="fa fa-info-circle"></i>费率转为小数即可
-                            </span>
                         </div>
                     </div>
                     <div class="form-group">

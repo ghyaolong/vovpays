@@ -4,14 +4,15 @@ namespace App\Common;
 
 class RespCode
 {
-    const DECRYPT_FAILED     = ['respCode'=>'502', 'msg'=>'数据解密失败'];
-    const CHECK_SIGN_FAILED  = ['respCode'=>'503', 'msg'=>'数据验签失败'];
-    const PARAMETER_ERROR    = ['respCode'=>'400', 'msg'=>'缺少必填参数'];
-    const MERCHANT_NOT_EXIST = ['respCode'=>'10002', 'msg'=>'商户信息不存在'];
-    const TRADE_BIZ_NOT_OPEN = ['respCode'=>'20002', 'msg'=>'支付方式不存在或未开通'];
-    const CHANNEL_NOT_EXIST  = ['respCode'=>'20001', 'msg'=>'交易通道不存在或未开通'];
-    const MCH_BIZ_NOT_OPEN   = ['respCode'=>'10003', 'msg'=>'商户业务未开通'];
-    const RESOURCE_NOT_FOUND = ['404', 'msg'=>'资源未找到'];
+    const DECRYPT_FAILED     = ['respCode'=>'10001', 'msg'=>'数据解密失败'];
+    const CHECK_SIGN_FAILED  = ['respCode'=>'10002', 'msg'=>'数据验签失败'];
+    const PARAMETER_ERROR    = ['respCode'=>'10003', 'msg'=>'缺少参数'];
+    const MERCHANT_NOT_EXIST = ['respCode'=>'10004', 'msg'=>'商户信息不存在'];
+    const MCH_BIZ_NOT_OPEN   = ['respCode'=>'10005', 'msg'=>'商户业务未开通'];
+    const PARAMETER_ERROR_TYPE = ['respCode'=>'10006', 'msg'=>'参数类型错误'];
+    const TRADE_BIZ_NOT_OPEN = ['respCode'=>'20001', 'msg'=>'支付方式不存在或未开通'];
+    const CHANNEL_NOT_EXIST  = ['respCode'=>'20002', 'msg'=>'交易通道不存在或未开通'];
+    const RESOURCE_NOT_FOUND = ['respCode'=>'404', 'msg'=>'资源未找到'];
 
 
     const SUCCESS = ['respCode'=>'200', 'msg'=>'请求成功'];

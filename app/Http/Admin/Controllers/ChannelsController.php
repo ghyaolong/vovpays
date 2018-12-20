@@ -65,9 +65,9 @@ class ChannelsController extends Controller
             $result = $this->channelService->add($request->all());
             if($result)
             {
-                return ajaxSuccess('添加通道成功！');
+                return ajaxSuccess('添加成功！');
             }else{
-                return ajaxError('添加通道失败！');
+                return ajaxError('添加失败！');
             }
         }
     }
