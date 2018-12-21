@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Common\RespCode;
 use App\Tool\AES;
 use App\Tool\Md5Verify;
+use App;
 
 class PayController extends Controller
 {
@@ -111,15 +112,18 @@ class PayController extends Controller
             return json_encode(RespCode::MCH_BIZ_NOT_OPEN);
         }
 
+
+
         try{
-            $class = '\App\Services\Pay\estService';
-            if(!class_exists($class))
+
+            $test = 'test';
+
+            if(!$test = App::make($test) )
             {
                 throw new \Exception('');
             }
-            $app = new $class;
-            dd($app->pay());
-            $app->pay(['a'=>1]);
+            $test->pay($this->user, $this->channel, $this->channelPayment, $this->userPayment);
+
         }catch ( \Exception $e){
 
             return json_encode(RespCode::RESOURCE_NOT_FOUND);

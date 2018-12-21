@@ -3,7 +3,7 @@
 namespace App\Services\Pay;
 use App\Exceptions\CustomServiceException;
 
-abstract class PayServiceInterface
+abstract class PayServiceInterface implements PayInterface
 {
 
     /**
@@ -11,7 +11,7 @@ abstract class PayServiceInterface
      * @param string $url
      * @param array $data
      */
-    protected function sendHttpPost(string $url, array $data)
+    public function sendHttpPost(string $url, array $data)
     {
         $str = '<form id="Form1" name="Form1" method="post" action="' . $url . '" >';
         foreach ($data as $key => $val) {
@@ -27,12 +27,12 @@ abstract class PayServiceInterface
     /**
      * Curl 提交
      * @param $url
-     * @param null $data
-     * @param null $header
-     * @param null $referer
+     * @param array $data
+     * @param array $header
+     * @param string $referer
      * @return mixed
      */
-    protected function sendCurl($url, $data = null, $header = null, $referer = null)
+    public function sendCurl(string $url, array $data = [], array $header = [], string $referer = '')
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
