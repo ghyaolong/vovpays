@@ -9,24 +9,6 @@ use App\Models\User_rates;
 
 interface PayInterface
 {
-
-    /**
-     * @param string $url
-     * @param array $data
-     * @return mixed
-     */
-    public function sendHttpPost(string $url, array $data);
-
-
-    /**
-     * @param string $url
-     * @param array $data
-     * @param array $header
-     * @param string $referer
-     * @return mixed
-     */
-    public function sendCurl(string $url, array $data = [], array $header = [], string $referer = '');
-
     /**
      * @param User $user
      * @param Channel $channel

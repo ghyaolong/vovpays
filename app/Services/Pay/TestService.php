@@ -12,7 +12,7 @@ use App\Models\Channel_payment;
 use App\Models\User;
 use App\Models\User_rates;
 
-class TestService extends PayServiceInterface
+class TestService implements PayInterface
 {
     public function pay(User $user, Channel $channel, Channel_payment $Channel_payment, User_rates $user_rates )
     {
