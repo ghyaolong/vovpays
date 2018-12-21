@@ -174,9 +174,9 @@ class UserRateService
     public function userRateStore(int $user_id, int $channelId, float $rate, int $pay_id, int $status)
     {
         $user = $this->userService->findId($user_id);
-        $channel = $this->channelService->findId($channelId);
+        $channelPayment = $this->channelPaymentsService->findId($pay_id);
 
-        if($rate > $channel['runRate'] )
+        if($rate > $channelPayment['runRate'] )
         {
             throw new CustomServiceException('会员费率不能大于运营费率');
         }
@@ -184,9 +184,9 @@ class UserRateService
         // 用户不存在代理的时候
         if($user->parentId == 0)
         {
-            if( $rate != 0 && $rate < $channel['costRate'] )
+            if( $rate != 0 && $rate < $channelPayment['costRate'] )
             {
-                throw new CustomServiceException('会员费率不能小于运营费率');
+                throw new CustomServiceException('会员费率不能小于成本费率');
             }
         }else{
             $sql = 'user_id = ? and channel_payment_id = ? ';

@@ -115,14 +115,11 @@ class PayController extends Controller
 
 
         try{
-
-            $test = 'test';
-
-            if(!$test = App::make($test) )
+            if(!$pay = App::make(strtolower($this->channel->channelCode)) )
             {
                 throw new \Exception('');
             }
-            $test->pay($this->user, $this->channel, $this->channelPayment, $this->userPayment);
+            $pay->pay($this->user, $this->channel, $this->channelPayment, $this->userPayment);
 
         }catch ( \Exception $e){
 
