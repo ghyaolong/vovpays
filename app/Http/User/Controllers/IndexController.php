@@ -30,7 +30,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('User.Index.index');
+        return view('User.Index.home');
     }
 
     //用户列表展示
