@@ -46,7 +46,7 @@ class AccountPhoneService
             } elseif ($data['accountType'] == 'wechat') {
                 $data['accountType'] = '微信';
             }
-            $sql .= 'and accountType = ?';
+            $sql .= ' and accountType = ?';
             $where['accountType'] = $data['accountType'];
         }
 

@@ -22,7 +22,7 @@
                     <!-- ./col -->
                     <form class="navbar-form navbar-left" action="{{route('user.alipay')}}" method="get">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="orderNo" placeholder="账号">
+                            <input type="text" class="form-control" name="account" placeholder="账号">
                         </div>&nbsp;&nbsp;
 
                         <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
