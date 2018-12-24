@@ -8,7 +8,7 @@
             <li class="header">商户管理</li>
             <li class="active treeview">
             <li><a href="{{route('user.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>首页</span></a></li>
-            <li><a href="{{route('user.user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>用户管理</span></a></li>
+            {{--<li><a href="{{route('user.user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>用户管理</span></a></li>--}}
             <li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>
             </li>
 

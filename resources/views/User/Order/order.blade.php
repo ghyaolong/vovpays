@@ -85,7 +85,7 @@
                 </div>
                 <div class="box-body">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="">
+                    <form class="navbar-form navbar-left" action="{{route('user.order')}}" method="get">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
@@ -160,28 +160,30 @@
                                 <th>订单状态</th>
                                 <th>操作</th>
                             </tr>
-                            <tr>
-                                <td colspan="10" style="text-align: center">没有找到匹配数据</td>
-                            </tr>
-                            <tbody>
-                            @foreach($orders as $v)
+
+                            @if(isset($orders[0]))
+                                @foreach($orders as $v)
+                                    <tr>
+                                        <td>{{ $v['username'] }}</td>
+                                        <td>{{ $v['orderNo'] }}</td>
+                                        <td>{{ $v['underOrderNo'] }}</td>
+                                        <td>{{ $v['orderRate'] }}</td>
+                                        <td>{{ $v['sysAmount'] }}</td>
+                                        <td>{{ $v['agentAmount'] }}</td>
+                                        <td>{{ $v['userAmount'] }}</td>
+                                        <td>{{ $v['orderRate'] }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-sm"
+                                                    onclick="info('订单详情',{{ $v['id'] }})">详情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td>{{ $v['username'] }}</td>
-                                    <td>{{ $v['orderNo'] }}</td>
-                                    <td>{{ $v['underOrderNo'] }}</td>
-                                    <td>{{ $v['orderRate'] }}</td>
-                                    <td>{{ $v['sysAmount'] }}</td>
-                                    <td>{{ $v['agentAmount'] }}</td>
-                                    <td>{{ $v['userAmount'] }}</td>
-                                    <td>{{ $v['orderRate'] }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-success btn-sm"
-                                                onclick="info('订单详情',{{ $v['id'] }})">详情
-                                        </button>
-                                    </td>
+                                    <td colspan="10" style="text-align: center">没有找到匹配数据</td>
                                 </tr>
-                            @endforeach
-                            </tbody>
+                            @endif
 
                         </table>
                     </div>

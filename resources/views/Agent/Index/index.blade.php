@@ -1,4 +1,4 @@
-@extends("User.Commons.layout")
+@extends("Agent.Commons.layout")
 @section('title','账户管理')
 @section('content')
     <style>
