@@ -112,14 +112,12 @@ class PayController extends Controller
             return json_encode(RespCode::MCH_BIZ_NOT_OPEN);
         }
 
-
-
         try{
             if(!$pay = App::make(strtolower($this->channel->channelCode)) )
             {
                 throw new \Exception('');
             }
-            $pay->pay($this->user, $this->channel, $this->channelPayment, $this->userPayment);
+            $pay->pay($this->user, $this->channel, $this->channelPayment, $this->userPayment, $request);
 
         }catch ( \Exception $e){
 
