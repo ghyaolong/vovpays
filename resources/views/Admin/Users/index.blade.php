@@ -218,6 +218,7 @@
                 $("#usersForm").data('bootstrapValidator').destroy();
                 $('#usersForm').data('bootstrapValidator', null);
                 $('#usersForm').get(0).reset();
+                $("input[name='id']").val('');
                 formValidator();
             });
 

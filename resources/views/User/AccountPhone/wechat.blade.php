@@ -22,7 +22,7 @@
                     <!-- ./col -->
                     <form class="navbar-form navbar-left" action="{{route('user.wechat')}}" method="get">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="account" placeholder="账号">
+                            <input type="text" class="form-control" id="account1" name="account" placeholder="账号">
                         </div>&nbsp;&nbsp;
 
                         <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
@@ -174,6 +174,7 @@
                 $("#addForm").data('bootstrapValidator').destroy();
                 $('#addForm').data('bootstrapValidator', null);
                 $('#addForm').get(0).reset();
+                $("input[name='id']").val('');
                 formValidator();
             });
 
