@@ -174,8 +174,8 @@ function sendCurl(string $url, array $data = [], array $header = [], string $ref
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);   // 从证书中检查SSL加密算法是否存在
     }
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-    if ( $res = curl_exec($ch) === false) {
+    $res = curl_exec($ch);
+    if ( $res === false) {
 
         throw new App\Exceptions\CustomServiceException(sprintf('Curl error (code %s): %s', curl_errno($ch), curl_error($ch)));
     }

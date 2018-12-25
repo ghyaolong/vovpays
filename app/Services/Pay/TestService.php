@@ -11,12 +11,14 @@ use App\Models\Channel;
 use App\Models\Channel_payment;
 use App\Models\User;
 use App\Models\User_rates;
+use Illuminate\Http\Request;
+use App\Jobs\SendOrderAsyncNotify;
 
 class TestService implements PayInterface
 {
-    public function pay(User $user, Channel $channel, Channel_payment $Channel_payment, User_rates $user_rates )
+    public function pay(User $user, Channel $channel, Channel_payment $Channel_payment, User_rates $user_rates, Request $request )
     {
-        dd($user);
+
     }
 
     public function queryOrder()
@@ -27,6 +29,9 @@ class TestService implements PayInterface
     public function notifyCallback()
     {
         // TODO: Implement notifyCallback() method.
+
+        // 订单异步通知
+        SendOrderAsyncNotify::dispatch(11)->onQueue('orderNotify');
     }
 
     public function successCallback()

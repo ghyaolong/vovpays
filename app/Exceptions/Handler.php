@@ -8,6 +8,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -82,6 +83,8 @@ class Handler extends ExceptionHandler
                 $exceptionArr = explode('(',$exception->getMessage());
                 return ajaxError($exceptionArr[0]);
             }
+        }else if($exception instanceof MethodNotAllowedHttpException){
+            return ajaxError('非法操作');
         }
         return parent::render($request, $exception);
     }
