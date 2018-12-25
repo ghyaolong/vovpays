@@ -116,7 +116,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-7" style="margin-top:-10px;">
-                                <a onclick="aliid('扫码获取账号ID')" style="margin-left: 150px">点击扫码，获取账号ID</a>
+                                <a onclick="aliid('二维码')" style="margin-left: 150px">点击扫码，获取账号ID</a>
                             </div>
                         </div>
                         <div class="form-group">
@@ -158,6 +158,10 @@
                 </div>
                 <div class="modal-body" style="overflow: auto;text-align: center">
                     <img src="{{ asset('/AdminLTE/dist/img/user/aliewm.png') }}" alt="二维码获取失败！">
+                    <br>
+                    <br>
+                    <br>
+                    <p style="color: red;font-size: 20px">打开支付宝扫一扫，获取账号ID</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
