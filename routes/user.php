@@ -43,10 +43,11 @@ Route::group([], function ($router) {
         //支付宝
         Route::get('alipay','AccountPhoneController@index')->name('user.alipay');
         Route::get('wechat','AccountPhoneController@index')->name('user.wechat');
-        Route::post('alipayadd','AccountPhoneController@store')->name('user.alipayadd');
+        Route::post('accountAdd','AccountPhoneController@store')->name('user.accountAdd');
         Route::post('accountStatus','AccountPhoneController@saveStatus')->name('user.accountStatus');
         Route::get('{id}/accountEdit','AccountPhoneController@edit')->name('user.accountEdit');
         Route::delete('accountDel','AccountPhoneController@destroy')->name('user.accountDel');
+        Route::post('check','AccountPhoneController@checkUnique')->name('user.check');
     });
 
 });

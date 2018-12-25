@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+
+use App\Repositories\AccountPhoneRepository;
 use App\Repositories\AdminsRepository;
 use App\Repositories\UsersRepository;
 
@@ -8,11 +10,13 @@ class CheckUniqueService
 {
     protected $adminsRepository;
     protected $usersRepository;
+    protected $accountPhoneRepository;
 
-    public function __construct(AdminsRepository $adminsRepository, UsersRepository $usersRepository)
+    public function __construct(AdminsRepository $adminsRepository, UsersRepository $usersRepository,AccountPhoneRepository $accountPhoneRepository)
     {
         $this->adminsRepository = $adminsRepository;
-        $this->usersRepository  = $usersRepository;
+        $this->usersRepository = $usersRepository;
+        $this->accountPhoneRepository=$accountPhoneRepository;
     }
 
 
@@ -24,42 +28,37 @@ class CheckUniqueService
      * @param int|null $id
      * @return bool
      */
-    public function check(string $table_name, string $field, string $value, int $id = null )
+    public function check(string $table_name, string $field, string $value, int $id = null)
     {
-
-        switch ($table_name)
-        {
+        switch ($table_name) {
             case 'admins':
 
-                if($id)
-                {
-                    if($field == 'email')
-                    {
+                if ($id) {
+                    if ($field == 'email') {
                         $sql = "id <> $id and email = ?";
                         $where['email'] = $value;
 
-                    }else if($field == 'username'){
+                    } else if ($field == 'username') {
 
                         $sql = "id <> $id and username = ?";
                         $where['username'] = $value;
 
-                    }else if($field == 'phone'){
+                    } else if ($field == 'phone') {
 
                         $sql = "id <> $id and phone = ?";
                         $where['phone'] = $value;
                     }
-                }else{
-                    if($field == 'email')
-                    {
+                } else {
+                    if ($field == 'email') {
                         $sql = " email = ?";
                         $where['email'] = $value;
 
-                    }else if($field == 'username'){
+                    } else if ($field == 'username') {
 
                         $sql = " username = ?";
                         $where['username'] = $value;
 
-                    }else if($field == 'phone'){
+                    } else if ($field == 'phone') {
 
                         $sql = " phone = ?";
                         $where['phone'] = $value;
@@ -68,33 +67,30 @@ class CheckUniqueService
                 $result = $this->adminsRepository->searchOne($sql, $where);
                 break;
             case 'users':
-                if($id)
-                {
-                    if($field == 'email')
-                    {
+                if ($id) {
+                    if ($field == 'email') {
                         $sql = "id <> $id and email = ?";
                         $where['email'] = $value;
 
-                    }else if($field == 'username'){
+                    } else if ($field == 'username') {
                         $sql = "id <> $id and username = ?";
                         $where['username'] = $value;
 
-                    }else if($field == 'phone'){
+                    } else if ($field == 'phone') {
                         $sql = "id <> $id and phone = ?";
                         $where['phone'] = $value;
                     }
-                }else{
-                    if($field == 'email')
-                    {
+                } else {
+                    if ($field == 'email') {
                         $sql = " email = ?";
                         $where['email'] = $value;
 
-                    }else if($field == 'username'){
+                    } else if ($field == 'username') {
 
                         $sql = " username = ?";
                         $where['username'] = $value;
 
-                    }else if($field == 'phone'){
+                    } else if ($field == 'phone') {
 
                         $sql = " phone = ?";
                         $where['phone'] = $value;
@@ -102,6 +98,22 @@ class CheckUniqueService
                 }
                 $result = $this->usersRepository->searchOne($sql, $where);
                 break;
+
+            case 'account_phones':
+                if ($id) {
+
+                    $sql = "id <> $id and account = ?";
+                    $where['account'] = $value;
+
+                } else {
+
+                    $sql = " account = ?";
+                    $where['account'] = $value;
+
+                }
+                $result = $this->accountPhoneRepository->searchOne($sql, $where);
+                break;
+
             default :
                 return false;
         }

@@ -10,15 +10,18 @@ namespace App\Http\User\Controllers;
 
 
 use App\Services\AccountPhoneService;
+use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 
 class AccountPhoneController extends Controller
 {
     protected $accountPhoneService;
+    protected $checkUniqueService;
 
-    public function __construct(AccountPhoneService $accountPhoneService)
+    public function __construct(AccountPhoneService $accountPhoneService, CheckUniqueService $checkUniqueService)
     {
         $this->accountPhoneService = $accountPhoneService;
+        $this->checkUniqueService = $checkUniqueService;
     }
 
     /**
@@ -58,10 +61,25 @@ class AccountPhoneController extends Controller
             }
         }
 
-
     }
 
     /**
+     * 检测唯一性
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkUnique(Request $request)
+    {
+        $result = $this->checkUniqueService->check('account_phones', $request->type, $request->value, $request->id);
+        if ($result) {
+            return response()->json(array("valid" => "true"));
+        } else {
+            return response()->json(array("valid" => "false"));
+        }
+    }
+
+    /**
+     * 编辑状态
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -77,6 +95,7 @@ class AccountPhoneController extends Controller
     }
 
     /**
+     * 编辑
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -91,6 +110,7 @@ class AccountPhoneController extends Controller
     }
 
     /**
+     * 删除
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */

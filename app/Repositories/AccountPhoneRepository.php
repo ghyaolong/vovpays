@@ -21,10 +21,10 @@ class AccountPhoneRepository
      */
     public function __construct(Account_phone $account_phone)
     {
-        $this->account_phone=$account_phone;
+        $this->account_phone = $account_phone;
     }
 
-    public function searchPage(string $sql,array $where,int $page)
+    public function searchPage(string $sql, array $where, int $page)
     {
         return $this->account_phone->whereRaw($sql, $where)->paginate($page);
     }
@@ -38,11 +38,11 @@ class AccountPhoneRepository
     {
         $string = strtolower(str_random(32));
 
-        $result=$this->account_phone->where('signKey','=',$string)->first();
+        $result = $this->account_phone->where('signKey', '=', $string)->first();
 
-        if (!isset($result)){
-            $data['signKey']=$string;
-        }else{
+        if (!isset($result)) {
+            $data['signKey'] = $string;
+        } else {
             return false;
         }
         return $this->account_phone->create($data);
@@ -53,9 +53,14 @@ class AccountPhoneRepository
      * @param array $data
      * @return mixed
      */
-    public function update(int $id,array $data)
+    public function update(int $id, array $data)
     {
         return $this->account_phone->whereId($id)->update($data);
+    }
+
+    public function searchOne(string $sql, array $where)
+    {
+        return $this->account_phone->whereRaw($sql, $where)->first();
     }
 
     /**

@@ -89,15 +89,14 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.alipayadd') }}" class="form-horizontal" role="form"
-                          method="post">
+                    <form id="addForm" action="{{ route('user.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <input type="hidden" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">账号:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="account" placeholder="请输入账号">
+                                <input type="text" id="account" class="form-control" name="account" placeholder="请输入账号">
                             </div>
                         </div>
                         <div class="form-group">
@@ -136,7 +135,7 @@
     <script>
 
         $(function () {
-
+            formValidator();
             // 状态修改
             $('.switch-state').bootstrapSwitch({
                 onText: '启用',
@@ -172,9 +171,9 @@
 
             // 模态关闭
             $('#addModel').on('hidden.bs.modal', function () {
-                $("#bankForm").data('bootstrapValidator').destroy();
-                $('#bankForm').data('bootstrapValidator', null);
-                $('#bankForm').get(0).reset();
+                $("#addForm").data('bootstrapValidator').destroy();
+                $('#addForm').data('bootstrapValidator', null);
+                $('#addForm').get(0).reset();
                 formValidator();
             });
 
@@ -220,7 +219,11 @@
         }
 
 
-        $().ready(function () {
+        /*
+      *表单验证
+      */
+        function formValidator()
+        {
             $('#addForm').bootstrapValidator({
                 message: 'This value is not valid',
                 feedbackIcons: {
@@ -234,20 +237,20 @@
                             notEmpty: {
                                 message: '请输入账号!'
                             },
-                            // remote: {
-                            //     url: "users/check",
-                            //     message: "账号已存在!",
-                            //     type: "post",
-                            //     data: function(){ // 额外的数据，默认为当前校验字段,不需要的话去掉即可
-                            //         return {
-                            //             "value" : $("#username").val().trim(),
-                            //             "type"  : 'username',
-                            //             "_token": $('meta[name="csrf-token"]').attr('content'),
-                            //             "id"    : $('input[name="id"]').val()
-                            //         };
-                            //     },
-                            //     delay:500,
-                            // }
+                            remote: {
+                                url: "check",
+                                message: "账号已存在!",
+                                type: "post",
+                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value" : $("#account").val().trim(),
+                                        "type": 'account',
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id": $('input[name="id"]').val()
+                                    };
+                                },
+                                delay: 500,
+                            }
                         }
                     },
                     alipayusername: {
@@ -280,7 +283,7 @@
                     },
                 }
             })
-        });
+        }
 
 
         /**
