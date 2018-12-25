@@ -18,15 +18,17 @@
                         </button>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body" class="col-md-12">
                     <!-- ./col -->
                     <form class="navbar-form navbar-left" action="{{route('user.alipay')}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="account" placeholder="账号">
                         </div>&nbsp;&nbsp;
 
-                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
-                        <a onclick="showModel('添加账号')" class="btn btn-info" style="margin-left: 650px">添加账号</a>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>
                     </form>
 
 
@@ -36,7 +38,7 @@
                                 <th>标识ID</th>
                                 <th>账号</th>
                                 <th>账号类型</th>
-                                <th>备注</th>
+                                {{--<th>备注</th>--}}
                                 <th>单日交易额/限额</th>
                                 <th>状态</th>
                                 <th>操作</th>
@@ -52,7 +54,7 @@
                                         <td>{{ $v->id+10000 }}</td>
                                         <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
-                                        <td>备注</td>
+                                        {{--<td>备注</td>--}}
                                         <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
                                                     style="color: red">{{ $v->dayQuota }}</span></td>
                                         <td>
@@ -113,6 +115,11 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-xs-7" style="margin-top:-10px;">
+                                <a onclick="aliid('扫码获取账号ID')" style="margin-left: 150px">点击扫码，获取账号ID</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="phone_id" placeholder="请输入手机标识">
@@ -124,12 +131,12 @@
                                 <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">备注:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="" placeholder="请填写备注">
-                            </div>
-                        </div>
+                        {{--<div class="form-group">--}}
+                        {{--<label for="" class="col-xs-3 control-label">备注:</label>--}}
+                        {{--<div class="col-xs-9">--}}
+                        {{--<input type="text" class="form-control" name="" placeholder="请填写备注">--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -140,6 +147,25 @@
             </div>
         </div>
     </div>
+
+    {{--二维码模态框--}}
+    <div class="modal fade" id="aliidModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;text-align: center">
+                    <img src="{{ asset('/AdminLTE/dist/img/user/aliewm.png') }}" alt="二维码获取失败！">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 
@@ -296,6 +322,11 @@
         function showModel(title) {
             $('#addModel .modal-title').html(title);
             $('#addModel').modal('show');
+        }
+
+        function aliid(title) {
+            $('#aliidModel .modal-title').html(title);
+            $('#aliidModel').modal('show');
         }
 
         /**
