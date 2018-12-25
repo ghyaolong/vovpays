@@ -53,7 +53,8 @@
                                         <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         <td>备注</td>
-                                        <td><span style="color: green">{{$v->tradeAmount}}</span> / <span style="color: red">{{ $v->dayQuota }}</span></td>
+                                        <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
+                                                    style="color: red">{{ $v->dayQuota }}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -223,8 +224,7 @@
         /*
       *表单验证
       */
-        function formValidator()
-        {
+        function formValidator() {
             $('#addForm').bootstrapValidator({
                 message: 'This value is not valid',
                 feedbackIcons: {
@@ -244,7 +244,7 @@
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
                                     return {
-                                        "value" : $("#account").val().trim(),
+                                        "value": $("#account").val().trim(),
                                         "type": 'account',
                                         "_token": $('meta[name="csrf-token"]').attr('content'),
                                         "id": $('input[name="id"]').val()
@@ -316,6 +316,7 @@
                 }
             })
         }
+
         /**
          * 删除
          * @param _this

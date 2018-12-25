@@ -194,7 +194,6 @@
         })
 
 
-
         /**
          *提交
          */
@@ -228,8 +227,7 @@
         /*
          *表单验证
          */
-        function formValidator()
-        {
+        function formValidator() {
             $('#addForm').bootstrapValidator({
                 message: 'This value is not valid',
                 feedbackIcons: {
@@ -249,7 +247,7 @@
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
                                     return {
-                                        "value" : $("#account").val().trim(),
+                                        "value": $("#account").val().trim(),
                                         "type": 'account',
                                         "_token": $('meta[name="csrf-token"]').attr('content'),
                                         "id": $('input[name="id"]').val()
