@@ -8,7 +8,7 @@
             <li class="header">商户管理</li>
             <li class="active treeview">
             <li><a href="{{route('user.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>首页</span></a></li>
-            <li><a href="{{route('user.user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>用户管理</span></a></li>
+            {{--<li><a href="{{route('user.user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>用户管理</span></a></li>--}}
             <li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>
             </li>
 
@@ -27,6 +27,8 @@
 
             <li><a href="{{route('user.bankCard',Auth::user()->id)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
             <li><a href="{{route('user.api')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>API管理</span></a></li>
+            <li><a href="{{route('user.wechat')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>微信管理</span></a></li>
+            <li><a href="{{route('user.alipay')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>支付宝管理</span></a></li>
 
             </li>
 

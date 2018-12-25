@@ -292,7 +292,6 @@
                         $("input[name='branchName']").val(result.data['branchName']);
                         $("input[name='bankCardNo']").val(result.data['bankCardNo']);
                         $("input[name='accountName']").val(result.data['accountName']);
-                        $("input[name='status']").val(result.data['status']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');

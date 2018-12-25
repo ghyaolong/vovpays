@@ -40,6 +40,14 @@ Route::group([], function ($router) {
         Route::post('apply','WithdrawsController@store')->name('user.apply');
 //        Route::any('withdraws/{id}','WithdrawsController@index')->name('user.withdraws');
         Route::any('withdraws','WithdrawsController@index')->name('user.withdraws');
+        //支付宝
+        Route::get('alipay','AccountPhoneController@index')->name('user.alipay');
+        Route::get('wechat','AccountPhoneController@index')->name('user.wechat');
+        Route::post('accountAdd','AccountPhoneController@store')->name('user.accountAdd');
+        Route::post('accountStatus','AccountPhoneController@saveStatus')->name('user.accountStatus');
+        Route::get('{id}/accountEdit','AccountPhoneController@edit')->name('user.accountEdit');
+        Route::delete('accountDel','AccountPhoneController@destroy')->name('user.accountDel');
+        Route::post('check','AccountPhoneController@checkUnique')->name('user.check');
     });
 
 });

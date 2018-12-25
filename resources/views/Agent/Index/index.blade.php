@@ -132,8 +132,11 @@
 
 
                 <div class="row" style="text-align: center;font-size: 18px">
+                    <br>
+                    <br>
+                    <br>
 
-                    <p class="col-md-12" style="">这是你的默认提现 <br> 银行卡</p>
+                    <p class="col-md-12" style="">您还未添加或未开启 <br> 银行卡</p>
 
                     <span class="col-md-12" style="text-align: center">
                     <a class="col-md-4 btn btn-info"
