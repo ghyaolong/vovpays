@@ -21,21 +21,21 @@ Route::group([], function ($router) {
         Route::get('rate', 'IndexController@rate')->name('agent.rate');
 
         Route::get('user', 'UserController@index')->name('agent.user');
-        Route::post('add', 'UserController@add')->name('agent.add');
-        Route::post('check', 'UserController@checkUnique')->name('agent.check');
-        Route::post('saveStatus', 'UserController@saveStatus')->name('agent.saveStatus');
+        Route::post('user', 'UserController@add')->name('agent.add');
+        Route::post('user/check', 'UserController@checkUnique')->name('agent.check');
+        Route::post('user/saveStatus', 'UserController@saveStatus')->name('agent.saveStatus');
 
         Route::get('info', 'AgentController@index')->name('agent.info');
 
         Route::get('order', 'OrderController@index')->name('agent.order');
 
         Route::get('bankCard', 'BankCardController@index')->name('agent.bankCard');
-        Route::post('store','BankCardController@store')->name('agent.store');
+        Route::post('bankCard','BankCardController@store')->name('agent.store');
 
         //提现
-        Route::get('clearing','WithdrawsController@clearing')->name('agent.clearing');
-        Route::post('apply','WithdrawsController@store')->name('agent.apply');
         Route::any('withdraws','WithdrawsController@index')->name('agent.withdraws');
+        Route::get('withdraws/clearing','WithdrawsController@clearing')->name('agent.clearing');
+        Route::post('withdraws/apply','WithdrawsController@store')->name('agent.apply');
 
     });
 

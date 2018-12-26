@@ -46,20 +46,6 @@ class IndexController extends Controller
     }
 
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy(Request $request)
-    {
-        $result = $this->userService->destroy($request->id);
-        if ($result) {
-            return ajaxSuccess('删除成功！');
-        } else {
-            return ajaxError('删除失败！');
-        }
-    }
-
     //修改密码
     public function editPassword(Request $request)
     {

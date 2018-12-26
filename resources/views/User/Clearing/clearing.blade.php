@@ -149,8 +149,7 @@
     <td>{{$v->branchName}}</td>
     <td>{{$v->bankCardNo}}</td>
     <td>{{$v->accountName}}</td>
-        {{--<td>$v->status?'启用':'禁用'}}</td>--}}
-        <td> @if($v->status) <span style="color: seagreen">启用</span> @else <span style="color: red">禁用</span> @endif</td>
+    <td> @if($v->status) <span style="color: seagreen">启用</span> @else <span style="color: red">禁用</span> @endif</td>
     <td>{{$v->created_at}}</td>
     <td>
     <button class="btn btn-danger btn-sm"
@@ -398,7 +397,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/' + id + '/edit',
+                url: '/user/bankCard/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

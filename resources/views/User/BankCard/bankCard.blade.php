@@ -164,7 +164,7 @@
                     var user_id = $(event.currentTarget).data('user_id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/saveStatus',
+                        url: '/user/bankCard/saveStatus',
                         data: {'status': state, 'id': id, 'user_id': user_id},
                         dataType: 'json',
                         headers: {
@@ -282,7 +282,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/' + id + '/edit',
+                url: '/user/bankCard/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -314,7 +314,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/del',
+                    url: '/user/bankCard',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {
