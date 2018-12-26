@@ -27,8 +27,8 @@
 
             <li><a href="{{route('user.bankCard',Auth::user()->id)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
             <li><a href="{{route('user.api')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>API管理</span></a></li>
-            <li><a href="{{route('user.wechat')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>微信管理</span></a></li>
-            <li><a href="{{route('user.alipay')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>支付宝管理</span></a></li>
+            <li><a href="{{route('user.account',0)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>微信管理</span></a></li>
+            <li><a href="{{route('user.account',1)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>支付宝管理</span></a></li>
 
             </li>
 

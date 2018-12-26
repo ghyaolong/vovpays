@@ -20,7 +20,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.alipay')}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('user.account',1)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="account" placeholder="账号">
                         </div>&nbsp;&nbsp;
@@ -48,7 +48,6 @@
                                     <td colspan="10" style="text-align: center">没有找到匹配数据</td>
                                 </tr>
                             @else
-                                {{--<tbody>--}}
                                 @foreach($list as $v)
                                     <tr>
                                         <td>{{ $v->id+10000 }}</td>
@@ -72,7 +71,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                {{--</tbody>--}}
                             @endif
                         </table>
                     </div>
@@ -190,7 +188,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/accountStatus',
+                        url: '/user/account/saveStatus',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -341,7 +339,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/' + id + '/accountEdit',
+                url: '/user/account/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -380,7 +378,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/accountDel',
+                    url: '/user/account',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

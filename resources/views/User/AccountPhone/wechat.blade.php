@@ -20,7 +20,7 @@
                 </div>
                 <div class="box-body">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.wechat')}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('user.account',0)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" id="account1" name="account" placeholder="账号">
                         </div>&nbsp;&nbsp;
@@ -148,7 +148,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/accountStatus',
+                        url: '/user/account/saveStatus',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -295,7 +295,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/' + id + '/accountEdit',
+                url: '/user/account/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -333,7 +333,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/accountDel',
+                    url: '/user/account',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {
