@@ -83,4 +83,14 @@ class BankCardRepository
         return $this->bankCard->whereId($id)->update($data);
     }
 
+    /**
+     * 修改用户所有银行卡状态
+     * @param int $id
+     * @param array $data
+     */
+    public function updateStatus(int $id,array $data)
+    {
+        $this->bankCard->whereUserId($id)->update($data);
+    }
+
 }

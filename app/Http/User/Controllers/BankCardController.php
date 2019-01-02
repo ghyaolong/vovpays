@@ -43,8 +43,6 @@ class BankCardController extends Controller
         $result = $this->bankCardService->updateStatus($request->id, $data);
         if ($result) {
             return ajaxSuccess('修改成功！');
-        } elseif ($result === false) {
-            return ajaxError('修改失败，只能有一张卡为启用状态！');
         } else {
             return ajaxError('修改失败！');
         }

@@ -55,7 +55,7 @@
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         {{--<td>备注</td>--}}
                                         <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
-                                                    style="color: red">{{ $v->dayQuota }}</span></td>
+                                                    style="color: red">{{ $v->dayQuota - $v->tradeAmount }}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />

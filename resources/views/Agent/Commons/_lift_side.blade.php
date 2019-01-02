@@ -34,11 +34,6 @@
             {{--<li><a href="{{route('agent.rate')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>商户费率</span></a></li>--}}
             </li>
 
-            {{--<li class="header">账号轮询</li>--}}
-            {{--<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>开发者</span></a></li>--}}
-            {{--<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>微信账户</span></a></li>--}}
-            {{--<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>百度钱包账户</span></a></li>--}}
-
         </ul>
     </section>
     <!-- /.sidebar -->

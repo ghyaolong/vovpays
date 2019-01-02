@@ -94,17 +94,12 @@ class BankCardService
     public function updateStatus(int $id, array $data)
     {
 
-        if ($data['status'] == '0') {
+        if ($this->bankCardRepository->findStatus($data['user_id'])) {
 
-            return $this->bankCardRepository->update($id, $data);
-
-        } elseif($this->bankCardRepository->findStatus($data['user_id'])) {
-
-            return false;
-
-        }else{
-            return $this->bankCardRepository->update($id, $data);
+            $this->bankCardRepository->updateStatus($data['user_id'], ['status' => 0]);
         }
 
+        return $this->bankCardRepository->update($id, $data);
     }
+
 }

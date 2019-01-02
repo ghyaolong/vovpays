@@ -173,6 +173,7 @@
                         success: function (result) {
                             if (result.status) {
                                 toastr.success(result.msg);
+                                window.location.href = window.location.href;
                             } else {
                                 $('#addModel').modal('hide');
                                 toastr.error(result.msg);

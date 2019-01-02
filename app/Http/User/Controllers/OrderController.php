@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    protected $orderRepository;
+    protected $ordersService;
     protected $channelService;
     protected $channelPaymentsService;
     /**
@@ -26,7 +26,6 @@ class OrderController extends Controller
 
     /**
      * Show the application dashboard.
-     *
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
