@@ -10,7 +10,6 @@ namespace App\Services;
 
 
 use App\Repositories\WithdrawsRepository;
-use Illuminate\Support\Facades\Auth;
 
 class WithdrawsService
 {
@@ -46,32 +45,32 @@ class WithdrawsService
      * @param int $page
      * @return mixed
      */
-    public function searchPage(array $data, int $page)
-    {
-        $sql = '1=1';
-        $time=explode(" - ",$data['orderTime']);
-
-        if (isset($data['user_id']) && $data['user_id']) {
-            $sql .= ' and user_id = ?';
-            $where['user_id'] = $data['user_id'];
-        }
-
-        if (isset($time[0]) && $time[0]) {
-            $sql .= ' and created_at >= ?';
-            $where['created_at'] = $time[0];
-        }
-
-        if (isset($time[1]) && $time[1]) {
-            $sql .= ' and created_at <= ?';
-            $where['updated_at'] = $time[1];
-        }
-
-        if (isset($data['status']) && $data['status'] != '-1') {
-            $sql .= ' and status = ?';
-            $where['status'] = $data['status'];
-        }
-        return $this->withdrawsService->searchPage($sql, $where, $page);
-    }
+//    public function searchPage(array $data, int $page)
+//    {
+//        $sql = '1=1';
+//        $time=explode(" - ",$data['orderTime']);
+//
+//        if (isset($data['user_id']) && $data['user_id']) {
+//            $sql .= ' and user_id = ?';
+//            $where['user_id'] = $data['user_id'];
+//        }
+//
+//        if (isset($time[0]) && $time[0]) {
+//            $sql .= ' and created_at >= ?';
+//            $where['created_at'] = $time[0];
+//        }
+//
+//        if (isset($time[1]) && $time[1]) {
+//            $sql .= ' and created_at <= ?';
+//            $where['updated_at'] = $time[1];
+//        }
+//
+//        if (isset($data['status']) && $data['status'] != '-1') {
+//            $sql .= ' and status = ?';
+//            $where['status'] = $data['status'];
+//        }
+//        return $this->withdrawsService->searchPage($sql, $where, $page);
+//    }
 
     /**
      * 结算记录
@@ -81,9 +80,6 @@ class WithdrawsService
      */
     public function getAllPage(int $page)
     {
-        $user_id=Auth::user()->id;
-        $sql = " user_id = {$user_id} ";
-        $where=[];
-        return $this->withdrawsService->searchPage($sql, $where, $page);
+        return $this->withdrawsService->searchPage($page);
     }
 }

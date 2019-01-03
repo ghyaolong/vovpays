@@ -10,6 +10,7 @@ namespace App\Repositories;
 
 
 use App\Models\Withdraw;
+use Illuminate\Support\Facades\Auth;
 
 class WithdrawsRepository
 {
@@ -37,8 +38,11 @@ class WithdrawsRepository
      * @param int $page
      * @return mixed
      */
-    public function searchPage(string $sql, array $where, int $page)
+    public function searchPage(int $page)
     {
+        $user_id=Auth::user()->id;
+        $sql = " user_id = {$user_id} ";
+        $where=[];
         return $this->withdraw->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
     }
 }
