@@ -93,4 +93,38 @@ class AdminsRepository
         return $this->findId($id)->roles()->sync($data);
     }
 
+    public function searchOne(string $field, string $value, int $id = null)
+    {
+        if ($id) {
+            if ($field == 'email') {
+                $sql = "id <> $id and email = ?";
+                $where['email'] = $value;
+
+            } else if ($field == 'username') {
+                $sql = "id <> $id and username = ?";
+                $where['username'] = $value;
+
+            } else if ($field == 'phone') {
+                $sql = "id <> $id and phone = ?";
+                $where['phone'] = $value;
+            }
+        } else {
+            if ($field == 'email') {
+                $sql = " email = ?";
+                $where['email'] = $value;
+
+            } else if ($field == 'username') {
+
+                $sql = " username = ?";
+                $where['username'] = $value;
+
+            } else if ($field == 'phone') {
+
+                $sql = " phone = ?";
+                $where['phone'] = $value;
+            }
+        }
+        return $this->admin->whereRaw($sql, $where)->first();
+    }
+
 }

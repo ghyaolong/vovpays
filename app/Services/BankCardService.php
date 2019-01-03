@@ -37,9 +37,7 @@ class BankCardService
      */
     public function getAll(int $id)
     {
-        $sql = 'user_id=?';
-        $where['user_id'] = $id;
-        return $this->bankCardRepository->search($sql, $where);
+        return $this->bankCardRepository->search($id);
     }
 
     /**

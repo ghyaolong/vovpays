@@ -37,8 +37,10 @@ class BankCardRepository
      * @param array $where
      * @return mixed
      */
-    public function search(string $sql, array $where)
+    public function search(int $id)
     {
+        $sql = 'user_id=?';
+        $where['user_id'] = $id;
         return $this->bankCard->whereRaw($sql,$where)->get();
     }
 

@@ -24,8 +24,25 @@ class AccountPhoneRepository
         $this->account_phone = $account_phone;
     }
 
-    public function searchPage(string $sql, array $where, int $page)
+    public function searchPage(array $data, int $page)
     {
+        $sql = ' 1=1 ';
+        $where = [];
+
+        if (isset($data['account']) && $data['account']) {
+            $sql .= 'and account = ?';
+            $where['account'] = $data['account'];
+        }
+        if (isset($data['accountType']) && $data['accountType']) {
+            if ($data['accountType'] == 'alipay') {
+                $data['accountType'] = '支付宝';
+            } elseif ($data['accountType'] == 'wechat') {
+                $data['accountType'] = '微信';
+            }
+            $sql .= ' and accountType = ?';
+            $where['accountType'] = $data['accountType'];
+        }
+
         return $this->account_phone->whereRaw($sql, $where)->paginate($page);
     }
 
@@ -63,8 +80,19 @@ class AccountPhoneRepository
      * @param array $where
      * @return mixed
      */
-    public function searchOne(string $sql, array $where)
+    public function searchOne(int $id, string $value)
     {
+        if ($id) {
+
+            $sql = "id <> $id and account = ?";
+            $where['account'] = $value;
+
+        } else {
+
+            $sql = " account = ?";
+            $where['account'] = $value;
+
+        }
         return $this->account_phone->whereRaw($sql, $where)->first();
     }
 

@@ -33,24 +33,7 @@ class AccountPhoneService
      */
     public function getAllPage(array $data, int $page)
     {
-        $sql = ' 1=1 ';
-        $where = [];
-
-        if (isset($data['account']) && $data['account']) {
-            $sql .= 'and account = ?';
-            $where['account'] = $data['account'];
-        }
-        if (isset($data['accountType']) && $data['accountType']) {
-            if ($data['accountType'] == 'alipay') {
-                $data['accountType'] = '支付宝';
-            } elseif ($data['accountType'] == 'wechat') {
-                $data['accountType'] = '微信';
-            }
-            $sql .= ' and accountType = ?';
-            $where['accountType'] = $data['accountType'];
-        }
-
-        return $this->accountPhoneRepository->searchPage($sql, $where, $page);
+        return $this->accountPhoneRepository->searchPage($data, $page);
     }
 
     /**

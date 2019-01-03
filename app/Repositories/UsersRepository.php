@@ -36,8 +36,45 @@ class UsersRepository
      * @param int $page
      * @return mixed
      */
-    public function searchPage(string $sql, array $where, int $page)
+    public function searchPage(array $data, int $page)
     {
+        $sql = ' 1=1 ';
+        $where = [];
+
+        if (isset($data['merchant']) && $data['merchant']) {
+            $sql .= 'and merchant = ?';
+            $where['merchant'] = $data['merchant'];
+        }
+
+        if (isset($data['username']) && $data['username']) {
+            $sql .= ' and username = ?';
+            $where['username'] = $data['username'];
+        }
+
+        if (isset($data['groupType']) && $data['groupType'] != '-1') {
+            $sql .= ' and group_type = ?';
+            $where['group_type'] = $data['groupType'];
+        }
+
+        if (isset($data['status']) && $data['status'] != '-1') {
+            $sql .= ' and status = ?';
+            $where['status'] = $data['status'];
+        }
+
+        return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
+    }
+
+    public function searchGroupPage(int $group_id, int $page)
+    {
+        $sql = ' group_type = ? and status <> 2';
+        $where['group_type'] = $group_id;
+        return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
+    }
+
+    public function searchParentPage(int $parentId, int $page)
+    {
+        $sql = 'parentId=? and status <>2';
+        $where['parentId'] = $parentId;
         return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
     }
 
@@ -47,8 +84,10 @@ class UsersRepository
      * @param array $where
      * @return mixed
      */
-    public function search(string $sql, array $where)
+    public function search(int $group_id)
     {
+        $sql = ' group_type = ?';
+        $where['group_type'] = $group_id;
         return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->get();
     }
 
@@ -68,6 +107,10 @@ class UsersRepository
      * @param array $where
      * @return mixed
      */
+//    public function searchOne(string $sql, array $where)
+//    {
+//        return $this->user->whereRaw($sql, $where)->first();
+//    }
     public function searchOne(string $sql, array $where)
     {
         return $this->user->whereRaw($sql, $where)->first();
