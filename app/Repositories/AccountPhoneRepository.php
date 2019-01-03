@@ -58,6 +58,11 @@ class AccountPhoneRepository
         return $this->account_phone->whereId($id)->update($data);
     }
 
+    /**
+     * @param string $sql
+     * @param array $where
+     * @return mixed
+     */
     public function searchOne(string $sql, array $where)
     {
         return $this->account_phone->whereRaw($sql, $where)->first();
@@ -79,6 +84,19 @@ class AccountPhoneRepository
     public function del(int $id)
     {
         return $this->account_phone->whereId($id)->delete();
+    }
+
+    /**
+     * @param string $type
+     * @param int $status
+     * @return mixed
+     */
+    public function searchAccountAll( string $type, int $status)
+    {
+        $sql = "status=? and accountType=?";
+        $where['status']      = $status;
+        $where['accountType'] = $type;
+        return $this->account_phone->whereRaw($sql, $where)->get();
     }
 
 }

@@ -41,6 +41,11 @@ class PayController extends Controller
         $this->md5Verify              = $md5Verify;
     }
 
+    /**
+     * 订单提交入口
+     * @param Request $request
+     * @return string
+     */
     public function index(Request $request)
     {
         if( isset($request->json) && $request->json == 'json'){
@@ -117,13 +122,22 @@ class PayController extends Controller
             {
                 throw new \Exception('');
             }
-            $pay->pay($this->user, $this->channel, $this->channelPayment, $this->userPayment, $request);
+            return $pay->pay($this->user, $this->channel, $this->channelPayment, $this->userPayment, $request);
 
         }catch ( \Exception $e){
 
             return json_encode(RespCode::RESOURCE_NOT_FOUND);
         }
+    }
 
+
+    /**
+     * 订单查询入口
+     * @param Request $request
+     */
+    public function queryOrder(Request $request)
+    {
+        dd(11);
     }
 
     /**
