@@ -40,9 +40,7 @@ class ChannelService
 
     public function findIdStatus(int $id)
     {
-        $sql = 'id=? and status=1';
-        $where['id'] = $id;
-        return $this->channelsRepository->searchOne($sql,$where);
+        return $this->channelsRepository->findIdAndStatus($id);
     }
 
     /**
@@ -52,10 +50,7 @@ class ChannelService
      */
     public function getAllPage(int $page)
     {
-        $sql   = '1=1';
-        $where = [];
-
-        return $this->channelsRepository->searchPage($sql, $where, $page);
+        return $this->channelsRepository->getAllPage($page);
     }
 
     /**
@@ -77,9 +72,7 @@ class ChannelService
      */
     public function getAll()
     {
-        $sql   = '1=1';
-        $where = [];
-        return $this->channelsRepository->search($sql, $where);
+        return $this->channelsRepository->getAll();
     }
 
     /**

@@ -24,15 +24,13 @@ class ChannelsRepository
     }
 
     /**
-     * 查询列表，分页
-     * @param string $sql
-     * @param array $where
+     * 获取所有，分页
      * @param int $page
      * @return mixed
      */
-    public function searchPage(string $sql, array $where, int $page)
+    public function getAllPage(int $page)
     {
-        return $this->channel->whereRaw($sql, $where)->paginate($page);
+        return $this->channel->orderBy('id', 'desc')->paginate($page);
     }
 
     /**
@@ -45,25 +43,23 @@ class ChannelsRepository
     }
 
     /**
-     * 查询列表，不分页
-     * @param string $sql
-     * @param array $where
+     * 获取所有，不分页
      * @return mixed
      */
-    public function search(string $sql, array $where)
+    public function getAll()
     {
-        return $this->channel->whereRaw($sql, $where)->get();
+        return $this->channel->orderBy('id', 'desc')->get();
     }
 
     /**
-     * 查询单条
-     * @param string $sql
-     * @param array $where
+     * 根据id和状态获取
+     * @param int $id
+     * @param int $status
      * @return mixed
      */
-    public function searchOne(string $sql, array $where)
+    public function findIdAndStatus(int $id, int $status = 1)
     {
-        return $this->channel->whereRaw($sql, $where)->first();
+        return $this->channel->whereId($id)->whereStatus($status)->first();
     }
 
     /**

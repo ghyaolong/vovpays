@@ -45,9 +45,7 @@ class ChannelPaymentsService
      */
     public function getAllPage(int $page)
     {
-        $sql   = '1=1';
-        $where = [];
-        return $this->channelPaymentsRepository->searchPage($sql, $where, $page);
+        return $this->channelPaymentsRepository->getAllPage($page);
     }
 
     /**
@@ -57,9 +55,7 @@ class ChannelPaymentsService
      */
     public function findPaymentCode(string $code)
     {
-        $sql   = 'paymentCode=? and status=1';
-        $where['paymentCode'] = $code;
-        return $this->channelPaymentsRepository->searchOne($sql, $where);
+        return $this->channelPaymentsRepository->findPaymentCode($code);
     }
 
     /**
@@ -78,14 +74,11 @@ class ChannelPaymentsService
 
     /**
      * 获取所有不带分页
-     * @param string $sql
-     * @param array $where
      * @return mixed
      */
-    public function getAll( string $sql = '', array $where = [])
+    public function getAll()
     {
-        $sql   = ' status <> 2 '.$sql;
-        return $this->channelPaymentsRepository->searchAll($sql, $where);
+        return $this->channelPaymentsRepository->getAll();
     }
 
     /**

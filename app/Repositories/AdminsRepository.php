@@ -33,26 +33,12 @@ class AdminsRepository
     }
 
     /**
-     * 查询不带分页
-     * @param string $sql
-     * @param array $where
+     * 获取所有
      * @return mixed
      */
-    public function search(string $sql, array $where)
+    public function getAll()
     {
-        return $this->admin->whereRaw($sql, $where)->orderBy('id', 'desc')->get();
-    }
-
-    /**
-     * 查询带分页
-     * @param string $sql
-     * @param array $where
-     * @param int $page
-     * @return mixed
-     */
-    public function searchPage(string $sql, array $where, int $page)
-    {
-        return $this->admin->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
+        return $this->admin->orderBy('id', 'desc')->get();
     }
 
 
@@ -66,16 +52,6 @@ class AdminsRepository
         return $this->admin->whereId($id)->update($data);
     }
 
-    /**
-     * 查询一条
-     * @param string $sql
-     * @param array $where
-     * @return mixed
-     */
-    public function searchOne(string $sql, array $where)
-    {
-        return $this->admin->whereRaw($sql, $where)->first();
-    }
 
     /**
      * 删除

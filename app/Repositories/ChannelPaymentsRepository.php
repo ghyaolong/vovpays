@@ -24,25 +24,24 @@ class ChannelPaymentsRepository
     }
 
     /**
-     * 查询列表，分页
-     * @param string $sql
-     * @param array $where
+     * 获取所有带分页
      * @param int $page
      * @return mixed
      */
-    public function searchPage(string $sql, array $where, int $page)
+    public function getAllPage(int $page)
     {
-        return $this->channel_payment->whereRaw($sql, $where)->paginate($page);
+        return $this->channel_payment->orderBy('id', 'desc')->paginate($page);
     }
 
     /**
-     * 查询单条
-     * @param string $sql
-     * @param array $where
+     * 根据支付编码获取启用的支付方式
+     * @param string $code
      * @return mixed
      */
-    public function searchOne(string $sql, array $where)
+    public function findPaymentCode(string $code)
     {
+        $sql   = 'paymentCode=? and status=1';
+        $where['paymentCode'] = $code;
         return $this->channel_payment->whereRaw($sql, $where)->first();
     }
 
@@ -56,14 +55,12 @@ class ChannelPaymentsRepository
     }
 
     /**
-     * 查询列表，不分页
-     * @param string $sql
-     * @param array $where
+     * 获取所有
      * @return mixed
      */
-    public function searchAll(string $sql, array $where)
+    public function getAll()
     {
-        return $this->channel_payment->whereRaw($sql, $where)->get();
+        return $this->channel_payment->orderBy('id', 'desc')->get();
     }
 
     /**
