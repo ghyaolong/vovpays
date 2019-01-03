@@ -25,26 +25,20 @@ class UserRateRepository
 
     /**
      * 根据用户id获取指定字段
-     * @param string $sql
-     * @param array $where
+     * @param int $uid
      * @return mixed
      */
-    public function search(string $sql, array $where)
+    public function findUserId( int $uid)
     {
-        return $this->user_rates->whereRaw($sql , $where)
+        return $this->user_rates->whereUserId($uid)
             ->select('channel_payment_id', 'rate', 'status', 'channel_id')
             ->get();
     }
 
-    /**
-     * 获取单条
-     * @param string $sql
-     * @param array $where
-     * @return mixed
-     */
-    public function searchOne(string $sql, array $where)
-    {
-        return $this->user_rates->whereRaw($sql , $where)
+
+    public function findUseridAndPaymentid(int $uid, int $paymentid){
+        return $this->user_rates->whereUserId($uid)
+            ->whereChannelPaymentId($paymentid)
             ->select('id','channel_payment_id', 'rate', 'status', 'channel_id')
             ->first();
     }

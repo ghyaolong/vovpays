@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Repositories\UserRateRepository;
 use App\Exceptions\CustomServiceException;
-use App\Services\ChannelPaymentsService;
 
 class UserRateService
 {
@@ -35,16 +34,12 @@ class UserRateService
         // 会员不存在代理的时候，获取所有支付产品，存在代理获取代理的支付产品
         if($user->parentId == 0)
         {
-            $sql = 'user_id=?';
-            $where['user_id'] = $user_id;
-            $user_rate_list = $this->userRateRepository->search($sql, $where);
+            $user_rate_list = $this->userRateRepository->findUserId($user_id);
             // 以支付方式id为key 转为数组
             $user_rate_array = $user_rate_list->keyBy('channel_payment_id')->toArray();
 
             // 获取所有已启用支付方式
-            $sql = ' and status=?';
-            $channelWhere['status'] = 1;
-            $channelPayment_list = $this->channelPaymentsService->getAll($sql,$channelWhere);
+            $channelPayment_list = $this->channelPaymentsService->getStatusAll(1);
             $channelPayment_array = $channelPayment_list->keyBy('id')->toArray();
 
             foreach ($channelPayment_array as $key=>$item)
@@ -55,16 +50,12 @@ class UserRateService
 
         }else{
             // 获取代理开启的支付产品
-            $sql = 'user_id=?';
-            $where['user_id'] = $user->parentId;
-            $agent_rate_list = $this->userRateRepository->search($sql, $where);
+            $agent_rate_list = $this->userRateRepository->findUserId($user->parentId);
             // 以支付方式id为key 转为数组
             $agent_rate_array = $agent_rate_list->keyBy('channel_payment_id')->toArray();
 
             // 获取所有已启用支付方式
-            $sql = ' and status=?';
-            $channelWhere['status'] = 1;
-            $channelPayment_list = $this->channelPaymentsService->getAll($sql,$channelWhere);
+            $channelPayment_list = $this->channelPaymentsService->getStatusAll(1);
             $channelPayment_array = $channelPayment_list->keyBy('id')->toArray();
 
             // unset 代理不存在的支付方式
@@ -80,9 +71,7 @@ class UserRateService
             }
 
             // 获取用户自身存在的支付方式
-            $sql = 'user_id=?';
-            $where['user_id'] = $user_id;
-            $user_rate_list = $this->userRateRepository->search($sql, $where);
+            $user_rate_list = $this->userRateRepository->findUserId($user_id);
             // 以支付方式id为key 转为数组
             $user_rate_array = $user_rate_list->keyBy('channel_payment_id')->toArray();
 
@@ -106,10 +95,7 @@ class UserRateService
      */
     public function saveStatus(int $user_id, int $pay_id, string $status, int $channelId)
     {
-        $sql = 'user_id = ? and channel_payment_id = ?';
-        $where['user_id'] = $user_id;
-        $where['channel_payment_id'] = $pay_id;
-        $userRate = $this->userRateRepository->searchOne($sql, $where);
+        $userRate = $this->userRateRepository->findUseridAndPaymentid($user_id, $pay_id);
         if($userRate)
         {
             $userRate->status = $status == 'true' ? '1' : '0';
@@ -140,11 +126,7 @@ class UserRateService
      */
     public function getFindUidPayId(int $user_id, int $pay_id)
     {
-        $sql = 'user_id = ? and channel_payment_id = ?';
-        $where['user_id'] = $user_id;
-        $where['channel_payment_id'] = $pay_id;
-        $userRate = $this->userRateRepository->searchOne($sql, $where);
-        return $userRate;
+        return $this->userRateRepository->findUseridAndPaymentid($user_id, $pay_id);
     }
 
     /**
@@ -155,11 +137,7 @@ class UserRateService
      */
     public function getFindUidPayIdStatus(int $user_id, int $pay_id)
     {
-        $sql = 'user_id = ? and channel_payment_id = ? and status=1';
-        $where['user_id'] = $user_id;
-        $where['channel_payment_id'] = $pay_id;
-        $userRate = $this->userRateRepository->searchOne($sql, $where);
-        return $userRate;
+        return $this->userRateRepository->findUseridAndPaymentid($user_id, $pay_id);
     }
 
     /**
@@ -189,10 +167,7 @@ class UserRateService
                 throw new CustomServiceException('会员费率不能小于成本费率');
             }
         }else{
-            $sql = 'user_id = ? and channel_payment_id = ? ';
-            $where['user_id'] = $user->parentId;
-            $where['channel_payment_id'] = $pay_id;
-            $agentRate = $this->userRateRepository->searchOne($sql, $where);
+            $agentRate = $this->userRateRepository->findUseridAndPaymentid($user->parentId, $pay_id);
             if(!$agentRate)
             {
                 throw new CustomServiceException('该用户的上级代理未开通该支付产品！');
@@ -204,10 +179,7 @@ class UserRateService
             }
         }
 
-        $sql2 = 'user_id = ? and channel_payment_id = ?';
-        $where2['user_id'] = $user_id;
-        $where2['channel_payment_id'] = $pay_id;
-        $userRate = $this->userRateRepository->searchOne($sql2, $where2);
+        $userRate = $this->userRateRepository->findUseridAndPaymentid($user_id, $pay_id);
         if($userRate)
         {
             $userRate->user_id      = $user_id;

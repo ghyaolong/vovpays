@@ -82,6 +82,16 @@ class ChannelPaymentsService
     }
 
     /**
+     * 根据状态获取所有
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAll(int $status)
+    {
+        return $this->channelPaymentsRepository->getStatusAll($status);
+    }
+
+    /**
      * 状态变更
      * @param int $id
      * @param array $data

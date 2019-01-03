@@ -64,6 +64,16 @@ class ChannelPaymentsRepository
     }
 
     /**
+     * 根据状态获取所有
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAll(int $status)
+    {
+        return $this->channel_payment->whereStatus($status)->orderBy('id', 'desc')->get();
+    }
+
+    /**
      * 修改
      * @param int $id
      * @param array $data
