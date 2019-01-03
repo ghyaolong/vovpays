@@ -70,16 +70,14 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                {{--</tbody>--}}
                             @endif
                         </table>
+                        {{$list->links()}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{--{{$orders->appends($data)->links()}}--}}
-
 
     {{--模态框--}}
     <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -273,6 +271,10 @@
                             notEmpty: {
                                 message: '请输入手机标识!'
                             },
+                            regexp: {
+                                regexp: /^[1-9]\d*$/,
+                                message: '请输入正确的手机标识!'
+                            }
                         },
                     },
                     dayQuota: {
@@ -280,6 +282,10 @@
                             notEmpty: {
                                 message: '请输入当日限额!'
                             },
+                            regexp: {
+                                regexp: /^[1-9]\d*$/,
+                                message: '请输入正确的数字额度'
+                            }
                         },
                     },
                 }

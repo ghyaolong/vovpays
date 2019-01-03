@@ -26,20 +26,20 @@
                 <p class="col-md-8 col-sm-8 col-xs-8" style="margin-left: 15px;margin-top: 19px">
                     商户号
                 </p>
-                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="10009"
+                <input type="text" class="form-control" id="exampleInputEmail1" value="10009"
                        style="width: 300px;margin-left: 30px">
 
                 <p class="col-md-8 col-sm-8 col-xs-8" style="margin-left: 15px; margin-top: 19px">
                     网关地址
                 </p>
                 <input type="text" class="form-control" id="exampleInputEmail1"
-                       placeholder="http://103.45.104.115/Pay_Index.html" style="width: 300px;margin-left: 30px">
+                       value="http://103.45.104.115/Pay_Index.html" style="width: 300px;margin-left: 30px">
 
                 <p class="col-md-8 col-sm-8 col-xs-8" style="margin-left: 15px; margin-top: 19px">
                     APIkey
                 </p>
                 <input type="text" class="form-control" id="exampleInputEmail1"
-                       placeholder="lly0hdcy7dmujtumwy7t15e3nhhboqlm" style="width: 300px;margin-left: 30px">
+                       value="lly0hdcy7dmujtumwy7t15e3nhhboqlm" style="width: 300px;margin-left: 30px">
             </div>
 
 

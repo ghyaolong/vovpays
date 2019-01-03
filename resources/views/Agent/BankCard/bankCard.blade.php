@@ -71,7 +71,7 @@
                                 </tbody>
                             </table>
                             <br>
-                            <b>
+                            <b style="color: firebrick">
                                 注： 只能有一张卡为 启用 状态 ！
                             </b>
                         </div>
@@ -106,7 +106,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="bankForm" action="{{ route('user.store') }}" class="form-horizontal" role="form"
+                    <form id="bankForm" action="{{ route('agent.store') }}" class="form-horizontal" role="form"
                           method="post">
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <input type="hidden" name="id">
@@ -165,7 +165,7 @@
                     var user_id = $(event.currentTarget).data('user_id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/bankCard/saveStatus',
+                        url: '/agent/bankCard/saveStatus',
                         data: {'status': state, 'id': id, 'user_id': user_id},
                         dataType: 'json',
                         headers: {
@@ -174,6 +174,7 @@
                         success: function (result) {
                             if (result.status) {
                                 toastr.success(result.msg);
+                                window.location.href = window.location.href;
                             } else {
                                 $('#addModel').modal('hide');
                                 toastr.error(result.msg);
@@ -283,7 +284,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/bankCard/' + id + '/edit',
+                url: '/agent/bankCard/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -316,7 +317,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/bankCard',
+                    url: '/agent/bankCard',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

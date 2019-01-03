@@ -73,6 +73,7 @@
                                 @endforeach
                             @endif
                         </table>
+                        {{$list->links()}}
                     </div>
                 </div>
             </div>
@@ -304,6 +305,10 @@
                             notEmpty: {
                                 message: '请输入手机标识!'
                             },
+                            regexp: {
+                                regexp: /^[1-9]\d*$/,
+                                message: '请输入正确的手机标识!'
+                            }
                         },
                     },
                     dayQuota: {
@@ -311,6 +316,11 @@
                             notEmpty: {
                                 message: '请输入当日限额!'
                             },
+                            regexp: {
+                                regexp: /^[1-9]\d*$/,
+                                message: '请输入正确的数字限额'
+                            }
+
                         },
                     },
                 }

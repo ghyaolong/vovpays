@@ -397,7 +397,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/bankCard/' + id + '/edit',
+                url: '/agent/bankCard/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -431,7 +431,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/del',
+                    url: '/agent/bankCard',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

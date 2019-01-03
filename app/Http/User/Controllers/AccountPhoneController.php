@@ -36,7 +36,8 @@ class AccountPhoneController extends Controller
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
         }
-        $list = $this->accountPhoneService->getAllPage($data, 10);
+
+        $list = $this->accountPhoneService->getAllPage($data, 6);
         return view("User.AccountPhone.{$data['accountType']}", compact('list'));
     }
 

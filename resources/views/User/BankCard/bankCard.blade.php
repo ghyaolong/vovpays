@@ -70,7 +70,8 @@
                                 </tbody>
                             </table>
                             <br>
-                            <b>
+                            {{--{{$lists->links()}}--}}
+                            <b style="color: firebrick">
                                 注： 只能有一张卡为 启用 状态 ！
                             </b>
                         </div>
