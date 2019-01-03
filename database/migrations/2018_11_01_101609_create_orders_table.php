@@ -34,7 +34,7 @@ class CreateOrdersTable extends Migration
             $table->string('channelName')->comment('通道名称');
             $table->string('paymentName')->comment('支付方式名称');
             $table->string('extend',1000)->default('{}')->comment('扩展字段，存储json');
-            $table->unsignedTinyInteger('status')->default(0)->comment('订单状态：0发起支付，1发起失败，2未支付，3支付成功，4支付异常，5伪删除');
+            $table->unsignedTinyInteger('status')->default(0)->comment('订单状态：0未支付，1支付成功，2支付异常');
             $table->timestamps();
         });
 

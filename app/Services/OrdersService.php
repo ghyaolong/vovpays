@@ -32,47 +32,18 @@ class OrdersService
      */
     public function searchPage(array $data, int $page)
     {
-        $sql   = ' 1=1 ';
-        $where = [];
-
-        if( isset($data['merchant']) && $data['merchant'])
-        {
-            $sql .= 'and merchant = ?';
-            $where['merchant'] = $data['merchant'];
-        }
-
-        if( isset($data['username']) && $data['username'])
-        {
-            $sql .= ' and username = ?';
-            $where['username'] = $data['username'];
-        }
-
-        if( isset($data['groupType']) && $data['groupType'] != '-1')
-        {
-            $sql .= ' and group_type = ?';
-            $where['group_type'] = $data['groupType'];
-        }
-
-        if( isset($data['status']) && $data['status'] != '-1')
-        {
-            $sql .= ' and status = ?';
-            $where['status'] = $data['status'];
-        }
-
-        return $this->ordersRepository->searchPage($sql, $where, $page);
+        return $this->ordersRepository->searchPage($data, $page);
     }
 
 
     /**
      * 根据id获取
-     * @param string $id
+     * @param int $id
      * @return array
      */
-    public function findId(string $id)
+    public function findId(int $id)
     {
-        $sql         = 'id=?';
-        $where['id'] = $id;
-        $channels = $this->ordersRepository->searchOne($sql,$where);
+        $channels = $this->ordersRepository->findId($id);
         return $channels->toArray();
     }
 
@@ -83,9 +54,7 @@ class OrdersService
      */
     public function getAllPage(int $page)
     {
-        $sql   = ' status <> 5 ';
-        $where = [];
-        return $this->ordersRepository->searchPage($sql, $where, $page);
+        return $this->ordersRepository->getAllPage($page);
     }
 
     /**
@@ -96,20 +65,7 @@ class OrdersService
      */
     public function update(int $id, array $data)
     {
-
-
         return $this->ordersRepository->update($id, $data);
-    }
-
-    /**
-     * 获取所有不带分页
-     * @return mixed
-     */
-    public function getAll()
-    {
-        $sql   = ' 1=1 ';
-        $where = [];
-        return $this->ordersRepository->search($sql, $where);
     }
 
     /**
@@ -123,7 +79,6 @@ class OrdersService
         return $this->ordersRepository->update($id, $data);
     }
 
-
     /**
      * 伪删除
      * @param int $id
@@ -131,6 +86,6 @@ class OrdersService
      */
     public function destroy(int $id)
     {
-        return $this->ordersRepository->update($id,['status'=>5]);
+        return $this->ordersRepository->update($id,['status'=>2]);
     }
 }

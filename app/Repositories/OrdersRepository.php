@@ -24,15 +24,13 @@ class OrdersRepository
     }
 
     /**
-     * 查询列表，分页
-     * @param string $sql
-     * @param array $where
+     * 获取所有，分页
      * @param int $page
      * @return mixed
      */
-    public function searchPage(string $sql, array $where, int $page)
+    public function getAllPage(int $page)
     {
-        return $this->order->whereRaw($sql, $where)->paginate($page);
+        return $this->order->orderBy('id', 'desc')->paginate($page);
     }
 
     /**
@@ -45,25 +43,13 @@ class OrdersRepository
     }
 
     /**
-     * 查询列表，不分页
-     * @param string $sql
-     * @param array $where
-     * @return mixed
-     */
-    public function search(string $sql, array $where)
-    {
-        return $this->order->whereRaw($sql, $where)->get();
-    }
-
-    /**
      * 查询单条
-     * @param string $sql
-     * @param array $where
+     * @param int $id
      * @return mixed
      */
-    public function searchOne(string $sql, array $where)
+    public function findId(int $id)
     {
-        return $this->order->whereRaw($sql, $where)->first();
+        return $this->order->whereId($id)->first();
     }
 
     /**
@@ -83,5 +69,37 @@ class OrdersRepository
      */
     public function del(int $id){
         return $this->order->whereId($id)->delete();
+    }
+
+    public function searchPage(array $data, int $page)
+    {
+        $sql   = ' 1=1 ';
+        $where = [];
+
+        if( isset($data['merchant']) && $data['merchant'])
+        {
+            $sql .= 'and merchant = ?';
+            $where['merchant'] = $data['merchant'];
+        }
+
+        if( isset($data['username']) && $data['username'])
+        {
+            $sql .= ' and username = ?';
+            $where['username'] = $data['username'];
+        }
+
+        if( isset($data['groupType']) && $data['groupType'] != '-1')
+        {
+            $sql .= ' and group_type = ?';
+            $where['group_type'] = $data['groupType'];
+        }
+
+        if( isset($data['status']) && $data['status'] != '-1')
+        {
+            $sql .= ' and status = ?';
+            $where['status'] = $data['status'];
+        }
+
+        return $this->order->whereRaw($sql,$where)->orderBy('id', 'desc')->paginate($page);
     }
 }
