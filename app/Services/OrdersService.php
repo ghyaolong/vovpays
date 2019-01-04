@@ -2,7 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\User;
+use App\Models\Channel;
+use App\Models\Channel_payment;
 use App\Repositories\OrdersRepository;
+use Illuminate\Http\Request;
 
 class OrdersService
 {
@@ -14,14 +18,44 @@ class OrdersService
     }
 
     /**
-     * 添加
-     * @param array $data
+     * @param User $user
+     * @param Channel $channel
+     * @param Channel_payment $Channel_payment
+     * @param Request $request
+     * @param array $order_amount_array
+     * @param array $account_array
      * @return mixed
      */
-    public function add(array $data)
+    public function add(User $user, Channel $channel, Channel_payment $Channel_payment, Request $request, array $order_amount_array, array $account_array)
     {
+        $extend = array(
+            'tm'        => $request->order_time ? $request->order_time : date('Y-m-d H:i:s',time()),
+            'attach'    => $request->attach ? $request->attach : '',
+            'cuid'      => $request->cuid ? $request->cuid : '',
+        );
 
-        return $this->ordersRepository->add($data);
+        $param = array(
+            'user_id'       => $user->id,
+            'merchant'      => $user->merchant,
+            'agent_id'      => $user->parentId,
+            'channel_id'    => $channel->id,
+            'channelName'   => $channel->channelName,
+            'channel_payment_id'    => $Channel_payment->id,
+            'paymentName'           => $Channel_payment->paymentName,
+            'account'       => $account_array['account'] ?: $account_array['account'] ,
+            'orderNo'       => getOrderId(),
+            'underOrderNo'  => $request->order_no,
+            'amount'        => $request->amount,
+            'orderRate'     => $order_amount_array['orderFee'],
+            'sysAmount'     => $order_amount_array['sysAmount'],
+            'agentAmount'   => $order_amount_array['agentAmount'],
+            'userAmount'    => $order_amount_array['userAmount'],
+            'notifyUrl'     => $request->notify_rul,
+            'successUrl'    => $request->return_url,
+            'extend'        => json_encode($extend),
+            'status'        => 0
+        );
+        return $this->ordersRepository->add($param);
     }
 
     /**

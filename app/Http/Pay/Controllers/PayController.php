@@ -22,7 +22,6 @@ class PayController extends Controller
     protected $md5Verify;
     protected $return_type;     // 返回类型true:json，false:页面
     protected $content;         // 解密后的数据
-    protected $verify_param_key = ['uid'=>'','order_no'=>'','price'=>'','tm'=>'','pay_code'=>'','notify_url'=>'','return_url'=>'','note'=>'','cuid'=>'','sign'=>''];
     protected $userPayment;     // 用户支付方式
     protected $user;            // 用户信息
     protected $channel;         // 通道信息
@@ -54,29 +53,12 @@ class PayController extends Controller
             $this->return_type = false;
         }
 
-//        if(!$request->cipherData || $request->cipherData == '')
-//        {
-//            return json_encode(RespCode::PARAMETER_ERROR);
-//        }
-
-        // 测试串：R4YuWygi/yWivAtmCwrsyDOMteNxbls4OHQ3/h+xjOAn9DPnC4PUvlf7PCy0HpHomyrKHrk0cnAjp0MZRvzAh5SLBZxIo7Y3/Y+Aq7xryjOgpumPoducA95mZqf9UXTlRDj0DQTpjUFv3NFM3p0d7Q9wZmmVbuVYV4BdgF4g9IS0CA4NjY1ph0VHpoOb2dCnxj/3T06x/JcqMQzRzExIg69tqXsnpUgE8SM7wY2PMvheCd8tPVuV4bDYtWbNrgtCOVAdpYj6JQgl84CT480y+aad5o9CsdyVPrrf/hFPHVA=
-        // AES数据解密
-//        $aes_str = $this->AES->decrypt($request->cipherData,env('AES_KEY'));
-//        if(!$aes_str)
-//        {
-//            return json_encode(RespCode::DECRYPT_FAILED);
-//        }
-//        $this->content = explode('&', $aes_str);
-
         $this->content = $request->input();
 
-        $paramVerify = $this->paramVerify();
-        if($paramVerify !== 'true')
-        {
-            return json_encode($paramVerify);
-        }
+        $this->paramVerify($request);
+
         // 获取用户
-        $this->user = $this->getUser($this->content['uid']);
+        $this->user = $this->getUser($this->content['merchant']);
         if(!$this->user)
         {
             return json_encode(RespCode::MERCHANT_NOT_EXIST);
@@ -98,9 +80,9 @@ class PayController extends Controller
         }
 
         // 验证单笔限额
-        if($this->channelPayment->minAmount > $this->content['price'] || $this->channelPayment->maxAmount < $this->content['price'])
+        if($this->channelPayment->minAmount > $this->content['amount'] || $this->channelPayment->maxAmount < $this->content['amount'])
         {
-            return json_encode(['respCode'=>'10007', 'msg'=>"交易金额范围为{$this->channelPayment->minAmount}-{$this->channelPayment->maxAmount}元"]);
+            return json_encode(RespCode::PARAMETER_ERROR_PRICE);
         }
 
         //获取通道
@@ -184,38 +166,30 @@ class PayController extends Controller
 
     /**
      * 检测参数是否合法
+     * @param Request $request
      * @return array|string
      */
-    protected function paramVerify()
+    protected function paramVerify(Request $request)
     {
-        foreach ($this->content as $key=>$val)
-        {
-            if (!array_key_exists($key,$this->verify_param_key))
-            {
-                return RespCode::PARAMETER_ERROR;
-            }
-
-            if($key != 'note' && $key != 'cuid' )
-            {
-                if(empty($this->content[$key]))return RespCode::PARAMETER_ERROR_TYPE;
-            }
-        }
-
-        if( !preg_match("/^[a-z\d]*$/i",$this->content['order_no']) || strlen($this->content['order_no']) > 20 ){
-            return RespCode::PARAMETER_ERROR_TYPE;
-        }
-
-        if( !is_numeric($this->content['price']) || $this->content['price'] == 0 )
-        {
-            return RespCode::PARAMETER_ERROR_TYPE;
-        }
-
-        if(!strtotime($this->content['tm']))
-        {
-            return RespCode::PARAMETER_ERROR_TYPE;
-        }
-
-        return 'true';
+        $this->validate($request, [
+            'merchant'        => 'required',
+            'amount'          => 'required|numeric',
+            'pay_code'        => 'required',
+            'order_no'        => 'required|max:50',
+            'notify_rul'      => 'required',
+            'return_url'      => 'required',
+            'order_time'      => 'date_format:Y-m-d H:i:s',
+        ],[
+            'merchant.required' => '商户号错误！',
+            'amount.required'   => '订单金额错误！',
+            'amount.numeric'    => '订单金额错误！',
+            'pay_code.required' => '支付方式错误！',
+            'order_no.required' => '订单号错误！',
+            'order_no.max'      => '订单号最大50位！',
+            'notify_rul.required' => '回调地址错误！',
+            'return_url.required' => '同步地址错误！',
+            'order_time.date_format' => '订单时间格式错误',
+        ]);
     }
 
 }

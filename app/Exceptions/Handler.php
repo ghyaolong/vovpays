@@ -68,6 +68,9 @@ class Handler extends ExceptionHandler
             {
                 $error = array_flatten($exception->errors());
                 return ajaxError(array_get($error,0));
+            }else if( $request->path() == 'pay'){   // 支付接口验证返回json
+                $error = array_flatten($exception->errors());
+                return ajaxError(array_get($error,0));
             }
 
         }else if($exception instanceof TokenMismatchException) {

@@ -119,12 +119,14 @@ class AccountPhoneRepository
      * @param int $status
      * @return mixed
      */
-    public function searchAccountAll( string $type, int $status)
+    public function findStatusAndAccountType( string $type, int $status)
     {
-        $sql = "status=? and accountType=?";
-        $where['status']      = $status;
-        $where['accountType'] = $type;
-        return $this->account_phone->whereRaw($sql, $where)->get();
+        if($type == 'alipay'){
+            $type = '支付宝';
+        }elseif($type == 'wechat'){
+            $type = '微信';
+        }
+        return $this->account_phone->whereStatus($status)->whereAccounttype($type)->get();
     }
 
 }

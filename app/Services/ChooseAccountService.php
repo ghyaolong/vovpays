@@ -9,11 +9,11 @@ class ChooseAccountService{
 
     protected $accountPhoneService;
     protected $price;
-    public function __construct(int $select, float $amount, AccountPhoneService $accountPhoneService)
+
+    public function __construct(AccountPhoneService $accountPhoneService)
     {
-        Redis::select($select);
-        $this->accountPhoneService   = $accountPhoneService;
-        $this->price = $amount;
+        $this->accountPhoneService = $accountPhoneService;
+        Redis::select(1);
     }
 
     /**
@@ -21,8 +21,9 @@ class ChooseAccountService{
      * @param int $status
      * @return mixed|void
      */
-    public function getAccount(string $type,int $status)
+    public function getAccount(string $type,int $status, float $price)
     {
+        $this->price = $price;
         $account_list = $this->accountPhoneService->searchAccountAll($type,$status);
         if(!count($account_list))
         {
@@ -44,14 +45,13 @@ class ChooseAccountService{
      * @param Collection $account_list
      * @return array
      */
-    public function getValidAlipayAccount(Collection $account_list){
+    protected function getValidAlipayAccount(Collection $account_list){
         $valid_account_list = [];
         foreach ($account_list as $k=>$account)
         {
             if( Redis::exists($account->phone_id.'alipay') )
             {
                 $get_account = Redis::hGetAll($account->phone_id.'alipay');
-
                 // 验证手机和支付宝id是否一致
                 if($get_account['userid'] != $account->alipayuserid || time() > strtotime($get_account['update'])+60000000000)
                 {

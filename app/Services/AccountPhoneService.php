@@ -88,11 +88,6 @@ class AccountPhoneService
 
 
     public function searchAccountAll( string $type, int $status){
-        if($type == 'alipay'){
-            $type = '支付宝';
-        }elseif($type == 'wechat'){
-            $type = '微信';
-        }
-        return $this->accountPhoneRepository->searchAccountAll($type, $status);
+        return $this->accountPhoneRepository->findStatusAndAccountType($type, $status);
     }
 }

@@ -28,7 +28,7 @@ class Md5Verify
         $para_filter = array();
         foreach ($data as $key=>$val)
         {
-            if($key == "sign")continue;
+            if($key == 'sign' || $val == '' || $key == 'json')continue;
             else $para_filter[$key] = $data[$key];
         }
         return $para_filter;
@@ -75,6 +75,6 @@ class Md5Verify
      */
     public function md5Encrypt($prestr, $key) {
         $prestr = $prestr . 'key='.$key;
-        return strtoupper(md5($prestr));
+        return md5($prestr);
     }
 }

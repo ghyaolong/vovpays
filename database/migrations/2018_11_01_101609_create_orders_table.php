@@ -17,12 +17,14 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->comment('商户id');
+            $table->string('merchant',10)->comment('商户号');
             $table->unsignedInteger('agent_id')->default(0)->comment('归属代理：0没有代理');
             $table->unsignedInteger('channel_id')->comment('通道id');
             $table->unsignedInteger('channel_payment_id')->comment('支付方式id');
-            $table->string('account',40)->comment('支付宝 微信账号 或云服务器ip地址');
-            $table->char('orderNo',20)->unique()->comment('系统订单号');
-            $table->string('underOrderNo',20)->comment('下游订单号');
+            $table->string('account',255)->default('account')->comment('支付宝 微信账号 或云服务器ip地址');
+            $table->string('orderMk',4)->default('0000')->comment('固码备注');
+            $table->char('orderNo',30)->unique()->comment('系统订单号');
+            $table->string('underOrderNo',50)->comment('下游订单号');
             $table->string('onOrderNo')->default(0)->comment('上游订单号');
             $table->decimal('amount',9,2)->default(0)->comment('订单金额');
             $table->decimal('orderRate',7,2)->default(0)->comment('订单手续费');

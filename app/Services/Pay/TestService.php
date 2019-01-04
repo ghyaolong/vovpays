@@ -12,29 +12,31 @@ use App\Models\Channel_payment;
 use App\Models\User;
 use App\Models\User_rates;
 use App\Services\ChooseAccountService;
-use App\Services\AccountPhoneService;
-use App\Repositories\AccountPhoneRepository;
 use App\Services\OrderRateService;
+use App\Services\OrdersService;
 use Illuminate\Http\Request;
-use App\Models\Account_phone;
 use App\Jobs\SendOrderAsyncNotify;
 use App\Common\RespCode;
 
 class TestService implements PayInterface
 {
-
     public function pay(User $user, Channel $channel, Channel_payment $Channel_payment, User_rates $user_rates, Request $request )
     {
-        $chooseAccountService = new ChooseAccountService(1, $request->price , new AccountPhoneService(  new AccountPhoneRepository( new Account_phone() ) ));
-        $account_array = $chooseAccountService->getAccount('alipay',1);
-
+        // 随机选号
+        $ChooseAccountService = app(ChooseAccountService::class);
+        $account_array        = $ChooseAccountService->getAccount($request->pay_code, 1, $request->amount);
         if(!$account_array)
         {
             return json_encode(RespCode::APP_ERROR);
         }
+        // 收益计算
+        $orderRateService   = app( OrderRateService::class);
+        $order_amount_array = $orderRateService->orderFee($user, $Channel_payment, $user_rates, $request->amount);
 
-        $orderRateService = new OrderRateService();
-        $orderRateService->orderFee($user, $Channel_payment, $user_rates, $request->price);
+        // 订单添加
+        $ordersService  = app(OrdersService::class);
+        $result         = $ordersService->add($user, $channel, $Channel_payment, $request, $order_amount_array, $account_array);
+
         return redirect('pay/213213');
     }
 
