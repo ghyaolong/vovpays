@@ -107,12 +107,49 @@ class UsersRepository
      * @param array $where
      * @return mixed
      */
-//    public function searchOne(string $sql, array $where)
-//    {
-//        return $this->user->whereRaw($sql, $where)->first();
-//    }
     public function searchOne(string $sql, array $where)
     {
+        return $this->user->whereRaw($sql, $where)->first();
+    }
+
+    /**
+     * 检测唯一
+     * @param string $field
+     * @param string $value
+     * @param int|null $id
+     * @return mixed
+     */
+    public function searchCheck(string $field, string $value, int $id = null)
+    {
+        if ($id) {
+            if ($field == 'email') {
+                $sql = "id <> $id and email = ?";
+                $where['email'] = $value;
+
+            } else if ($field == 'username') {
+                $sql = "id <> $id and username = ?";
+                $where['username'] = $value;
+
+            } else if ($field == 'phone') {
+                $sql = "id <> $id and phone = ?";
+                $where['phone'] = $value;
+            }
+        } else {
+            if ($field == 'email') {
+                $sql = " email = ?";
+                $where['email'] = $value;
+
+            } else if ($field == 'username') {
+
+                $sql = " username = ?";
+                $where['username'] = $value;
+
+            } else if ($field == 'phone') {
+
+                $sql = " phone = ?";
+                $where['phone'] = $value;
+            }
+        }
         return $this->user->whereRaw($sql, $where)->first();
     }
 

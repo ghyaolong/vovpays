@@ -36,7 +36,7 @@ class CheckUniqueService
                 break;
 
             case 'users':
-                $result = $this->usersRepository->searchOne($field, $value, $id);
+                $result = $this->usersRepository->searchCheck($field, $value, $id);
                 break;
 
             case 'account_phones':
