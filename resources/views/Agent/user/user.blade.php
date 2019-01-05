@@ -28,34 +28,50 @@
                             <!-- Collect the nav links, forms, and other content for toggling -->
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
                                  style="background: #ffffff">
-                                <form class="navbar-form navbar-left" action="" method="post">
-                                    {{ csrf_field() }}
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="merchant" placeholder="商户号">
-                                    </div>&nbsp;&nbsp;
-
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="username" placeholder="用户名">
-                                    </div>&nbsp;&nbsp;
-
-                                    <div class="form-group">
-                                        <select name="status" id="status" class="form-control">
-                                            <option value="">状态</option>
-                                            <option value="1">正常</option>
-                                            <option value="0">禁用</option>
-                                            <option value="2">已删除</option>
-                                        </select>
-                                    </div>&nbsp;&nbsp;
-
-                                    <div class="form-group">
-                                        <select name="queryed" id="" class="form-control">
-                                            <option value="">认证</option>
-                                            <option value="1">认证用户</option>
-                                            <option value="0">未认证</option>
-                                            <option value="2">等待审核</option>
-                                        </select>
-                                    </div>&nbsp;&nbsp;
-                                    <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
+                                <form action="{{ route('agent.user') }}" method="get">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="商户号" name="merchant"
+                                                   @if(isset($query['merchant'])) value="{{ $query['merchant'] }}" @endif />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="用户名" name="username"
+                                                   @if(isset($query['username'])) value="{{ $query['username'] }}" @endif />
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" id="groupType" name="groupType">
+                                                <option value="1"
+                                                        @if(isset($query['groupType']) && $query['groupType'] =='1') selected @endif>
+                                                    商户
+                                                </option>
+                                                <option value="2"
+                                                        @if(isset($query['groupType']) && $query['groupType'] =='2') selected @endif>
+                                                    代理商
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" id="status" name="status">
+                                                <option value="-1"
+                                                        @if(!isset($query['status']) || $query['status'] =='-1') selected @endif >
+                                                    会员状态
+                                                </option>
+                                                <option value="1"
+                                                        @if(isset($query['status']) && $query['status'] =='1') selected @endif >
+                                                    启用
+                                                </option>
+                                                <option value="0"
+                                                        @if(isset($query['status']) && $query['status'] =='0') selected @endif>
+                                                    禁用
+                                                </option>
+                                                <option value="2"
+                                                        @if(isset($query['status']) && $query['status'] =='2') selected @endif>
+                                                    已删除
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
+                                    </div>
                                 </form>
 
                             </div><!-- /.navbar-collapse -->
@@ -112,7 +128,7 @@
                             @endif
                             </tbody>
                         </table>
-                        {{$list->appends($data)->links()}}
+                        {{$list->appends($query)->links()}}
                     </div>
                 </div>
             </div>

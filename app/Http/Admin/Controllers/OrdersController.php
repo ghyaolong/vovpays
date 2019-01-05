@@ -14,9 +14,9 @@ class OrdersController extends Controller
     protected $channelService;
     protected $channelPaymentsService;
 
-    public function __construct( OrdersService $ordersService, ChannelService $channelService, ChannelPaymentsService $channelPaymentsService)
+    public function __construct(OrdersService $ordersService, ChannelService $channelService, ChannelPaymentsService $channelPaymentsService)
     {
-        $this->ordersService  = $ordersService;
+        $this->ordersService = $ordersService;
         $this->channelService = $channelService;
         $this->channelPaymentsService = $channelPaymentsService;
     }
@@ -29,18 +29,24 @@ class OrdersController extends Controller
     {
         $title = '订单管理';
         $query = $request->query();
+        $userId=null;
 
-        if(count($query))
-        {
+        if (count($query)) {
             $list = $this->ordersService->searchPage($query, 10);
-        }else{
-            $list = $this->ordersService->getAllPage(10);
+        } else {
+            $list = $this->ordersService->getAllPage($userId,10);
         }
+        //订单金额
+        $amountSum = $this->ordersService->amountSum($userId);
+        //手续费
+        $orderRateSum = $this->ordersService->orderRateSum($userId);
+        //订单数
+        $orderSum = $this->ordersService->orderSum($userId);
 
-        $chanel_list    = $this->channelService->getAll();
-        $payments_list  = $this->channelPaymentsService->getAll();
+        $chanel_list = $this->channelService->getAll();
+        $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('Admin.Orders.index',compact('title', 'list', 'query', 'chanel_list','payments_list'));
+        return view('Admin.Orders.index', compact('title', 'list', 'query', 'chanel_list', 'payments_list','amountSum','orderRateSum','orderSum'));
     }
 
 
@@ -51,8 +57,8 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        $rule =$this->ordersService->findId($id);
-        return ajaxSuccess('获取成功',$rule);
+        $rule = $this->ordersService->findId($id);
+        return ajaxSuccess('获取成功', $rule);
     }
 
     /**
@@ -65,10 +71,9 @@ class OrdersController extends Controller
         $data['status'] = $request->status;
         $result = $this->ordersService->updateStatus($request->id, $data);
 
-        if($result)
-        {
+        if ($result) {
             return ajaxSuccess('修改成功！');
-        }else{
+        } else {
             return ajaxError('修改失败！');
         }
     }
@@ -81,10 +86,9 @@ class OrdersController extends Controller
     public function destroy(Request $request)
     {
         $result = $this->ordersService->destroy($request->id);
-        if($result)
-        {
+        if ($result) {
             return ajaxSuccess('删除成功！');
-        }else{
+        } else {
             return ajaxError('删除失败！');
         }
     }

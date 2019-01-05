@@ -38,10 +38,23 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = $request->input();
+        $query = $request->input();
         $pid = Auth::user()->id;
-        $list = $this->userService->getParentIdPage($pid, 10);
-        return view('Agent.User.user', compact('list', 'data'));
+
+        if(count($query))
+        {
+            $query['parentId']=$pid;
+            $list = $this->userService->searchPage($query, 10);
+        }else{
+            $list = $this->userService->getParentIdPage($pid,10);
+        }
+
+        $agent_list = $this->userService->getParentIdPage($pid,10);
+        return view('Agent.User.user',compact('title', 'list', 'query', 'agent_list'));
+
+
+//        $list = $this->userService->getAllParentPage($pid, 10);
+//        return view('Agent.User.user', compact('list', 'data'));
     }
 
     /**

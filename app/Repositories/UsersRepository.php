@@ -59,6 +59,10 @@ class UsersRepository
             $sql .= ' and status = ?';
             $where['status'] = $data['status'];
         }
+        if (isset($data['parentId']) && $data['parentId']) {
+            $sql .= ' and parentId = ?';
+            $where['parentId'] = $data['parentId'];
+        }
 
         return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
     }

@@ -7,6 +7,7 @@
  */
 
 namespace App\Repositories;
+
 use App\Models\Order;
 
 class OrdersRepository
@@ -18,7 +19,7 @@ class OrdersRepository
      * UsersRepository constructor.
      * @param Order $order
      */
-    public function __construct( Order $order)
+    public function __construct(Order $order)
     {
         $this->order = $order;
     }
@@ -28,9 +29,34 @@ class OrdersRepository
      * @param int $page
      * @return mixed
      */
-    public function getAllPage(int $page)
+    public function getAllPage($userId, int $page)
     {
-        return $this->order->orderBy('id', 'desc')->paginate($page);
+        if (isset($userId)) {
+            $sql = " user_id = ?";
+            $where['user_id'] = $userId;
+        } else {
+            $sql = " 1=1 ";
+            $where = [];
+        }
+
+        return $this->order->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
+    }
+
+    /**
+     * 获取所有订单信息
+     * @return mixed
+     */
+    public function getAll($userId)
+    {
+        if (isset($userId)) {
+            $sql = " user_id = ?";
+            $where['user_id'] = $userId;
+        } else {
+            $sql = " 1=1 ";
+            $where = [];
+        }
+
+        return $this->order->whereRaw($sql, $where)->get();
     }
 
     /**
@@ -38,7 +64,8 @@ class OrdersRepository
      * @param array $data
      * @return mixed
      */
-    public function add(array $data){
+    public function add(array $data)
+    {
         return $this->order->create($data);
     }
 
@@ -58,7 +85,8 @@ class OrdersRepository
      * @param array $data
      * @return mixed
      */
-    public function update(int $id, array $data){
+    public function update(int $id, array $data)
+    {
         return $this->order->whereId($id)->update($data);
     }
 
@@ -67,39 +95,64 @@ class OrdersRepository
      * @param int $id
      * @return mixed
      */
-    public function del(int $id){
+    public function del(int $id)
+    {
         return $this->order->whereId($id)->delete();
     }
 
     public function searchPage(array $data, int $page)
     {
-        $sql   = ' 1=1 ';
+        $sql = ' 1=1 ';
         $where = [];
 
-        if( isset($data['merchant']) && $data['merchant'])
-        {
+        if (isset($data['merchant']) && $data['merchant']) {
             $sql .= 'and merchant = ?';
             $where['merchant'] = $data['merchant'];
         }
 
-        if( isset($data['username']) && $data['username'])
-        {
-            $sql .= ' and username = ?';
-            $where['username'] = $data['username'];
+        if (isset($data['orderNo']) && $data['orderNo']) {
+            $sql .= ' and orderNo = ?';
+            $where['orderNo'] = $data['orderNo'];
         }
 
-        if( isset($data['groupType']) && $data['groupType'] != '-1')
-        {
-            $sql .= ' and group_type = ?';
-            $where['group_type'] = $data['groupType'];
+        if (isset($data['underOrderNo']) && $data['underOrderNo']) {
+            $sql .= ' and underOrderNo = ?';
+            $where['underOrderNo'] = $data['underOrderNo'];
         }
 
-        if( isset($data['status']) && $data['status'] != '-1')
-        {
+        if (isset($data['status']) && $data['status'] != '-1') {
             $sql .= ' and status = ?';
             $where['status'] = $data['status'];
         }
 
-        return $this->order->whereRaw($sql,$where)->orderBy('id', 'desc')->paginate($page);
+        if (isset($data['channel_id']) && $data['channel_id'] != '-1') {
+            $sql .= ' and channel_id = ?';
+            $where['channel_id'] = $data['channel_id'];
+        }
+
+        if (isset($data['user_id']) && $data['user_id'] != '-1') {
+            $sql .= ' and user_id = ?';
+            $where['user_id'] = $data['user_id'];
+        }
+
+        if (isset($data['channel_payment_id']) && $data['channel_payment_id'] != '-1') {
+            $sql .= ' and channel_payment_id = ?';
+            $where['channel_payment_id'] = $data['channel_payment_id'];
+        }
+
+        if (isset($data['orderTime']) && $data['orderTime']) {
+            $time = explode(" - ", $data['orderTime']);
+            $sql .= ' and created_at >= ?';
+            $where['created_at'] = $time[0];
+        }
+
+        if (isset($data['orderTime']) && $data['orderTime']) {
+            $time = explode(" - ", $data['orderTime']);
+            $sql .= ' and updated_at <= ?';
+            $where['updated_at'] = $time[1];
+        }
+
+
+        return $this->order->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
     }
 }

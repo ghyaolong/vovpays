@@ -6,6 +6,7 @@ use App\Services\ChannelPaymentsService;
 use App\Services\ChannelService;
 use App\Services\OrdersService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -27,20 +28,27 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $title = '订单管理';
-        $query = $request->query();
+        $data = $request->input();
+        $userId = Auth::user()->id;
 
-        if(count($query))
-        {
-            $list = $this->ordersService->searchPage($query, 10);
-        }else{
-            $list = $this->ordersService->getAllPage(10);
+        if (count($data)) {
+            $data['user_id'] = $userId;
+            $list = $this->ordersService->searchPage($data, 10);
+        } else {
+            $list = $this->ordersService->getAllPage($userId,10);
         }
+        //订单金额
+        $amountSum = $this->ordersService->amountSum($userId);
+        //手续费
+        $orderRateSum = $this->ordersService->orderRateSum($userId);
+        //订单数
+        $orderSum = $this->ordersService->orderSum($userId);
 
-        $chanel_list    = $this->channelService->getAll();
-        $payments_list  = $this->channelPaymentsService->getAll();
+        $chanel_list = $this->channelService->getAll();
+        $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('Agent.Order.order',compact('title', 'list', 'query', 'chanel_list','payments_list'));
+        return view('Agent.Order.order', compact('list', 'data', 'chanel_list', 'payments_list', 'amountSum', 'orderRateSum', 'orderSum'));
+
     }
 
 

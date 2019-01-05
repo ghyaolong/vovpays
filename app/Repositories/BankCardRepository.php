@@ -32,11 +32,12 @@ class BankCardRepository
     }
 
     /**
-     * 根据用户id获取所有
-     * @param int $uid
+     * 查询列表，不分页
+     * @param string $sql
+     * @param array $where
      * @return mixed
      */
-    public function findUserId(int $uid)
+    public function search(int $id)
     {
         return $this->bankCard->whereUserId($uid)->get();
     }

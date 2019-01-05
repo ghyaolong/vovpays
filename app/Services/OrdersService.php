@@ -59,6 +59,48 @@ class OrdersService
     }
 
     /**
+     * 订单金额
+     * @return int
+     */
+    public function amountSum($userId)
+    {
+          $data=$this->ordersRepository->getAll($userId);
+          $sum=0;
+          foreach ($data as $v){
+              $sum=$sum+$v['amount'];
+          }
+          return $sum;
+    }
+
+    /**
+     * 手续费
+     * @return int
+     */
+    public function orderRateSum($userId)
+    {
+        $data=$this->ordersRepository->getAll($userId);
+        $sum=0;
+        foreach ($data as $v){
+            $sum=$sum+$v['orderRate'];
+        }
+        return $sum;
+    }
+
+    /**
+     * 订单总数
+     * @return int
+     */
+    public function orderSum($userId)
+    {
+        $data=$this->ordersRepository->getAll($userId);
+        $sum=0;
+        foreach ($data as $v){
+            $sum=$sum+1;
+        }
+        return $sum;
+    }
+
+    /**
      * 订单查询，带分页
      * @param array $data
      * @param int $page
@@ -86,9 +128,9 @@ class OrdersService
      * @param int $page
      * @return mixed
      */
-    public function getAllPage(int $page)
+    public function getAllPage($userId,int $page)
     {
-        return $this->ordersRepository->getAllPage($page);
+        return $this->ordersRepository->getAllPage($userId,$page);
     }
 
     /**

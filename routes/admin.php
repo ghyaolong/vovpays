@@ -69,7 +69,7 @@ Route::group([], function () {
         Route::post('channelPayments/upload','channelPaymentsController@upload')->name('channelPayments.upload');
         //订单管理
         Route::get('orders','OrdersController@index')->name('orders.index');
-        Route::get('orders/{id}/show', 'OrdersController@edit')->name('orders.show');
+        Route::get('orders/{id}/show', 'OrdersController@show')->name('orders.show');
         Route::delete('orders','OrdersController@destroy')->name('orders.destroy');
         Route::post('orders/saveStatus','OrdersController@saveStatus')->name('orders.saveStatus');
     });

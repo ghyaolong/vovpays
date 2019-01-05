@@ -46,7 +46,7 @@
                 <div class="info-box-content">
 
 						<span class="progress-description" style="padding-top: 10px;">
-							平台收入 </span>
+							商户收入 </span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
