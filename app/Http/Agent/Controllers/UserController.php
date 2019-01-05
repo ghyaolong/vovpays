@@ -40,7 +40,7 @@ class UserController extends Controller
     {
         $data = $request->input();
         $pid = Auth::user()->id;
-        $list = $this->userService->getAllParentPage($pid, 10);
+        $list = $this->userService->getParentIdPage($pid, 10);
         return view('Agent.User.user', compact('list', 'data'));
     }
 

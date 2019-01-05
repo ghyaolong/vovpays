@@ -102,20 +102,20 @@ class UserService
      * @param int $page
      * @return mixed
      */
-    public function getAllGroupPage(int $group_id, int $page)
+    public function getGroupPage(int $group_id, int $page)
     {
-        return $this->usersRepository->searchGroupPage($group_id, $page);
+        return $this->usersRepository->getGroupPage($group_id, $page);
     }
 
     /**
-     * 根据标识$parent_id获取用户分页
-     * @param int $parent_id
+     * 根据标识parentId获取用户分页
+     * @param int $parentId
      * @param int $page
      * @return mixed
      */
-    public function getAllParentPage(int $parentId, int $page)
+    public function getParentIdPage(int $parentId, int $page)
     {
-        return $this->usersRepository->searchParentPage($parentId, $page);
+        return $this->usersRepository->getParentIdPage($parentId, $page);
     }
 
     /**
@@ -189,7 +189,7 @@ class UserService
      */
     public function getGroupAll(int $group_id)
     {
-        return $this->usersRepository->search($group_id);
+        return $this->usersRepository->getGroupAll($group_id);
     }
 
     /**

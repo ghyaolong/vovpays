@@ -33,7 +33,7 @@ class UsersController extends Controller
         {
             $list = $this->userService->searchPage($query, 10);
         }else{
-            $list = $this->userService->getAllGroupPage(1,10);
+            $list = $this->userService->getGroupPage(1,10);
         }
 
         $agent_list = $this->userService->getGroupAll(2);

@@ -31,8 +31,7 @@ class UsersRepository
 
     /**
      * 查询带分页
-     * @param string $sql
-     * @param array $where
+     * @param array $data
      * @param int $page
      * @return mixed
      */
@@ -64,38 +63,51 @@ class UsersRepository
         return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
     }
 
-    public function searchGroupPage(int $group_id, int $page)
+    /**
+     * 根据用户身份标识获取
+     * @param int $group_id
+     * @param int $page
+     * @return mixed
+     */
+    public function getGroupPage(int $group_id, int $page)
     {
-        $sql = ' group_type = ? and status <> 2';
-        $where['group_type'] = $group_id;
-        return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
-    }
-
-    public function searchParentPage(int $parentId, int $page)
-    {
-        $sql = 'parentId=? and status <>2';
-        $where['parentId'] = $parentId;
-        return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
+        return $this->user->whereGroupType($group_id)->where('status','<>',2)->orderBy('id', 'desc')->paginate($page);
     }
 
     /**
-     * 查询不带分页
-     * @param string $sql
-     * @param array $where
+     * 根据$parentId没有被删除的用户
+     * @param int $parentId
+     * @param int $page
      * @return mixed
      */
-    public function search(int $group_id)
+    public function getParentIdPage(int $parentId, int $page)
     {
-        $sql = ' group_type = ?';
-        $where['group_type'] = $group_id;
-        return $this->user->whereRaw($sql, $where)->orderBy('id', 'desc')->get();
+        return $this->user->whereParentid($parentId)->where('status','<>',2)->orderBy('id', 'desc')->paginate($page);
     }
 
+    /**
+     * 根据用户身份标识获取，部分也
+     * @param int $group_id
+     * @return mixed
+     */
+    public function getGroupAll(int $group_id)
+    {
+        return $this->user->whereGroupType($group_id)->where('status','<>',2)->orderBy('id', 'desc')->get();
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
     public function findId(int $id)
     {
         return $this->user->whereId($id)->first();
     }
 
+    /**
+     * @param string $username
+     * @return mixed
+     */
     public function findUser(string $username)
     {
         return $this->user->whereUsername($username)->first();
