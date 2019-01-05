@@ -35,9 +35,9 @@ class BankCardService
      * 得到该用户名下的所有银行卡
      * @param int $id
      */
-    public function getAll(int $id)
+    public function getAll(int $uid)
     {
-        return $this->bankCardRepository->search($id);
+        return $this->bankCardRepository->findUserId($uid);
     }
 
     /**
