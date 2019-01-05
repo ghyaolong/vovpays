@@ -29,7 +29,7 @@ class BankCardController extends Controller
     public function index()
     {
         $uid=Auth::user()->id;
-        $lists = $this->bankCardService->getAll($uid);
+        $lists = $this->bankCardService->getUserIdAll($uid);
         return view('Agent.BankCard.bankCard', compact('lists'));
     }
 
