@@ -85,6 +85,16 @@ class AdminsService
     }
 
     /**
+     * @param string $username
+     * @param int $status
+     * @return mixed
+     */
+    public function findUsernameAndStatus(string $username, int $status)
+    {
+        return $this->adminsRepository->findUsernameAndStatus($username, $status);
+    }
+
+    /**
      * @param $id
      * @return mixed
      */

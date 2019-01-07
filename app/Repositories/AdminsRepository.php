@@ -127,4 +127,13 @@ class AdminsRepository
         return $this->admin->whereRaw($sql, $where)->first();
     }
 
+    /**
+     * @param string $username
+     * @param int $status
+     * @return mixed
+     */
+    public function findUsernameAndStatus(string $username, int $status){
+        return $this->admin->whereUsername($username)->whereStatus($status)->first();
+    }
+
 }
