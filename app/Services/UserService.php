@@ -32,10 +32,7 @@ class UserService
 
         // 用户选着上级代理的时候，检测上级代理是否存在
         if ($data['parentId'] != '0') {
-            $sql = 'id=? and group_type=?';
-            $where['id'] = $data['parentId'];
-            $where['group_type'] = 2;
-            $agent = $this->usersRepository->searchOne($sql, $where);
+            $agent = $this->usersRepository->findIdAndGrouptype($data['parentId'], 2);
             if ($agent) {
                 $data['agentName'] = $agent->username;
             } else {
@@ -91,9 +88,7 @@ class UserService
      */
     public function findMerchant(string $merchant)
     {
-        $sql = 'merchant = ? and status=1';
-        $where['merchant'] = $merchant;
-        return $this->usersRepository->searchOne($sql, $where);
+        return $this->usersRepository->findMerchant($merchant);
     }
 
     /**
@@ -142,10 +137,7 @@ class UserService
 
         // 用户选着上级代理的时候，检测上级代理是否存在
         if ($data['parentId'] != '0') {
-            $sql = 'id=? and group_type=?';
-            $where['id'] = $data['parentId'];
-            $where['group_type'] = 2;
-            $agent = $this->usersRepository->searchOne($sql, $where);
+            $agent = $this->usersRepository->findIdAndGrouptype($data['parentId'], 2);
             if ($agent) {
                 $data['agentName'] = $agent->username;
             } else {
@@ -212,6 +204,18 @@ class UserService
     public function searchPage(array $data, int $page)
     {
         return $this->usersRepository->searchPage($data, $page);
+    }
+
+    /**
+     * 根据用户名和密码，状态获取用户信息
+     * @param string $username
+     * @param string $password
+     * @param int $status
+     * @return mixed
+     */
+    public function findUsernameAndPasswordAndStatus(string $username, string $password, int $status)
+    {
+        return $this->usersRepository->findUsernameAndPasswordAndStatus($username, $password, $status);
     }
 
     /**

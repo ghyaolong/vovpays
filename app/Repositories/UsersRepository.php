@@ -118,14 +118,35 @@ class UsersRepository
     }
 
     /**
-     * 查询一条
-     * @param string $sql
-     * @param array $where
+     * 商户号
+     * @param string $merchant
      * @return mixed
      */
-    public function searchOne(string $sql, array $where)
+    public function findMerchant(string $merchant)
     {
-        return $this->user->whereRaw($sql, $where)->first();
+        return $this->user->whereMerchant($merchant)->first();
+    }
+
+    /**
+     * 用户id和用户标识
+     * @param int $id
+     * @param int $group_type
+     * @return mixed
+     */
+    public function findIdAndGrouptype(int $id, int $group_type )
+    {
+        return $this->user->whereId($id)->whereGrouptype($group_type)->first();
+    }
+
+    /**
+     * @param string $username
+     * @param string $password
+     * @param int $status
+     * @return mixed
+     */
+    public function findUsernameAndPasswordAndStatus(string $username, string $password, int $status)
+    {
+        return $this->user->whereUsername($username)->wherePassword($password)->whereStatus($status)->first();
     }
 
     /**
