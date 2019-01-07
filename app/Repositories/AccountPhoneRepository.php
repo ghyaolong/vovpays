@@ -76,8 +76,8 @@ class AccountPhoneRepository
     }
 
     /**
-     * @param string $sql
-     * @param array $where
+     * @param int $id
+     * @param string $value
      * @return mixed
      */
     public function searchOne(int $id, string $value)
@@ -119,7 +119,7 @@ class AccountPhoneRepository
      * @param int $status
      * @return mixed
      */
-    public function findStatusAndAccountType( string $type, int $status)
+    public function getStatusAndAccountType( string $type, int $status)
     {
         if($type == 'alipay'){
             $type = '支付宝';
@@ -127,6 +127,16 @@ class AccountPhoneRepository
             $type = '微信';
         }
         return $this->account_phone->whereStatus($status)->whereAccounttype($type)->get();
+    }
+
+    /**
+     * @param string $phoneid
+     * @param int $status
+     * @return mixed
+     */
+    public function getPhoneidAndStatus(string $phoneid, int $status)
+    {
+        return $this->account_phone->whereStatus($status)->wherePhoneid($phoneid)->get();
     }
 
 }

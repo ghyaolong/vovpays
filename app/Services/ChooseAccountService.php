@@ -24,7 +24,7 @@ class ChooseAccountService{
     public function getAccount(string $type,int $status, float $price)
     {
         $this->price = $price;
-        $account_list = $this->accountPhoneService->searchAccountAll($type,$status);
+        $account_list = $this->accountPhoneService->getStatusAndAccountType($type,$status);
         if(!count($account_list))
         {
             return;

@@ -87,7 +87,17 @@ class AccountPhoneService
     }
 
 
-    public function searchAccountAll( string $type, int $status){
-        return $this->accountPhoneRepository->findStatusAndAccountType($type, $status);
+    public function getStatusAndAccountType( string $type, int $status){
+        return $this->accountPhoneRepository->getStatusAndAccountType($type, $status);
+    }
+
+    /**
+     * @param string $phoneid
+     * @param int $status
+     * @return mixed
+     */
+    public function getPhoneidAndStatus(string $phoneid, int $status )
+    {
+        return $this->accountPhoneRepository->getPhoneidAndStatus($phoneid, $status);
     }
 }
