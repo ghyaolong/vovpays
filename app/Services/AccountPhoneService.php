@@ -94,10 +94,11 @@ class AccountPhoneService
     /**
      * @param string $phoneid
      * @param int $status
+     * @param int $uid
      * @return mixed
      */
-    public function getPhoneidAndStatus(string $phoneid, int $status )
+    public function getPhoneidAndStatusAndUserid(string $phoneid, int $status, int $uid )
     {
-        return $this->accountPhoneRepository->getPhoneidAndStatus($phoneid, $status);
+        return $this->accountPhoneRepository->getPhoneidAndStatusAndUserid($phoneid, $status, $uid);
     }
 }
