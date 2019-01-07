@@ -130,13 +130,13 @@ class AccountPhoneRepository
     }
 
     /**
-     * @param string $phoneid
+     * @param string $phoneId
      * @param int $status
      * @return mixed
      */
-    public function getPhoneidAndStatus(string $phoneid, int $status)
+    public function getPhoneIdAndStatus(string $phoneId, int $status)
     {
-        return $this->account_phone->whereStatus($status)->wherePhoneid($phoneid)->get();
+        return $this->account_phone->whereStatus($status)->wherePhoneId($phoneId)->get();
     }
 
 }
