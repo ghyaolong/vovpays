@@ -62,7 +62,7 @@ class WithdrawsController extends Controller
     public function clearing()
     {
         $uid = Auth::user()->id;
-        $list = $this->bankCardService->getAll($uid);
+        $list = $this->bankCardService->getUserIdAll($uid);
 
         $clearings = $this->withdrawsService->getAllPage(6);
 

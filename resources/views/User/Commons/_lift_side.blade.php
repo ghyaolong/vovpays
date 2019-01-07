@@ -16,7 +16,7 @@
             <li class="active treeview">
 
             <li><a href="{{route('user.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
-            <li><a href="{{route('user.clearing',Auth::user()->id)}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a>
+            <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a>
             </li>
             {{--<li><a href="{{route('user.withdraws')}}"><i class="fa fa-circle-o text-aqua"></i> <span>提现记录</span></a></li>--}}
             </li>
@@ -25,7 +25,7 @@
             <li class="active treeview">
 
 
-            <li><a href="{{route('user.bankCard',Auth::user()->id)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
+            <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
             <li><a href="{{route('user.api')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>API管理</span></a></li>
             <li><a href="{{route('user.account',0)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>微信管理</span></a></li>
             <li><a href="{{route('user.account',1)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>支付宝管理</span></a></li>

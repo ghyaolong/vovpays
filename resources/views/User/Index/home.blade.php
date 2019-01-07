@@ -77,6 +77,8 @@
 
                         </div>
                     </div>
+                    <a class="btn btn-primary pull-right"  href="{{ asset('index1.php') }}">测试按钮</a>
+                    <a class="btn btn-primary pull-right"  href="{{route('pay.show')}}">支付页面</a>
                 </div>
 
                 <div class="col-md-4">

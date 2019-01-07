@@ -122,6 +122,11 @@ class PayController extends Controller
         dd(11);
     }
 
+    public function show(Request $request)
+    {
+        return view('Pay.Pay.pay');
+    }
+
     /**
      * 获取用户
      * @param string $merchant

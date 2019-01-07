@@ -28,26 +28,33 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $data = $request->input();
-        $userId = Auth::user()->id;
+        $query = $request->input();
 
-        if (count($data)) {
-            $data['user_id'] = $userId;
-            $list = $this->ordersService->searchPage($data, 10);
+        if (count($query)) {
+            $query['agent_id'] = Auth::user()->id;
+            $list = $this->ordersService->searchPage($query, 10);
+            //订单金额
+            $amountSum = $this->ordersService->amountSum($query);
+            //手续费
+            $orderRateSum = $this->ordersService->orderRateSum($query);
+            //订单数
+            $orderSum = $this->ordersService->orderSum($query);
         } else {
-            $list = $this->ordersService->getAllPage($userId,10);
+            $data['agent_id'] = Auth::user()->id;
+            $list = $this->ordersService->getAllPage($data,10);
+            //订单金额
+            $amountSum = $this->ordersService->amountSum($data);
+            //手续费
+            $orderRateSum = $this->ordersService->orderRateSum($data);
+            //订单数
+            $orderSum = $this->ordersService->orderSum($data);
         }
-        //订单金额
-        $amountSum = $this->ordersService->amountSum($userId);
-        //手续费
-        $orderRateSum = $this->ordersService->orderRateSum($userId);
-        //订单数
-        $orderSum = $this->ordersService->orderSum($userId);
+
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('Agent.Order.order', compact('list', 'data', 'chanel_list', 'payments_list', 'amountSum', 'orderRateSum', 'orderSum'));
+        return view('Agent.Order.order', compact('list', 'query', 'chanel_list', 'payments_list', 'amountSum', 'orderRateSum', 'orderSum'));
 
     }
 

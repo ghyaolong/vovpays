@@ -28,6 +28,7 @@ Route::group([], function ($router) {
         Route::get('info', 'AgentController@index')->name('agent.info');
 
         Route::get('order', 'OrderController@index')->name('agent.order');
+        Route::get('order/{id}/show', 'OrderController@show')->name('order.show');
 
         Route::get('bankCard', 'BankCardController@index')->name('agent.bankCard');
         Route::post('bankCard','BankCardController@store')->name('agent.store');

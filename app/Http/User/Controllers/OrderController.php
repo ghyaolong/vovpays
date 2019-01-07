@@ -30,28 +30,45 @@ class OrderController extends Controller
      * Show the application dashboard.
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function index(Request $request)
     {
-        $data = $request->input();
-        $userId = Auth::user()->id;
+        $query = $request->input();
 
-        if (count($data)) {
-            $data['user_id'] = $userId;
-            $orders = $this->ordersService->searchPage($data, 10);
+        if (count($query)) {
+            $query['user_id'] = Auth::user()->id;
+            $orders = $this->ordersService->searchPage($query, 10);
+            //订单金额
+            $amountSum = $this->ordersService->amountSum($query);
+            //手续费
+            $orderRateSum = $this->ordersService->orderRateSum($query);
+            //订单数
+            $orderSum = $this->ordersService->orderSum($query);
         } else {
-            $orders = $this->ordersService->getAllPage($userId,10);
+            $data['user_id'] = Auth::user()->id;
+            $orders = $this->ordersService->getAllPage($data,10);
+            //订单金额
+            $amountSum = $this->ordersService->amountSum($data);
+            //手续费
+            $orderRateSum = $this->ordersService->orderRateSum($data);
+            //订单数
+            $orderSum = $this->ordersService->orderSum($data);
         }
-        //订单金额
-        $amountSum = $this->ordersService->amountSum($userId);
-        //手续费
-        $orderRateSum = $this->ordersService->orderRateSum($userId);
-        //订单数
-        $orderSum = $this->ordersService->orderSum($userId);
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('User.Order.order', compact('orders', 'data', 'chanel_list', 'payments_list', 'amountSum', 'orderRateSum', 'orderSum'));
+        return view('User.Order.order', compact('orders', 'query', 'chanel_list', 'payments_list', 'amountSum', 'orderRateSum', 'orderSum'));
+    }
+
+    /**
+     * 详情
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        $rule = $this->ordersService->findId($id);
+        return ajaxSuccess('获取成功', $rule);
     }
 
     public function recharge()

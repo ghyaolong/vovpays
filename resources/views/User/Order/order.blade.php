@@ -186,7 +186,7 @@
                             @endif
 
                         </table>
-                        {{$orders->appends($data)->links()}}
+                        {{$orders->appends($query)->links()}}
                     </div>
                 </div>
             </div>
@@ -344,7 +344,7 @@
         {
             $.ajax({
                 type: 'get',
-                url: '/admin/orders/'+id+'/show',
+                url: '/user/order/'+id+'/show',
                 dataType:'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -11,6 +11,7 @@ namespace App\Http\User\Controllers;
 
 use App\Services\BankCardService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BankCardController extends Controller
 {
@@ -24,9 +25,10 @@ class BankCardController extends Controller
     /*
      * 银行卡管理
      */
-    public function bankCard($id)
+    public function bankCard()
     {
-        $lists = $this->bankCardService->getAll($id);
+        $id = Auth::user()->id;
+        $lists = $this->bankCardService->getUserIdAll($id);
         return view('User.BankCard.bankCard', compact('lists'));
     }
 

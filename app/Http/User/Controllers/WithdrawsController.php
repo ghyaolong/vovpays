@@ -12,6 +12,7 @@ namespace App\Http\User\Controllers;
 use App\Services\BankCardService;
 use App\Services\WithdrawsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WithdrawsController extends Controller
 {
@@ -36,7 +37,7 @@ class WithdrawsController extends Controller
      */
     public function index(Request $request)
     {
-        $query=$request->input();
+        $query = $request->input();
         $data = [];
 
         if (count($request->input()) > 1) {
@@ -50,7 +51,7 @@ class WithdrawsController extends Controller
             $list = $this->withdrawsService->getAllPage(10);
         }
 
-        return view('User.Withdraws.withdraws', compact('list', 'data','query'));
+        return view('User.Withdraws.withdraws', compact('list', 'data', 'query'));
     }
 
 
@@ -58,9 +59,10 @@ class WithdrawsController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function clearing($id)
+    public function clearing()
     {
-        $list = $this->bankCardService->getAll($id);
+        $id = Auth::user()->id;
+        $list = $this->bankCardService->getUserIdAll($id);
 
         $clearings = $this->withdrawsService->getAllPage(6);
 

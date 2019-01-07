@@ -23,7 +23,7 @@
                     <div class="box-body">
                         <input type="button" class="btn btn-primary" onclick="showModel('添加银行卡')" value="添加银行卡"
                                style="margin: 15px">
-                        <a href="{{ route('user.bankCard',Auth::user()->id) }}" class="btn pull-right"><i
+                        <a href="{{ route('user.bankCard') }}" class="btn pull-right"><i
                                     class="fa fa-undo"></i>刷新</a>
 
                         <div class="box-body">

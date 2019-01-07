@@ -62,9 +62,9 @@ class OrdersService
      * 订单金额
      * @return int
      */
-    public function amountSum($userId)
+    public function amountSum($data)
     {
-          $data=$this->ordersRepository->getAll($userId);
+          $data=$this->ordersRepository->Summing($data);
           $sum=0;
           foreach ($data as $v){
               $sum=$sum+$v['amount'];
@@ -76,9 +76,9 @@ class OrdersService
      * 手续费
      * @return int
      */
-    public function orderRateSum($userId)
+    public function orderRateSum($data)
     {
-        $data=$this->ordersRepository->getAll($userId);
+        $data=$this->ordersRepository->Summing($data);
         $sum=0;
         foreach ($data as $v){
             $sum=$sum+$v['orderRate'];
@@ -90,9 +90,9 @@ class OrdersService
      * 订单总数
      * @return int
      */
-    public function orderSum($userId)
+    public function orderSum($data)
     {
-        $data=$this->ordersRepository->getAll($userId);
+        $data=$this->ordersRepository->Summing($data);
         $sum=0;
         foreach ($data as $v){
             $sum=$sum+1;
@@ -128,9 +128,9 @@ class OrdersService
      * @param int $page
      * @return mixed
      */
-    public function getAllPage($userId,int $page)
+    public function getAllPage($data,int $page)
     {
-        return $this->ordersRepository->getAllPage($userId,$page);
+        return $this->ordersRepository->getAllPage($data,$page);
     }
 
     /**

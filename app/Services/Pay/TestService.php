@@ -37,7 +37,7 @@ class TestService implements PayInterface
         $ordersService  = app(OrdersService::class);
         $result         = $ordersService->add($user, $channel, $Channel_payment, $request, $order_amount_array, $account_array);
 
-        return redirect('pay/213213');
+        return redirect('Pay/213213');
     }
 
     public function queryOrder()
