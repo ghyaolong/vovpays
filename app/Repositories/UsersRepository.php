@@ -140,13 +140,12 @@ class UsersRepository
 
     /**
      * @param string $username
-     * @param string $password
      * @param int $status
      * @return mixed
      */
-    public function findUsernameAndPasswordAndStatus(string $username, string $password, int $status)
+    public function findUsernameAndStatus(string $username, int $status)
     {
-        return $this->user->whereUsername($username)->wherePassword($password)->whereStatus($status)->first();
+        return $this->user->whereUsername($username)->whereStatus($status)->first();
     }
 
     /**

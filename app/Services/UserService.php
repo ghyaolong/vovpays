@@ -209,13 +209,12 @@ class UserService
     /**
      * 根据用户名和密码，状态获取用户信息
      * @param string $username
-     * @param string $password
      * @param int $status
      * @return mixed
      */
-    public function findUsernameAndPasswordAndStatus(string $username, string $password, int $status)
+    public function findUsernameAndStatus(string $username, int $status)
     {
-        return $this->usersRepository->findUsernameAndPasswordAndStatus($username, $password, $status);
+        return $this->usersRepository->findUsernameAndStatus($username, $status);
     }
 
     /**
