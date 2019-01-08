@@ -72,5 +72,9 @@ Route::group([], function () {
         Route::get('orders/{id}/show', 'OrdersController@show')->name('orders.show');
         Route::delete('orders','OrdersController@destroy')->name('orders.destroy');
         Route::post('orders/saveStatus','OrdersController@saveStatus')->name('orders.saveStatus');
+        //系统配置
+        Route::get('system','SystemController@index')->name('system.index');
+        Route::get('system/{id}/edit', 'SystemController@edit')->name('system.edit');
+        Route::post('system','SystemController@store')->name('system.store');
     });
 });

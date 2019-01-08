@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sys_config extends Model
+class System extends Model
 {
     protected $fillable = [
-        'name', 'value'
+        'name', 'value','remark'
     ];
 }

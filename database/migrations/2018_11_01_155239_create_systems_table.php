@@ -14,7 +14,7 @@ class CreateSysConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sys_configs', function (Blueprint $table) {
+        Schema::create('systems', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->comment('配置键名');
             $table->string('value')->comment('配置键值');
@@ -22,7 +22,7 @@ class CreateSysConfigsTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE `pay_sys_configs` comment '系统配置'");
+        DB::statement("ALTER TABLE `pay_systems` comment '系统配置'");
     }
 
     /**

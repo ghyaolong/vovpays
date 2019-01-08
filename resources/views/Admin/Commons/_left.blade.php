@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('system.index') }}">
                     <i class="fa fa-cog"></i>
                     <span>系统设置</span>
                 </a>
