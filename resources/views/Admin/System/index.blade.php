@@ -32,9 +32,6 @@
                                     <button type="button" class="btn btn-primary btn-sm"
                                             onclick="edit('编辑',{{ $v['id'] }})">编辑
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                            onclick="del($(this),{{ $v['id'] }})">删除
-                                    </button>
                                 </td>
                             </tr>
                             @endforeach
