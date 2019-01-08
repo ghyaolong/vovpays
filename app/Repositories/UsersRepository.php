@@ -135,7 +135,7 @@ class UsersRepository
      */
     public function findIdAndGrouptype(int $id, int $group_type )
     {
-        return $this->user->whereId($id)->whereGrouptype($group_type)->first();
+        return $this->user->whereId($id)->whereGroup_type($group_type)->first();
     }
 
     /**

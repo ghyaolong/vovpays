@@ -80,21 +80,47 @@ class AccountPhoneRepository
      * @param string $value
      * @return mixed
      */
-    public function searchOne(int $id, string $value)
+    public function searchCheck(int $id = null, string $value)
     {
         if ($id) {
 
-            $sql = "id <> $id and account = ?";
-            $where['account'] = $value;
+            $sql = "id <> $id and phone_id = ?";
+            $where['phone_id'] = $value;
 
         } else {
 
-            $sql = " account = ?";
-            $where['account'] = $value;
+            $sql = " phone_id = ?";
+            $where['phone_id'] = $value;
 
         }
-        return $this->account_phone->whereRaw($sql, $where)->first();
+        $data = $this->account_phone->whereRaw($sql, $where)->get();
+        if (count($data) <= 1) {
+            return false;
+        } else {
+            $account = [];
+            foreach ($data as $v) {
+                $account[] = $v['accountType'];
+            }
+            return $account;
+        }
+
+//        return $this->account_phone->whereRaw($sql, $where)->first();
     }
+//    public function searchOne(int $id, string $value)
+//    {
+//        if ($id) {
+//
+//            $sql = "id <> $id and account = ?";
+//            $where['account'] = $value;
+//
+//        } else {
+//
+//            $sql = " account = ?";
+//            $where['account'] = $value;
+//
+//        }
+//        return $this->account_phone->whereRaw($sql, $where)->first();
+//    }
 
     /**
      * @param int $id
@@ -119,11 +145,11 @@ class AccountPhoneRepository
      * @param int $status
      * @return mixed
      */
-    public function getStatusAndAccountType( string $type, int $status)
+    public function getStatusAndAccountType(string $type, int $status)
     {
-        if($type == 'alipay'){
+        if ($type == 'alipay') {
             $type = '支付宝';
-        }elseif($type == 'wechat'){
+        } elseif ($type == 'wechat') {
             $type = '微信';
         }
         return $this->account_phone->whereStatus($status)->whereAccounttype($type)->get();

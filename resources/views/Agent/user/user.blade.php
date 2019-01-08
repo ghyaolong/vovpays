@@ -106,7 +106,7 @@
                                             <span class="label label-success">已认证</span>
                                         </td>
                                         <td>
-                                            可提现：1000 冻结：0.4
+                                            1000
                                         </td>
                                         <td>{{$v->created_at}}</td>
                                         <td>
