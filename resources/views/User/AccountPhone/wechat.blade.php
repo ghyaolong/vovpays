@@ -90,7 +90,7 @@
                 <div class="modal-body" style="overflow: auto;">
                     <form id="addForm" action="{{ route('user.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                        <input type="hidden" name="id">
+                        <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">账号:</label>
@@ -101,7 +101,8 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="phone_id" placeholder="请输入手机标识">
+                                <input type="text" class="form-control" id="phone_id" name="phone_id"
+                                       placeholder="请输入手机标识">
                             </div>
                         </div>
                         <div class="form-group">
@@ -173,7 +174,7 @@
                 $("#addForm").data('bootstrapValidator').destroy();
                 $('#addForm').data('bootstrapValidator', null);
                 $('#addForm').get(0).reset();
-                $("input[name='id']").val('');
+                $("#id").val('');
                 formValidator();
             });
 
@@ -236,20 +237,6 @@
                             notEmpty: {
                                 message: '请输入账号!'
                             },
-                            remote: {
-                                url: "check",
-                                message: "账号已存在!",
-                                type: "post",
-                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
-                                    return {
-                                        "value": $("#account").val().trim(),
-                                        "type": 'account',
-                                        "_token": $('meta[name="csrf-token"]').attr('content'),
-                                        "id": $('input[name="id"]').val()
-                                    };
-                                },
-                                delay: 500,
-                            }
                         }
                     },
                     alipayusername: {
@@ -274,6 +261,21 @@
                             regexp: {
                                 regexp: /^[1-9]\d*$/,
                                 message: '请输入正确的手机标识!'
+                            },
+                            remote: {
+                                url: "check",
+                                message: "该手机已添加过微信账号!",
+                                type: "post",
+                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value": $("#phone_id").val().trim(),
+                                        "type": 'phone_id',
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id": $('#id').val(),
+                                        "name": '微信'
+                                    };
+                                },
+                                delay: 500,
                             }
                         },
                     },

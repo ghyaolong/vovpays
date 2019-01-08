@@ -7,8 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ config('app.name') }} - [商户后台]</title>
-{{--<title>{{ config('app.name', 'Laravel') }}</title>--}}
-<!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{ asset('AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/bootstrapValidator/bootstrapValidator.min.css') }}">
@@ -74,6 +72,8 @@
             showMethod: "fadeIn",
             hideMethod: "fadeOut"
         };
+        $('.content').hide().fadeIn(1000);
+        $('body').css('overflow-y', 'auto');
     })
 </script>
 @yield('scripts')

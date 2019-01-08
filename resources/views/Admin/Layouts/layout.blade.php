@@ -2,7 +2,8 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name') }} - [管理后台]</title>
@@ -17,45 +18,47 @@
     @yield('css')
 </head>
 <style>
-    .toast-top-right{
+    .toast-top-right {
         margin-top: 110px;
     }
-    body{
+
+    body {
         overflow-x: hidden;
         overflow-y: hidden;
     }
-    .wrapper{
+
+    .wrapper {
         overflow-x: hidden;
         overflow-y: hidden;
     }
 </style>
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper" style="padding: 0px;">
-        <!-- 顶部内容 -->
-        @include('Admin.Commons._header')
-        <!-- 左侧导航 -->
-        @include('Admin.Commons._left')
-        <!-- 右侧内容 -->
-        <div class="content-wrapper">
-            <!-- 内容导航 -->
-            <section class="content-header">
-                <h1>{{ $title }}</h1>
-                <ol class="breadcrumb">
-                    <li><a href="{{ route('admin') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
-                    <li class="active">{{ $title }}</li>
-                </ol>
-            </section>
-            <!-- 内容导航结束 -->
-            <!-- 主内容 -->
-            <section class="content" style="display:none">
+<div class="wrapper" style="padding: 0px;">
+    <!-- 顶部内容 -->
+@include('Admin.Commons._header')
+<!-- 左侧导航 -->
+@include('Admin.Commons._left')
+<!-- 右侧内容 -->
+    <div class="content-wrapper">
+        <!-- 内容导航 -->
+        <section class="content-header">
+            <h1>{{ $title }}</h1>
+            <ol class="breadcrumb">
+                <li><a href="{{ route('admin') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
+                <li class="active">{{ $title }}</li>
+            </ol>
+        </section>
+        <!-- 内容导航结束 -->
+        <!-- 主内容 -->
+        <section class="content" style="display:none">
             @yield('content')
-            </section>
-            <!-- /.主内容结束 -->
-        </div>
-        <!--右侧内容结束-->
-        <!--底部-->
-        @include('Admin.Commons._footer')
+        </section>
+        <!-- /.主内容结束 -->
     </div>
+    <!--右侧内容结束-->
+    <!--底部-->
+    @include('Admin.Commons._footer')
+</div>
 </body>
 <script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('AdminLTE/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -65,7 +68,7 @@
 <script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
 <script src="{{ asset('plugins/sweetalert/sweetalert.min.js') }}"></script>
 <script>
-    $(function(){
+    $(function () {
         toastr.options = {
             closeButton: false,
             debug: false,
@@ -82,7 +85,7 @@
             hideMethod: "fadeOut"
         };
         $('.content').hide().fadeIn(1000);
-        $('body').css('overflow-y','auto');
+        $('body').css('overflow-y', 'auto');
     })
 </script>
 @yield('scripts')

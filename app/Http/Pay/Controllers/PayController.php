@@ -122,8 +122,9 @@ class PayController extends Controller
         dd(11);
     }
 
-    public function show(Request $request)
+    public function show()
     {
+        echo 123;exit;
         return view('Pay.Pay.pay');
     }
 

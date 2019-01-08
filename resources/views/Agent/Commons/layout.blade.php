@@ -74,6 +74,8 @@
             showMethod: "fadeIn",
             hideMethod: "fadeOut"
         };
+        $('.content').hide().fadeIn(1000);
+        $('body').css('overflow-y', 'auto');
     })
 </script>
 @yield('scripts')

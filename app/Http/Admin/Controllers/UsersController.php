@@ -71,6 +71,7 @@ class UsersController extends Controller
         // id 存在更新。不存在添加
         if($id)
         {
+//            dd($request->all());
             $result = $this->userService->update($request->id, $request->all());
 
             if($result)

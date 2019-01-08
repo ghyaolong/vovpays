@@ -75,7 +75,7 @@ class AccountPhoneController extends Controller
      */
     public function checkUnique(Request $request)
     {
-        $result = $this->checkUniqueService->check('account_phones', $request->type, $request->value, $request->id);
+        $result = $this->checkUniqueService->check('account_phones', $request->type, $request->value, $request->id, $request->name);
         if ($result) {
             return response()->json(array("valid" => "true"));
         } else {
