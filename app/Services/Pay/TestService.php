@@ -29,15 +29,12 @@ class TestService implements PayInterface
         {
             return json_encode(RespCode::APP_ERROR);
         }
-        // 收益计算
-        $orderRateService   = app( OrderRateService::class);
-        $order_amount_array = $orderRateService->orderFee($user, $Channel_payment, $user_rates, $request->amount);
 
         // 订单添加
         $ordersService  = app(OrdersService::class);
-        $result         = $ordersService->add($user, $channel, $Channel_payment, $request, $order_amount_array, $account_array);
+        $result         = $ordersService->add($user, $channel, $Channel_payment, $request, $user_rates, $account_array);
 
-        return redirect('Pay/213213');
+        return redirect('pay/213213');
     }
 
     public function queryOrder()

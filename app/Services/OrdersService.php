@@ -5,16 +5,20 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Channel;
 use App\Models\Channel_payment;
+use App\Models\User_rates;
 use App\Repositories\OrdersRepository;
+use App\Services\OrderRateService;
 use Illuminate\Http\Request;
 
 class OrdersService
 {
     protected $ordersRepository;
+    protected $orderRateService;
 
-    public function __construct(OrdersRepository $ordersRepository)
+    public function __construct(OrdersRepository $ordersRepository, OrderRateService $orderRateService)
     {
         $this->ordersRepository = $ordersRepository;
+        $this->orderRateService = $orderRateService;
     }
 
     /**
@@ -22,12 +26,14 @@ class OrdersService
      * @param Channel $channel
      * @param Channel_payment $Channel_payment
      * @param Request $request
-     * @param array $order_amount_array
+     * @param User_rates $user_rates
      * @param array $account_array
      * @return mixed
      */
-    public function add(User $user, Channel $channel, Channel_payment $Channel_payment, Request $request, array $order_amount_array, array $account_array)
+    public function add(User $user, Channel $channel, Channel_payment $Channel_payment, Request $request, User_rates $user_rates, array $account_array)
     {
+        // 订单收益计算
+        $order_amount_array = $this->orderRateService->orderFee($user, $Channel_payment, $user_rates, $request->amount);
         $extend = array(
             'tm'        => $request->order_time ? $request->order_time : date('Y-m-d H:i:s',time()),
             'attach'    => $request->attach ? $request->attach : '',
