@@ -109,12 +109,9 @@
                         <div class="form-group">
                             <select class="form-control" id="status" name="status">
                                 <option value="-1" @if(!isset($query['status']) || $query['status'] =='-1') selected  @endif >订单状态</option>
-                                <option value="0" @if(isset($query['status']) && $query['status'] =='0') selected  @endif>发起支付</option>
-                                <option value="1" @if(isset($query['status']) && $query['status'] =='1') selected  @endif >发起失败</option>
-                                <option value="2" @if(isset($query['status']) && $query['status'] =='2') selected  @endif>未支付</option>
-                                <option value="3" @if(isset($query['status']) && $query['status'] =='3') selected  @endif>支付成功</option>
-                                <option value="4" @if(isset($query['status']) && $query['status'] =='4') selected  @endif>支付异常</option>
-                                <option value="5" @if(isset($query['status']) && $query['status'] =='5') selected  @endif>已删除</option>
+                                <option value="0" @if(isset($query['status']) && $query['status'] =='0') selected  @endif>未支付</option>
+                                <option value="1" @if(isset($query['status']) && $query['status'] =='1') selected  @endif >已支付</option>
+                                <option value="2" @if(isset($query['status']) && $query['status'] =='2') selected  @endif>支付异常</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
@@ -135,6 +132,7 @@
                         <th>平台收入</th>
                         <th>代理收入</th>
                         <th>商户收入</th>
+                        <th>订单状态</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -151,7 +149,17 @@
                             <td>{{ $v['agentAmount'] }}</td>
                             <td>{{ $v['userAmount'] }}</td>
                             <td>
+                                @if($v['status'] == 2)
+                                    <span style="color:#dd4b39">异常</span>
+                                @elseif($v['status'] == 0)
+                                    <span>未支付</span>
+                                @elseif($v['status'] == 1)
+                                    <span style="color:#008d4c">已支付</span>
+                                @endif
+                            </td>
+                            <td>
                                 <button type="button" class="btn btn-success btn-sm" onclick="info('订单详情',{{ $v['id'] }})">详情</button>
+                                <button type="button" class="btn btn-sm">补发通知</button>
                             </td>
                         </tr>
                     @endforeach

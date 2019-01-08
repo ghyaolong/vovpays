@@ -117,27 +117,15 @@
                                 </option>
                                 <option value="0"
                                         @if(isset($query['status']) && $query['status'] =='0') selected @endif>
-                                    发起支付
+                                    未支付
                                 </option>
                                 <option value="1"
                                         @if(isset($query['status']) && $query['status'] =='1') selected @endif >
-                                    发起失败
+                                    支付成功
                                 </option>
                                 <option value="2"
                                         @if(isset($query['status']) && $query['status'] =='2') selected @endif>
-                                    未支付
-                                </option>
-                                <option value="3"
-                                        @if(isset($query['status']) && $query['status'] =='3') selected @endif>
-                                    支付成功
-                                </option>
-                                <option value="4"
-                                        @if(isset($query['status']) && $query['status'] =='4') selected @endif>
                                     支付异常
-                                </option>
-                                <option value="5"
-                                        @if(isset($query['status']) && $query['status'] =='5') selected @endif>
-                                    已删除
                                 </option>
                             </select>
                         </div>
@@ -156,9 +144,8 @@
                                 <th>商户订单</th>
                                 <th>订单金额</th>
                                 <th>手续费</th>
-                                <th>平台收入</th>
-                                <th>代理收入</th>
                                 <th>商户收入</th>
+                                <th>订单状态</th>
                                 <th>操作</th>
                             </tr>
 
@@ -171,9 +158,16 @@
                                         <td>{{ $v['underOrderNo'] }}</td>
                                         <td>{{ $v['amount'] }}</td>
                                         <td>{{ $v['orderRate'] }}</td>
-                                        <td>{{ $v['sysAmount'] }}</td>
-                                        <td>{{ $v['agentAmount'] }}</td>
                                         <td>{{ $v['userAmount'] }}</td>
+                                        <td>
+                                            @if($v['status'] == 2)
+                                                <span style="color:#dd4b39">异常</span>
+                                            @elseif($v['status'] == 0)
+                                                <span>未支付</span>
+                                            @elseif($v['status'] == 1)
+                                                <span style="color:#008d4c">已支付</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <button type="button" class="btn btn-success btn-sm" onclick="info('订单详情',{{ $v['id'] }})">详情</button>
                                         </td>
@@ -268,16 +262,6 @@
                                 <input type="text" class="form-control" name="successUrl" readonly="readonly">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">状态</label>
-                            <div class="col-xs-9">
-                                <select class="form-control" name="status" readonly="readonly">
-                                    <option value="1">支付成功</option>
-                                    <option value="0">发起支付</option>
-                                    <option value="2">支付异常</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             {{--<button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>--}}
@@ -363,7 +347,6 @@
                         $("input[name='paymentName']").val(result.data['paymentName']);
                         $("input[name='notifyUrl']").val(result.data['notifyUrl']);
                         $("input[name='successUrl']").val(result.data['successUrl']);
-                        $("select[name='status']").val(result.data['status']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
                     }
