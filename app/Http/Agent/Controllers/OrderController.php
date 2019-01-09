@@ -87,21 +87,4 @@ class OrderController extends Controller
             return ajaxError('修改失败！');
         }
     }
-
-    /**
-     * 删除
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy(Request $request)
-    {
-        $result = $this->ordersService->destroy($request->id);
-        if($result)
-        {
-            return ajaxSuccess('删除成功！');
-        }else{
-            return ajaxError('删除失败！');
-        }
-    }
-
 }
