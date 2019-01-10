@@ -35,7 +35,7 @@
                     <div class="box-body" style="margin-top: 45px">
                         <table id="example2" class="table table-bordered table-hover">
                             <tr style="color: #666666;background: #f5f6f9">
-                                <th>标识ID</th>
+                                <th>手机标识</th>
                                 <th>账号</th>
                                 <th>账号类型</th>
                                 {{--<th>备注</th>--}}
@@ -50,7 +50,7 @@
                             @else
                                 @foreach($list as $v)
                                     <tr>
-                                        <td>{{ $v->id+10000 }}</td>
+                                        <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         {{--<td>备注</td>--}}
@@ -290,10 +290,6 @@
                         validators: {
                             notEmpty: {
                                 message: '请输入手机标识!'
-                            },
-                            regexp: {
-                                regexp: /^[1-9]\d*$/,
-                                message: '请输入正确的手机标识!'
                             },
                             remote: {
                                 url: "check",

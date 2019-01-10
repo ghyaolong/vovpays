@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 
 class PhoneLoginController extends Controller
 {
-
     /**
      * Where to redirect users after login.
      *
@@ -79,8 +78,8 @@ class PhoneLoginController extends Controller
         }
 
         $data = array(
-            'alipayAccount' => $alipay_account ?: '',
-            'wechatAccount' => $wx_account ?: '',
+            'alipayAccount' => isset($alipay_account) ? $alipay_account : '',
+            'wechatAccount' => isset($wx_account) ? $wx_account : '',
             'key'           => $fans->apiKey,
             'host'          => env('MQ_HOST'),
             'Port'          => env('MQ_PORT'),
@@ -88,7 +87,6 @@ class PhoneLoginController extends Controller
             'qname'         => env('MQ_USER'),
             'qpassword'     => env('MQ_PWD'),
             'msg'           => '',
-            'notifyUrl'     => '/Pay_Exemption_notify.html'
         );
         return json_encode($data);
 
