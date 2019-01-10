@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,13 +15,15 @@ class SendOrderAsyncNotify implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $tries = 3;
+    protected $order;
     /**
      * Create a new job instance.
+     * @param Order $order
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -29,8 +32,9 @@ class SendOrderAsyncNotify implements ShouldQueue
      */
     public function handle()
     {
+
         $DownNotifyContentService = new DownNotifyContentService();
-        $result = $DownNotifyContentService->send();
+        $result = $DownNotifyContentService->send($this->order);
         if(!$result)
         {
             $num = $this->getDelay($this->job->attempts());

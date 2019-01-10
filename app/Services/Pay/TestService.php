@@ -47,7 +47,9 @@ class TestService implements PayInterface
         // TODO: Implement notifyCallback() method.
 
         // 订单异步通知
-        SendOrderAsyncNotify::dispatch(11)->onQueue('orderNotify');
+        $ordersService = app(OrdersService::class);
+        $orders = $ordersService->findId(6,'collection');
+        SendOrderAsyncNotify::dispatch($orders)->onQueue('orderNotify');
     }
 
     public function successCallback()

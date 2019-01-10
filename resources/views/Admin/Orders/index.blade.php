@@ -159,7 +159,9 @@
                             </td>
                             <td>
                                 <button type="button" class="btn btn-success btn-sm" onclick="info('订单详情',{{ $v['id'] }})">详情</button>
-                                <button type="button" class="btn btn-sm">补发通知</button>
+                                @if($v['status'] == 1)
+                                <button type="button" class="btn btn-sm" onclick="send({{ $v['id'] }})">补发通知</button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -347,6 +349,29 @@
                         $("select[name='status']").val(result.data['status']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
+                    }
+                },
+                error:function(XMLHttpRequest,textStatus){
+                    toastr.error('通信失败');
+                }
+            })
+        }
+
+        function send(id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ route('orders.reissue') }}',
+                dataType:'json',
+                data:{'id':id},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(result){
+                    if(result.status == 1)
+                    {
+                        toastr.success(result.msg);
+                    }else{
+                        toastr.error(result.msg);
                     }
                 },
                 error:function(XMLHttpRequest,textStatus){

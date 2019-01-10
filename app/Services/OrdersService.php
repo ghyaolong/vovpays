@@ -121,12 +121,19 @@ class OrdersService
     /**
      * 根据id获取
      * @param int $id
-     * @return array
+     * @param string $type
+     * @return mixed | array
      */
-    public function findId(int $id)
+    public function findId(int $id, $type ='array')
     {
-        $channels = $this->ordersRepository->findId($id);
-        return $channels->toArray();
+        $orders = $this->ordersRepository->findId($id);
+        if($type == 'array')
+        {
+            return $orders->toArray();
+        }else{
+            return $orders;
+        }
+
     }
 
     /**

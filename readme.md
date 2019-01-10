@@ -16,3 +16,8 @@
 4. bootstrap-switch
 5. bootstrap-fileinput-4.5.1
 
+##命令使用
+1.php artisan queue:work --queue=orderNotify  运行异步通知下游
+2.php artisan phoneAlipay:get 运行手机监听
+
+

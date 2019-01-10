@@ -11,6 +11,8 @@ use App\Common\RespCode;
 use App\Tool\AES;
 use App\Tool\Md5Verify;
 use App;
+use App\Jobs\SendOrderAsyncNotify;
+use App\Services\OrdersService;
 
 class PayController extends Controller
 {
@@ -119,7 +121,9 @@ class PayController extends Controller
      */
     public function queryOrder(Request $request)
     {
-        dd(11);
+//        $objRabbitMQ = \App\Services\RabbitMqService::getInstance();
+//        $objRabbitMQ->send('test','测试信息');
+        exit;
     }
 
     public function show()

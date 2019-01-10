@@ -4,6 +4,7 @@ namespace App\Http\Admin\Controllers;
 
 use App\Services\ChannelPaymentsService;
 use App\Services\ChannelService;
+use App\Services\DownNotifyContentService;
 use App\Services\OrdersService;
 use Illuminate\Http\Request;
 
@@ -13,12 +14,15 @@ class OrdersController extends Controller
     protected $ordersService;
     protected $channelService;
     protected $channelPaymentsService;
+    protected $downNotifyContentService;
 
-    public function __construct(OrdersService $ordersService, ChannelService $channelService, ChannelPaymentsService $channelPaymentsService)
+    public function __construct(OrdersService $ordersService, ChannelService $channelService, ChannelPaymentsService $channelPaymentsService,
+                                DownNotifyContentService $downNotifyContentService)
     {
         $this->ordersService = $ordersService;
         $this->channelService = $channelService;
         $this->channelPaymentsService = $channelPaymentsService;
+        $this->downNotifyContentService = $downNotifyContentService;
     }
 
     /**
@@ -80,6 +84,29 @@ class OrdersController extends Controller
             return ajaxSuccess('修改成功！');
         } else {
             return ajaxError('修改失败！');
+        }
+    }
+
+    /**
+     * 订单补发通知
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reissue(Request $request)
+    {
+
+        $order = $this->ordersService->findId($request->id,'collection');
+
+        if(!$order || $order->status != 1)
+        {
+            return ajaxError('订单不存在或未支付');
+        }
+
+        if($this->downNotifyContentService->send($order))
+        {
+            return ajaxSuccess('已发送');
+        }else{
+            return ajaxError('发送失败');
         }
     }
 }
