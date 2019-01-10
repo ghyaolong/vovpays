@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class OrdersRepository
 {
@@ -26,6 +27,7 @@ class OrdersRepository
 
     /**
      * 获取所有，分页
+     * @param array $data
      * @param int $page
      * @return mixed
      */
@@ -48,14 +50,20 @@ class OrdersRepository
     }
 
     /**
-     * 获取所有
-     * @param int $page
-     * @return mixed
+     * 订单统计
+     * @param array $data
+     * @param string $type 默认只统计成功订单
+     * @return array
      */
-    public function Summing(array $data)
+    public function Summing(array $data, string $type ='success')
     {
-        $sql = " 1=1 ";
         $where = [];
+        if($type == 'success')
+        {
+            $sql = " status=1 ";
+        }else{
+            $sql = " 1=1 ";
+        }
 
         if (isset($data['merchant']) && $data['merchant']) {
             $sql .= 'and merchant = ?';
@@ -109,7 +117,9 @@ class OrdersRepository
             $where['updated_at'] = $time[1];
         }
 
-        return $this->order->whereRaw($sql, $where)->get();
+        return $this->order->whereRaw($sql, $where)
+            ->select(DB::raw('sum(amount) as amountSum ,count(id) as orderCount,sum(orderRate) as orderRateSum, sum(agentAmount) as agentSum'))
+            ->get()->toArray();
     }
 
     /**

@@ -38,26 +38,18 @@ class OrderController extends Controller
             $query['user_id'] = Auth::user()->id;
             $orders = $this->ordersService->searchPage($query, 10);
             //订单金额
-            $amountSum = $this->ordersService->amountSum($query);
-            //手续费
-            $orderRateSum = $this->ordersService->orderRateSum($query);
-            //订单数
-            $orderSum = $this->ordersService->orderSum($query);
+            $orderInfoSum = $this->ordersService->orderInfoSum($query);
         } else {
             $data['user_id'] = Auth::user()->id;
             $orders = $this->ordersService->getAllPage($data,10);
             //订单金额
-            $amountSum = $this->ordersService->amountSum($data);
-            //手续费
-            $orderRateSum = $this->ordersService->orderRateSum($data);
-            //订单数
-            $orderSum = $this->ordersService->orderSum($data);
+            $orderInfoSum = $this->ordersService->orderInfoSum($query);
         }
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('User.Order.order', compact('orders', 'query', 'chanel_list', 'payments_list', 'amountSum', 'orderRateSum', 'orderSum'));
+        return view('User.Order.order', compact('orders', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
     }
 
     /**

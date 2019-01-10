@@ -13,13 +13,11 @@
                 <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
 
                 <div class="info-box-content">
-
-						<span class="progress-description" style="padding-top: 10px;">
-							订单金额 </span>
+                    <span class="progress-description" style="padding-top: 10px;">订单金额</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="info-box-number">{{$amountSum}} 元</span>
+                    <span class="info-box-number">{{$orderInfoSum[0]['amountSum'] ?: 0}} 元</span>
                 </div>
             </div>
         </div>
@@ -27,15 +25,12 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
-
                 <div class="info-box-content">
-
-						<span class="progress-description" style="padding-top: 10px;">
-							手续费 </span>
+                    <span class="progress-description" style="padding-top: 10px;">手续费</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="info-box-number">{{$orderRateSum}} 元</span>
+                    <span class="info-box-number">{{$orderInfoSum[0]['orderRateSum'] ?: 0}} 元</span>
                 </div>
             </div>
         </div>
@@ -43,35 +38,15 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
-
                 <div class="info-box-content">
-
-						<span class="progress-description" style="padding-top: 10px;">
-							平台收入 </span>
+                    <span class="progress-description" style="padding-top: 10px;">成功笔数</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="info-box-number">{{$orderSum}} 笔</span>
+                    <span class="info-box-number">{{$orderInfoSum[0]['orderCount'] ?: 0}} 笔</span>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-aqua">
-                <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
-
-                <div class="info-box-content">
-
-						<span class="progress-description" style="padding-top: 10px;">
-							代理收入 </span>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 100%"></div>
-                    </div>
-                    <span class="info-box-number">{{$orderSum}} 笔</span>
-                </div>
-            </div>
-        </div>
-
         <div class="col-md-12">
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">

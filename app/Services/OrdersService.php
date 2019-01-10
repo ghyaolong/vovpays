@@ -7,7 +7,6 @@ use App\Models\Channel;
 use App\Models\Channel_payment;
 use App\Models\User_rates;
 use App\Repositories\OrdersRepository;
-use App\Services\OrderRateService;
 use Illuminate\Http\Request;
 
 class OrdersService
@@ -65,46 +64,16 @@ class OrdersService
     }
 
     /**
-     * 订单金额
-     * @return int
+     * 订单详情统计
+     * @param array $data
+     * @param string $type 默认只统计成功订单
+     * @return array
      */
-    public function amountSum($data)
+    public function orderInfoSum(array $data, string $type ='success')
     {
-          $data=$this->ordersRepository->Summing($data);
-          $sum=0;
-          foreach ($data as $v){
-              $sum=$sum+$v['amount'];
-          }
-          return $sum;
+        return $this->ordersRepository->Summing($data,$type);
     }
 
-    /**
-     * 手续费
-     * @return int
-     */
-    public function orderRateSum($data)
-    {
-        $data=$this->ordersRepository->Summing($data);
-        $sum=0;
-        foreach ($data as $v){
-            $sum=$sum+$v['orderRate'];
-        }
-        return $sum;
-    }
-
-    /**
-     * 订单总数
-     * @return int
-     */
-    public function orderSum($data)
-    {
-        $data=$this->ordersRepository->Summing($data);
-        $sum=0;
-        foreach ($data as $v){
-            $sum=$sum+1;
-        }
-        return $sum;
-    }
 
     /**
      * 订单查询，带分页
@@ -138,10 +107,11 @@ class OrdersService
 
     /**
      * 获取所有，分页
+     * @param array $data
      * @param int $page
      * @return mixed
      */
-    public function getAllPage($data,int $page)
+    public function getAllPage(array $data,int $page)
     {
         return $this->ordersRepository->getAllPage($data,$page);
     }

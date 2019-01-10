@@ -36,26 +36,19 @@ class OrdersController extends Controller
         if (count($query)) {
             $list = $this->ordersService->searchPage($query, 10);
             //订单金额
-            $amountSum = $this->ordersService->amountSum($query);
+            $orderInfoSum = $this->ordersService->orderInfoSum($query);
             //手续费
-            $orderRateSum = $this->ordersService->orderRateSum($query);
-            //订单数
-            $orderSum = $this->ordersService->orderSum($query);
         } else {
             $query = [];
             $list = $this->ordersService->getAllPage($query,10);
             //订单金额
-            $amountSum = $this->ordersService->amountSum($query);
-            //手续费
-            $orderRateSum = $this->ordersService->orderRateSum($query);
-            //订单数
-            $orderSum = $this->ordersService->orderSum($query);
+            $orderInfoSum = $this->ordersService->orderInfoSum($query);
         }
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('Admin.Orders.index', compact('title', 'list', 'query', 'chanel_list', 'payments_list','amountSum','orderRateSum','orderSum'));
+        return view('Admin.Orders.index', compact('title', 'list', 'query', 'chanel_list', 'payments_list','orderInfoSum'));
     }
 
 
