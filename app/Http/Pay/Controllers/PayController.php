@@ -61,7 +61,7 @@ class PayController extends Controller
         $this->paramVerify($request);
 
         // 获取用户
-        $this->user = $this->getUser($this->content['merchant']);
+        $this->user = $this->userService->findMerchant($this->content['merchant']);
         if(!$this->user)
         {
             return json_encode(RespCode::MERCHANT_NOT_EXIST);
@@ -76,7 +76,7 @@ class PayController extends Controller
         }
 
         // 获取支付方式
-        $this->channelPayment = $this->getChannelPayment($this->content['pay_code']);
+        $this->channelPayment = $this->channelPaymentsService->findPaymentCode($this->content['pay_code']);
         if(!$this->channelPayment)
         {
             return json_encode(RespCode::TRADE_BIZ_NOT_OPEN);
@@ -89,14 +89,14 @@ class PayController extends Controller
         }
 
         //获取通道
-        $this->channel = $this->getChannel($this->channelPayment->channel_id);
+        $this->channel = $this->channelService->findIdStatus($this->channelPayment->channel_id);
 
         if(!$this->channel)
         {
             return json_encode(RespCode::CHANNEL_NOT_EXIST);
         }
         //获取商户支付方式
-        $this->userPayment = $this->getFindUidPayIdStatus($this->user->id, $this->channelPayment->id);
+        $this->userPayment = $this->userRateService->getFindUidPayIdStatus($this->user->id, $this->channelPayment->id);
         if(!$this->userPayment)
         {
             return json_encode(RespCode::MCH_BIZ_NOT_OPEN);
@@ -135,7 +135,7 @@ class PayController extends Controller
     public function h5pay(Request $request)
     {
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
-//        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
+        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
         if(!$request->orderNo) return ;
 
         Redis::select(2);
@@ -146,12 +146,12 @@ class PayController extends Controller
 
         $data = Redis::hGetAll($request->orderNo);
 
-//        if($this->get_device_type()!='ios')
-//        {
-//            return view('Pay.android',compact('data'));
-//        }else{
+        if($this->get_device_type()!='ios')
+        {
+            return view('Pay.android',compact('data'));
+        }else{
             return view('Pay.ios',compact('data'));
-//        }
+        }
 
     }
 
@@ -175,48 +175,6 @@ class PayController extends Controller
             $type = 'android';
         }
         return $type;
-    }
-
-    /**
-     * 获取用户
-     * @param string $merchant
-     * @return mixed
-     */
-    protected function getUser(string $merchant)
-    {
-        return $this->userService->findMerchant($merchant);
-
-    }
-
-    /**
-     * 根据编码获取启用的支付方式
-     * @param string $paycode
-     * @return mixed
-     */
-    protected function getChannelPayment(string $paycode)
-    {
-        return $this->channelPaymentsService->findPaymentCode($paycode);
-    }
-
-    /**
-     * 根据id获取启用的通道
-     * @param int $id
-     * @return array
-     */
-    protected function getChannel(int $id)
-    {
-        return $this->channelService->findIdStatus($id);
-    }
-
-    /**
-     * 获取用户支付方式
-     * @param int $uid
-     * @param int $pay_id
-     * @return mixed
-     */
-    protected function getFindUidPayIdStatus(int $uid, int $pay_id)
-    {
-        return $this->userRateService->getFindUidPayIdStatus($uid, $pay_id);
     }
 
     /**
