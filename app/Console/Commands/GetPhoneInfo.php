@@ -60,7 +60,7 @@ class GetPhoneInfo extends Command
         {
             Redis::hset($key, 'status', $data['status']);
             Redis::hset($key, 'update', date('Y-m-d H:i:s', time()));
-            Redis::hset($key, 'comment', $data['comment']);
+            Redis::hset($key, 'comment',$data['comment']);
         }else{
             $params = array(
                 'phoneid' => $data['phoneid'],
@@ -70,6 +70,7 @@ class GetPhoneInfo extends Command
                 'comment' => $data['comment'],
                 'type'    => $data['type'],
                 'account' => $data['account'],
+                'userid'  => $data['alipayuserid'],
                 'status'  => $data['status'],
             );
             Redis::hmset($key,$params);
