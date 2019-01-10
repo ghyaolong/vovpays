@@ -11,8 +11,6 @@ use App\Common\RespCode;
 use App\Tool\AES;
 use App\Tool\Md5Verify;
 use App;
-use App\Jobs\SendOrderAsyncNotify;
-use App\Services\OrdersService;
 use Illuminate\Support\Facades\Redis;
 
 class PayController extends Controller
