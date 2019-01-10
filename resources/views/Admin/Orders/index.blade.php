@@ -132,6 +132,7 @@
                         <th>平台收入</th>
                         <th>代理收入</th>
                         <th>商户收入</th>
+                        <th>支付方式</th>
                         <th>订单状态</th>
                         <th>操作</th>
                     </tr>
@@ -148,6 +149,7 @@
                             <td>{{ $v['sysAmount'] }}</td>
                             <td>{{ $v['agentAmount'] }}</td>
                             <td>{{ $v['userAmount'] }}</td>
+                            <td>{{ $v['paymentName'] }}</td>
                             <td>
                                 @if($v['status'] == 2)
                                     <span style="color:#dd4b39">异常</span>
