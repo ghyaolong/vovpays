@@ -15,9 +15,9 @@ class RespCode
     const CHANNEL_NOT_EXIST  = ['respCode'=>'20002', 'msg'=>'交易通道不存在或未开通'];
     const RESOURCE_NOT_FOUND = ['respCode'=>'404',   'msg'=>'资源未找到'];
     const APP_ERROR          = ['respCode'=>'20003', 'msg'=>'APP或账号未配置'];
+    const FAILED             = ['respCode'=>'500', 'msg'=>'处理失败'];
 
     const SUCCESS = ['respCode'=>'200', 'msg'=>'请求成功'];
-    const FAILED = ['respCode'=>'500', 'msg'=>'处理失败'];
     const WARN = ['respCode'=>'-1', 'msg'=>'网络异常，请稍后重试'];
     const PARAS_ERR = ['respCode'=>'-1', 'msg'=>'参数错误'];
     const UNAUTHORIZED = ['respCode'=>'401', 'msg'=>'未授权的访问'];

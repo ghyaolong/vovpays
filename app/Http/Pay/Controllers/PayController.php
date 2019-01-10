@@ -13,6 +13,7 @@ use App\Tool\Md5Verify;
 use App;
 use App\Jobs\SendOrderAsyncNotify;
 use App\Services\OrdersService;
+use Illuminate\Support\Facades\Redis;
 
 class PayController extends Controller
 {
@@ -126,10 +127,54 @@ class PayController extends Controller
         exit;
     }
 
-    public function show()
+    /**
+     * 支付宝免签H5跳转页面
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View|void
+     */
+    public function h5pay(Request $request)
     {
-        echo 123;exit;
-        return view('Pay.Pay.pay');
+        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+//        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
+        if(!$request->orderNo) return ;
+
+        Redis::select(2);
+        if(!Redis::exists($request->orderNo))
+        {
+            return ajaxError('订单不存在或者已过期！');
+        }
+
+        $data = Redis::hGetAll($request->orderNo);
+
+//        if($this->get_device_type()!='ios')
+//        {
+//            return view('Pay.android',compact('data'));
+//        }else{
+            return view('Pay.ios',compact('data'));
+//        }
+
+    }
+
+    /**
+     * 检测手机系统
+     * @return string
+     */
+    protected function get_device_type()
+    {
+        //全部变成小写字母
+        $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+        $type = 'other';
+        //分别进行判断
+        if(strpos($agent, 'iphone') || strpos($agent, 'ipad'))
+        {
+            $type = 'ios';
+        }
+
+        if(strpos($agent, 'android'))
+        {
+            $type = 'android';
+        }
+        return $type;
     }
 
     /**

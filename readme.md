@@ -18,6 +18,6 @@
 
 ##命令使用
 1.php artisan queue:work --queue=orderNotify  运行异步通知下游
-2.php artisan phoneAlipay:get 运行手机监听
+2.php artisan phone:get 运行手机监听
 
 

@@ -16,6 +16,7 @@ use App\Services\OrdersService;
 use Illuminate\Http\Request;
 use App\Jobs\SendOrderAsyncNotify;
 use App\Common\RespCode;
+use Illuminate\Support\Facades\Redis;
 
 class TestService implements PayInterface
 {
@@ -32,8 +33,30 @@ class TestService implements PayInterface
         // 订单添加
         $ordersService  = app(OrdersService::class);
         $result         = $ordersService->add($user, $channel, $Channel_payment, $request, $user_rates, $account_array);
+        if(!$result)
+        {
+            return json_encode(RespCode::FAILED);
+        }
+        $data = [
+            'type'    => $request->pay_code,
+            'username'=> $account_array['username'],
+            'money'   => sprintf('%0.2f',$result->amount),
+            'orderNo' => $result->orderNo,
+            'qrurl'  => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$account_array['userId'].'","a": "'.$result->amount.'","m": "'.$result->orderNo.'"}',
+            'payurl'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+        ];
 
-        return redirect('pay/213213');
+        Redis::select(2);
+        $order_date = array(
+            'amount'  => $result->amount,
+            'meme'    => $result->orderNo,
+            'userID'  => $account_array['userId'],
+            'status'  => 0,
+        );
+
+        Redis::hmset($result->orderNo,$order_date);
+        Redis::expire($result->orderNo,180);
+        return view('Pay.pay',compact('data'));
     }
 
     public function queryOrder()
