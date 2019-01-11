@@ -13,12 +13,26 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = Carbon::now()->toDateTimeString();
-        DB::table('users')->insert([
+        $now  = Carbon::now()->toDateTimeString();
+        $user = DB::table('users')->insert([
             'username'  => 'vovpay',
-            'password'  => bcrypt ('vovpay'),
+            'password'  => bcrypt ('000000'),
             'email'     => 'vovpay@vovpay.com',
             'phone'     => '18888888888',
+            'group_type'=> 1,
+            'payPassword' => bcrypt ('123456'),
+            'merchant'  => str_random(10),
+            'apiKey'    => bcrypt(str_random(10)),
+            'created_at'=> $now,
+            'updated_at'=> $now
+        ]);
+        DB::table('users')->insert([
+            'username'  => 'agent',
+            'password'  => bcrypt ('000000'),
+            'email'     => 'vovpay@agent.com',
+            'phone'     => '18888888889',
+            'group_type'=> 2,
+            'parentId'  => $user->id,
             'payPassword' => bcrypt ('123456'),
             'merchant'  => str_random(10),
             'apiKey'    => bcrypt(str_random(10)),
