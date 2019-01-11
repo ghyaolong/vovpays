@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateSysConfigsTable extends Migration
+class CreateSystemsTable extends Migration
 {
     /**
      * Run the migrations.

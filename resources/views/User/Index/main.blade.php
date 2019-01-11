@@ -34,14 +34,14 @@
                             <td>注册账号，在“我的”-“基本资料”中获取。</td>
                             <td><span class="glyphicon glyphicon-ok"></span></td>
                         </tr>
+                        {{--<tr>--}}
+                            {{--<td>2.</td>--}}
+                            {{--<td>已上传支付宝、微信不设金额收款码各一张</td>--}}
+                            {{--<td>可能用到的固定金额收款码多多益善。在“账号轮询”-“支付宝或微信账号”中上传“任意金额码”和“固定金额码”。</td>--}}
+                            {{--<td><span class="glyphicon glyphicon-ok"></span></td>--}}
+                        {{--</tr>--}}
                         <tr>
                             <td>2.</td>
-                            <td>已上传支付宝、微信不设金额收款码各一张</td>
-                            <td>可能用到的固定金额收款码多多益善。在“账号轮询”-“支付宝或微信账号”中上传“任意金额码”和“固定金额码”。</td>
-                            <td><span class="glyphicon glyphicon-ok"></span></td>
-                        </tr>
-                        <tr>
-                            <td>3.</td>
                             <td>已挂载网关程序，并按要求设置完毕。</td>
                             <td>打开网关程序，配置商户ID、Token、收款账号，配置完成后登陆微信或支付宝并保持在线状态。</td>
                             <td><span class="glyphicon glyphicon-ok"></span></td>
@@ -93,8 +93,8 @@
                             </tr>
                             <tr>
                                 <td>1.</td>
-                                <td>uid</td>
-                                <td>商户ID</td>
+                                <td>merchant</td>
+                                <td>商户号</td>
                                 <td>string(50)</td>
                                 <td>您的商户唯一标识，注册后在基本资料里获得</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
@@ -102,7 +102,7 @@
                             </tr>
                             <tr>
                                 <td>2.</td>
-                                <td>price</td>
+                                <td>amount</td>
                                 <td>金额</td>
                                 <td>float</td>
                                 <td> 单位：元。精确小数点后2位</td>
@@ -111,79 +111,87 @@
                             </tr>
                             <tr>
                                 <td>3.</td>
-                                <td>paytype</td>
+                                <td>pay_code</td>
                                 <td>支付渠道</td>
                                 <td>int</td>
-                                <td>1：支付宝；2：微信支付</td>
+                                <td>填写相应的支付方式编码 1：支付宝；2：微信支付</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>4.</td>
-                                <td>notify_url</td>
-                                <td>异步回调地址</td>
-                                <td>string(255)</td>
+                                <td>order_no</td>
+                                <td>商户订单号</td>
+                                <td>string(50)</td>
                                 <td>
-                                    用户支付成功后，我们服务器会主动发送一个post消息到这个网址。由您自定义。不要urlencode并且不带任何参数。例：http://www.xxx.com/notify_url
-                                </td>
+                                    订单号，max(50),该值需在商户系统内唯一                             </td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>5.</td>
-                                <td>return_url</td>
-                                <td>同步跳转地址</td>
+                                <td> notify_url</td>
+                                <td>异步回调地址</td>
                                 <td>string(255)</td>
-                                <td>用户支付成功后，我们会让用户浏览器自动跳转到这个网址。由您自定义。不要urlencode并且不带任何参数。例：http://www.xxx.com/return_url
-                                </td>
+                                <td>异步通知地址，需要以http://开头且没有任何参数用户。支付成功后，我们服务器会主动发送一个post消息到这个网址。</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>6.</td>
-                                <td> user_order_no</td>
-                                <td>商户自定义订单号</td>
-                                <td>string(50)</td>
-                                <td>我们会据此判别是同一笔订单还是新订单。我们回调时，会带上这个参数。例：201810110922</td>
+                                <td>return_url</td>
+                                <td>同步跳转地址</td>
+                                <td>string(255)</td>
+                                <td>同步跳转地址，支付成功后跳回用户。支付成功后，我们会让用户浏览器自动跳转到这个网址。
+                                </td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
+
                             <tr>
                                 <td>7.</td>
-                                <td>note</td>
-                                <td>附加内容</td>
-                                <td>string(1000)</td>
-                                <td> 回调时将会根据传入内容原样返回（为防止乱码情况，请尽量不填写中文）</td>
+                                <td>json</td>
+                                <td>请求返回方式</td>
+                                <td>string(10)</td>
+                                <td> 固定值：json; 注意：只适用于扫码付款</td>
                                 <td><span class="glyphicon glyphicon-remove"></span></td>
                                 <td><span class="glyphicon glyphicon-remove"></span></td>
                             </tr>
                             <tr>
                                 <td>8.</td>
-                                <td> cuid</td>
-                                <td>商户自定义用户唯一标识</td>
-                                <td> string(50)</td>
-                                <td>我们会显示在您后台的订单列表中，方便您看到是哪个用户的付款，方便后台对账。强烈建议填写。可以填用户名、邮箱、主键</td>
+                                <td> attach</td>
+                                <td>备注消息</td>
+                                <td> string(1000)</td>
+                                <td>回调时将会根据传入内容原样返回（为防止乱码情况，请尽量不填写中文）</td>
                                 <td><span class="glyphicon glyphicon-remove"></span></td>
-                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>9.</td>
-                                <td>tm</td>
-                                <td>日期时间</td>
+                                <td> order_time</td>
+                                <td>请求时间</td>
+                                <td> string(50)</td>
+                                <td>格式YYYY-MM-DD hh:ii:ss，回调时原样返回</td>
+                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>10.</td>
+                                <td>cuid</td>
+                                <td>商户的用户id</td>
                                 <td>string(50)</td>
-                                <td>请求时间yyyy-mm-dd hh:mi:ss</td>
+                                <td>商户名下的能表示用户的标识，方便对账，回调时原样返回</td>
                                 <td><span class="glyphicon glyphicon-remove"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>10.</td>
                                 <td>sign</td>
-                                <td>签名</td>
+                                <td>MD5签名</td>
                                 <td>string(32)</td>
-                                <td>将参数1至6按顺序连Token一起，做md5-32位加密，取字符串小写。网址类型的参数值不要urlencode（例：uid + price + paytype +
-                                    notify_url + return_url + user_order_no + token）
+                                <td>Md5签名(签名规则详见下面签名规则)
                                 </td>
-                                <td></td>
+                                <td><span class="glyphicon glyphicon-remove"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                         </table>
@@ -191,25 +199,25 @@
                         <b>注意：Token在安全上非常重要，一定不要显示在任何网页代码、网址参数中。只可以放在服务端。计算sign时，先在服务端计算好，把计算出来的sign传出来。严禁在客户端计算、存储Token。</b>
                     </div>
 
-                    <div style="background: #F5F5F5;margin:15px 10px;">
-                    <pre>   <b>JSON请求的返回值：</b><br>                 {
-		    //0失败 1成功
-		    "Code": 1,
-		    //返回消息
-		    "Msg": "success",
-		    //支付渠道 1支付宝 2微信
-		    "PayType": 1,
-		    //收款码解析路径
-		    "QRCodeLink": "HTTPS://QR.ALIPAY.COM/XXXXXXXX",
-		    //实际支付金额(一定要把这个价格显示在支付页上，而不是订单金额)
-		    "RealPrice": 0.01,
-		    //订单有效期（秒），订单创建时间 + 有效期 小于当前时间则此单失效
-		    "TimeOut": 180,
-		    //订单创建时间
-		    "CreateTime": "2018-10-30 09:22:33"
-		}
-                    </pre>
-                    </div>
+                    {{--<div style="background: #F5F5F5;margin:15px 10px;">--}}
+                    {{--<pre>   <b>JSON请求的返回值：</b><br>                 {--}}
+		    {{--//0失败 1成功--}}
+		    {{--"Code": 1,--}}
+		    {{--//返回消息--}}
+		    {{--"Msg": "success",--}}
+		    {{--//支付渠道 1支付宝 2微信--}}
+		    {{--"PayType": 1,--}}
+		    {{--//收款码解析路径--}}
+		    {{--"QRCodeLink": "HTTPS://QR.ALIPAY.COM/XXXXXXXX",--}}
+		    {{--//实际支付金额(一定要把这个价格显示在支付页上，而不是订单金额)--}}
+		    {{--"RealPrice": 0.01,--}}
+		    {{--//订单有效期（秒），订单创建时间 + 有效期 小于当前时间则此单失效--}}
+		    {{--"TimeOut": 180,--}}
+		    {{--//订单创建时间--}}
+		    {{--"CreateTime": "2018-10-30 09:22:33"--}}
+		{{--}--}}
+                    {{--</pre>--}}
+                    {{--</div>--}}
 
                 </div>
             </div>
@@ -293,10 +301,10 @@
                             </tr>
                             <tr>
                                 <td>1.</td>
-                                <td>user_order_no</td>
+                                <td>merchant</td>
                                 <td>您的自定义订单号</td>
                                 <td>string(50)</td>
-                                <td>一定存在。是您在发起付款接口传入的您的自定义订单号</td>
+                                <td>上行过程中商户系统传入的orderid</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
@@ -308,46 +316,54 @@
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
+                                <td>2.</td>
+                                <td>amount</td>
+                                <td>订单金额</td>
+                                <td>float</td>
+                                <td>订单实际支付金额，单位元</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
                                 <td>3.</td>
-                                <td>tradeno</td>
-                                <td>支付流水号</td>
+                                <td>sys_order_no</td>
+                                <td>平台流水号</td>
                                 <td>string(50)</td>
-                                <td>一定存在。支付宝支付或微信支付的流水订单号</td>
+                                <td>一定存在。是此订单在本服务器上的唯一编号</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>4.</td>
-                                <td>price</td>
-                                <td>订单定价</td>
-                                <td>float</td>
-                                <td>一定存在。是您在发起付款接口传入的订单价格</td>
+                                <td>out_order_no</td>
+                                <td>商户订单号</td>
+                                <td>string(50)</td>
+                                <td>一定存在。商户提交的订单号,保证订单号唯一</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>5.</td>
-                                <td>realprice</td>
-                                <td> 实际支付金额</td>
-                                <td>float</td>
-                                <td>
-                                    一定存在。表示用户实际支付的金额。一般会和price值一致，如果同时存在多个用户支付同一金额，就会和price存在一定差额，差额一般在1-2分钱上下，越多人同时付款，差额越大
-                                </td>
+                                <td>order_time</td>
+                                <td>订单请求时间</td>
+                                <td>datetime</td>
+                                <td>order_time 原样返回</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>6.</td>
-                                <td>cuid</td>
-                                <td> 您的自定义用户唯一标识</td>
-                                <td>string(50)</td>
-                                <td>如果您在发起付款接口带入此参数，我们会原封不动传回</td>
-                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td>attach</td>
+                                <td> 备注信息</td>
+                                <td>string(255)</td>
+                                <td>
+                                    attach原样返回
+                                </td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>7.</td>
-                                <td>note</td>
-                                <td>附加内容</td>
-                                <td>string(1000)</td>
+                                <td>cuid</td>
+                                <td> 商户的用户id</td>
+                                <td>string(50)</td>
                                 <td>如果您在发起付款接口带入此参数，我们会原封不动传回</td>
-                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>8.</td>
@@ -355,14 +371,38 @@
                                 <td>签名</td>
                                 <td>string(32)</td>
                                 <td>
-                                    将参数1至5按顺序连Token一起，做md5-32位加密，取字符串小写。您需要在您的服务端按照同样的算法，自己验证此sign是否正确。只在正确时，执行您自己逻辑中支付成功代码。（拼接顺序：user_order_no
-                                    + orderno + tradeno + price + realprice + token）
+                                    Md5签名(签名规则详见下面签名规则)
                                 </td>
-                                <td></td>
+                                <td><span class="glyphicon glyphicon-remove"></span></td>
                             </tr>
                         </table>
 
                     </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{--MD5签名--}}
+        <div class="col-md-12">
+            <div class="box box-primary box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">MD5签名</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div style="background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
+                        <b>待签名数据为表1中必须加入签名和有值加入签名的数据，以ASCII码升序(字典序)排序，然后以key=value&key1=value1......&key=密钥，生成签名串。具体MD5签名源串及格式如下： amount=10.01&merchant=HPWBCimj4e&notify_rul=http://baidu.com&order_no=20190104055920&order_time=2018-12-0813:46:01&pay_code=alipay&return_url=http://baidu.com&key=$2y$10$YCJ1PkNmlBzm1Fm0r9wfpPu8oH4WnoSevO1ir249kHgBSkQDYPa5oa</b><br><br>
+                    </div>
+
+
+
                 </div>
             </div>
         </div>
