@@ -82,6 +82,7 @@ function timer(intDiff) {
             clearInterval(myTimer);
         }
         intDiff--;
+        checkdata();
     }, 1000);
 }
 
@@ -107,6 +108,26 @@ function qrcode_timeout(){
     $('#show_qrcode').attr("src","{{ asset('images/Pay/qrcode_timeout.png') }}");
     $('.paybtn').hide();
     $('#msg').html("<h1>订单已过期,请重新支付</h1>");
+}
+
+function checkdata(){
+    var no = $("#trade_no").val();
+    $.get(
+        "{{ route('pay.success','test') }}", {
+            trade_no : no,
+        },
+        function(data){
+            if (data.status == 'success'){
+                window.clearInterval(timer);
+                $("#show_qrcode").attr("src","{{ asset('images/Pay/pay_ok.png') }}");
+                $("#money").text("支付成功");
+                $("#msg").html("<h1>订单已支付成功</h1>");
+                $(".paybtn").hide();
+                clearInterval(myTimer);
+                clearInterval(timers);
+            }
+        }
+    );
 }
 
 $().ready(function(){

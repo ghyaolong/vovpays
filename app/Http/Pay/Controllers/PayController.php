@@ -8,14 +8,12 @@ use App\Services\UserRateService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Common\RespCode;
-use App\Tool\AES;
 use App\Tool\Md5Verify;
 use App;
 use Illuminate\Support\Facades\Redis;
 
 class PayController extends Controller
 {
-    protected $AES;
     protected $userService;
     protected $channelPaymentsService;
     protected $channelService;
@@ -28,12 +26,11 @@ class PayController extends Controller
     protected $channel;         // 通道信息
     protected $channelPayment;  // 支付方式信息
 
-    public function __construct(AES $AES, UserService $userService,
+    public function __construct(UserService $userService,
                                 ChannelPaymentsService $channelPaymentsService, ChannelService $channelService,
                                 UserRateService $userRateService, Md5Verify $md5Verify)
     {
         parent::__construct();
-        $this->AES                    = $AES;
         $this->userService            = $userService;
         $this->channelPaymentsService = $channelPaymentsService;
         $this->channelService         = $channelService;
@@ -119,11 +116,55 @@ class PayController extends Controller
      * @param Request $request
      */
     public function queryOrder(Request $request)
-    {
+    {  dd(22);
 //        $objRabbitMQ = \App\Services\RabbitMqService::getInstance();
 //        $objRabbitMQ->send('test','测试信息');
         exit;
     }
+
+    /**
+     * 异步通知入口
+     * @param Request $request
+     * @throws \Exception
+     * @return json
+     */
+    public function notifyCallback(Request $request)
+    {
+        try{
+            if(!$pay = App::make(strtolower($request->action)) )
+            {
+                throw new \Exception('');
+            }
+            return $pay->successCallback($request);
+
+        }catch ( \Exception $e){
+
+            return json_encode(RespCode::RESOURCE_NOT_FOUND);
+        }
+    }
+
+    /**
+     * 同步通知入口
+     * @param Request $request
+     * @throws \Exception
+     * @return json
+     */
+    public function successCallback(Request $request)
+    {
+        try{
+            if(!$pay = App::make(strtolower($request->action)) )
+            {
+                throw new \Exception('');
+            }
+            return $pay->successCallback($request);
+
+        }catch ( \Exception $e){
+
+            return json_encode(RespCode::RESOURCE_NOT_FOUND);
+        }
+
+    }
+
 
     /**
      * 支付宝免签H5跳转页面
@@ -143,6 +184,7 @@ class PayController extends Controller
         }
 
         $data = Redis::hGetAll($request->orderNo);
+        $data['orderNo'] = $request->orderNo;
 
         if($this->get_device_type()!='ios')
         {

@@ -78,9 +78,9 @@
     var checkOrderStatus = function () {
         clearTimeout(qi);
         $.ajax({
-            url: '/Pay_Exemption_successNotify.html',
-            data: {"trade_no": "<{$orderNo}>"},
-            type:'post',
+            url: '{{ route('pay.success','test') }}',
+            data: {"trade_no": "{{$data['orderNo']}}"},
+            type:'get',
             success: function (ret) {
                 if (ret.status == 'success') {
                     if (ret.status != 'inprogress' && ret.status != 'expired') {

@@ -64,7 +64,11 @@ class TestService implements PayInterface
         // TODO: Implement queryOrder() method.
     }
 
-    public function notifyCallback()
+    /**
+     * @param Request $request
+     * @return mixed|void
+     */
+    public function notifyCallback(Request $request)
     {
         // TODO: Implement notifyCallback() method.
 
@@ -74,8 +78,28 @@ class TestService implements PayInterface
         SendOrderAsyncNotify::dispatch($orders)->onQueue('orderNotify');
     }
 
-    public function successCallback()
+    /**
+     * @param Request $request
+     * @return mixed|void
+     */
+    public function successCallback(Request $request)
     {
         // TODO: Implement successCallback() method.
+        Redis::select(2);
+        $order_no = $request->orderNo;
+
+        if(!Redis::exists($order_no))
+        {
+            return json_encode(array('msg'=>'','status'=>'expired'));
+        }
+
+        $data = Redis::hGetAll($order_no);
+        if($data['status'] == 0)
+        {
+            return json_encode(array('msg'=>'','status'=>'inprogress'));
+
+        }else if($data['status'] == '4'){
+            return json_encode(array('msg'=>'','status'=>'success'));
+        }
     }
 }

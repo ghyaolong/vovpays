@@ -22,15 +22,17 @@ interface PayInterface
 
     /**
      * 同步回调
+     * @param Request $request
      * @return mixed
      */
-    public function successCallback();
+    public function successCallback(Request $request);
 
     /**
      * 异步回调
+     * @param Request $request
      * @return mixed
      */
-    public function notifyCallback();
+    public function notifyCallback(Request $request);
 
     /**
      * 订单查询
