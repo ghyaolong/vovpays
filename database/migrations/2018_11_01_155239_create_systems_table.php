@@ -32,6 +32,6 @@ class CreateSystemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sys_configs');
+        Schema::dropIfExists('systems');
     }
 }
