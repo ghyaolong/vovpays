@@ -5,12 +5,6 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 class RabbitMqService{
-
-    /**
-     * @var object $instance 单例对象
-     */
-    private static $instance = null;
-
     /**
      * @var object $connection 队列连接对象
      */
@@ -19,26 +13,6 @@ class RabbitMqService{
     public function __construct()
     {
         $this->connection = new AMQPStreamConnection(env('MQ_Local_HOST'), env('MQ_PORT'), env('MQ_USER'), env('MQ_PWD'),env('MQ_VHOST'));
-    }
-
-    /**
-     * 单例实例化入口
-     */
-    public static function getInstance()
-    {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
-    /**
-     * 析构函数
-     */
-    public function __destruct()
-    {
-        $this->connection->close();
-        self::$instance = null;
     }
 
     /**
@@ -53,5 +27,8 @@ class RabbitMqService{
 
         $msg = new AMQPMessage($messAge);
         $channel->basic_publish($msg, '', $queue_name);
+
+        $channel->close();
+        $this->connection->close();
     }
 }
