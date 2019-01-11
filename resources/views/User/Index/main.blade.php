@@ -8,49 +8,49 @@
     <div class="row" style="margin-top: 20px">
 
         {{--接口文档--}}
-        <div class="col-md-12">
-            <div class="box box-primary box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">接口文档</h3>
+        {{--<div class="col-md-12">--}}
+            {{--<div class="box box-primary box-solid">--}}
+                {{--<div class="box-header with-border">--}}
+                    {{--<h3 class="box-title">接口文档</h3>--}}
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
+                    {{--<div class="box-tools pull-right">--}}
+                        {{--<button type="button" class="btn btn-box-tool" data-widget="collapse">--}}
+                            {{--<i class="fa fa-minus"></i>--}}
+                        {{--</button>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
 
-                <div class="box-body" style="padding:20px auto;font-size: 15px">
-                    <table class="table table-bordered" style="margin: 10px auto">
-                        <tr>
-                            <th style="width: 30px">#</th>
-                            <th style="width: 500px">必要前提</th>
-                            <th style="width: 1200px">说明</th>
-                            <th style="width: 30px"></th>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>已有商户ID和Token。</td>
-                            <td>注册账号，在“我的”-“基本资料”中获取。</td>
-                            <td><span class="glyphicon glyphicon-ok"></span></td>
-                        </tr>
+                {{--<div class="box-body" style="padding:20px auto;font-size: 15px">--}}
+                    {{--<table class="table table-bordered" style="margin: 10px auto">--}}
+                        {{--<tr>--}}
+                            {{--<th style="width: 30px">#</th>--}}
+                            {{--<th style="width: 500px">必要前提</th>--}}
+                            {{--<th style="width: 1200px">说明</th>--}}
+                            {{--<th style="width: 30px"></th>--}}
+                        {{--</tr>--}}
+                        {{--<tr>--}}
+                            {{--<td>1.</td>--}}
+                            {{--<td>已有商户ID和Token。</td>--}}
+                            {{--<td>注册账号，在“我的”-“基本资料”中获取。</td>--}}
+                            {{--<td><span class="glyphicon glyphicon-ok"></span></td>--}}
+                        {{--</tr>--}}
                         {{--<tr>--}}
                             {{--<td>2.</td>--}}
                             {{--<td>已上传支付宝、微信不设金额收款码各一张</td>--}}
                             {{--<td>可能用到的固定金额收款码多多益善。在“账号轮询”-“支付宝或微信账号”中上传“任意金额码”和“固定金额码”。</td>--}}
                             {{--<td><span class="glyphicon glyphicon-ok"></span></td>--}}
                         {{--</tr>--}}
-                        <tr>
-                            <td>2.</td>
-                            <td>已挂载网关程序，并按要求设置完毕。</td>
-                            <td>打开网关程序，配置商户ID、Token、收款账号，配置完成后登陆微信或支付宝并保持在线状态。</td>
-                            <td><span class="glyphicon glyphicon-ok"></span></td>
-                        </tr>
-                    </table>
-                </div>
+                        {{--<tr>--}}
+                            {{--<td>2.</td>--}}
+                            {{--<td>已挂载网关程序，并按要求设置完毕。</td>--}}
+                            {{--<td>打开网关程序，配置商户ID、Token、收款账号，配置完成后登陆微信或支付宝并保持在线状态。</td>--}}
+                            {{--<td><span class="glyphicon glyphicon-ok"></span></td>--}}
+                        {{--</tr>--}}
+                    {{--</table>--}}
+                {{--</div>--}}
 
-            </div>
-        </div>
+            {{--</div>--}}
+        {{--</div>--}}
 
 
         {{--发起付款--}}
@@ -73,12 +73,12 @@
                         <b>使用方法：</b> 用表单post的方式，post参数并跳转到此网址，显示我们的支付页<br>
                     </div>
 
-                    <div style="height: 150px;background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
-                        <b>方式二：自定义支付页</b><br>
-                        <b>获取支付JSON数据接口URL：</b> https://www.***.com/pay/json<br>
-                        <b>传参方式：</b> Post (Content-Type: application/json;charset=utf-8)<br>
-                        <b>使用方法：</b> 用curl的post方式传参数，并直接获取JSON返回值，显示在您自定义的支付页上。<br>
-                    </div>
+                    {{--<div style="height: 150px;background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">--}}
+                        {{--<b>方式二：自定义支付页</b><br>--}}
+                        {{--<b>获取支付JSON数据接口URL：</b> https://www.***.com/pay/json<br>--}}
+                        {{--<b>传参方式：</b> Post (Content-Type: application/json;charset=utf-8)<br>--}}
+                        {{--<b>使用方法：</b> 用curl的post方式传参数，并直接获取JSON返回值，显示在您自定义的支付页上。<br>--}}
+                    {{--</div>--}}
 
                     <div class="box-body" style="padding:20px auto;font-size: 15px">
                         <table class="table table-bordered" style="margin: 10px auto">
@@ -196,7 +196,7 @@
                             </tr>
                         </table>
                         <br>
-                        <b>注意：Token在安全上非常重要，一定不要显示在任何网页代码、网址参数中。只可以放在服务端。计算sign时，先在服务端计算好，把计算出来的sign传出来。严禁在客户端计算、存储Token。</b>
+                        {{--<b>注意：Token在安全上非常重要，一定不要显示在任何网页代码、网址参数中。只可以放在服务端。计算sign时，先在服务端计算好，把计算出来的sign传出来。严禁在客户端计算、存储Token。</b>--}}
                     </div>
 
                     {{--<div style="background: #F5F5F5;margin:15px 10px;">--}}
@@ -283,7 +283,7 @@
 
                 <div class="box-body">
                     <div style="height: 80px;background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
-                        <b>传参方式：</b> Get<br>
+                        <b>传参方式：</b> Post<br>
                         <b></b>
                         用户付款成功后，我们会向您在发起付款接口传入的notify_url网址发送通知(POST)。您的服务器只要返回小写字符串“success”（不包括引号），就表示回调成功。通知内容(json)如下:<br>
                     </div>
