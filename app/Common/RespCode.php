@@ -16,6 +16,7 @@ class RespCode
     const RESOURCE_NOT_FOUND = ['respCode'=>'404',   'msg'=>'资源未找到'];
     const APP_ERROR          = ['respCode'=>'20003', 'msg'=>'APP或账号未配置'];
     const FAILED             = ['respCode'=>'500', 'msg'=>'处理失败'];
+    const TRADE_ORDER_NOT_EXIST = ['respCode'=>'20004', 'msg'=>'交易订单不存在'];
 
     const SUCCESS = ['respCode'=>'200', 'msg'=>'请求成功'];
     const WARN = ['respCode'=>'-1', 'msg'=>'网络异常，请稍后重试'];
@@ -25,7 +26,6 @@ class RespCode
     const MCH_WAIT_EXAMINE = ['respCode'=>'10004', 'msg'=>'商户业务审核中'];
     const ORGRATE_NOT_EXIST = ['respCode'=>'10005', 'msg'=>'代理费率信息不存在'];
     const TRADE_ORDER_EXIST = ['respCode'=>'20003', 'msg'=>'交易订单号重复'];
-    const TRADE_ORDER_NOT_EXIST = ['respCode'=>'20004', 'msg'=>'交易订单不存在'];
     const TRADE_ORDER_STATUS_EX = ['respCode'=>'20005', 'msg'=>'交易订单状态异常'];
     /** 20006, "该通道的交易时间为${startTime}-${endTime}" */
     const NOT_ALLOW_TRADING_TIEME = ['respCode'=>'20006', 'msg'=>'该通道的交易时间为%s-%s'];

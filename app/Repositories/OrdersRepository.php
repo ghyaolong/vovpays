@@ -143,6 +143,26 @@ class OrdersRepository
     }
 
     /**
+     * 根据平台订单查询
+     * @param string $order_no
+     * @return mixed
+     */
+    public function findOrderNo(string $order_no)
+    {
+        return $this->order->whereOrderno($order_no)->first();
+    }
+
+    /**
+     * 根据商户订单查询
+     * @param string $order_no
+     * @return mixed
+     */
+    public function findUnderOrderNo(string $order_no)
+    {
+        return $this->order->whereunderorderno($order_no)->first();
+    }
+
+    /**
      * 修改
      * @param int $id
      * @param array $data

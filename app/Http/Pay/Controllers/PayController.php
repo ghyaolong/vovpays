@@ -2,6 +2,7 @@
 
 namespace App\Http\Pay\Controllers;
 
+use App\Services\OrdersService;
 use App\Services\ChannelPaymentsService;
 use App\Services\ChannelService;
 use App\Services\UserRateService;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Redis;
 
 class PayController extends Controller
 {
+    protected $ordersService;
     protected $userService;
     protected $channelPaymentsService;
     protected $channelService;
@@ -28,7 +30,7 @@ class PayController extends Controller
 
     public function __construct(UserService $userService,
                                 ChannelPaymentsService $channelPaymentsService, ChannelService $channelService,
-                                UserRateService $userRateService, Md5Verify $md5Verify)
+                                UserRateService $userRateService, Md5Verify $md5Verify, OrdersService $ordersService)
     {
         parent::__construct();
         $this->userService            = $userService;
@@ -36,6 +38,7 @@ class PayController extends Controller
         $this->channelService         = $channelService;
         $this->userRateService        = $userRateService;
         $this->md5Verify              = $md5Verify;
+        $this->ordersService          = $ordersService;
     }
 
     /**
@@ -114,12 +117,53 @@ class PayController extends Controller
     /**
      * 订单查询入口
      * @param Request $request
+     * @return string
      */
     public function queryOrder(Request $request)
-    {  dd(22);
-//        $objRabbitMQ = \App\Services\RabbitMqService::getInstance();
-//        $objRabbitMQ->send('test','测试信息');
-        exit;
+    {
+        if( !isset($request->merchant) || !isset($request->sign) || (!isset($request->sys_order_no) && !isset($request->out_order_no)) )
+        {
+            return json_encode(RespCode::PARAMETER_ERROR);
+        }
+
+        $this->user = $this->userService->findMerchant($request->merchant);
+        if(!$this->user)
+        {
+            return json_encode(RespCode::MERCHANT_NOT_EXIST);
+        }
+
+        $sign = $this->md5Verify->getSign($request->input(), $this->user->apiKey);
+        if($sign != $request->sign)
+        {
+            return json_encode(RespCode::CHECK_SIGN_FAILED);
+        }
+
+        if($request->sys_order_no && $request->out_order_no)
+        {
+            $order = $this->ordersService->findOrderNo($request->sys_order_no);
+        }else if($request->out_order_no){
+            $order = $this->ordersService->findUnderOrderNo($request->out_order_no);
+        }else if($request->sys_order_no){
+            $order = $this->ordersService->findOrderNo($request->sys_order_no);
+        }
+
+        if(!$order)
+        {
+            return json_encode(RespCode::TRADE_ORDER_NOT_EXIST);
+        }
+
+        $data = [
+            'respCode'      => '0000',
+            'msg'           => '查询成功',
+            'out_order_no'  => $order->underOrderNo,
+            'sys_order_no'  => $order->orderNo,
+            'status'        => $order->status,
+            'money'         => $order->amount
+        ];
+
+        $data['sign'] = $this->md5Verify->getSign($data, $this->user->apiKey);
+
+        return json_encode($data);
     }
 
     /**
@@ -159,7 +203,6 @@ class PayController extends Controller
             return $pay->successCallback($request);
 
         }catch ( \Exception $e){
-
             return json_encode(RespCode::RESOURCE_NOT_FOUND);
         }
 
@@ -192,7 +235,6 @@ class PayController extends Controller
         }else{
             return view('Pay.ios',compact('data'));
         }
-
     }
 
     /**

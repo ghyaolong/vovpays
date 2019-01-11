@@ -74,6 +74,25 @@ class OrdersService
         return $this->ordersRepository->Summing($data,$type);
     }
 
+    /**
+     * 根据平台订单查询
+     * @param string $order_no
+     * @return mixed
+     */
+    public function findOrderNo(string $order_no)
+    {
+        return $this->ordersRepository->findOrderNo($order_no);
+    }
+
+    /**
+     * 根据商户订单查询
+     * @param string $order_no
+     * @return mixed
+     */
+    public function findUnderOrderNo(string $order_no)
+    {
+        return $this->ordersRepository->findUnderOrderNo($order_no);
+    }
 
     /**
      * 订单查询，带分页
