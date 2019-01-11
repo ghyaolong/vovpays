@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateSysConfigsTable extends Migration
+class CreateSystemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -32,6 +32,6 @@ class CreateSysConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sys_configs');
+        Schema::dropIfExists('systems');
     }
 }
