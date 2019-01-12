@@ -304,7 +304,7 @@ class PayController extends Controller
         $pay_orderid = date('YmdHis').rand(0000,9999);    //订单号
         $pay_notifyurl = "http://cc.vovpay.com/Pay_Exemption_test.html";   //服务端返回地址
         $pay_callbackurl = "http://b.com:8080";  //页面跳转返回地址
-        $Md5key = '$2y$10$W6n77XJ8daHSI27P3sf.y.odjEbdHMgSWLOoW7GcHevanhwk2ZpGS';   //密钥
+        $Md5key = '$2y$10$jCVQuj5K2tc9WQcjz5HIxOKdWyDL2ixTrCDmBhV.B18b1Y1MLj5ye';   //密钥
 
         $jsapi = array(
             "merchant"      => $pay_memberid,
