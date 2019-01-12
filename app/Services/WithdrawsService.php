@@ -8,7 +8,7 @@
 
 namespace App\Services;
 
-
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\WithdrawsRepository;
 
 class WithdrawsService
@@ -25,13 +25,17 @@ class WithdrawsService
 
     public function add(array $data)
     {
+        //校验支付密码
+
         // 去掉无用数据
-        $data = array_except($data, ['_token', 'bankCardNo', 'accountName', 'payPassword']);
+        $data = array_except($data, ['_token', 'payPassword']);
+        $data['user_id']=Auth::user()->id;
+
         //获取费率
-        $userRate = $this->userRateService->getFindUidPayId($data['user_id'], 1);
-        $rate = $userRate['rate'];
+        $userRate =5;
+
         //提现手续费
-        $data['withdrawRate'] = $data['withdrawAmount'] * $rate;
+        $data['withdrawRate'] = $userRate;
         //到账金额
         $data['toAmount'] = $data['withdrawAmount'] - $data['withdrawRate'];
 

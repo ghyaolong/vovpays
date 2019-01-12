@@ -85,7 +85,7 @@
                                 <th>用户类型</th>
                                 <th>状态</th>
                                 <th>认证</th>
-                                <th>账户总额</th>
+                                {{--<th>账户总额</th>--}}
                                 <th>注册时间</th>
                                 <th>操作</th>
                             </tr>
@@ -105,9 +105,9 @@
                                         <td>
                                             <span class="label label-success">已认证</span>
                                         </td>
-                                        <td>
-                                            1000
-                                        </td>
+                                        {{--<td>--}}
+                                            {{--1000--}}
+                                        {{--</td>--}}
                                         <td>{{$v->created_at}}</td>
                                         <td>
                                             <div class="btn-group">

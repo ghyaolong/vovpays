@@ -17,9 +17,9 @@
                 </div>
 
                 <div class="box-body" id="bank">
-                    <form class="form-horizontal" id="form1" method="post" action="{{route('user.apply')}}">
+                    <form class="form-horizontal" id="form1" method="post" action="{{route('agent.apply')}}">
                         {{ csrf_field() }}
-                        <input type="hidden" id="user_id" name="user_id">
+                        {{--<input type="hidden" id="user_id" name="user_id">--}}
                         <div class="form-group">
                             <label for="" class="col-sm-3 control-label">提现金额</label>
                             <div class="col-sm-9">
@@ -32,30 +32,29 @@
                             <div class="col-sm-9">
                                 <a class="btn btn-info" id="choseCard" onclick="bankModel('选择银行卡')">选择银行卡</a>&nbsp;
                                 <a class="btn btn-info" id="addCard" onclick="showModel('添加银行卡')">添加银行卡</a>
+                                <input type="hidden" class="form-control" id="bankcard" name="bank_id">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-xs-3 control-label">持卡人</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="accountName" name="accountName1"
+                                <input type="text" class="form-control" id="accountName" name="accountName"
                                        disabled="disabled">
-                                <input type="hidden" class="form-control" id="accountName" name="accountName">
+
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-3 control-label">银行名称</label>
+                            <label class="col-xs-3 control-label">支行名称</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="bankName" name="branchName1"
+                                <input type="text" class="form-control" id="branchName" name="branchName"
                                        disabled="disabled">
-                                <input type="hidden" class="form-control" id="bankName" name="bankName">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-xs-3 control-label">银行卡号</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="bankCardNo" name="bankCardNo1"
+                                <input type="text" class="form-control" id="bankCardNo" name="bankCardNo"
                                        disabled="disabled">
-                                <input type="hidden" class="form-control" id="bankCardNo" name="bankCardNo">
                             </div>
                         </div>
                         <div class="form-group">
@@ -135,7 +134,9 @@
                     <table class="table table-hover">
                         <tr style="background: #f5f6f9;color: #999999">
                             <th>序号</th>
+
                             <th>银行名称</th>
+                            <th>支行名称</th>
                             <th>银行卡号</th>
                             <th>持卡人</th>
                             <th>状态</th>
@@ -147,8 +148,10 @@
                                 <tr>
                                     <td>
                                         <input type="radio" onclick="edit('编辑',{{$v->id}})"
-                                               @if($v->status==0) disabled="disabled" @endif data-dismiss="modal">
+                                               {{--@if($v->status==0) disabled="disabled" @endif --}}
+                                               data-dismiss="modal">
                                     </td>
+                                    <td>{{$v->bank->bankName}}</td>
                                     <td>{{$v->branchName}}</td>
                                     <td>{{$v->bankCardNo}}</td>
                                     <td>{{$v->accountName}}</td>
@@ -185,11 +188,35 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="bankForm" action="{{ route('user.store') }}" class="form-horizontal" role="form"
+                    <form id="bankForm" action="{{ route('agent.store') }}" class="form-horizontal" role="form"
                           method="post">
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                        <input type="hidden" name="id">
+
+
                         {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">银行名称:</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" id="bankid" name="bank_id">
+                                    <option value="0">
+                                        选择银行
+                                    </option>
+                                    @if(isset($banks[0]))
+                                        @foreach($banks as $v)
+                                            <option value="{{$v->id}}">
+                                                {{--@if($v['status'] =='-1') selected @endif >>--}}
+                                                {{$v->bankName}}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        <option value="0}">
+                                            {{--@if(!isset($query['status']) || $query['status'] =='-1') selected @endif >--}}
+                                            没有系统预设银行
+                                        </option>
+                                    @endif
+                                </select>
+
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">持卡人:</label>
                             <div class="col-xs-9">
@@ -315,13 +342,11 @@
                     },
                 }
             })
-        });
 
 
-        /**
-         * 结算申请，条件控制
-         */
-        $().ready(function () {
+            /**
+             * 结算申请，条件控制
+             */
             $('#form1').bootstrapValidator({
                 message: 'This value is not valid',
                 feedbackIcons: {
@@ -404,7 +429,9 @@
                 },
                 success: function (result) {
                     if (result.status == 1) {
-                        $("input[id='bankName']").val(result.data['branchName']);
+
+                        $("input[id='bankcard']").val(result.data['id']);
+                        $("input[id='branchName']").val(result.data['branchName']);
                         $("input[id='bankCardNo']").val(result.data['bankCardNo']);
                         $("input[id='accountName']").val(result.data['accountName']);
                         $("input[id='user_id']").val(result.data['user_id']);

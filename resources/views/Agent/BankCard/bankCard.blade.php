@@ -46,7 +46,7 @@
                                 @foreach($lists as $list)
                                     <tr>
                                         <td>{{$list->id}}</td>
-                                        <td>中国银行</td>
+                                        <td>{{$list->bank->bankName}}</td>
                                         <td>{{$list->branchName}}</td>
                                         <td>{{$list->accountName}}</td>
                                         <td>{{$list->bankCardNo}}</td>
@@ -94,13 +94,31 @@
                 <div class="modal-body" style="overflow: auto;">
                     <form id="bankForm" action="{{ route('agent.store') }}" class="form-horizontal" role="form"
                           method="post">
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                        {{--<input type="hidden" name="user_id" value="{{Auth::user()->id}}">--}}
                         <input type="hidden" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">银行名称:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="" placeholder="请输入银行名称" value="中国银行">
+                                <select class="form-control" id="bankid" name="bank_id">
+                                    <option value="0">
+                                        选择银行
+                                    </option>
+                                    @if(isset($banks[0]))
+                                        @foreach($banks as $v)
+                                    <option value="{{$v->id}}">
+                                            {{--@if($v['status'] =='-1') selected @endif >>--}}
+                                        {{$v->bankName}}
+                                    </option>
+                                        @endforeach
+                                    @else
+                                        <option value="0}">
+                                        {{--@if(!isset($query['status']) || $query['status'] =='-1') selected @endif >--}}
+                                            没有系统预设银行
+                                        </option>
+                                    @endif
+                                </select>
+
                             </div>
                         </div>
                         <div class="form-group">
@@ -123,7 +141,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default" onclick="" data-dismiss="modal">关闭</button>
                             <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
                         </div>
                     </form>
@@ -176,45 +194,23 @@
 
             // 模态关闭
             $('#addModel').on('hidden.bs.modal', function () {
-                $("#bankForm").data('bootstrapValidator').destroy();
-                $('#bankForm').data('bootstrapValidator', null);
+                // $("#bankForm").data('bootstrapValidator').destroy();
+                // $('#bankForm').data('bootstrapValidator', null);
                 $('#bankForm').get(0).reset();
-                formValidator();
+
+                $("#bankid").val(0);
+
+                $("input[name='branchName']").val('');
+                $("input[name='bankCardNo']").val('');
+                $("input[name='accountName']").val('');
+                $("input[name='status']").val('');
+                $("input[name='id']").val('');
+
+
+                // formValidator();
             });
 
-        })
-
-        /**
-         * 提交
-         */
-        function save(_this) {
-            // formValidator();
-            $('#bankForm').data('bootstrapValidator').validate();
-            if (!$('#bankForm').data('bootstrapValidator').isValid()) {
-                return;
-            }
-            _this.removeAttr('onclick');
-
-            var $form = $('#bankForm');
-            $.post($form.attr('action'), $form.serialize(), function (result) {
-                if (result.status) {
-                    $('#addModel').modal('hide');
-                    setInterval(function () {
-                        window.location.reload();
-                    }, 1000);
-
-                    toastr.success(result.msg);
-                } else {
-                    $('#addModel').modal('hide');
-                    _this.attr("onclick", "save($(this))");
-                    toastr.error(result.msg);
-                }
-            }, 'json');
-
-        }
-
-
-        $().ready(function () {
+            //表单验证
             $('#bankForm').bootstrapValidator({
                 message: 'This value is not valid',
                 feedbackIcons: {
@@ -250,7 +246,40 @@
                     },
                 }
             })
-        });
+
+        })
+
+        /**
+         * 提交
+         */
+        function save(_this) {
+            // formValidator();
+            $('#bankForm').data('bootstrapValidator').validate();
+            if (!$('#bankForm').data('bootstrapValidator').isValid()) {
+                return;
+            }
+            _this.removeAttr('onclick');
+
+            var $form = $('#bankForm');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if (result.status) {
+                    $('#addModel').modal('hide');
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                    toastr.success(result.msg);
+                } else {
+                    $('#addModel').modal('hide');
+                    _this.attr("onclick", "save($(this))");
+                    toastr.error(result.msg);
+                }
+            }, 'json');
+
+        }
+
+
+
 
 
         /**
@@ -261,6 +290,16 @@
             $('#addModel .modal-title').html(title);
             $('#addModel').modal('show');
         }
+
+        // /**
+        //  * 关闭模态框
+        //  * @param title
+        //  */
+        // function modelclose(){
+        //
+        //
+        //
+        // }
 
         /**
          * 编辑
@@ -277,6 +316,12 @@
                 },
                 success: function (result) {
                     if (result.status == 1) {
+                        bankid=result.data['bank_id'];
+
+                        $("#bankid").val(bankid);
+
+                        // $("#bankid").find("option[value="+bankid+"]").attr("selected",true);
+
                         $("input[name='branchName']").val(result.data['branchName']);
                         $("input[name='bankCardNo']").val(result.data['bankCardNo']);
                         $("input[name='accountName']").val(result.data['accountName']);
