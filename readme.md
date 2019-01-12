@@ -17,7 +17,11 @@
 5. bootstrap-fileinput-4.5.1
 
 ##命令使用
-1.php artisan queue:work --queue=orderNotify  运行异步通知下游
-2.php artisan phone:get 运行手机监听
+1. php artisan queue:work --queue=orderNotify 运行异步下游通知
+2. php artisan phone:get 运行手机监听
+3. php artisan order:callback 运行免签订单回调监听
+ 
+##日志
+以天为单位,订单回调详情日志：orderCallback; 异步通知只记录通知失败的信息：orderAsyncNotify;
 
 

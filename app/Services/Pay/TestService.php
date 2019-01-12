@@ -46,7 +46,7 @@ class TestService implements PayInterface
             'payurl'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
         ];
 
-        Redis::select(2);
+        Redis::select(1);
         $order_date = array(
             'amount'  => $result->amount,
             'meme'    => $result->orderNo,
@@ -85,7 +85,7 @@ class TestService implements PayInterface
     public function successCallback(Request $request)
     {
         // TODO: Implement successCallback() method.
-        Redis::select(2);
+        Redis::select(1);
         $order_no = $request->orderNo;
 
         if(!Redis::exists($order_no))
@@ -98,7 +98,7 @@ class TestService implements PayInterface
         {
             return json_encode(array('msg'=>'','status'=>'inprogress'));
 
-        }else if($data['status'] == '4'){
+        }else if($data['status'] == '1'){
             return json_encode(array('msg'=>'','status'=>'success'));
         }
     }

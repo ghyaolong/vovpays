@@ -25,10 +25,10 @@ class DownNotifyContentService{
         $paraBuild['sign'] = $md5Verify->getSign($paraBuild, $user->apiKey);
 
         $result = sendCurl($orders->notifyUrl,$paraBuild);
-        if(strtolower($result) === 'ok'){
+        if(strtolower($result) == 'success'){
             return true;
         }else{
-            Log::info('order async notify echo info:', ['content' => strtolower($result)]);
+            Log::info('orderAsyncNotify:', ['content' => json_encode($paraBuild),'callback'=>$result]);
             return false;
         }
     }

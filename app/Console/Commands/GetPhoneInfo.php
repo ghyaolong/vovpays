@@ -33,7 +33,7 @@ class GetPhoneInfo extends Command
     }
 
     /**
-     * @throws \ErrorException
+     * @throws \Exception
      */
     public function handle()
     {
@@ -54,7 +54,6 @@ class GetPhoneInfo extends Command
         while ($channel->callbacks) {
             $channel->wait();
         }
-        $connection->set_close_on_destruct(false);
     }
 
     protected function phoneStatusCheck($json_str)
