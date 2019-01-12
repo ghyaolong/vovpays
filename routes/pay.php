@@ -6,4 +6,5 @@ Route::group([], function () {
     Route::get('h5pay/{orderNo}','PayController@h5pay')->name('pay.h5pay');
     Route::get('success/{action}', 'PayController@successCallback')->name('pay.success');
     Route::post('notify/{action}', 'PayController@notifyCallback')->name('pay.notify');
+    Route::get('demo','PayController@demo')->name('pay.demo');
 });
