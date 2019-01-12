@@ -121,10 +121,6 @@ class PayController extends Controller
      */
     public function queryOrder(Request $request)
     {
-
-        $rabbitMqService = app(App\Services\RabbitMqService::class);
-        $rabbitMqService->send('appStatus','哈哈哈哈哈');
-exit;
         if( !isset($request->merchant) || !isset($request->sign) || (!isset($request->sys_order_no) && !isset($request->out_order_no)) )
         {
             return json_encode(RespCode::PARAMETER_ERROR);
