@@ -49,12 +49,10 @@ class UserController extends Controller
             $list = $this->userService->getParentIdPage($pid,10);
         }
 
-        $agent_list = $this->userService->getParentIdPage($pid,10);
-        return view('Agent.User.user',compact('title', 'list', 'query', 'agent_list'));
+
+        return view('Agent.User.user',compact( 'list', 'query'));
 
 
-//        $list = $this->userService->getAllParentPage($pid, 10);
-//        return view('Agent.User.user', compact('list', 'data'));
     }
 
     /**

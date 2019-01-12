@@ -181,34 +181,34 @@
             </table>
         </div>
 
-        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
-            <p style="font-size: 18px;margin: 15px;">推广地址</p>
+        {{--<div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">--}}
+            {{--<p style="font-size: 18px;margin: 15px;">推广地址</p>--}}
             {{--<p style="font-size: 15px;margin:20px 15px;">推广地址链接</p>--}}
 
 
-            <div class="row">
-                <div class="col-md-10" style="margin:0px 33px;padding: 0px">
-                    <p style="font-size: 15px;">推广地址链接</p>
-                    <hr>
+            {{--<div class="row">--}}
+                {{--<div class="col-md-10" style="margin:0px 33px;padding: 0px">--}}
+                    {{--<p style="font-size: 15px;">推广地址链接</p>--}}
+                    {{--<hr>--}}
 
-                    <p class="col-md-11" style="margin: 20px auto;color: #CDCDCD">把推广地址链接发送给你的下级注册,注册之后成
-                        为你的下级用户</p>
+                    {{--<p class="col-md-11" style="margin: 20px auto;color: #CDCDCD">把推广地址链接发送给你的下级注册,注册之后成--}}
+                        {{--为你的下级用户</p>--}}
 
-                    <div class="col-md-11"
-                         style="margin: 20px 15px;line-height: 23px;border: #eeeeee solid 1px;color: #CDCDCD">
-                        <textarea id="contents" style="border: none" cols="38" readonly="readonly">http://103.45.104.115/Agent_Login_registe
-                        r.html?pid=1015</textarea>
+                    {{--<div class="col-md-11"--}}
+                         {{--style="margin: 20px 15px;line-height: 23px;border: #eeeeee solid 1px;color: #CDCDCD">--}}
+                        {{--<textarea id="contents" style="border: none" cols="38" readonly="readonly">http://103.45.104.115/Agent_Login_registe--}}
+                        {{--r.html?pid=1015</textarea>--}}
 
-                    </div>
-                </div>
+                    {{--</div>--}}
+                {{--</div>--}}
                 {{--<hr class="col-md-8">--}}
 
 
-                <input class="btn btn-default" type="button" onclick="jsCopy();" value="复制"
-                       style="color: #3B86FF;border: #3B86FF solid 1px;height: 50px;width: 180px;background: #ffffff;margin: 50px 100px;font-size: 15px"/>
-            </div>
+                {{--<input class="btn btn-default" type="button" onclick="jsCopy();" value="复制"--}}
+                       {{--style="color: #3B86FF;border: #3B86FF solid 1px;height: 50px;width: 180px;background: #ffffff;margin: 50px 100px;font-size: 15px"/>--}}
+            {{--</div>--}}
 
-        </div>
+        {{--</div>--}}
     </div>
 
     {{--模态框--}}

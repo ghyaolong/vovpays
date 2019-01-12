@@ -38,18 +38,18 @@
                                             <input type="text" class="form-control" placeholder="用户名" name="username"
                                                    @if(isset($query['username'])) value="{{ $query['username'] }}" @endif />
                                         </div>
-                                        <div class="form-group">
-                                            <select class="form-control" id="groupType" name="groupType">
-                                                <option value="1"
-                                                        @if(isset($query['groupType']) && $query['groupType'] =='1') selected @endif>
-                                                    商户
-                                                </option>
-                                                <option value="2"
-                                                        @if(isset($query['groupType']) && $query['groupType'] =='2') selected @endif>
-                                                    代理商
-                                                </option>
-                                            </select>
-                                        </div>
+                                        {{--<div class="form-group">--}}
+                                            {{--<select class="form-control" id="groupType" name="groupType">--}}
+                                                {{--<option value="1"--}}
+                                                        {{--@if(isset($query['groupType']) && $query['groupType'] =='1') selected @endif>--}}
+                                                    {{--商户--}}
+                                                {{--</option>--}}
+                                                {{--<option value="2"--}}
+                                                        {{--@if(isset($query['groupType']) && $query['groupType'] =='2') selected @endif>--}}
+                                                    {{--代理商--}}
+                                                {{--</option>--}}
+                                            {{--</select>--}}
+                                        {{--</div>--}}
                                         <div class="form-group">
                                             <select class="form-control" id="status" name="status">
                                                 <option value="-1"

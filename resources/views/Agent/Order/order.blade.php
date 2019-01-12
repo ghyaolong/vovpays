@@ -81,7 +81,7 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" id="channelId" name="channelId">
-                                    <option value="-1">选着通道</option>
+                                    <option value="-1">选择通道</option>
                                     @foreach($chanel_list as $v )
                                         <option value="{{ $v['id'] }}">{{ $v['channelName'] }}</option>
                                     @endforeach
@@ -89,7 +89,7 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" id="paymentId" name="paymentId">
-                                    <option value="-1">选着支付方式</option>
+                                    <option value="-1">选择支付方式</option>
                                     @foreach($payments_list as $v )
                                         <option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>
                                     @endforeach
