@@ -297,7 +297,7 @@ class PayController extends Controller
      */
     public function demo()
     {
-        $pay_memberid = 'zKWbxbpNHY';
+        $pay_memberid = 'RVu0m9vNTu';
         $pay_amount  = "0.01";    //交易金额
         $pay_applydate = date('Y-m-d H:i:s');  //订单时间
         $pay_code  = "alipay";   //支付方式
