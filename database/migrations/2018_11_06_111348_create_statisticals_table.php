@@ -17,7 +17,7 @@ class CreateStatisticalsTable extends Migration
         Schema::create('statisticals', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->comment('商户id');
-            $table->unsignedInteger('agent_id')->comment('商户所属代理id');
+            $table->unsignedInteger('agent_id')->default(0)->comment('商户所属代理id');
             $table->decimal('balance',11,2)->default(0)->comment('余额');
             $table->decimal('freezeBalance',11,2)->default(0)->comment('冻结金额');
             $table->decimal('handlingFeeBalance',11,2)->default(0)->comment('充值余额');
