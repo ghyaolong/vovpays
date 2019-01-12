@@ -5,8 +5,9 @@
 @endsection
 @section('content')
 
-    @if(isset($lists[0]))
 
+    <input type="button" class="btn btn-primary" onclick="showModel('添加银行卡')" value="添加银行卡"
+           style="margin: 15px">
         <div class="row" style="margin: 20px 0px">
             <div class="col-xs-12 col-md-12">
 
@@ -16,16 +17,16 @@
                         <h3 class="box-title">银行卡管理</h3>
 
                         <div class="box-tools pull-right">
+                            <a href="{{ route('agent.bankCard',Auth::user()->id) }}" class="btn"><i
+                                        class="fa fa-undo"></i>刷新</a>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
                     </div>
                     <div class="box-body">
-                        <input type="button" class="btn btn-primary" onclick="showModel('添加银行卡')" value="添加银行卡"
-                               style="margin: 15px">
-                        <a href="{{ route('user.bankCard',Auth::user()->id) }}" class="btn pull-right"><i
-                                    class="fa fa-undo"></i>刷新</a>
+
+
 
                         <div class="box-body">
                             <table id="example2" class="table table-condensed table-bordered table-hover">
@@ -80,22 +81,7 @@
             </div>
         </div>
 
-    @else
-        <div style="margin: 100px 200px;width: 800px;height: 300px">
-            <div class="col-sm-12 col-xs-12">
-                <div style="margin-top:150px;margin-left: 450px">
-                    <img src="/AdminLTE/dist/img/addcard.png">
-                </div>
-                <div class="col-sm-12" style="margin-top:20px;margin-left: 410px;font-size: 20px;color: #999999">
-                    您还没有提款银行卡,添加一张吧
-                </div>
 
-                <div class="box-header" style="margin-top:50px;margin-left: 500px">
-                    <button type="button" class="btn btn-primary" onclick="showModel('添加银行卡')">添加银行卡</button>
-                </div>
-            </div>
-        </div>
-    @endif
 
     {{--模态框--}}
     <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
