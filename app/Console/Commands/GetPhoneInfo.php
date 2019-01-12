@@ -39,17 +39,22 @@ class GetPhoneInfo extends Command
     {
         Redis::select(1);
         $queue = 'appStatus';
-        $connection = new AMQPStreamConnection(env('MQ_Local_HOST'), env('MQ_PORT'), env('MQ_USER'), env('MQ_PWD'),env('MQ_VHOST'));
+        $connection = AMQPStreamConnection::create_connection([
+            ['host' => env('MQ_Local_HOST'), 'port' => env('MQ_PORT'), 'user' => env('MQ_USER'), 'password' => env('MQ_PWD'), 'vhost' => env('MQ_VHOST')],
+        ],
+            ['read_write_timeout'=>60,'heartbeat'=>30]);
         $channel = $connection->channel();
         $channel->queue_declare($queue, false, false, false, false);
         $callback = function ($msg) {
+
             echo $msg->body."\n";
             $this->phoneStatusCheck($msg->body);
         };
         $channel->basic_consume($queue, '', false, true, false, false, $callback);
-        while (count($channel->callbacks)) {
+        while ($channel->callbacks) {
             $channel->wait();
         }
+        $connection->set_close_on_destruct(false);
     }
 
     protected function phoneStatusCheck($json_str)
