@@ -28,7 +28,7 @@ class WithdrawsService
         //校验支付密码
 
         // 去掉无用数据
-        $data = array_except($data, ['_token', 'payPassword']);
+        $data = array_except($data, ['_token', 'payPassword','accountName','bankCardNo']);
         $data['user_id']=Auth::user()->id;
 
         //获取费率

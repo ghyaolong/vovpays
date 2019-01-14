@@ -469,7 +469,7 @@
                             <td>1.</td>
                             <td>API文档</td>
                             <td><a class="glyphicon glyphicon-download-alt btn btn-primary"
-                                   href="/demo/免签支付接口文档v1.1.docx" download="免签支付接口文档v1.1.docx"> 下载</a></td>
+                                   href="/demo/php-接口文档.doc" download="php-接口文档.doc"> 下载</a></td>
                         </tr>
                     </table>
                 </div>
