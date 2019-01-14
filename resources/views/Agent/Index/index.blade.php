@@ -45,31 +45,31 @@
 
             <div class="row">
                 <p class="col-md-6" style="font-size: 28px;margin:15px 15px 0px 15px;display: inline-block">
-                    2541.66RMB
+                    {{$user->branchName}}RMB
                 </p>
 
                 <img src="/AdminLte/dist/img/agent/tjt.png" alt="" style="margin-top: 15px">
 
                 <span class="glyphicon glyphicon-arrow-up"
-                      style="font-size: 11px;margin:-15px 0 0 30px;color: #3CC480">13.8%</span>
+                      style="font-size: 11px;margin:-15px 0 0 30px;color: #3CC480">{{$user->branchName}}</span>
             </div>
 
 
             <ul class="uul">
                 <li class="lli">
                     <b class="bbt">姓名</b><br>
-                    <span class="spa">Don.t</span>
+                    <span class="spa">---</span>
                 </li>
 
 
                 <li class="lli  col-md-6" style="float: right;">
                     <b class="bbt">身份证号码</b><br>
-                    <span class="spa">50022119870903541x</span>
+                    <span class="spa">500221198909035410</span>
                 </li>
 
                 <li class="lli">
                     <b class="bbt">手机</b><br>
-                    <span class="spa">17749920375</span>
+                    <span class="spa">{{$user->phone}}</span>
                 </li>
 
 

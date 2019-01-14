@@ -11,16 +11,19 @@ namespace App\Http\Agent\Controllers;
 
 use App\Http\Agent\Controllers\Controller;
 use App\Services\BankCardService;
+use App\Services\BanksService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BankCardController extends Controller
 {
     protected $bankCardService;
+    protected $banksService;
 
-    public function __construct(BankCardService $bankCardService)
+    public function __construct(BankCardService $bankCardService,BanksService $banksService)
     {
         $this->bankCardService = $bankCardService;
+        $this->banksService = $banksService;
     }
 
     /*
@@ -30,7 +33,9 @@ class BankCardController extends Controller
     {
         $uid=Auth::user()->id;
         $lists = $this->bankCardService->getUserIdAll($uid);
-        return view('Agent.BankCard.bankCard', compact('lists'));
+        $banks= $this->banksService->findAll();
+
+        return view('Agent.BankCard.bankCard', compact('lists','banks'));
     }
 
 

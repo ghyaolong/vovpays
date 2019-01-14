@@ -126,7 +126,7 @@
 
                                 </div>
                                 <div class="box-footer">
-                                    <button type="button" class="btn btn-primary pull-right" onclick="save();">保存</button>
+                                    <button type="button" class="btn btn-primary pull-right">保存</button>
                                 </div>
                             </form>
                         </div>

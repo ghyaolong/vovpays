@@ -21,4 +21,13 @@ class Bank_card extends Model
     {
         return $this->belongsTo('App\models\User');
     }
+
+    /**
+     * 一对多反向 银行表
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function Bank()
+    {
+        return $this->belongsTo('App\models\Bank','bank_id');
+    }
 }

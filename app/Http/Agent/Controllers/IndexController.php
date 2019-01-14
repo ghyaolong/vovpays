@@ -9,21 +9,23 @@
 namespace App\Http\Agent\Controllers;
 
 
-use App\Services\AgentService;
+use App\Services\UserService;
 use App\Services\BankCardService;
 use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
     protected $bankCardService;
+    protected $userService;
 
     /**
      * IndexController constructor.
      * @param BankCardService $bankCardService
      */
-    public function __construct(BankCardService $bankCardService)
+    public function __construct(BankCardService $bankCardService,UserService $userService)
     {
         $this->bankCardService = $bankCardService;
+        $this->userService = $userService;
     }
 
 
@@ -34,12 +36,13 @@ class IndexController extends Controller
     public function show()
     {
         $uid=Auth::user()->id;
+        //获取默认银行卡信息
         $list = $this->bankCardService->findStatus($uid);
-        if($list)
-        {
-            $list->bankCardNo=substr_replace($list->bankCardNo," **** **** **** ",3,12);
-        }
-        return view('Agent.Index.index',compact('list'));
+
+        //获取用户基本信息
+        $user=$this->userService->findId($uid);
+
+        return view('Agent.Index.index',compact('list','user'));
     }
 
 

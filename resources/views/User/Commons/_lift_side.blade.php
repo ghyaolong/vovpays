@@ -2,6 +2,17 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
+        <!-- 侧边栏用户 -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="{{ asset('AdminLTE/dist/img/user4-128x128.jpg') }}" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>{{ Auth::user()->username }}</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> 欢迎登录</a>
+            </div>
+        </div>
+
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
 

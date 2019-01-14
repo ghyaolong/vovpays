@@ -10,6 +10,7 @@ namespace App\Http\Agent\Controllers;
 
 
 use App\Services\BankCardService;
+use App\Services\BanksService;
 use App\Services\WithdrawsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,15 +19,17 @@ class WithdrawsController extends Controller
 {
     protected $withdrawsService;
     protected $bankCardService;
+    protected $banksService;
 
     /**
      * WithdrawsController constructor.
      * @param WithdrawsService $withdrawsService
      */
-    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService)
+    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService, BanksService $banksService)
     {
         $this->withdrawsService = $withdrawsService;
         $this->bankCardService = $bankCardService;
+        $this->banksService = $banksService;
 
     }
 
@@ -51,6 +54,7 @@ class WithdrawsController extends Controller
             $list = $this->withdrawsService->getAllPage(10);
         }
 
+
         return view('Agent.Withdraws.withdraws', compact('list', 'data', 'query'));
     }
 
@@ -66,7 +70,9 @@ class WithdrawsController extends Controller
 
         $clearings = $this->withdrawsService->getAllPage(6);
 
-        return view('Agent.Withdraws.clearing', compact('list', 'clearings'));
+        $banks= $this->banksService->findAll();
+
+        return view('Agent.Withdraws.clearing', compact('list','banks', 'clearings'));
     }
 
     /**

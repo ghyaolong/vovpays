@@ -60,7 +60,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="ruleForm" action="{{route('user.editPassword')}}" class="form-horizontal" role="form" method="post">
+                    <form id="ruleForm1" action="{{route('user.editPassword')}}" class="form-horizontal" role="form" method="post">
                         <input type="hidden" name="id" value="{{Auth::user()->id}}">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -87,7 +87,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
+                            <button type="button" class="btn btn-primary" onclick="save1($(this))">提交</button>
                         </div>
                     </form>
                 </div>
@@ -100,7 +100,7 @@
 
 <script>
     $().ready(function () {
-        $('#ruleForm').bootstrapValidator({
+        $('#ruleForm1').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
@@ -152,15 +152,15 @@
     /**
      * 提交
      */
-    function save(_this) {
+    function save1(_this) {
         // formValidator();
-        $('#ruleForm').data('bootstrapValidator').validate();
-        if (!$('#ruleForm').data('bootstrapValidator').isValid()) {
+        $('#ruleForm1').data('bootstrapValidator').validate();
+        if (!$('#ruleForm1').data('bootstrapValidator').isValid()) {
             return;
         }
         _this.removeAttr('onclick');
 
-        var $form = $('#ruleForm');
+        var $form = $('#ruleForm1');
         $.post($form.attr('action'), $form.serialize(), function (result) {
             if (result.status) {
                 $('#editPwdModel').modal('hide');

@@ -19,7 +19,7 @@
                 <div class="box-body" id="bank">
                     <form class="form-horizontal" id="form1" method="post" action="{{route('user.apply')}}">
                         {{ csrf_field() }}
-                        <input type="hidden" id="user_id" name="user_id">
+                        {{--<input type="hidden" id="user_id" name="user_id">--}}
                         <div class="form-group">
                             <label for="" class="col-sm-3 control-label">提现金额</label>
                             <div class="col-sm-9">
