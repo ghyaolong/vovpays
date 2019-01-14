@@ -182,3 +182,27 @@ function sendCurl(string $url, array $data = [], array $header = [], string $ref
     curl_close($ch);
     return $res;
 }
+
+/**
+ * 将数据库中查出的列表以指定的 id 作为数组的键名
+ * @param $arr
+ * @param $key_name
+ * @return array
+ */
+function convert_arr_key($arr, $key_name)
+{
+    $result = array();
+    foreach($arr as $key => $val){
+        $result[$val->$key_name] = objectToArray($val);
+    }
+    return $result;
+}
+
+/**
+ * 对象转数组
+ * @param $object
+ * @return array
+ */
+function objectToArray($object) {
+    return json_decode(json_encode($object), true);
+}

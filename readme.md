@@ -1,5 +1,10 @@
-## Laravel 5.5.* + Mysql 5.7 + PHP 7.2.* 
-
+##环境
+1. Laravel 5.5.* 
+2. Mysql 5.7
+3. PHP 7.2.*
+4. redis
+5. RabbitMQ
+ 
 ##安装步骤
 1. 下载或克隆项目，进入项目根目录执行,等待框架安装
 
@@ -20,6 +25,8 @@
 
 ##使用扩展包：
 1. 验证码 [mews/captcha](https://github.com/mewebstudio/captcha)
+2. php-amqplib": "^2.8"
+
 
 
 ##使用前端资源：
@@ -28,6 +35,7 @@
 3. sweetalert
 4. bootstrap-switch
 5. bootstrap-fileinput-4.5.1
+6. Chart.min.js
 
 ##命令使用
 1. ``php artisan queue:work --queue=orderNotify`` 运行异步下游通知
