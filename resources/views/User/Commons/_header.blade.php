@@ -17,13 +17,13 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="/AdminLTE/dist/img/user4-128x128.jpg" class="user-image" alt="User Image">
+                        <img src="/AdminLTE/dist/img/user3-128x128.jpg" class="user-image" alt="User Image">
                         <span class="hidden-xs">{{ Auth::user()->username }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="/AdminLTE/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="/AdminLTE/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
 
                             <p>
                                 {{ Auth::user()->username }}

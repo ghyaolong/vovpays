@@ -9,23 +9,26 @@
 namespace App\Http\Agent\Controllers;
 
 
-use App\Services\UserService;
-use App\Services\BankCardService;
+use App\Services\OrdersService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\OrderDayCountService;
 
 class IndexController extends Controller
 {
-    protected $bankCardService;
+    protected $ordersService;
     protected $userService;
+    protected $orderDayCountService;
 
     /**
      * IndexController constructor.
-     * @param BankCardService $bankCardService
+     * @param OrdersService $ordersService
+     * @param OrderDayCountService $orderDayCountService
      */
-    public function __construct(BankCardService $bankCardService,UserService $userService)
+    public function __construct( OrdersService $ordersService,OrderDayCountService $orderDayCountService)
     {
-        $this->bankCardService = $bankCardService;
-        $this->userService = $userService;
+        $this->ordersService  = $ordersService;
+        $this->orderDayCountService = $orderDayCountService;
     }
 
 
@@ -33,16 +36,15 @@ class IndexController extends Controller
      * 后台主页
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show()
+    public function show(Request $request)
     {
-        $uid=Auth::user()->id;
-        //获取默认银行卡信息
-        $list = $this->bankCardService->findStatus($uid);
+        $query = $request->input();
+        $agentId=Auth::user()->id;
+        //订单金额
+        $orderInfoSum = $this->ordersService->orderInfoSum($query);
+        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getAgentSevenDaysCount($agentId),'tm'));
 
-        //获取用户基本信息
-        $user=$this->userService->findId($uid);
-
-        return view('Agent.Index.index',compact('list','user'));
+        return view('Agent.Index.index',compact('orderInfoSum','order_day_count'));
     }
 
 

@@ -120,7 +120,7 @@ $(document).ready(function(){
             },
             scales: {
                 yAxes: [{
-                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    type: 'linear',
                     display: true,
                     position: 'left',
                     ticks: {
@@ -128,7 +128,7 @@ $(document).ready(function(){
                     },
                     id: 'y-axis-1',
                 }, {
-                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    type: 'linear',
                     display: true,
                     position: 'right',
                     ticks: {
