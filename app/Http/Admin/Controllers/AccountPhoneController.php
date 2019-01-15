@@ -6,7 +6,7 @@
  * Time: 15:32
  */
 
-namespace App\Http\User\Controllers;
+namespace App\Http\Admin\Controllers;
 
 
 use App\Services\AccountPhoneService;
@@ -17,6 +17,7 @@ class AccountPhoneController extends Controller
 {
     protected $accountPhoneService;
     protected $checkUniqueService;
+    protected $uid = 100000; // 总后台挂号,默认用户id
 
     public function __construct(AccountPhoneService $accountPhoneService, CheckUniqueService $checkUniqueService)
     {
@@ -33,12 +34,17 @@ class AccountPhoneController extends Controller
         $data = $request->input();
         if ($request->type == '0') {
             $data['accountType'] = 'wechat';
+            $title = '微信账号';
+
         } elseif ($request->type == '1') {
+            $title = '支付宝账号';
             $data['accountType'] = 'alipay';
+
         }
-        $data['user_id'] = auth()->user()->id;
+        $data['user_id'] = $this->uid;
+
         $list = $this->accountPhoneService->getAllPage($data, 6);
-        return view("User.AccountPhone.{$data['accountType']}", compact('list'));
+        return view("Admin.AccountPhone.{$data['accountType']}", compact('list','title'));
     }
 
     /**
@@ -51,14 +57,15 @@ class AccountPhoneController extends Controller
         $id = $request->id ?? '';
 
         if (!empty($id)) {
-            $result = $this->accountPhoneService->update($id,auth()->user()->id, $request->input());
+            $result = $this->accountPhoneService->update($id, $this->uid, $request->input());
             if ($result) {
                 return ajaxSuccess('编辑成功！');
             } else {
                 return ajaxError('编辑失败！');
             }
         } else {
-            $request->merge(['user_id' => auth()->user()->id]);
+
+            $request->merge(['user_id' => $this->uid]);
             $result = $this->accountPhoneService->add($request->input());
             if ($result) {
                 return ajaxSuccess('账号添加成功！');
@@ -92,7 +99,7 @@ class AccountPhoneController extends Controller
     public function saveStatus(Request $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
-        $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
+        $result = $this->accountPhoneService->update($request->id, $this->uid, $data);
         if ($result) {
             return ajaxSuccess('修改成功！');
         } else {
@@ -107,7 +114,7 @@ class AccountPhoneController extends Controller
      */
     public function edit(Request $request)
     {
-        $result = $this->accountPhoneService->findIdAndUserId($request->id,auth()->user()->id);
+        $result = $this->accountPhoneService->findIdAndUserId($request->id, $this->uid);
         if ($result) {
             return ajaxSuccess('获取成功！', $result->toArray());
         } else {
@@ -122,7 +129,7 @@ class AccountPhoneController extends Controller
      */
     public function destroy(Request $request)
     {
-        $result = $this->accountPhoneService->del($request->id,auth()->user()->id);
+        $result = $this->accountPhoneService->del($request->id, $this->uid);
         if ($result) {
             return ajaxSuccess('账号已删除！');
         } else {

@@ -1,5 +1,4 @@
-@extends("User.Commons.layout")
-@section('title','微信管理')
+@extends("Admin.Layouts.layout")
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
@@ -9,21 +8,20 @@
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">账号列表</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.account',0)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('account.index',1)}}" method="get">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="account1" name="account" placeholder="账号">
+                            <input type="text" class="form-control" name="account" placeholder="账号">
                         </div>
                         <button type="submit" class="btn btn-info">搜索</button>
-                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>&nbsp;&nbsp;
+                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>
                     </form>
                     <div class="box-body" style="margin-top: 45px">
                         <table id="example2" class="table table-bordered table-hover">
@@ -41,7 +39,6 @@
                                     <td colspan="10" style="text-align: center">没有找到匹配数据</td>
                                 </tr>
                             @else
-                                {{--<tbody>--}}
                                 @foreach($list as $v)
                                     <tr>
                                         <td>{{ $v->phone_id }}</td>
@@ -49,7 +46,7 @@
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         {{--<td>备注</td>--}}
                                         <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
-                                                    style="color: red">{{ $v->dayQuota - $v->tradeAmount}}</span></td>
+                                                    style="color: red">{{ $v->dayQuota - $v->tradeAmount }}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -73,6 +70,8 @@
             </div>
         </div>
     </div>
+    {{--{{$orders->appends($data)->links()}}--}}
+
 
     {{--模态框--}}
     <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -83,7 +82,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.accountAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('account.store') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -93,10 +92,26 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">账号实名:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="alipayusername" placeholder="请输入账号实名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">账号ID:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="alipayuserid" placeholder="请输入账号ID">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-7" style="margin-top:-10px;">
+                                <a onclick="aliid('二维码')" style="margin-left: 150px">点击扫码，获取账号ID</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="phone_id" name="phone_id"
-                                       placeholder="请输入手机标识">
+                                <input type="text" class="form-control" id="phone_id" name="phone_id" placeholder="请输入手机标识">
                             </div>
                         </div>
                         <div class="form-group">
@@ -122,6 +137,29 @@
         </div>
     </div>
 
+    {{--二维码模态框--}}
+    <div class="modal fade" id="aliidModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;text-align: center">
+                    <img src="{{ asset('/AdminLTE/dist/img/user/aliewm.png') }}" alt="二维码获取失败！">
+                    <br>
+                    <br>
+                    <br>
+                    <p style="color: red;font-size: 20px">打开支付宝扫一扫，获取账号ID</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 @section("scripts")
@@ -141,7 +179,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/account/saveStatus',
+                        url: "{{ route('account.saveStatus') }}",
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -168,21 +206,12 @@
                 $("#addForm").data('bootstrapValidator').destroy();
                 $('#addForm').data('bootstrapValidator', null);
                 $('#addForm').get(0).reset();
-                $("#id").val('');
+                $('#id').val('');
                 formValidator();
             });
 
         })
 
-
-        /**
-         * 显示模态框
-         * @param title
-         */
-        function showModel(title) {
-            $('#addModel .modal-title').html(title);
-            $('#addModel').modal('show');
-        }
 
         /**
          *提交
@@ -215,8 +244,8 @@
 
 
         /*
-      *表单验证
-      */
+         *表单验证
+         */
         function formValidator() {
             $('#addForm').bootstrapValidator({
                 message: 'This value is not valid',
@@ -252,13 +281,9 @@
                             notEmpty: {
                                 message: '请输入手机标识!'
                             },
-                            regexp: {
-                                regexp: /^[1-9]\d*$/,
-                                message: '请输入正确的手机标识!'
-                            },
                             remote: {
                                 url: "check",
-                                message: "该手机已添加过微信账号!",
+                                message: "该手机已添加过支付宝账号!",
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
                                     return {
@@ -266,7 +291,7 @@
                                         "type": 'phone_id',
                                         "_token": $('meta[name="csrf-token"]').attr('content'),
                                         "id": $('#id').val(),
-                                        "name": '微信'
+                                        "name": '支付宝'
                                     };
                                 },
                                 delay: 500,
@@ -280,14 +305,28 @@
                             },
                             regexp: {
                                 regexp: /^[1-9]\d*$/,
-                                message: '请输入正确的数字额度'
+                                message: '请输入正确的数字限额'
                             }
+
                         },
                     },
                 }
             })
         }
 
+        /**
+         * 显示模态框
+         * @param title
+         */
+        function showModel(title) {
+            $('#addModel .modal-title').html(title);
+            $('#addModel').modal('show');
+        }
+
+        function aliid(title) {
+            $('#aliidModel .modal-title').html(title);
+            $('#aliidModel').modal('show');
+        }
 
         /**
          * 编辑
@@ -297,7 +336,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/account/' + id + '/edit',
+                url: "/admin/account/"+id+"/edit",
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -305,9 +344,10 @@
                 success: function (result) {
                     if (result.status == 1) {
                         $("input[name='account']").val(result.data['account']);
+                        $("input[name='alipayusername']").val(result.data['alipayusername']);
+                        $("input[name='alipayuserid']").val(result.data['alipayuserid']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
-                        $("input[name='status']").val(result.data['status']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
@@ -335,7 +375,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/account',
+                    url: "{{route('account.destroy')}}",
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

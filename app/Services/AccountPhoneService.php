@@ -14,7 +14,6 @@ use App\Repositories\AccountPhoneRepository;
 class AccountPhoneService
 {
     protected $accountPhoneRepository;
-
     /**
      * AccountPhoneService constructor.
      * @param AccountPhoneRepository $accountPhoneRepository
@@ -44,7 +43,6 @@ class AccountPhoneService
     public function add(array $data)
     {
         $data = array_except($data, ['_token']);
-
         if (isset($data['alipayusername']) && isset($data['alipayuserid'])) {
             $data['accountType'] = "支付宝";
             $data['channel_payment_id'] = 1;
@@ -56,39 +54,47 @@ class AccountPhoneService
         return $this->accountPhoneRepository->add($data);
     }
 
-    public function updata(int $id, array $data)
-    {
-        $data = array_except($data, ['_token']);
-        return $this->accountPhoneRepository->update($id, $data);
-    }
-
     /**
+     * 根据用户id和表示id修改
      * @param int $id
+     * @param int $uid
      * @param array $data
      * @return mixed
      */
-    public function updateStatus(int $id, array $data)
+    public function update(int $id, int $uid, array $data)
     {
-        return $this->accountPhoneRepository->update($id, $data);
+        $data = array_except($data, ['_token']);
+        return $this->accountPhoneRepository->update($id, $uid, $data);
     }
 
     /**
      * @param int $id
+     * @param int $uid
      * @return mixed
      */
-    public function findId(int $id)
+    public function findIdAndUserId(int $id, int $uid)
     {
-        return $this->accountPhoneRepository->findId($id);
+        return $this->accountPhoneRepository->findIdAndUserId($id,$uid);
     }
 
-    public function del(int $id)
+    /**
+     * @param int $id
+     * @param int $uid
+     * @return mixed
+     */
+    public function del(int $id, int $uid)
     {
-        return $this->accountPhoneRepository->del($id);
+        return $this->accountPhoneRepository->del($id,$uid);
     }
 
-
-    public function getStatusAndAccountType( string $type, int $status){
-        return $this->accountPhoneRepository->getStatusAndAccountType($type, $status);
+    /**
+     * @param string $type
+     * @param int $uid
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAndAccountType( string $type,int $uid, int $status){
+        return $this->accountPhoneRepository->getStatusAndAccountType($type, $uid, $status);
     }
 
     /**

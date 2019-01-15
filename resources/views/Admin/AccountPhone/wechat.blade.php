@@ -1,5 +1,4 @@
-@extends("User.Commons.layout")
-@section('title','微信管理')
+@extends("Admin.Layouts.layout")
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
@@ -9,7 +8,6 @@
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">账号列表</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -18,12 +16,12 @@
                 </div>
                 <div class="box-body">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.account',0)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('account.index',0)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" id="account1" name="account" placeholder="账号">
                         </div>
                         <button type="submit" class="btn btn-info">搜索</button>
-                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>&nbsp;&nbsp;
+                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>
                     </form>
                     <div class="box-body" style="margin-top: 45px">
                         <table id="example2" class="table table-bordered table-hover">
@@ -83,7 +81,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.accountAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('account.store') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -141,7 +139,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/account/saveStatus',
+                        url: "{{ route('account.saveStatus') }}",
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -297,7 +295,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/account/' + id + '/edit',
+                url: "/admin/account/"+id+"/edit",
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -335,7 +333,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/account',
+                    url: "{{route('account.destroy')}}",
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

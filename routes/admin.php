@@ -73,6 +73,13 @@ Route::group([], function () {
         Route::delete('orders','OrdersController@destroy')->name('orders.destroy');
         Route::post('orders/saveStatus','OrdersController@saveStatus')->name('orders.saveStatus');
         Route::post('orders/reissue','OrdersController@reissue')->name('orders.reissue');
+        //账号管理
+        Route::get('account/{type}','AccountPhoneController@index')->name('account.index');
+        Route::post('account','AccountPhoneController@store')->name('account.store');
+        Route::post('account/saveStatus','AccountPhoneController@saveStatus')->name('account.saveStatus');
+        Route::get('account/{id}/edit','AccountPhoneController@edit')->name('account.edit');
+        Route::delete('account','AccountPhoneController@destroy')->name('account.destroy');
+        Route::post('account/check','AccountPhoneController@checkUnique')->name('account.check');
         //系统配置
         Route::get('system','SystemController@index')->name('system.index');
         Route::get('system/{id}/edit', 'SystemController@edit')->name('system.edit');

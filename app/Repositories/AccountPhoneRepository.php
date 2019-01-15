@@ -24,6 +24,11 @@ class AccountPhoneRepository
         $this->account_phone = $account_phone;
     }
 
+    /**
+     * @param array $data
+     * @param int $page
+     * @return mixed
+     */
     public function searchPage(array $data, int $page)
     {
         $sql = ' 1=1 ';
@@ -43,6 +48,12 @@ class AccountPhoneRepository
             $where['accountType'] = $data['accountType'];
         }
 
+        if( isset($data['user_id']) && $data['user_id'] )
+        {
+            $sql .= ' and user_id = ?';
+            $where['user_id'] = $data['user_id'];
+        }
+
         return $this->account_phone->whereRaw($sql, $where)->paginate($page);
     }
 
@@ -56,7 +67,6 @@ class AccountPhoneRepository
         $string = strtolower(str_random(32));
 
         $result = $this->account_phone->where('signKey', '=', $string)->first();
-
         if (!isset($result)) {
             $data['signKey'] = $string;
         } else {
@@ -67,12 +77,13 @@ class AccountPhoneRepository
 
     /**
      * @param int $id
+     * @param int $uid
      * @param array $data
      * @return mixed
      */
-    public function update(int $id, array $data)
+    public function update(int $id, int $uid, array $data)
     {
-        return $this->account_phone->whereId($id)->update($data);
+        return $this->account_phone->whereId($id)->whereUserId($uid)->update($data);
     }
 
     /**
@@ -124,35 +135,38 @@ class AccountPhoneRepository
 
     /**
      * @param int $id
+     * @param int $uid
      * @return mixed
      */
-    public function findId(int $id)
+    public function findIdAndUserId(int $id, int $uid)
     {
-        return $this->account_phone->whereId($id)->first();
+        return $this->account_phone->whereId($id)->whereUserId($uid)->first();
     }
 
     /**
      * @param int $id
+     * @param int $uid
      * @return mixed
      */
-    public function del(int $id)
+    public function del(int $id,int $uid)
     {
-        return $this->account_phone->whereId($id)->delete();
+        return $this->account_phone->whereId($id)->whereUserId($uid)->delete();
     }
 
     /**
      * @param string $type
+     * @param int $uid
      * @param int $status
      * @return mixed
      */
-    public function getStatusAndAccountType(string $type, int $status)
+    public function getStatusAndAccountType(string $type,int $uid, int $status)
     {
         if ($type == 'alipay') {
             $type = '支付宝';
         } elseif ($type == 'wechat') {
             $type = '微信';
         }
-        return $this->account_phone->whereStatus($status)->whereAccounttype($type)->get();
+        return $this->account_phone->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->get();
     }
 
     /**
