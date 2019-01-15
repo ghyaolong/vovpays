@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label">提款密码</label>
                             <div class="col-xs-9">
-                                <input type="password" class="form-control" id="applyPws" name="payPassword">
+                                <input type="password" class="form-control" id="applyPws" name="auth_code">
                             </div>
                         </div>
                         <div class="form-group">
