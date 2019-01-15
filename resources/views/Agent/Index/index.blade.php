@@ -1,358 +1,168 @@
 @extends("Agent.Commons.layout")
 @section('title','账户管理')
 @section('content')
-    <style>
-        ul.uul {
-            margin-top: 20px;
-            margin-left: 0px;
-        }
-
-        li.lli {
-            padding: 0px;
-            font-size: 40px;
-            line-height: 33px;
-            align-content: center;
-            color: #A4A1FB;
-        }
-
-        b.bbt {
-            font-size: 15px;
-            color: black;
-            font-weight: bold;
-            line-height: 1px;
-        }
-
-        span.spa {
-            line-height: 3px;
-            font-size: 13px;
-            color: #999999;
-        }
-
-        div.col-md-9 {
-            border-radius: 6px
-        }
-
-        textarea {
-            resize: none;
-        }
-    </style>
-    <div class="row" style="margin: 10px 100px">
-        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
-            <p style="font-size: 18px;margin: 15px;display: inline-block">
-                基础信息
-            </p>
-            <a href=""><i class="glyphicon glyphicon-cog" style="color: #999999;float: right;margin: 15px"></i></a>
-
-            <div class="row">
-                <p class="col-md-6" style="font-size: 28px;margin:15px 15px 0px 15px;display: inline-block">
-                    {{$user->branchName}}RMB
-                </p>
-
-                <img src="/AdminLte/dist/img/agent/tjt.png" alt="" style="margin-top: 15px">
-
-                <span class="glyphicon glyphicon-arrow-up"
-                      style="font-size: 11px;margin:-15px 0 0 30px;color: #3CC480">{{$user->branchName}}</span>
-            </div>
-
-
-            <ul class="uul">
-                <li class="lli">
-                    <b class="bbt">姓名</b><br>
-                    <span class="spa">---</span>
-                </li>
-
-
-                <li class="lli  col-md-6" style="float: right;">
-                    <b class="bbt">身份证号码</b><br>
-                    <span class="spa">500221198909035410</span>
-                </li>
-
-                <li class="lli">
-                    <b class="bbt">手机</b><br>
-                    <span class="spa">{{$user->phone}}</span>
-                </li>
-
-
-                <li class="lli col-md-6" style="float: right;">
-                    <b class="bbt">联系地址</b><br>
-                    <span class="spa">重庆市渝中区大坪长江支
-                        路10号</span>
-                </li>
-
-                <li class="lli">
-                    <b class="bbt">QQ</b><br>
-                    <span class="spa">33659854</span>
-                </li>
-
-
-                <li class="lli">
-                    <b class="bbt">Email</b><br>
-                    <span class="spa">1950796924@qq.com</span>
-                </li>
-
-
-            </ul>
-
-        </div>
-
-        {{--<div class="row">--}}
-        @if(isset($list))
-            <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
-                <p style="font-size: 18px;margin: 15px;">银行卡管理</p>
-
-                <div class="col-md-9"
-                     style="background:linear-gradient(#A3A0FB,#74A8FF);height: 137px;margin-left:45px;margin-top: 20px">
-                    <ul>
-                        <li style="font-size: 16px;color: #FFFFFF;margin-top: 15px;margin-left: -15px">{{$list->branchName}}</li>
-                    </ul>
-                    <ul class="list-inline" style="text-align: center;margin-top: 30px">
-                        <li style="font-size: 19px;color: #FFFFFF;">{{$list->bankCardNo}}</li>
-                    </ul>
+    <div class="row">
+    <!-- ./col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+            <div class="info-box-content">
+                <span class="progress-description" style="padding-top: 10px;">订单金额 </span>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
                 </div>
-
-                <div class="row" style="text-align: center;font-size: 18px">
-                    <p class="col-md-12" style="margin: 18px auto;color: #999999">上次修改:{{$list->updated_at}}</p>
-                    <p class="col-md-12" style="">这是你的默认提现 <br> 银行卡</p>
-
-                    <span class="col-md-12" style="text-align: center">
-                    <a class="col-md-4 btn btn-info"
-                       style="margin: 50px 90px;width: 185px;height: 50px;font-size: 15px;background: #3B86FF"
-                       onclick="showModel('添加银行卡')"><p
-                                style="margin-top: 8px">添加</p></a>
-                </span>
-
-
-                </div>
-            </div>
-
-        @else
-
-            <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
-                <p style="font-size: 18px;margin: 15px;">银行卡管理</p>
-
-
-                <div class="row" style="text-align: center;font-size: 18px">
-                    <br>
-                    <br>
-                    <br>
-
-                    <p class="col-md-12" style="">您还未添加或未开启 <br> 银行卡</p>
-
-                    <span class="col-md-12" style="text-align: center">
-                    <a class="col-md-4 btn btn-info"
-                       style="margin: 50px 90px;width: 185px;height: 50px;font-size: 15px;background: #3B86FF"
-                       onclick="showModel('添加银行卡')"><p
-                                style="margin-top: 8px">添加</p></a>
-                </span>
-
-
-                </div>
-            </div>
-
-        @endif
-        {{--</div>--}}
-
-        <div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">
-            <p style="font-size: 18px;margin: 15px;">商户费率</p>
-            <div class="row" style="text-align: center">
-                <img src="/AdminLte/dist/img/agent/sh.png" alt="" style="margin-top: 20px">
-            </div>
-            <table class="table" style="width: 340px;margin: 60px 10px 0 10px;font-size: 13px">
-                <tr style="color: #999999;background: #f5f6f9">
-                    <th>通道名称</th>
-                    <th>充值费率</th>
-                    <th>封顶费率</th>
-                </tr>
-                <tr>
-                    <td>支付宝直通</td>
-                    <td>0‰</td>
-                    <td>0‰</td>
-                </tr>
-                <tr>
-                    <td>京东PC</td>
-                    <td>25‰</td>
-                    <td>0‰</td>
-                </tr>
-                <tr>
-                    <td>支付宝H5</td>
-                    <td>25‰</td>
-                    <td>0‰</td>
-                </tr>
-            </table>
-        </div>
-
-        {{--<div class="" style="margin: 50px;width: 370px;height: 479px;background:#ffffff;float: left">--}}
-            {{--<p style="font-size: 18px;margin: 15px;">推广地址</p>--}}
-            {{--<p style="font-size: 15px;margin:20px 15px;">推广地址链接</p>--}}
-
-
-            {{--<div class="row">--}}
-                {{--<div class="col-md-10" style="margin:0px 33px;padding: 0px">--}}
-                    {{--<p style="font-size: 15px;">推广地址链接</p>--}}
-                    {{--<hr>--}}
-
-                    {{--<p class="col-md-11" style="margin: 20px auto;color: #CDCDCD">把推广地址链接发送给你的下级注册,注册之后成--}}
-                        {{--为你的下级用户</p>--}}
-
-                    {{--<div class="col-md-11"--}}
-                         {{--style="margin: 20px 15px;line-height: 23px;border: #eeeeee solid 1px;color: #CDCDCD">--}}
-                        {{--<textarea id="contents" style="border: none" cols="38" readonly="readonly">http://103.45.104.115/Agent_Login_registe--}}
-                        {{--r.html?pid=1015</textarea>--}}
-
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<hr class="col-md-8">--}}
-
-
-                {{--<input class="btn btn-default" type="button" onclick="jsCopy();" value="复制"--}}
-                       {{--style="color: #3B86FF;border: #3B86FF solid 1px;height: 50px;width: 180px;background: #ffffff;margin: 50px 100px;font-size: 15px"/>--}}
-            {{--</div>--}}
-
-        {{--</div>--}}
-    </div>
-
-    {{--模态框--}}
-    <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" style="margin-top: 123px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body" style="overflow: auto;">
-                    <form id="bankForm" action="{{ route('agent.store') }}" class="form-horizontal" role="form"
-                          method="post">
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                        <input type="hidden" name="id">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">银行名称:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="" placeholder="请输入银行名称" value="中国银行">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">支行名称:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="branchName" placeholder="请输入支行名称">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">开户名:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="accountName" placeholder="请输入开户名">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">银行卡号:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="bankCardNo" placeholder="请输入银行卡号">
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                        </div>
-                    </form>
-                </div>
+                <span class="info-box-number">{{$orderInfoSum[0]['amountSum'] ?: 0}} 元</span>
             </div>
         </div>
     </div>
 
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
+            <div class="info-box-content">
+                <span class="progress-description" style="padding-top: 10px;">我的收入 </span>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <span class="info-box-number">{{$orderInfoSum[0]['agentSum'] ?: 0 }} 元</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+
+            <div class="info-box-content">
+                <span class="progress-description" style="padding-top: 10px;">成功笔数 </span>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <span class="info-box-number">{{$orderInfoSum[0]['orderCount'] ?: 0 }}笔</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ./col -->
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">平台订单过去7天统计</h3> <span style="color: #999999">(统计有10分钟延迟)</span>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="chart_line"   style="height:300px" ></canvas>
+                    </div>
+                    <div id="chart_line_legend" class="line-legend"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
 @section("scripts")
-    <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
-    <script type="text/javascript">
+    <script src="{{ asset('js/Chart.min.js') }}"></script>
+    <!-- ChartJS -->
+    <!-- FastClick -->
+    <script src="{{ asset('AdminLTE/bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script>
+        var data = JSON.parse('{!! $order_day_count !!}');
+        var chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
+        var chartBar ;
+        var barChartData;
+        $(document).ready(function(){
 
-        function jsCopy() {
-            var e = document.getElementById("contents");//对象是contents
-            e.select(); //选择对象
-            tag = document.execCommand("Copy"); //执行浏览器复制命令
-            if (tag) {
-                alert('复制内容成功');
-            }
-        }
+            var weeklabelsData=[ getDate(-6), getDate(-5),  getDate(-4),  getDate(-3),  getDate(-2), getDate(-1), getDate(0)];
 
-        /**
-         * 提交
-         */
-        function save(_this) {
-            // formValidator();
-            $('#bankForm').data('bootstrapValidator').validate();
-            if (!$('#bankForm').data('bootstrapValidator').isValid()) {
-                return;
-            }
-            _this.removeAttr('onclick');
+            var color = Chart.helpers.color;
 
-            var $form = $('#bankForm');
-            $.post($form.attr('action'), $form.serialize(), function (result) {
-                if (result.status) {
-                    $('#addModel').modal('hide');
-                    setInterval(function () {
-                        window.location.reload();
-                    }, 1000);
+            barChartData = {
+                labels : weeklabelsData,
+                datasets : [
+                    {
+                        label: '订单金额',
+                        backgroundColor: color( chartColors.purple).alpha(0.5).rgbString(),
+                        borderColor:  chartColors.red,
+                        data : [getDate(-6) in data ? data[getDate(-6)]['sys_amount'] : 0, getDate(-5) in data ? data[getDate(-5)]['sys_amount'] : 0, getDate(-4) in data ? data[getDate(-4)]['sys_amount'] : 0, getDate(-3) in data ? data[getDate(-3)]['sys_amount'] : 0, getDate(-2) in data ? data[getDate(-2)]['sys_amount'] : 0,  getDate(-1) in data ? data[getDate(-1)]['sys_amount'] : 0, getDate(0) in data ? data[getDate(0)]['sys_amount'] : 0],
+                        yAxisID: 'y-axis-1'
+                    } ,
+                    {
+                        label: '平台收益',
+                        backgroundColor: color( chartColors.blue).alpha(0.5).rgbString(),
+                        borderColor:  chartColors.blue,
+                        yAxisID: 'y-axis-2',
+                        data :[getDate(-6) in data ? data[getDate(-6)]['sys_income'] : 0, getDate(-5) in data ? data[getDate(-5)]['sys_income'] : 0, getDate(-4) in data ? data[getDate(-4)]['sys_income'] : 0, getDate(-3) in data ? data[getDate(-3)]['sys_income'] : 0, getDate(-2) in data ? data[getDate(-2)]['sys_income'] : 0,  getDate(-1) in data ? data[getDate(-1)]['sys_income'] : 0, getDate(0) in data ? data[getDate(0)]['sys_income'] : 0],
+                    }
+                ]
 
-                    toastr.success(result.msg);
-                } else {
-                    $('#addModel').modal('hide');
-                    _this.attr("onclick", "save($(this))");
-                    toastr.error(result.msg);
-                }
-            }, 'json');
-
-        }
-
-
-        $().ready(function () {
-            $('#bankForm').bootstrapValidator({
-                message: 'This value is not valid',
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    branchName: {
-                        validators: {
-                            notEmpty: {
-                                message: '支行名称不能为空!'
-                            },
-                        }
+            };
+            var ctx   = document.getElementById("chart_line") .getContext('2d');
+            chartBar  =new Chart(ctx , {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: false
                     },
-                    accountName: {
-                        validators: {
-                            notEmpty: {
-                                message: '开户名不能为空!'
-                            },
-                        }
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
                     },
-                    bankCardNo: {
-                        validators: {
-                            notEmpty: {
-                                message: '银行卡号不能为空!'
+                    scales: {
+                        yAxes: [{
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            ticks: {
+                                beginAtZero:true
                             },
-                            regexp: {
-                                regexp: /^([1-9]{1})(\d{14}|\d{18})$/,
-                                message: '请输入正确的银行卡号！'
+                            id: 'y-axis-1',
+                        }, {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            ticks: {
+                                beginAtZero:true
+                            },
+                            id: 'y-axis-2',
+                            gridLines: {
+                                drawOnChartArea: false
                             }
-                        },
-                    },
+                        }],
+                    }
                 }
-            })
+            });
         });
-
-
-        /**
-         * 显示模态框
-         * @param title
-         */
-        function showModel(title) {
-            $('#addModel .modal-title').html(title);
-            $('#addModel').modal('show');
+        function getDate(index){
+            var date = new Date(); //当前日期
+            var newDate = new Date();
+            newDate.setDate(date.getDate() + index);//官方文档上虽然说setDate参数是1-31,其实是可以设置负数的
+            var time = newDate.getFullYear()+"-"+Appendzero(newDate.getMonth()+1)+"-"+Appendzero(newDate.getDate());
+            return time;
         }
+
+        function Appendzero(obj)
+        {
+            if(obj<10) return "0" +""+ obj;
+            else return obj;
+        }
+
 
     </script>
 @endsection

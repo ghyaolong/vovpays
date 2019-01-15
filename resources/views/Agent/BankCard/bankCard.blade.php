@@ -27,7 +27,6 @@
                     <div class="box-body">
 
 
-
                         <div class="box-body">
                             <table id="example2" class="table table-condensed table-bordered table-hover">
                                 <thead>

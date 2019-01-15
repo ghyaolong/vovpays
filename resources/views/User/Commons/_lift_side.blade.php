@@ -5,7 +5,7 @@
         <!-- 侧边栏用户 -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ asset('AdminLTE/dist/img/user4-128x128.jpg') }}" class="img-circle" alt="User Image">
+                <img src="{{ asset('AdminLTE/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->username }}</p>
