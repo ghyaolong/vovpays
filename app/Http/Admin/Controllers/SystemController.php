@@ -49,6 +49,7 @@ class SystemController extends Controller
 
             if($result)
             {
+                $this->systemCacheUpdate();
                 return ajaxSuccess('修改成功！');
             }else{
                 return ajaxError('修改失败！');
@@ -57,11 +58,25 @@ class SystemController extends Controller
             $result = $this->systemsService->add($request->all());
             if($result)
             {
+                $this->systemCacheUpdate();
                 return ajaxSuccess('添加成功！');
             }else{
                 return ajaxError('添加失败！');
             }
         }
+    }
+
+    protected function systemCacheUpdate()
+    {
+        Cache::forget('systems');
+        Cache::rememberForever('systems', function () {
+            $system = DB::table('systems')->select('name','value')->get();
+            $system_array = [];
+            foreach ($system as $k=>$v){
+                $system_array[$v->name] = $v;
+            }
+            return $system_array;
+        });
     }
 
     /**

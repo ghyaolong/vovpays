@@ -12,15 +12,17 @@ class IndexController extends Controller
     public function __construct(OrderDayCountService $orderDayCountService)
     {
         $this->orderDayCountService = $orderDayCountService;
-        Cache::rememberForever('systems', function () {
-            $system = DB::table('systems')->select('name','value')->get();
-            $system_array = [];
-            foreach ($system as $k=>$v){
-                $system_array[$v->name] = $v;
-            }
-            return $system_array;
-        });
 
+        if(!Cache::has('systems')){
+            Cache::rememberForever('systems', function () {
+                $system = DB::table('systems')->select('name','value')->get();
+                $system_array = [];
+                foreach ($system as $k=>$v){
+                    $system_array[$v->name] = $v;
+                }
+                return $system_array;
+            });
+        }
     }
 
     public function index()
