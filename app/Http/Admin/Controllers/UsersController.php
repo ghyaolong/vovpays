@@ -26,18 +26,21 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $title = '会员管理';
-        $query = $request->query();
 
-        if(count($query))
-        {
-            $list = $this->userService->searchPage($query, 10);
-        }else{
-            $list = $this->userService->getGroupPage(1,10);
+        $data = $request->input();
+        if ($request->type == 'user') {
+            $data['group_type'] = 1;
+            $title = '普通商户';
+
+        } elseif ($request->type == 'agent') {
+            $title = '代理商户';
+            $data['group_type'] = 2;
+
         }
-
+        $list = $this->userService->searchPage($data, 10);
         $agent_list = $this->userService->getGroupAll(2);
-        return view('Admin.Users.index',compact('title', 'list', 'query', 'agent_list'));
+        $query = $request->query();
+        return view("Admin.Users.{$request->type}",compact('title', 'list', 'query', 'agent_list'));
     }
 
     /**
@@ -71,7 +74,6 @@ class UsersController extends Controller
         // id 存在更新。不存在添加
         if($id)
         {
-//            dd($request->all());
             $result = $this->userService->update($request->id, $request->all());
 
             if($result)

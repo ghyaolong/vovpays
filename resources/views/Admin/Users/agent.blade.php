@@ -9,13 +9,13 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" onclick="showModel('添加会员')">添加会员</button>
-                    <a href="{{ route('users.index') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
+                    <button type="button" class="btn btn-primary" onclick="showModel('添加代理')">添加代理</button>
+                    <a href="{{ route('users.index',['agent']) }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box box-primary">
                     <div class="box-body">
-                        <form action="{{ route('users.index') }}" method="get">
+                        <form action="{{ route('users.index',['agent']) }}" method="get">
                             <div class="form-inline">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="商户号" name="merchant"
@@ -26,22 +26,10 @@
                                            @if(isset($query['username'])) value="{{ $query['username'] }}" @endif />
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" id="groupType" name="groupType">
-                                        <option value="1"
-                                                @if(isset($query['groupType']) && $query['groupType'] =='1') selected @endif>
-                                            商户
-                                        </option>
-                                        <option value="2"
-                                                @if(isset($query['groupType']) && $query['groupType'] =='2') selected @endif>
-                                            代理商
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <select class="form-control" id="status" name="status">
                                         <option value="-1"
                                                 @if(!isset($query['status']) || $query['status'] =='-1') selected @endif >
-                                            会员状态
+                                            状态
                                         </option>
                                         <option value="1"
                                                 @if(isset($query['status']) && $query['status'] =='1') selected @endif >
@@ -70,7 +58,6 @@
                             <th>#</th>
                             <th>商户号</th>
                             <th>用户名</th>
-                            <th>上级代理</th>
                             <th>Email</th>
                             <th>电话</th>
                             <th>状态</th>
@@ -83,7 +70,6 @@
                                 <td>{{ $v['id'] }}</td>
                                 <td>{{ $v['merchant'] }}</td>
                                 <td>{{ $v['username'] }}</td>
-                                <td>{{ $v['agentName'] }}</td>
                                 <td>{{ $v['email'] }}</td>
                                 <td>{{ $v['phone'] }}</td>
                                 <td>
@@ -157,30 +143,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">用户组</label>
-                            <div class="col-xs-9">
-
-                                <select class="form-control" name="groupType">
-                                    <option value="1">商户</option>
-                                    <option value="2">代理商</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">上级代理</label>
-                            <div class="col-xs-9">
-                                <select class="form-control selectpicker" name="parentId">
-                                    <option value="0">无</option>
-                                    @foreach($agent_list as $v)
-                                        <option value="{{ $v['id'] }}">{{ $v['username'] }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="help-block" style="color: #FF0000; font-size: 12px;">
-                                <i class="fa fa-info-circle"></i>用户组为代理商，上级代理选着无
-                            </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">状态</label>
                             <div class="col-xs-9">
 
@@ -192,6 +154,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <input type="hidden" name="groupType" value="2">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
                         </div>
@@ -219,7 +182,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/admin/users/saveStatus',
+                        url: '{{ route('users.saveStatus') }}',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -307,7 +270,7 @@
                                 message: '只能使用数字和字母!'
                             },
                             remote: {
-                                url: "users/check",
+                                url: "{{ route('users.check') }}",
                                 message: "用户名已存在!",
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
@@ -357,7 +320,7 @@
                                 message: '邮箱格式不正确!'
                             },
                             remote: {
-                                url: "users/check",
+                                url: "{{ route('users.check') }}",
                                 message: "邮箱已存在!",
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
@@ -387,7 +350,7 @@
                                 message: '电话格式不正确!'
                             },
                             remote: {
-                                url: "users/check",
+                                url: "{{ route('users.check') }}",
                                 message: "电话已存在!",
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可

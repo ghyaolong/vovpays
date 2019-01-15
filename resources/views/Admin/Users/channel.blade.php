@@ -9,7 +9,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <a href="{{ route('users.index') }}" class="btn pull-right"><i class="fa fa-undo"></i>返回</a>
+                <button onclick="javascript:history.back(-1);" class="btn btn-primary"><i class="fa fa-undo"></i>返回上一页</button>
             </div>
             <div class="box-body">
                 <table id="example2" class="table table-condensed table-bordered table-hover">

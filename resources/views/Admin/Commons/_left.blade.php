@@ -37,9 +37,15 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ route('users.index') }}">
+                <a href="{{ route('users.index',['agent']) }}">
                     <i class="fa fa-user"></i>
-                    <span>会员管理</span>
+                    <span>代理管理</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('users.index',['user']) }}">
+                    <i class="fa fa-user"></i>
+                    <span>商户管理</span>
                 </a>
             </li>
             <li>

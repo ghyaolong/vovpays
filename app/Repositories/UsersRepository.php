@@ -40,8 +40,14 @@ class UsersRepository
         $sql = ' 1=1 ';
         $where = [];
 
+        if(isset($data['group_type']) && $data['group_type'])
+        {
+            $sql .= ' and group_type = ?';
+            $where['group_type'] = $data['group_type'];
+        }
+
         if (isset($data['merchant']) && $data['merchant']) {
-            $sql .= 'and merchant = ?';
+            $sql .= ' and merchant = ?';
             $where['merchant'] = $data['merchant'];
         }
 

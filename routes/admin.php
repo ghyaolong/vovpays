@@ -37,19 +37,17 @@ Route::group([], function () {
         Route::post('admins/saveStatus','AdminsController@saveStatus')->name('admins.saveStatus');
         Route::post('admins/check','AdminsController@checkUnique')->name('admins.check');
         //会员管理
-        Route::get('users','UsersController@index')->name('users.index');
+        Route::get('users/{type}','UsersController@index')->name('users.index');
         Route::post('users','UsersController@store')->name('users.store');
         Route::get('users/{id}/edit', 'UsersController@edit')->name('users.edit');
         Route::delete('users','UsersController@destroy')->name('users.destroy');
         Route::post('users/saveStatus','UsersController@saveStatus')->name('users.saveStatus');
         Route::post('users/check','UsersController@checkUnique')->name('users.check');
-
         //会员通道设置
         Route::get('users/{id}/channel', 'UsersController@channel')->name('users.channel');
         Route::post('users/{id}/saveUserRate', 'UsersController@saveUserRateStatus')->name('users.saveUserRate');
         Route::get('users/{id}/rate','UsersController@getUserRate')->name('users.rate');
         Route::post('users/{id}/userRateStore', 'UsersController@userRateStore')->name('users.userRateStore');
-
         //通道管理
         Route::get('channels','ChannelsController@index')->name('channels.index');
         Route::post('channels','ChannelsController@store')->name('channels.store');

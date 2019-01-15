@@ -92,17 +92,6 @@ class UserService
     }
 
     /**
-     * 根据标识$group_id获取用户分页
-     * @param int $group_id
-     * @param int $page
-     * @return mixed
-     */
-    public function getGroupPage(int $group_id, int $page)
-    {
-        return $this->usersRepository->getGroupPage($group_id, $page);
-    }
-
-    /**
      * 根据标识parentId获取用户分页
      * @param int $parentId
      * @param int $page
@@ -144,6 +133,8 @@ class UserService
                 $data['parentId'] = 0;
                 $data['agentName'] = '';
             }
+        }else{
+            $data['agentName'] = '';
         }
         $data['group_type'] = $data['groupType'];
         $data = array_except($data, 'groupType');

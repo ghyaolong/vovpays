@@ -32,9 +32,9 @@ Route::group([], function ($router) {
         //银行卡管理
         Route::post('bankCard/store','BankCardController@store')->name('user.store');
         Route::get('bankCard','BankCardController@bankCard')->name('user.bankCard');
-        Route::delete('bankCard','BankCardController@destroy')->name('users.destroy');
-        Route::get('bankCard/{id}/edit','BankCardController@edit')->name('users.edit');
-        Route::post('bankCard/saveStatus','BankCardController@saveStatus')->name('users.saveStatus');
+        Route::delete('bankCard','BankCardController@destroy')->name('user.destroy');
+        Route::get('bankCard/{id}/edit','BankCardController@edit')->name('user.edit');
+        Route::post('bankCard/saveStatus','BankCardController@saveStatus')->name('user.saveStatus');
         //提现
         Route::any('withdraws','WithdrawsController@index')->name('user.withdraws');
         Route::get('withdraws','WithdrawsController@clearing')->name('user.clearing');
