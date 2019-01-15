@@ -13,6 +13,7 @@ class IndexController extends Controller
     {
         $this->orderDayCountService = $orderDayCountService;
 
+
         if(!Cache::has('systems')){
             Cache::rememberForever('systems', function () {
                 $system = DB::table('systems')->select('name','value')->get();
