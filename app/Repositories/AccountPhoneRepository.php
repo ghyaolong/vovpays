@@ -38,6 +38,10 @@ class AccountPhoneRepository
             $sql .= 'and account = ?';
             $where['account'] = $data['account'];
         }
+        if (isset($data['user_id']) && $data['user_id']) {
+            $sql .= ' and user_id = ?';
+            $where['user_id'] = $data['user_id'];
+        }
         if (isset($data['accountType']) && $data['accountType']) {
             if ($data['accountType'] == 'alipay') {
                 $data['accountType'] = '支付宝';
@@ -46,12 +50,6 @@ class AccountPhoneRepository
             }
             $sql .= ' and accountType = ?';
             $where['accountType'] = $data['accountType'];
-        }
-
-        if( isset($data['user_id']) && $data['user_id'] )
-        {
-            $sql .= ' and user_id = ?';
-            $where['user_id'] = $data['user_id'];
         }
 
         return $this->account_phone->whereRaw($sql, $where)->paginate($page);

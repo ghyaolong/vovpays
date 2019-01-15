@@ -61,7 +61,6 @@
                 </div>
                 <div class="modal-body" style="overflow: auto;">
                     <form id="ruleForm1" action="{{route('user.editPassword')}}" class="form-horizontal" role="form" method="post">
-                        <input type="hidden" name="id" value="{{Auth::user()->id}}">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">原密码:</label>

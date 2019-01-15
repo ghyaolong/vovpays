@@ -41,7 +41,6 @@
                                     <td colspan="10" style="text-align: center">没有找到匹配数据</td>
                                 </tr>
                             @else
-                                {{--<tbody>--}}
                                 @foreach($list as $v)
                                     <tr>
                                         <td>{{ $v->phone_id }}</td>

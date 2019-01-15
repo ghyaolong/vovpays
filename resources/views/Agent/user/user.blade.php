@@ -148,7 +148,6 @@
                 <div class="modal-body" style="overflow: auto;">
                     <form id="usersForm" action="{{route('agent.add')}}" class="form-horizontal" role="form"
                           method="post">
-                        <input type="hidden" name="parentId" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="groupType" value="1">
                         {{ csrf_field() }}
                         <div class="form-group">

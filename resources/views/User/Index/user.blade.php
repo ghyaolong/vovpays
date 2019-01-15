@@ -274,7 +274,6 @@
                 <div class="modal-body" style="overflow: auto;">
                     <form id="bankForm" action="{{ route('user.store') }}" class="form-horizontal" role="form"
                           method="post">
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <input type="hidden" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
