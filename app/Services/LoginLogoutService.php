@@ -18,6 +18,7 @@ class LoginLogoutService
      */
     public function Login( string $table_name, array $check_data)
     {
+
         if ( Auth::guard($table_name)->attempt($check_data) ) {
             return true;
         }else{

@@ -105,7 +105,7 @@
                         @foreach($clearings as $vv)
                             <tr>
                                 <th>{{$vv->bankName}}</th>
-                                <th>4114698698569856</th>
+                                <th>{{$vv->bankCardNo}}</th>
                                 <th>{{$vv->withdrawAmount}}</th>
                                 <th>{{$vv->withdrawRate}}</th>
                                 <th>{{$vv->toAmount}}</th>

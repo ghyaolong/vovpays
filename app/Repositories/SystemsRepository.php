@@ -28,6 +28,15 @@ class SystemsRepository
         return $this->system->whereId($id)->first();
     }
 
+    /**安Name获取配置项值
+     * @param string $name
+     * @return mixed
+     */
+    static public function findKey(string $name)
+    {
+        return DB::table('system')->whereName($name)->value('value');
+    }
+
     /**
      * 添加
      * @param array $data

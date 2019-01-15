@@ -10,36 +10,110 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\WithdrawsRepository;
+use App\Repositories\BankCardRepository;
+use App\Services\UserPermissionServer;
+use Mockery\Exception;
+
 
 class WithdrawsService
 {
-    protected $withdrawsService;
-    protected $userRateService;
+    protected $withdrawsRepository;
+    protected $bankCardRepository;
 
-    public function __construct(WithdrawsRepository $withdrawsRepository, UserRateService $userRateService)
+    public function __construct(WithdrawsRepository $withdrawsRepository, BankCardRepository $bankCardRepository)
     {
-        $this->withdrawsService = $withdrawsRepository;
-        $this->userRateService = $userRateService;
+        $this->withdrawsRepository = $withdrawsRepository;
+        $this->bankCardRepository = $bankCardRepository;
     }
 
 
     public function add(array $data)
     {
-        //校验支付密码
+        //权限验证
+        UserPermissionServer::checkPermission($data['auth_code']);
+        //验证账户余额
+        $this->accountVerify($data);
+//        //获取提款规则信息
+//        $this->getWithdrawRule($data);
+        try {
+            DB::beginTransaction();
+            //账户余额更新
+            $this->updateAccount($data);
+//          //资金变动记录
+//          $this->addMoneyDetail($data);
+            //添加提款记录
+            $this->addWithdrawInfo($data);
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return false;
+        }
+        return true;
 
-        // 去掉无用数据
-        $data = array_except($data, ['_token', 'payPassword','accountName','bankCardNo']);
-        $data['user_id']=Auth::user()->id;
+    }
 
-        //获取费率
-        $userRate =5;
-
+    protected function updateAccount($data)
+    {
         //提现手续费
-        $data['withdrawRate'] = $userRate;
+        $data['withdrawRate'] = 5;
         //到账金额
         $data['toAmount'] = $data['withdrawAmount'] - $data['withdrawRate'];
+        return $data;
+    }
 
-        return $this->withdrawsService->add($data);
+    protected function addMoneyDetail($data)
+    {
+        return true;
+    }
+
+    /**获取提款规则信息
+     * @param $data
+     * @return array
+     */
+    protected function getWithdrawRule($data)
+    {
+
+        $withdrawRule = [];
+        return $withdrawRule;
+    }
+
+    /**验证账户余额
+     * @return bool
+     */
+    protected function accountVerify($data)
+    {
+        return true;
+    }
+
+    /**添加提款记录
+     * @param $data
+     * @return mixed
+     */
+
+    protected function addWithdrawInfo($data)
+    {
+
+        // 去掉无用数据
+        $data = array_except($data, ['_token', 'payPassword']);
+
+        //银行卡信息
+        $bankCard = $this->bankCardRepository->findId($data['bank_id']);
+        unset($data['bank_id']);
+        //银行信息
+
+        $bankInfo = $bankCard->Bank->toArray();
+
+        $data['accountName'] = $bankCard['accountName'];
+        $data['branchName'] = $bankCard['branchName'];
+        $data['bankCardNo'] = $bankCard['bankCardNo'];
+
+        $data['bankName'] = $bankInfo['bankName'];
+        $data['bankCode'] = $bankInfo['code'];
+        $data['orderId'] = static::buildWithdrawOrderid();
+        $data['user_id'] = Auth::user()->id;
+
+
+        return $this->withdrawsRepository->add($data);
     }
 
 
@@ -84,6 +158,15 @@ class WithdrawsService
      */
     public function getAllPage(int $page)
     {
-        return $this->withdrawsService->searchPage($page);
+        return $this->withdrawsRepository->searchPage($page);
+    }
+
+    /**生成提款订单号
+     * @return string
+     */
+    static private function buildWithdrawOrderid()
+    {
+
+        return 'W' . date('ymdhis') . mt_rand(10000, 99999);
     }
 }

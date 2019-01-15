@@ -61,4 +61,12 @@ class SystemsService
     {
         return $this->systemsRepository->findId($id);
     }
+
+
+    /**获取系统配置项
+     * @param $name
+     */
+   public function findKey($name){
+       return $this->systemsRepository->findKey($name);
+    }
 }

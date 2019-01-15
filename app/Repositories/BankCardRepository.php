@@ -17,7 +17,7 @@ class BankCardRepository
 
     public function __construct(Bank_card $bank_card)
     {
-        $this->bankCard=$bank_card;
+        $this->bankCard = $bank_card;
     }
 
     /**
@@ -77,7 +77,7 @@ class BankCardRepository
      * @param array $data
      * @return mixed
      */
-    public function update(int $id,array $data)
+    public function update(int $id, array $data)
     {
         return $this->bankCard->whereId($id)->update($data);
     }
@@ -87,9 +87,11 @@ class BankCardRepository
      * @param int $id
      * @param array $data
      */
-    public function updateStatus(int $id,array $data)
+    public function updateStatus(int $id, array $data)
     {
         $this->bankCard->whereUserId($id)->update($data);
     }
+
+
 
 }
