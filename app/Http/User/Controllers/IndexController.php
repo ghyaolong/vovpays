@@ -3,24 +3,30 @@
 namespace App\Http\User\Controllers;
 
 use App\Services\BankCardService;
+use App\Services\OrdersService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\OrderDayCountService;
 
 class IndexController extends Controller
 {
     protected $userService;
     protected $bankCardService;
+    protected $orderDayCountService;
+    protected $ordersService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(UserService $userService, BankCardService $bankCardService)
+    public function __construct(UserService $userService, BankCardService $bankCardService, OrdersService $ordersService, OrderDayCountService $orderDayCountService)
     {
         $this->userService = $userService;
         $this->bankCardService = $bankCardService;
+        $this->ordersService = $ordersService;
+        $this->orderDayCountService = $orderDayCountService;
     }
 
     /**
@@ -28,9 +34,15 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('User.Index.home');
+        $query = $request->input();
+        $userId = Auth::user()->id;
+        $user=$this->userService->findId($userId);
+        //订单金额
+        $orderInfoSum = $this->ordersService->orderInfoSum($query);
+        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getUserSevenDaysCount($userId), 'tm'));
+        return view('User.Index.home', compact('user','orderInfoSum', 'order_day_count'));
     }
 
     //用户列表展示
@@ -38,7 +50,7 @@ class IndexController extends Controller
     {
         $uid = Auth::user()->id;
         $list = $this->bankCardService->findStatus($uid);
-        if ($list){
+        if ($list) {
             $list->bankCardNo = substr_replace($list->bankCardNo, " **** **** **** ", 3, 12);
         }
         return view('User.Index.user', compact('list'));
@@ -49,7 +61,7 @@ class IndexController extends Controller
     public function editPassword(Request $request)
     {
         $data = $request->input();
-        $id = $request->input('id');
+        $id = Auth::user()->id;
         $result = $this->userService->updatePassword($id, $data);
 
         if ($result) {

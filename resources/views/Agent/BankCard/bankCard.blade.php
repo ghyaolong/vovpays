@@ -17,7 +17,7 @@
                         <h3 class="box-title">银行卡管理</h3>
 
                         <div class="box-tools pull-right">
-                            <a href="{{ route('agent.bankCard',Auth::user()->id) }}" class="btn"><i
+                            <a href="{{ route('agent.bankCard') }}" class="btn"><i
                                         class="fa fa-undo"></i>刷新</a>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -45,7 +45,7 @@
                                 @foreach($lists as $list)
                                     <tr>
                                         <td>{{$list->id}}</td>
-                                        <td>{{$list->bank->bankName}}</td>
+{{--                                        <td>{{$list->bank->bankName}}</td>--}}
                                         <td>{{$list->branchName}}</td>
                                         <td>{{$list->accountName}}</td>
                                         <td>{{$list->bankCardNo}}</td>
@@ -93,7 +93,6 @@
                 <div class="modal-body" style="overflow: auto;">
                     <form id="bankForm" action="{{ route('agent.store') }}" class="form-horizontal" role="form"
                           method="post">
-                        {{--<input type="hidden" name="user_id" value="{{Auth::user()->id}}">--}}
                         <input type="hidden" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">

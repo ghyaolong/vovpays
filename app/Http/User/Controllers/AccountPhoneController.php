@@ -12,6 +12,7 @@ namespace App\Http\User\Controllers;
 use App\Services\AccountPhoneService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountPhoneController extends Controller
 {
@@ -31,12 +32,12 @@ class AccountPhoneController extends Controller
     public function index(Request $request)
     {
         $data = $request->input();
+        $data['user_id'] = Auth::user()->id;
         if ($request->type == '0') {
             $data['accountType'] = 'wechat';
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
         }
-        $data['user_id'] = auth()->user()->id;
         $list = $this->accountPhoneService->getAllPage($data, 6);
         return view("User.AccountPhone.{$data['accountType']}", compact('list'));
     }
@@ -51,7 +52,7 @@ class AccountPhoneController extends Controller
         $id = $request->id ?? '';
 
         if (!empty($id)) {
-            $result = $this->accountPhoneService->update($id,auth()->user()->id, $request->input());
+            $result = $this->accountPhoneService->update($id, auth()->user()->id, $request->input());
             if ($result) {
                 return ajaxSuccess('编辑成功！');
             } else {
@@ -107,7 +108,7 @@ class AccountPhoneController extends Controller
      */
     public function edit(Request $request)
     {
-        $result = $this->accountPhoneService->findIdAndUserId($request->id,auth()->user()->id);
+        $result = $this->accountPhoneService->findIdAndUserId($request->id, auth()->user()->id);
         if ($result) {
             return ajaxSuccess('获取成功！', $result->toArray());
         } else {
@@ -122,7 +123,7 @@ class AccountPhoneController extends Controller
      */
     public function destroy(Request $request)
     {
-        $result = $this->accountPhoneService->del($request->id,auth()->user()->id);
+        $result = $this->accountPhoneService->del($request->id, auth()->user()->id);
         if ($result) {
             return ajaxSuccess('账号已删除！');
         } else {

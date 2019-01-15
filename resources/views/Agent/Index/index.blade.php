@@ -1,5 +1,5 @@
 @extends("Agent.Commons.layout")
-@section('title','账户管理')
+@section('title','主页')
 @section('content')
     <div class="row">
     <!-- ./col -->
@@ -18,7 +18,7 @@
 
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box bg-aqua">
-            <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
+            <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
             <div class="info-box-content">
                 <span class="progress-description" style="padding-top: 10px;">我的收入 </span>
                 <div class="progress">
@@ -30,7 +30,7 @@
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box bg-aqua">
-            <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+            <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
 
             <div class="info-box-content">
                 <span class="progress-description" style="padding-top: 10px;">成功笔数 </span>
@@ -102,7 +102,7 @@
                         yAxisID: 'y-axis-1'
                     } ,
                     {
-                        label: '平台收益',
+                        label: '我的收益',
                         backgroundColor: color( chartColors.blue).alpha(0.5).rgbString(),
                         borderColor:  chartColors.blue,
                         yAxisID: 'y-axis-2',

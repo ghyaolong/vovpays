@@ -22,7 +22,6 @@
                 <div class="box-body">
                     <form class="navbar-form navbar-left" action="{{route('user.withdraws')}}" method="post">
                         {{ csrf_field() }}
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                         <div class="form-group">
                             <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
                                    placeholder="提现时间" name="orderTime"
