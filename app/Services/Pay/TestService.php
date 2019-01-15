@@ -24,10 +24,10 @@ class TestService implements PayInterface
     {
         // 随机选号
         $ChooseAccountService = app(ChooseAccountService::class);
-        $account_array        = $ChooseAccountService->getAccount($request->pay_code, 1, $request->amount);
-        if(!$account_array)
+        $account_array        = $ChooseAccountService->getAccount($user,$request->pay_code, 1, $request->amount);
+        if( isset($account_array['respCode']) )
         {
-            return json_encode(RespCode::APP_ERROR);
+            return json_encode($account_array);
         }
 
         // 订单添加

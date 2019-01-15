@@ -12,7 +12,6 @@ use App\Common\RespCode;
 use App\Tool\Md5Verify;
 use App;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\View\View;
 
 class PayController extends Controller
 {
@@ -54,7 +53,6 @@ class PayController extends Controller
         }else{
             $this->return_type = false;
         }
-
         $this->content = $request->input();
 
         $this->paramVerify($request);
@@ -297,14 +295,14 @@ class PayController extends Controller
      */
     public function demo()
     {
-        $pay_memberid = 'RVu0m9vNTu';
+        $pay_memberid = 'zKWbxbpNHY';
         $pay_amount  = "0.01";    //交易金额
         $pay_applydate = date('Y-m-d H:i:s');  //订单时间
-        $pay_code  = "alipay";   //支付方式
+        $pay_code  = "wechat";   //支付方式
         $pay_orderid = date('YmdHis').rand(0000,9999);    //订单号
         $pay_notifyurl = "http://cc.vovpay.com/Pay_Exemption_test.html";   //服务端返回地址
         $pay_callbackurl = "http://b.com:8080";  //页面跳转返回地址
-        $Md5key = '$2y$10$jCVQuj5K2tc9WQcjz5HIxOKdWyDL2ixTrCDmBhV.B18b1Y1MLj5ye';   //密钥
+        $Md5key = '$2y$10$W6n77XJ8daHSI27P3sf.y.odjEbdHMgSWLOoW7GcHevanhwk2ZpGS';   //密钥
 
         $jsapi = array(
             "merchant"      => $pay_memberid,

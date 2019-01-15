@@ -18,7 +18,7 @@
 <div class="container">
    <div class="row">
         <div class="col-md-12">
-            <form class="form-inline" method="post" action="http://mq.vovpay.com/pay">
+            <form class="form-inline" method="post" action="http://fjvte7.natappfree.cc/pay">
                 @foreach($jsapi as $k=>$v)
                     <input type="hidden" name="{{ $k }}" value="{{ $v }}">
                 @endforeach

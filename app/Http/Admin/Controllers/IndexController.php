@@ -13,13 +13,19 @@ class IndexController extends Controller
     {
         $this->orderDayCountService = $orderDayCountService;
         Cache::rememberForever('systems', function () {
-            return DB::table('systems')->select('name','value')->get();
+            $system = DB::table('systems')->select('name','value')->get();
+            $system_array = [];
+            foreach ($system as $k=>$v){
+                $system_array[$v->name] = $v;
+            }
+            return $system_array;
         });
 
     }
 
     public function index()
     {
+
         $title = '主页';
         $description = '今日统计数据有10分钟延迟,想看实时的请使用订单查询';
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getSevenDaysCount(),'tm'));

@@ -28,7 +28,7 @@ class SystemController extends Controller
         $id = $request->id ? $request->id : '';
         $this->validate($request, [
             'name'        => [
-                'required',
+                'required,'.$id,
                 'regex:/^[A-Za-z]+$/',
                 'unique:systems,name,'.$id,
             ],
