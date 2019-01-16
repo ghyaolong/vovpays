@@ -1,5 +1,5 @@
 @extends("User.Commons.layout")
-@section('title','支付宝账号')
+@section('title','银行卡号')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
@@ -43,7 +43,7 @@
                                 @foreach($list as $v)
                                     <tr>
                                         <td>{{ $v->phone_id }}</td>
-                                        <td style="color: red">{{ $v->account }}</td>
+                                        <td style="color: red">{{ $v->bank_account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         {{--<td>备注</td>--}}
                                         <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
@@ -83,30 +83,31 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.accountAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('user.accountBankAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">账号:</label>
-                            <div class="col-xs-9">
-                                <input type="text" id="account" class="form-control" name="account" placeholder="请输入账号">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">账号实名:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="alipayusername" placeholder="请输入账号实名">
+                                <input type="text" class="form-control" name="bank_account" placeholder="请输入账号实名">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">账号ID:</label>
+                            <label for="" class="col-xs-3 control-label">账户类型:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="alipayuserid" placeholder="请输入账号ID">
+                                <input type="text" class="form-control" name="accountType" placeholder="请输入账户类型，如: 支付宝，微信 等">
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-xs-7" style="margin-top:-10px;">
-                                <a onclick="aliid('二维码')" style="margin-left: 150px">点击扫码，获取账号ID</a>
+                            <label for="" class="col-xs-3 control-label">银行名称:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="bank_name" placeholder="请输入银行名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">卡号:</label>
+                            <div class="col-xs-9">
+                                <input type="text" id="account" class="form-control" name="cardNo" placeholder="请输入银行卡号">
                             </div>
                         </div>
                         <div class="form-group">
@@ -133,28 +134,6 @@
                             <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{--二维码模态框--}}
-    <div class="modal fade" id="aliidModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" style="margin-top: 123px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body" style="overflow: auto;text-align: center">
-                    <img src="{{ asset('/AdminLTE/dist/img/user/aliewm.png') }}" alt="二维码获取失败！">
-                    <br>
-                    <br>
-                    <br>
-                    <p style="color: red;font-size: 20px">打开支付宝扫一扫，获取账号ID</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -337,16 +316,17 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/account/' + id + '/edit',
+                url: '/user/accountBank/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (result) {
                     if (result.status == 1) {
-                        $("input[name='account']").val(result.data['account']);
-                        $("input[name='alipayusername']").val(result.data['alipayusername']);
-                        $("input[name='alipayuserid']").val(result.data['alipayuserid']);
+                        $("input[name='bank_account']").val(result.data['bank_account']);
+                        $("input[name='accountType']").val(result.data['accountType']);
+                        $("input[name='bank_name']").val(result.data['bank_name']);
+                        $("input[name='cardNo']").val(result.data['cardNo']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
                         $("input[name='id']").val(result.data['id']);

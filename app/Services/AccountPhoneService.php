@@ -43,7 +43,9 @@ class AccountPhoneService
     public function add(array $data)
     {
         $data = array_except($data, ['_token']);
-        if (isset($data['alipayusername']) && isset($data['alipayuserid'])) {
+        if (isset($data['accountType'])){
+
+        } elseif (isset($data['alipayusername']) && isset($data['alipayuserid'])) {
             $data['accountType'] = "支付宝";
             $data['channel_payment_id'] = 1;
         } else {

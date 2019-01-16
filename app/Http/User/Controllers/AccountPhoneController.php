@@ -37,6 +37,8 @@ class AccountPhoneController extends Controller
             $data['accountType'] = 'wechat';
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
+        } elseif ($request->type == '2') {
+            $data['accountType'] = 'bank';
         }
         $list = $this->accountPhoneService->getAllPage($data, 6);
         return view("User.AccountPhone.{$data['accountType']}", compact('list'));

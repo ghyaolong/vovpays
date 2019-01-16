@@ -15,14 +15,12 @@
 
         <ul class="sidebar-menu" data-widget="tree">
 
-            {{--<li class="header">商户管理</li>--}}
             <li class="active treeview">
             <li><a href="{{route('user.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>首页</span></a></li>
             {{--<li><a href="{{route('user.user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>用户管理</span></a></li>--}}
             <li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>
             </li>
 
-            {{--<li class="header">交易管理</li>--}}
             <li class="active treeview">
 
             <li><a href="{{route('user.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
@@ -31,14 +29,27 @@
             {{--<li><a href="{{route('user.withdraws')}}"><i class="fa fa-circle-o text-aqua"></i> <span>提现记录</span></a></li>--}}
             </li>
 
-            {{--<li class="header">信息管理</li>--}}
             <li class="active treeview">
 
 
             <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
             {{--<li><a href="{{route('user.api')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>API管理</span></a></li>--}}
-            <li><a href="{{route('user.account',0)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>微信管理</span></a></li>
-            <li><a href="{{route('user.account',1)}}"><i class="fa fa-circle-o  text-aqua"></i> <span>支付宝管理</span></a></li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-paper-plane"></i>
+                    <span>账号管理</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{route('user.account',0)}}"><i class="fa fa-circle-o"></i> <span>微信账号</span></a></li>
+                    <li><a href="{{route('user.account',1)}}"><i class="fa fa-circle-o"></i> <span>支付宝账号</span></a></li>
+                    <li><a href="{{ route('user.accountBank') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
+                </ul>
+            </li>
+
 
             </li>
 

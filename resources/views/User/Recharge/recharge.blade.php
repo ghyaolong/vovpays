@@ -91,8 +91,8 @@
                             <label for="exampleInputName2">支付方式:</label>&emsp;
                             <input class="flat-red" id="alipayradio" type="radio" name="paytype" checked>
                             <img src="/AdminLTE/dist/img/ico_zfb.png" alt="">&emsp;
-                            <input class="flat-red" id="alipayradio" type="radio" name="paytype">
-                            <img src="/AdminLTE/dist/img/ico_wx.png" alt="">
+                            {{--<input class="flat-red" id="alipayradio" type="radio" name="paytype">--}}
+                            {{--<img src="/AdminLTE/dist/img/ico_wx.png" alt="">--}}
                         </div>
                         <br>
                         <br>

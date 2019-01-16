@@ -46,6 +46,10 @@ Route::group([], function ($router) {
         Route::get('account/{id}/edit','AccountPhoneController@edit')->name('user.accountEdit');
         Route::delete('account','AccountPhoneController@destroy')->name('user.accountDel');
         Route::post('account/check','AccountPhoneController@checkUnique')->name('user.check');
+
+        Route::post('accountBank','AccountBankCardsController@store')->name('user.accountBankAdd');
+        Route::get('accountBank','AccountBankCardsController@index')->name('user.accountBank');
+        Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('user.accountBankEdit');
     });
 
 });

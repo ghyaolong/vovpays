@@ -1,5 +1,5 @@
 @extends("User.Commons.layout")
-@section('title','微信管理')
+@section('title','微信账号')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
