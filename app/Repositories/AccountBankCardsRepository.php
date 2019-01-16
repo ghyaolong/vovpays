@@ -83,5 +83,16 @@ class AccountBankCardsRepository
         return $this->account_bank_cards->whereId($id)->whereUserId($uid)->first();
     }
 
+    /**
+     * @param int $id
+     * @param int $uid
+     * @return mixed
+     */
+    public function del(int $id,int $uid)
+    {
+        return $this->account_bank_cards->whereId($id)->whereUserId($uid)->delete();
+    }
+
+
 
 }

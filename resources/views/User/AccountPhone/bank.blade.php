@@ -261,21 +261,6 @@
                             notEmpty: {
                                 message: '请输入手机标识!'
                             },
-                            remote: {
-                                url: "check",
-                                message: "该手机已添加过支付宝账号!",
-                                type: "post",
-                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
-                                    return {
-                                        "value": $("#phone_id").val().trim(),
-                                        "type": 'phone_id',
-                                        "_token": $('meta[name="csrf-token"]').attr('content'),
-                                        "id": $('#id').val(),
-                                        "name": '支付宝'
-                                    };
-                                },
-                                delay: 500,
-                            }
                         },
                     },
                     dayQuota: {

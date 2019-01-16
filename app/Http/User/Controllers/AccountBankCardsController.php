@@ -80,4 +80,19 @@ class AccountBankCardsController extends Controller
         }
     }
 
+    /**
+     * 删除
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Request $request)
+    {
+        $result = $this->accountBankCardsService->del($request->id, auth()->user()->id);
+        if ($result) {
+            return ajaxSuccess('账号已删除！');
+        } else {
+            return ajaxError('删除失败！');
+        }
+    }
+
 }
