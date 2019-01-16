@@ -159,7 +159,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/account/saveStatus',
+                        url: '/user/accountBank/saveStatus',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -341,7 +341,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/account',
+                    url: '/user/accountBank',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {
