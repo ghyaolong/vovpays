@@ -101,6 +101,7 @@
                             <th>到账金额</th>
                             <th>状态</th>
                             <th>提现时间</th>
+                            <th>处理时间</th>
                         </tr>
                         @foreach($clearings as $vv)
                             <tr>
@@ -111,6 +112,7 @@
                                 <th>{{$vv->toAmount}}</th>
                                 <th>{{$vv->status?'未处理':'处理中'}}</th>
                                 <th>{{$vv->created_at}}</th>
+                                <th>{{$vv->updated_at!=$vv->created_at?$vv->updated_at:'---'}}</th>
                             </tr>
                         @endforeach
                     </table>
@@ -134,7 +136,6 @@
                     <table class="table table-hover">
                         <tr style="background: #f5f6f9;color: #999999">
                             <th>序号</th>
-
                             <th>银行名称</th>
                             <th>支行名称</th>
                             <th>银行卡号</th>

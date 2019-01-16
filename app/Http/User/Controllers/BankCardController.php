@@ -69,6 +69,7 @@ class BankCardController extends Controller
                 return ajaxError('编辑失败！');
             }
         } else {
+
             $result = $this->bankCardService->add($request->input());
             if ($result) {
                 return ajaxSuccess('添加银行卡成功！');

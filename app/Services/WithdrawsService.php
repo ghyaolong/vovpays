@@ -54,16 +54,17 @@ class WithdrawsService
             DB::connection('mysql')->transaction(function () use ($data) {
                 //账户余额更新
 
-                DB::connection('mysql')->table('statisticals')->whereUserId($data['user_id'])->decrement('balance', $data['withdrawAmount']);
-
-//              //资金变动记录
+                $this->statisticalRepository->updateUseridBalanceDecrement($data['user_id'], $data['withdrawAmount']);
+                //资金变动记录
 //              $this->addMoneyDetail($data);
-                DB::connection('mysql')->table('withdraws')->insert($data);
+                $this->withdrawsRepository->add($data);
 
-            },3);
+//                DB::connection('mysql')->table('statisticals')->whereUserId($data['user_id'])->decrement('balance', $data['withdrawAmount']);
+//                DB::connection('mysql')->table('withdraws')->insert($data);
 
-            return ['status' => true, 'msg' => ''];
+            }, 3);
 
+            return ['status' => true];
 
         } catch (CustomServiceException $customexception) {
             $msg = $customexception->getMessage();

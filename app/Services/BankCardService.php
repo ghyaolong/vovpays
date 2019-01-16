@@ -29,6 +29,7 @@ class BankCardService
     public function add(array $data)
     {
         $data['user_id']=Auth::user()->id;
+
         return $this->bankCardRepository->add($data);
     }
 

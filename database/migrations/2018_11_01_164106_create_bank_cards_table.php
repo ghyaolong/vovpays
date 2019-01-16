@@ -18,7 +18,7 @@ class CreateBankCardsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->comment('用户id');
             $table->unsignedInteger('bank_id')->comment('银行ID');
-            $table->unsignedInteger('bankCardNo')->unique()->comment('银行卡号');
+            $table->string('bankCardNo')->unique()->comment('银行卡号');
             $table->string('accountName')->comment('开户名');
             $table->string('branchName')->nullable()->comment('支行名称');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态：0禁用，1启用，只能1张卡为1');
