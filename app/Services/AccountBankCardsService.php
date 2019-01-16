@@ -45,6 +45,7 @@ class AccountBankCardsService
         } elseif ($data['accountType'] = "微信"){
             $data['channel_payment_id'] = 2;
         }else{
+
             $data['channel_payment_id'] = 3;
         }
 
