@@ -44,6 +44,8 @@ class AccountBankCardsService
             $data['channel_payment_id'] = 1;
         } elseif ($data['accountType'] = "微信"){
             $data['channel_payment_id'] = 2;
+        }else{
+            $data['channel_payment_id'] = 3;
         }
 
         return $this->accountBankCardsRepository->add($data);
