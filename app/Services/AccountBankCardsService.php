@@ -40,9 +40,6 @@ class AccountBankCardsService
     {
         $data = array_except($data, ['_token'], ['bank']);
         $bank = explode(",", $data['bank_name']);
-        $ali = explode(",", $data['phone_id']);
-        $data['phone_id']=$ali[0];
-        $data['chard_index']=$ali[1];
         $data['bank_name'] = $bank[0];
         $data['bank_mark'] = $bank[1];
         $data['accountType'] = '银行卡';
@@ -60,6 +57,9 @@ class AccountBankCardsService
     public function update(int $id, int $uid, array $data)
     {
         $data = array_except($data, ['_token']);
+        $bank = explode(",", $data['bank_name']);
+        $data['bank_name'] = $bank[0];
+        $data['bank_mark'] = $bank[1];
         return $this->accountBankCardsRepository->update($id, $uid, $data);
     }
 

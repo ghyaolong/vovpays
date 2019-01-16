@@ -137,10 +137,17 @@
                                 <select class="form-control" id="phone_id" name="phone_id">
                                     <option value="">选择手机标识</option>
                                     @foreach($alist as $v)
-                                        <option value="{{$v->phone_id}},{{$v->id}}">{{$v->phone_id}}</option>
+                                        <option value="{{$v->phone_id}}">{{$v->phone_id}}</option>
                                     @endforeach
                                 </select>
                                 <p style="margin-bottom: -8px;color: red">必须先配置支付宝账号</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">索引:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="chard_index"
+                                       placeholder="请输入索引">
                             </div>
                         </div>
                         <div class="form-group">
@@ -288,24 +295,24 @@
                             notEmpty: {
                                 message: '请输入银行卡号!'
                             },
-                            regexp: {
-                                regexp: /^([1-9]{1})(\d{14}|\d{18})$/,
-                                message: '请输入正确的银行卡号！'
-                            },
-                            remote: {
-                                url: "{{route('user.checkBank')}}",
-                                message: "该卡号已存在!",
-                                type: "post",
-                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
-                                    return {
-                                        "value": $("input[name='cardNo']").val().trim(),
-                                        "type": 'cardNo',
-                                        "_token": $('meta[name="csrf-token"]').attr('content'),
-                                        "id": $('#id').val(),
-                                    };
-                                },
-                                delay: 500,
-                            },
+                            {{--regexp: {--}}
+                                {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
+                                {{--message: '请输入正确的银行卡号！'--}}
+                            {{--},--}}
+                            {{--remote: {--}}
+                                {{--url: "{{route('user.checkBank')}}",--}}
+                                {{--message: "该卡号已存在!",--}}
+                                {{--type: "post",--}}
+                                {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
+                                    {{--return {--}}
+                                        {{--"value": $("input[name='cardNo']").val().trim(),--}}
+                                        {{--"type": 'cardNo',--}}
+                                        {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
+                                        {{--"id": $('#id').val(),--}}
+                                    {{--};--}}
+                                {{--},--}}
+                                {{--delay: 500,--}}
+                            {{--},--}}
                         },
                     },
                     phone_id: {
