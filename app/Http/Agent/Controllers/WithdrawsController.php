@@ -12,6 +12,7 @@ namespace App\Http\Agent\Controllers;
 use App\Services\BankCardService;
 use App\Services\BanksService;
 use App\Services\WithdrawsService;
+use App\Http\Requests\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,8 +72,9 @@ class WithdrawsController extends Controller
         $clearings = $this->withdrawsService->getAllPage(6);
 
         $banks= $this->banksService->findAll();
+        $WithdrawRule=$this->withdrawsService->getWithdrawRule();
 
-        return view('Agent.Withdraws.clearing', compact('list','banks', 'clearings'));
+        return view('Agent.Withdraws.clearing', compact('list','banks', 'clearings','WithdrawRule'));
     }
 
     /**
@@ -80,17 +82,17 @@ class WithdrawsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(WithdrawRequest $request)
     {
         $result = $this->withdrawsService->add($request->input());
 
-        if ($result) {
+        if ($result['status']) {
 
             return ajaxSuccess('结算申请中，请留意您的账单变化！');
 
         } else {
 
-            return ajaxError('发起申请失败，请稍后重试！');
+            return ajaxError($result['msg']);
         }
     }
 }

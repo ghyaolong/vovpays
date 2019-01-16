@@ -14,6 +14,15 @@ class Withdraw extends Model
     protected $guarded = ['id','created_at','updated_at'];
 
     /**
+     * 这个属性应该被转换为原生类型.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'extend' => 'array',
+    ];
+
+    /**
      * 一对多反向 用户表
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

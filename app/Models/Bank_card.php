@@ -13,6 +13,8 @@ class Bank_card extends Model
      */
     protected $guarded = ['id','created_at','updated_at'];
 
+
+
     /**
      * 一对多反向关联用户表
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

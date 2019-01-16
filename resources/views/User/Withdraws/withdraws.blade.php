@@ -1,13 +1,85 @@
 @extends("User.Commons.layout")
-@section('title','提现记录')
-@section("css")
-    <link rel="stylesheet"
-          href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
-@endsection
+@section('title','结算管理')
 @section('content')
     <div class="row" style="margin-top: 20px">
-        <div class="col-xs-12">
 
+        {{--结算申请--}}
+        <div class="col-md-4">
+            <div class="box box-primary box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">结算申请</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body" id="bank">
+                    <form class="form-horizontal" id="form1" method="post" action="{{route('user.apply')}}">
+                        {{ csrf_field() }}
+                        {{--<input type="hidden" id="user_id" name="user_id">--}}
+                        <div class="form-group">
+                            <label for="" class="col-sm-3 control-label">提现金额</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="withdrawAmount" placeholder="0.00"
+                                       name="withdrawAmount" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-3 control-label">银行卡</label>
+                            <div class="col-sm-9">
+                                <a class="btn btn-info" id="choseCard" onclick="bankModel('选择银行卡')">选择银行卡</a>&nbsp;
+                                <a class="btn btn-info" id="addCard" onclick="showModel('添加银行卡')">添加银行卡</a>
+                                <input type="hidden" class="form-control" id="bankcard" name="bank_id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">持卡人</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="accountName" name="accountName"
+                                       disabled="disabled">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">支行名称</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="branchName" name="branchName"
+                                       disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">银行卡号</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="bankCardNo" name="bankCardNo"
+                                       disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">提款密码</label>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-control" id="authCode" name="auth_code">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <a class="btn btn-danger pull-right" id="applyBtn" onclick="save1($(this))">&nbsp;申&nbsp;请&nbsp;</a>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="reset" class="btn btn-warning" value="&nbsp;重&nbsp;置&nbsp;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        {{--结算记录--}}
+        <div class="col-md-8">
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">结算记录</h3>
@@ -20,131 +92,331 @@
                 </div>
 
                 <div class="box-body">
-                    <form class="navbar-form navbar-left" action="{{route('user.withdraws')}}" method="post">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
-                                   placeholder="提现时间" name="orderTime"
-                                   @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
-                        </div>
-
-                        <div class="form-group">
-                            <select class="form-control" id="paymentId" name="paymentId">
-                                <option value="-1">支付方式</option>
-                                @foreach($payments_list as $v )
-                                    <option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" id="status" name="status">
-                                <option value="0"
-                                        @if(isset($query['status']) && $query['status'] =='0') selected @endif>
-                                    未处理
-                                </option>
-                                <option value="1"
-                                        @if(isset($query['status']) && $query['status'] =='1') selected @endif >
-                                    处理中
-                                </option>
-                                <option value="2"
-                                        @if(isset($query['status']) && $query['status'] =='2') selected @endif>
-                                    已结算
-                                </option>
-                                <option value="3"
-                                        @if(isset($query['status']) && $query['status'] =='3') selected @endif>
-                                    已取消
-                                </option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
-                    </form>
-
-                    <div class="box-body">
-                        <table id="example2" class="table table-condensed table-bordered table-hover">
-                            <tr style="color: #999999">
-                                <th>#</th>
-                                <th>商户id</th>
-                                <th>银行名称</th>
-                                <th>提现金额</th>
-                                <th>提现手续费</th>
-                                <th>到账金额</th>
-                                <th>状态</th>
-                                <th>申请时间</th>
-                                <th>处理时间</th>
+                    <table class="table table-bordered table-hover">
+                        <tr style="color: #999999;background:#f5f6f9">
+                            <th>银行名称</th>
+                            <th>银行卡号</th>
+                            <th>提现额度</th>
+                            <th>提现手续费</th>
+                            <th>到账金额</th>
+                            <th>状态</th>
+                            <th>提现时间</th>
+                        </tr>
+                        @foreach($clearings as $vv)
+                            <tr>
+                                <th>{{$vv->bankName}}</th>
+                                <th>{{$vv->bankCardNo}}</th>
+                                <th>{{$vv->withdrawAmount}}</th>
+                                <th>{{$vv->withdrawRate}}</th>
+                                <th>{{$vv->toAmount}}</th>
+                                <th>{{$vv->status?'未处理':'处理中'}}</th>
+                                <th>{{$vv->created_at}}</th>
                             </tr>
-                            @if(isset($list[0]))
-                                @foreach($list as $v)
-                                    <tr>
-                                        <td>{{$v->id}}</td>
-                                        <td>{{$v->user_id+10000}}</td>
-                                        <td>{{$v->bankName}}</td>
-                                        <td>{{$v->withdrawAmount}}</td>
-                                        <td>{{$v->withdrawRate}}</td>
-                                        <td>{{$v->toAmount}}</td>
-                                        <td>{{$v->status?'已结算':'未处理'}}</td>
-                                        <td>{{$v->created_at}}</td>
-                                        <td>__ __ __</td>
-                                    </tr>
-                                @endforeach
-                            @else
+                        @endforeach
+                    </table>
+                    {{$clearings->links()}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    {{--银行卡表单模态框--}}
+    <div class="modal fade" id="bankModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px;width: 700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;">
+                    <table class="table table-hover">
+                        <tr style="background: #f5f6f9;color: #999999">
+                            <th>序号</th>
+
+                            <th>银行名称</th>
+                            <th>支行名称</th>
+                            <th>银行卡号</th>
+                            <th>持卡人</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        @if(isset($list[0]))
+                            @foreach($list as $v)
                                 <tr>
-                                    <td colspan="9" style="color: #999999">没有找到匹配数据</td>
+                                    <td>
+                                        <input type="radio" onclick="edit('编辑',{{$v->id}})"
+                                               {{--@if($v->status==0) disabled="disabled" @endif --}}
+                                               data-dismiss="modal">
+                                    </td>
+                                    <td>{{$v->bank->bankName}}</td>
+                                    <td>{{$v->branchName}}</td>
+                                    <td>{{$v->bankCardNo}}</td>
+                                    <td>{{$v->accountName}}</td>
+                                    <td> @if($v->status) <span style="color: seagreen">启用</span> @else <span style="color: red">禁用</span> @endif</td>
+                                    <td>{{$v->created_at}}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm"
+                                                onclick="del($(this),{{$v->id}})">删除
+                                        </button>
+                                    </td>
                                 </tr>
-                            @endif
-                        </table>
-                        {{$list->appends($data)->links()}}
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="7">
+                                    <a id="addCard" onclick="showModel('添加银行卡')">您还没有银行卡，请添加！</a>
+                                </td>
+                            </tr>
+                        @endif
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
+    {{--添加银行卡模态框--}}
+    @include('User.Commons._bank_modal')
 @endsection
 
 @section("scripts")
-    <script src="{{ asset('AdminLTE/bower_components/moment/moment.js') }}"></script>
-    <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
     <script>
-        $(function () {
-            $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
 
-            $('#daterange-btn').daterangepicker(
-                {
-                    dateLimit: {days: 30},
-                    timePicker: false,
-                    timePicker24Hour: false,
-                    linkedCalendars: false,
-                    autoUpdateInput: false,
-                    ranges: {
-                        '今日': [moment().startOf('day'), moment()],
-                        '昨日': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        '最近7天': [moment().subtract(6, 'days'), moment()],
-                        '最近30天': [moment().subtract(29, 'days'), moment()],
-                        '本月': [moment().startOf('month'), moment().endOf('month')],
-                        '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                    },
-                    opens: 'right', //日期选择框的弹出位置
-                    format: 'YYYY-MM-DD HH:mm:ss', //控件中from和to 显示的日期格式
-                    locale: {
-                        applyLabel: '确定',
-                        cancelLabel: '取消',
-                        fromLabel: '起始时间',
-                        toLabel: '结束时间',
-                        customRangeLabel: '自定义',
-                        daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
-                        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                        firstDay: 1,
-                        endDate: moment(),
-                        format: 'YYYY-MM-DD HH:mm:ss',
-                    },
-                    startDate: moment().startOf('day'),
-                    endDate: moment()
+        /**
+         * 提交
+         */
+
+        function save1(_this) {
+            // formValidator();
+            $('#form1').data('bootstrapValidator').validate();
+            if (!$('#form1').data('bootstrapValidator').isValid()) {
+                return;
+            }
+            _this.removeAttr('onclick');
+
+            var $form = $('#form1');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if (result.status) {
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                    toastr.success(result.msg);
+                } else {
+                    _this.attr("onclick", "save1($(this))");
+                    toastr.error(result.msg);
+                }
+            }, 'json');
+
+        }
+
+        function save(_this) {
+            // formValidator();
+            $('#bankForm').data('bootstrapValidator').validate();
+            if (!$('#bankForm').data('bootstrapValidator').isValid()) {
+                return;
+            }
+            _this.removeAttr('onclick');
+
+            var $form = $('#bankForm');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if (result.status) {
+                    $('#addModel').modal('hide');
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                    toastr.success(result.msg);
+                } else {
+                    $('#addModel').modal('hide');
+                    _this.attr("onclick", "save($(this))");
+                    toastr.error(result.msg);
+                }
+            }, 'json');
+
+        }
+
+
+        $().ready(function () {
+            $('#bankForm').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
                 },
-                function (start, end) {
-                    $('#daterange-btn').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'))
-                });
-        })
+                fields: {
+                    branchName: {
+                        validators: {
+                            notEmpty: {
+                                message: '支行名称不能为空!'
+                            },
+                        }
+                    },
+                    accountName: {
+                        validators: {
+                            notEmpty: {
+                                message: '开户名不能为空!'
+                            },
+                        }
+                    },
+                    bankCardNo: {
+                        validators: {
+                            notEmpty: {
+                                message: '银行卡号不能为空!'
+                            },
+                            regexp: {
+                                regexp: /^([1-9]{1})(\d{14}|\d{18})$/,
+                                message: '请输入正确的银行卡号！'
+                            }
+                        },
+                    },
+                }
+            })
+
+
+            /**
+             * 结算申请，条件控制
+             */
+            $('#form1').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    withdrawAmount: {
+                        validators: {
+                            notEmpty: {
+                                message: '提现金额不能为空'
+                            },
+                            between: {
+                                min: {{$WithdrawRule['withdraw_downline']}},
+                                max: 1000000,
+                                // regexp: /^[1-9]\d{2,}[\.]?\d*/,
+                                message: '输入值必须大于'+{{$WithdrawRule['withdraw_downline']}}
+                            }
+
+                        }
+                    },
+                    bankName1: {
+                        validators: {
+                            notEmpty: {
+                                message: '您未选择银行卡！'
+                            },
+                        }
+                    },
+                    accountName1: {
+                        validators: {
+                            notEmpty: {
+                                message: '您未选择银行卡！'
+                            },
+                        }
+                    },
+                    bankCardNo1: {
+                        validators: {
+                            notEmpty: {
+                                message: '您未选择银行卡！'
+                            }
+                        },
+                    },
+                    payPassword: {
+                        validators: {
+                            notEmpty: {
+                                message: '提款密码不能为空！'
+                            }
+                        }
+                    }
+                }
+            })
+        });
+
+
+        /**
+         * 显示模态框
+         * @param title
+         */
+        function showModel(title) {
+            $('#addModel .modal-title').html(title);
+            $('#addModel').modal('show');
+        }
+
+        function bankModel(title) {
+            $('#bankModel .modal-title').html(title);
+            $('#bankModel').modal('show');
+        }
+
+        /**
+         * 编辑
+         * @param id
+         * @param title
+         */
+        function edit(title, id) {
+            $.ajax({
+                type: 'get',
+                url: '/user/bankCard/' + id + '/edit',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (result) {
+                    if (result.status == 1) {
+
+                        $("input[id='bankcard']").val(result.data['id']);
+                        $("input[id='branchName']").val(result.data['branchName']);
+                        $("input[id='bankCardNo']").val(result.data['bankCardNo']);
+                        $("input[id='accountName']").val(result.data['accountName']);
+                        $("input[id='user_id']").val(result.data['user_id']);
+                        // $("input[name='id']").val(result.data['id']);
+                        // $('.modal-title').html(title);
+                        // $('#bank').modal('show');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus) {
+                    toastr.error('通信失败');
+                }
+            })
+        }
+
+
+        function del(_this, id) {
+            swal({
+                title: "您确定要删除吗？",
+                text: "删除后不能恢复！",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            }, function () {
+                $.ajax({
+                    type: 'delete',
+                    url: '/user/bankCard',
+                    data: {'id': id},
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (result) {
+                        if (result.status) {
+                            _this.parents('tr').empty();
+                            swal(result.msg, "银行卡已删除。", "success")
+                        } else {
+                            swal(result.msg, "银行卡未删除。", "error")
+                        }
+
+                    },
+                    error: function (XMLHttpRequest, textStatus) {
+                        toastr.error('通信失败');
+                    }
+                })
+            });
+        }
 
     </script>
 @endsection

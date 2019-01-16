@@ -25,7 +25,7 @@ class AddBankinfoToWithdrawsTable extends Migration
             $table->string('upOrderId')->nullable()->comment('上游结算单号');
             $table->string('channelCode')->comment('结算通道编码');
             $table->string('comment')->nullable()->comment('结算备注信息');
-            $table->json('extend')->nullable()->comment('扩展银行卡信息,json格式');
+            $table->text('extend')->nullable()->comment('扩展银行卡信息,json格式');
 
         });
     }

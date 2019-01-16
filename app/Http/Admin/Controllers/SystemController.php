@@ -29,11 +29,11 @@ class SystemController extends Controller
     {
         $id = $request->id ? $request->id : '';
         $this->validate($request, [
-            'name'        => 'required,'.$id .'| regex:/^[A-Za-z]+$/ |unique:systems,name,'.$id,
+            'name'        =>'required_without:id| regex:/^[A-Za-z]+$/ |unique:systems,name,'.$id,
             'value'       => 'required',
             'remark'      => 'required',
         ],[
-            'name.required'         => '配置键名不能为空',
+            'name.required_without' => '配置键名不能为空',
             'name.regex'            => '配置键名格式不正确',
             'name.unique'           => '配置键名已存在',
             'value.required'        => '配置键值不能为空',

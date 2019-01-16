@@ -11,56 +11,76 @@ namespace App\Services;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\WithdrawsRepository;
 use App\Repositories\BankCardRepository;
-use App\Services\UserPermissionServer;
-use Mockery\Exception;
+use App\Repositories\StatisticalRepository;
+use App\Exceptions\CustomServiceException;
+use App\Repositories\SystemsRepository;
+use Illuminate\Support\Facades\DB;
 
 
 class WithdrawsService
 {
     protected $withdrawsRepository;
     protected $bankCardRepository;
+    protected $statisticalRepository;
 
-    public function __construct(WithdrawsRepository $withdrawsRepository, BankCardRepository $bankCardRepository)
+    public function __construct(WithdrawsRepository $withdrawsRepository, BankCardRepository $bankCardRepository, StatisticalRepository $statisticalRepository)
     {
         $this->withdrawsRepository = $withdrawsRepository;
         $this->bankCardRepository = $bankCardRepository;
+        $this->statisticalRepository = $statisticalRepository;
+
     }
 
 
     public function add(array $data)
     {
-        //权限验证
-        UserPermissionServer::checkPermission($data['auth_code']);
-        //验证账户余额
-        $this->accountVerify($data);
-//        //获取提款规则信息
-//        $this->getWithdrawRule($data);
         try {
-            DB::beginTransaction();
-            //账户余额更新
-            $this->updateAccount($data);
-//          //资金变动记录
-//          $this->addMoneyDetail($data);
+            $data['user_id'] = Auth::user()->id;
+
+            //权限验证
+            UserPermissionServer::checkPermission($data['auth_code']);
+
+            //获取提款规则信息
+            $withdrawRule = $this->getWithdrawRule($data);
+            //验证账户余额
+            $this->accountVerify($data, $withdrawRule);
+            //手续费计算
+            $this->caculateRate($data, $withdrawRule);
+
             //添加提款记录
-            $this->addWithdrawInfo($data);
-            DB::commit();
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            return false;
+            $data=$this->buildWithdrawInfo($data);
+
+            try {
+//                DB::transaction(function ()use($data) {
+                    //账户余额更新
+
+                    DB::table('statisticals')->whereUserId($data['user_id'])->decrement('balance', $data['withdrawAmount']);
+
+//              //资金变动记录
+//              $this->addMoneyDetail($data);
+
+                    $this->withdrawsRepository->add($data);
+//                }, 2);
+
+                return ['status' => true, 'msg' => ''];
+
+            } catch (\Exception $exception) {
+
+                $msg = $exception->getMessage();
+                return ['status' => false, 'msg' => '系统错误:' . $msg];
+            }
+        } catch (CustomServiceException $customexception) {
+            $msg = $customexception->getMessage();
+            return ['status' => false, 'msg' => $msg];
         }
-        return true;
+
 
     }
 
-    protected function updateAccount($data)
-    {
-        //提现手续费
-        $data['withdrawRate'] = 5;
-        //到账金额
-        $data['toAmount'] = $data['withdrawAmount'] - $data['withdrawRate'];
-        return $data;
-    }
-
+    /**
+     * @param $data
+     * @return bool
+     */
     protected function addMoneyDetail($data)
     {
         return true;
@@ -70,19 +90,51 @@ class WithdrawsService
      * @param $data
      * @return array
      */
-    protected function getWithdrawRule($data)
+    public function getWithdrawRule()
     {
-
         $withdrawRule = [];
+        $withdrawRule['withdraw_downline'] = SystemsRepository::findKey('withdraw_downline');
+        $withdrawRule['withdraw_fee_type'] = SystemsRepository::findKey('withdraw_fee_type');
+        $withdrawRule['withdraw_rate'] = SystemsRepository::findKey('withdraw_rate');
         return $withdrawRule;
     }
 
     /**验证账户余额
      * @return bool
      */
-    protected function accountVerify($data)
+    protected function accountVerify($data, $withdrawRule)
     {
-        return true;
+        if ($withdrawRule['withdraw_downline'] > $data['withdrawAmount']) {
+            throw   new CustomServiceException('提现金额不能少于' . $withdrawRule['withdraw_downline'] . '元');
+        }
+
+        $useraccount = $this->statisticalRepository->findUserId($data['user_id']);
+
+        if ($useraccount['balance'] < $data['withdrawAmount']) {
+            throw   new CustomServiceException('提现金额超过账户可提现金额');
+        }
+
+    }
+
+    /**计算提款手续费
+     * @param $data
+     * @param $withdrawRule
+     */
+    protected function caculateRate(&$data, $withdrawRule)
+    {
+
+        switch ($withdrawRule['withdraw_fee_type']) {
+            case 'RATE':
+                $data['withdrawRate'] = bcmul($data['withdrawAmount'], bcdiv($withdrawRule['withdraw_rate'], 100, 2), 2);
+                $data['toAmount'] = bcsub($data['withdrawAmount'], $data['withdrawRate'], 2);
+                break;
+            case 'FIX':
+                $data['withdrawRate'] = $withdrawRule['withdraw_rate'];
+                $data['toAmount'] = bcsub($data['withdrawAmount'], $data['withdrawRate'], 2);
+                break;
+            default :
+                throw new  CustomServiceException('不存在的提款收费类型:' . $withdrawRule['withdraw_fee_type'] . ',请联系平台管理员!');
+        }
     }
 
     /**添加提款记录
@@ -90,7 +142,7 @@ class WithdrawsService
      * @return mixed
      */
 
-    protected function addWithdrawInfo($data)
+    protected function buildWithdrawInfo($data)
     {
 
         // 去掉无用数据
@@ -110,10 +162,9 @@ class WithdrawsService
         $data['bankName'] = $bankInfo['bankName'];
         $data['bankCode'] = $bankInfo['code'];
         $data['orderId'] = static::buildWithdrawOrderid();
-        $data['user_id'] = Auth::user()->id;
+        unset($data['auth_code']);
+        return $data;
 
-
-        return $this->withdrawsRepository->add($data);
     }
 
 

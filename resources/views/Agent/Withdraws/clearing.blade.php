@@ -24,7 +24,7 @@
                             <label for="" class="col-sm-3 control-label">提现金额</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="withdrawAmount" placeholder="0.00"
-                                       name="withdrawAmount" value="0.00">
+                                       name="withdrawAmount" value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label">提款密码</label>
                             <div class="col-xs-9">
-                                <input type="password" class="form-control" id="applyPws" name="auth_code">
+                                <input type="password" class="form-control" id="authCode" name="auth_code">
                             </div>
                         </div>
                         <div class="form-group">
@@ -180,71 +180,8 @@
         </div>
     </div>
     {{--添加银行卡模态框--}}
-    <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" style="margin-top: 123px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body" style="overflow: auto;">
-                    <form id="bankForm" action="{{ route('agent.store') }}" class="form-horizontal" role="form"
-                          method="post">
 
-
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">银行名称:</label>
-                            <div class="col-xs-9">
-                                <select class="form-control" id="bankid" name="bank_id">
-                                    <option value="0">
-                                        选择银行
-                                    </option>
-                                    @if(isset($banks[0]))
-                                        @foreach($banks as $v)
-                                            <option value="{{$v->id}}">
-                                                {{--@if($v['status'] =='-1') selected @endif >>--}}
-                                                {{$v->bankName}}
-                                            </option>
-                                        @endforeach
-                                    @else
-                                        <option value="0}">
-                                            {{--@if(!isset($query['status']) || $query['status'] =='-1') selected @endif >--}}
-                                            没有系统预设银行
-                                        </option>
-                                    @endif
-                                </select>
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">持卡人:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="accountName" placeholder="请输入开户名">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">支行名称:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="branchName" placeholder="请输入支行名称">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">银行卡号:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="bankCardNo" placeholder="请输入银行卡号">
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('Agent.Commons._bank_modal')
 @endsection
 
 @section("scripts")
@@ -360,9 +297,11 @@
                             notEmpty: {
                                 message: '提现金额不能为空'
                             },
-                            regexp: {
-                                regexp: /^[1-9]\d{2,}[\.]?\d*/,
-                                message: '提现金额最小100'
+                            between: {
+                                min: {{$WithdrawRule['withdraw_downline']}},
+                                max: 1000000,
+                                // regexp: /^[1-9]\d{2,}[\.]?\d*/,
+                                message: '输入值必须大于'+{{$WithdrawRule['withdraw_downline']}}
                             }
 
                         }

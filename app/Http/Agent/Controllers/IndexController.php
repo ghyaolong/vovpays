@@ -13,22 +13,26 @@ use App\Services\OrdersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
+use App\Services\StatisticalService;
+
 
 class IndexController extends Controller
 {
     protected $ordersService;
     protected $userService;
     protected $orderDayCountService;
+    protected $statisticalService;
 
     /**
      * IndexController constructor.
      * @param OrdersService $ordersService
      * @param OrderDayCountService $orderDayCountService
      */
-    public function __construct( OrdersService $ordersService,OrderDayCountService $orderDayCountService)
+    public function __construct(OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
     {
-        $this->ordersService  = $ordersService;
+        $this->ordersService = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
+        $this->statisticalService = $statisticalService;
     }
 
 
@@ -39,12 +43,17 @@ class IndexController extends Controller
     public function show(Request $request)
     {
         $query = $request->input();
-        $agentId=Auth::user()->id;
+        $agentId = Auth::user()->id;
         //订单金额
         $orderInfoSum = $this->ordersService->orderInfoSum($query);
-        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getAgentSevenDaysCount($agentId),'tm'));
 
-        return view('Agent.Index.index',compact('orderInfoSum','order_day_count'));
+        //账户信息
+        $agentAccount = $this->statisticalService->findUserId($agentId);
+
+        //当日统计
+        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getAgentSevenDaysCount($agentId), 'tm'));
+
+        return view('Agent.Index.index', compact('orderInfoSum', 'order_day_count','agentAccount'));
     }
 
 

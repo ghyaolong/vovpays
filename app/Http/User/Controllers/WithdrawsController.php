@@ -11,6 +11,8 @@ namespace App\Http\User\Controllers;
 
 use App\Services\BankCardService;
 use App\Services\WithdrawsService;
+use App\Services\BanksService;
+use App\Http\Requests\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,16 +20,17 @@ class WithdrawsController extends Controller
 {
     protected $withdrawsService;
     protected $bankCardService;
+    protected $banksService;
 
     /**
      * WithdrawsController constructor.
      * @param WithdrawsService $withdrawsService
      */
-    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService)
+    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService, BanksService $banksService)
     {
         $this->withdrawsService = $withdrawsService;
         $this->bankCardService = $bankCardService;
-
+        $this->banksService = $banksService;
     }
 
     /**
@@ -61,12 +64,17 @@ class WithdrawsController extends Controller
      */
     public function clearing()
     {
-        $id = Auth::user()->id;
-        $list = $this->bankCardService->getUserIdAll($id);
+        $uid = Auth::user()->id;
+        $list = $this->bankCardService->getUserIdAll($uid);
 
         $clearings = $this->withdrawsService->getAllPage(6);
 
-        return view('User.Clearing.clearing', compact('list', 'clearings'));
+        $banks= $this->banksService->findAll();
+
+        $WithdrawRule=$this->withdrawsService->getWithdrawRule();
+
+        return view('User.Withdraws.withdraws', compact('list','banks', 'clearings','WithdrawRule'));
+
     }
 
     /**
@@ -74,17 +82,18 @@ class WithdrawsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(WithdrawRequest $request)
     {
+
         $result = $this->withdrawsService->add($request->input());
 
-        if ($result) {
+        if ($result['status']) {
 
             return ajaxSuccess('结算申请中，请留意您的账单变化！');
 
         } else {
 
-            return ajaxError('发起申请失败，请稍后重试！');
+            return ajaxError($result['msg']);
         }
     }
 }
