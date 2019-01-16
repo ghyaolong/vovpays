@@ -17,7 +17,7 @@ class SystemsTableSeeder extends Seeder
         DB::table('systems')->insert([
             'name'  => 'add_account_type',
             'value' => '1',
-            'remark'=> '挂号方式:1商户后台挂号,2总后台挂号',
+            'remark'=> '挂号方式:1商户后台挂号,2总后台挂号,3代理后台挂号,4三方挂号',
             'created_at'=> $now,
             'updated_at'=> $now
         ]);

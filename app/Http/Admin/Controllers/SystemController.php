@@ -3,6 +3,8 @@ namespace App\Http\Admin\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\SystemsService;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class SystemController extends Controller
 {
