@@ -50,6 +50,8 @@ Route::group([], function ($router) {
         Route::post('accountBank','AccountBankCardsController@store')->name('user.accountBankAdd');
         Route::get('accountBank','AccountBankCardsController@index')->name('user.accountBank');
         Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('user.accountBankEdit');
+        Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('user.accountBankStatus');
+        Route::delete('accountBank','AccountBankCardsController@destroy')->name('user.accountBankDel');
     });
 
 });

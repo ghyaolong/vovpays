@@ -64,6 +64,22 @@ class AccountBankCardsController extends Controller
 
     }
 
+    /**
+     * 编辑状态
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveStatus(Request $request)
+    {
+        $data['status'] = $request->status == 'true' ? '1' : '0';
+        $result = $this->accountBankCardsService->update($request->id, auth()->user()->id, $data);
+        if ($result) {
+            return ajaxSuccess('修改成功！');
+        } else {
+            return ajaxError('修改失败！');
+        }
+    }
+
 
     /**
      * 编辑
