@@ -256,7 +256,7 @@
                                 message: '请输入正确的手机标识!'
                             },
                             remote: {
-                                url: "check",
+                                url: "{{route('user.check')}}",
                                 message: "该手机已添加过微信账号!",
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可

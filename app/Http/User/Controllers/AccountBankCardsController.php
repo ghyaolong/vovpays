@@ -10,6 +10,7 @@ namespace App\Http\User\Controllers;
 
 
 use App\Services\AccountBankCardsService;
+use App\Services\AccountPhoneService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,11 +18,13 @@ use Illuminate\Support\Facades\Auth;
 class AccountBankCardsController extends Controller
 {
     protected $accountBankCardsService;
+    protected $accountPhoneService;
     protected $checkUniqueService;
 
-    public function __construct(AccountBankCardsService $accountBankCardsService, CheckUniqueService $checkUniqueService)
+    public function __construct(AccountBankCardsService $accountBankCardsService, CheckUniqueService $checkUniqueService,AccountPhoneService $accountPhoneService)
     {
         $this->accountBankCardsService=$accountBankCardsService;
+        $this->accountPhoneService = $accountPhoneService;
         $this->checkUniqueService = $checkUniqueService;
     }
 
@@ -35,7 +38,9 @@ class AccountBankCardsController extends Controller
         $data['user_id'] = Auth::user()->id;
 
         $list = $this->accountBankCardsService->getAllPage($data, 6);
-        return view("User.AccountPhone.bank", compact('list'));
+        $data['accountType'] = 'alipay';
+        $alist= $this->accountPhoneService->getAllPage($data, 1000);
+        return view("User.AccountPhone.bank", compact('list','alist'));
     }
 
     /**
@@ -56,7 +61,8 @@ class AccountBankCardsController extends Controller
                 return ajaxError('编辑失败！');
             }
         } else {
-            $request->merge(['user_id' => auth()->user()->id]);
+
+            $request->merge(['user_id' => Auth::user()->id]);
             $result = $this->accountBankCardsService->add($request->input());
             if ($result) {
                 return ajaxSuccess('账号添加成功！');
@@ -121,7 +127,7 @@ class AccountBankCardsController extends Controller
      */
     public function checkUnique(Request $request)
     {
-        $result = $this->checkUniqueService->check('account_phones', $request->type, $request->value, $request->id, $request->name);
+        $result = $this->checkUniqueService->check('account_bank_cards', $request->type, $request->value, $request->id, $request->name);
         if ($result) {
             return response()->json(array("valid" => "true"));
         } else {

@@ -17,7 +17,7 @@ class AccountBankCardsService
 
     public function __construct(AccountBankCardsRepository $accountBankCardsRepository)
     {
-        $this->accountBankCardsRepository=$accountBankCardsRepository;
+        $this->accountBankCardsRepository = $accountBankCardsRepository;
     }
 
     /**
@@ -38,16 +38,15 @@ class AccountBankCardsService
      */
     public function add(array $data)
     {
-//        dd($data);
-        $data = array_except($data, ['_token']);
-        if ($data['accountType'] = "支付宝"){
-            $data['channel_payment_id'] = 1;
-        } elseif ($data['accountType'] = "微信"){
-            $data['channel_payment_id'] = 2;
-        }else{
-            $data['channel_payment_id'] = 3;
-        }
-
+        $data = array_except($data, ['_token'], ['bank']);
+        $bank = explode(",", $data['bank_name']);
+        $ali = explode(",", $data['phone_id']);
+        $data['phone_id']=$ali[0];
+        $data['chard_index']=$ali[1];
+        $data['bank_name'] = $bank[0];
+        $data['bank_mark'] = $bank[1];
+        $data['accountType'] = '银行卡';
+        $data['channel_payment_id'] = 3;
         return $this->accountBankCardsRepository->add($data);
     }
 
@@ -69,8 +68,9 @@ class AccountBankCardsService
      * @param int $status
      * @return mixed
      */
-    public function getStatusAndUserId(int $uid, int $status){
-        return $this->accountBankCardsRepository->getStatusAndUserId( $uid, $status);
+    public function getStatusAndUserId(int $uid, int $status)
+    {
+        return $this->accountBankCardsRepository->getStatusAndUserId($uid, $status);
     }
 
     /**
@@ -80,7 +80,7 @@ class AccountBankCardsService
      */
     public function findIdAndUserId(int $id, int $uid)
     {
-        return $this->accountBankCardsRepository->findIdAndUserId($id,$uid);
+        return $this->accountBankCardsRepository->findIdAndUserId($id, $uid);
     }
 
     /**
@@ -90,7 +90,7 @@ class AccountBankCardsService
      */
     public function del(int $id, int $uid)
     {
-        return $this->accountBankCardsRepository->del($id,$uid);
+        return $this->accountBankCardsRepository->del($id, $uid);
     }
 
 

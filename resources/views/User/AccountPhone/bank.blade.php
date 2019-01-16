@@ -87,26 +87,45 @@
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">账号实名:</label>
+                            <label for="" class="col-xs-3 control-label">卡号实名:</label>
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="bank_account" placeholder="请输入账号实名">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">账户类型:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="accountType"
-                                       placeholder="请输入账户类型，如: 支付宝，微信 等">
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">银行名称:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="bank_name" placeholder="请输入银行名称">
+                                <select class="form-control" id="channelId" name="bank_name">
+                                    <option value="">选择银行</option>
+                                    <option value="中国银行,BOC">中国银行</option>
+                                    <option value="中国工商银行,ICBC">中国工商银行</option>
+                                    <option value="中国建设银行,CCB">中国建设银行</option>
+                                    <option value="中国农业银行,ABC">中国农业银行</option>
+                                    <option value="中国光大银行,CEB">中国光大银行</option>
+                                    <option value="招商银行,CMBC">招商银行</option>
+                                    <option value="广发银行,GDB">广发银行</option>
+                                    <option value="华夏银行,HXB">华夏银行</option>
+                                    <option value="交通银行,BCM">交通银行</option>
+                                    <option value="中国民生银行,CMSB">中国民生银行</option>
+                                    <option value="北京银行,BOB">北京银行</option>
+                                    <option value="东亚银行,BEA">东亚银行</option>
+                                    <option value="南京银行,NJCB">南京银行</option>
+                                    <option value="宁波银行,NBCB">宁波银行</option>
+                                    <option value="平安银行,PAB">平安银行</option>
+                                    <option value="上海银行,BOS">上海银行</option>
+                                    <option value="上海浦东发展银行,SPDB">上海浦东发展银行</option>
+                                    <option value="兴业银行,CIB">兴业银行</option>
+                                    <option value="中国邮政储蓄银行,PSBC">中国邮政储蓄银行</option>
+                                    <option value="浙商银行,CZB">浙商银行</option>
+                                    <option value="中信银行,CNCB">中信银行</option>
+                                    <option value="支付宝,ALIPAY">支付宝</option>
+                                    <option value="微信,WECHAT">微信</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">卡号:</label>
+                            <label for="" class="col-xs-3 control-label">银行卡号:</label>
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="cardNo"
                                        placeholder="请输入银行卡号">
@@ -115,8 +134,13 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="phone_id" name="phone_id"
-                                       placeholder="请输入手机标识">
+                                <select class="form-control" id="phone_id" name="phone_id">
+                                    <option value="">选择手机标识</option>
+                                    @foreach($alist as $v)
+                                        <option value="{{$v->phone_id}},{{$v->id}}">{{$v->phone_id}}</option>
+                                    @endforeach
+                                </select>
+                                <p style="margin-bottom: -8px;color: red">必须先配置支付宝账号</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -255,7 +279,7 @@
                     bank_name: {
                         validators: {
                             notEmpty: {
-                                message: '请输入银行名称!'
+                                message: '请选择银行!'
                             },
                         },
                     },
@@ -300,7 +324,6 @@
                                 regexp: /^[1-9]\d*$/,
                                 message: '请输入正确的数字限额'
                             }
-
                         },
                     },
                 }
