@@ -16,6 +16,7 @@ class CreateBanksTable extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code')->comment('银行编码');
             $table->string('bankName',40)->comment('银行名称');
             $table->string('ico')->nullbale()->comment('银行logo');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态：0禁用，1启用');

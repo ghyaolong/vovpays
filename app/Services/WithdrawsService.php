@@ -48,30 +48,30 @@ class WithdrawsService
             $this->caculateRate($data, $withdrawRule);
 
             //添加提款记录
-            $data=$this->buildWithdrawInfo($data);
+            $data = $this->buildWithdrawInfo($data);
 
-            try {
-//                DB::transaction(function ()use($data) {
-                    //账户余额更新
 
-                    DB::table('statisticals')->whereUserId($data['user_id'])->decrement('balance', $data['withdrawAmount']);
+            DB::connection('mysql')->transaction(function () use ($data) {
+                //账户余额更新
+
+                DB::connection('mysql')->table('statisticals')->whereUserId($data['user_id'])->decrement('balance', $data['withdrawAmount']);
 
 //              //资金变动记录
 //              $this->addMoneyDetail($data);
+                DB::connection('mysql')->table('withdraws')->insert($data);
 
-                    $this->withdrawsRepository->add($data);
-//                }, 2);
+            },3);
 
-                return ['status' => true, 'msg' => ''];
+            return ['status' => true, 'msg' => ''];
 
-            } catch (\Exception $exception) {
 
-                $msg = $exception->getMessage();
-                return ['status' => false, 'msg' => '系统错误:' . $msg];
-            }
         } catch (CustomServiceException $customexception) {
             $msg = $customexception->getMessage();
             return ['status' => false, 'msg' => $msg];
+        } catch (\Exception $exception) {
+
+            $msg = $exception->getMessage();
+            return ['status' => false, 'msg' => '系统错误:' . $msg];
         }
 
 
@@ -99,7 +99,7 @@ class WithdrawsService
         return $withdrawRule;
     }
 
-    /**验证账户余额
+    /**金额验证
      * @return bool
      */
     protected function accountVerify($data, $withdrawRule)
@@ -146,7 +146,7 @@ class WithdrawsService
     {
 
         // 去掉无用数据
-        $data = array_except($data, ['_token', 'payPassword']);
+        $data = array_except($data, ['_token', 'auth_code']);
 
         //银行卡信息
         $bankCard = $this->bankCardRepository->findId($data['bank_id']);
@@ -162,7 +162,7 @@ class WithdrawsService
         $data['bankName'] = $bankInfo['bankName'];
         $data['bankCode'] = $bankInfo['code'];
         $data['orderId'] = static::buildWithdrawOrderid();
-        unset($data['auth_code']);
+
         return $data;
 
     }

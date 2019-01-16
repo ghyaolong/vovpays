@@ -17,7 +17,8 @@ class CreateBankCardsTable extends Migration
         Schema::create('bank_cards', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->comment('用户id');
-            $table->char('bankCardNo',19)->comment('银行卡号');
+            $table->unsignedInteger('bank_id')->comment('银行ID');
+            $table->unsignedInteger('bankCardNo')->unique()->comment('银行卡号');
             $table->string('accountName')->comment('开户名');
             $table->string('branchName')->nullable()->comment('支行名称');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态：0禁用，1启用，只能1张卡为1');
