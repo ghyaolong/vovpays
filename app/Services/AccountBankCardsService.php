@@ -64,6 +64,14 @@ class AccountBankCardsService
         return $this->accountBankCardsRepository->update($id, $uid, $data);
     }
 
+    /**
+     * @param int $uid
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAndUserId(int $uid, int $status){
+        return $this->accountBankCardsRepository->getStatusAndUserId( $uid, $status);
+    }
 
     /**
      * @param int $id

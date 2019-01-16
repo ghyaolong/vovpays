@@ -93,6 +93,13 @@ class AccountBankCardsRepository
         return $this->account_bank_cards->whereId($id)->whereUserId($uid)->delete();
     }
 
-
-
+    /**
+     * @param int $uid
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAndUserId(int $uid, int $status)
+    {
+        return $this->account_bank_cards->whereStatus($status)->whereUserId($uid)->get();
+    }
 }
