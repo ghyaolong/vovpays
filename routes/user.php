@@ -52,6 +52,7 @@ Route::group([], function ($router) {
         Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('user.accountBankEdit');
         Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('user.accountBankStatus');
         Route::delete('accountBank','AccountBankCardsController@destroy')->name('user.accountBankDel');
+        Route::post('accountBank/checkBank','AccountBankCardsController@checkUnique')->name('user.checkBank');
     });
 
 });

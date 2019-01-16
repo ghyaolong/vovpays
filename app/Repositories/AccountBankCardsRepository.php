@@ -102,4 +102,30 @@ class AccountBankCardsRepository
     {
         return $this->account_bank_cards->whereStatus($status)->whereUserId($uid)->get();
     }
+
+    /**
+     * 检测唯一
+     * @param string $field
+     * @param string $value
+     * @param int|null $id
+     * @return mixed
+     */
+    public function searchCheck(string $field, string $value, int $id = null)
+    {
+        if ($id) {
+            if ($field == 'cardNo') {
+                $sql = "id <> $id and cardNo = ?";
+                $where['cardNo'] = $value;
+            }
+        } else {
+            if ($field == 'cardNo') {
+                $sql = " cardNo = ?";
+                $where['cardNo'] = $value;
+
+            }
+        }
+        return $this->account_bank_cards->whereRaw($sql, $where)->first();
+    }
+
+
 }

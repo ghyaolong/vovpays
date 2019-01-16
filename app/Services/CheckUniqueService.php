@@ -5,18 +5,21 @@ namespace App\Services;
 use App\Repositories\AccountPhoneRepository;
 use App\Repositories\AdminsRepository;
 use App\Repositories\UsersRepository;
+use App\Repositories\AccountBankCardsRepository;
 
 class CheckUniqueService
 {
     protected $adminsRepository;
     protected $usersRepository;
     protected $accountPhoneRepository;
+    protected $accountBankCardsRepository;
 
-    public function __construct(AdminsRepository $adminsRepository, UsersRepository $usersRepository, AccountPhoneRepository $accountPhoneRepository)
+    public function __construct(AdminsRepository $adminsRepository, UsersRepository $usersRepository, AccountPhoneRepository $accountPhoneRepository,AccountBankCardsRepository $accountBankCardsRepository)
     {
         $this->adminsRepository = $adminsRepository;
         $this->usersRepository = $usersRepository;
         $this->accountPhoneRepository = $accountPhoneRepository;
+        $this->accountBankCardsRepository=$accountBankCardsRepository;
     }
 
 
@@ -52,6 +55,10 @@ class CheckUniqueService
 
                     return $result = 1;
                 }
+                break;
+
+            case 'account_bank_cards':
+                $result = $this->accountBankCardsRepository->searchCheck($field, $value, $id);
                 break;
 
             default :

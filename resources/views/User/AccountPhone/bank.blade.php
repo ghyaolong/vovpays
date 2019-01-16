@@ -95,7 +95,8 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">账户类型:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="accountType" placeholder="请输入账户类型，如: 支付宝，微信 等">
+                                <input type="text" class="form-control" name="accountType"
+                                       placeholder="请输入账户类型，如: 支付宝，微信 等">
                             </div>
                         </div>
                         <div class="form-group">
@@ -107,13 +108,15 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">卡号:</label>
                             <div class="col-xs-9">
-                                <input type="text" id="account" class="form-control" name="cardNo" placeholder="请输入银行卡号">
+                                <input type="text" class="form-control" name="cardNo"
+                                       placeholder="请输入银行卡号">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="phone_id" name="phone_id" placeholder="请输入手机标识">
+                                <input type="text" class="form-control" id="phone_id" name="phone_id"
+                                       placeholder="请输入手机标识">
                             </div>
                         </div>
                         <div class="form-group">
@@ -235,24 +238,49 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    account: {
+                    bank_account: {
                         validators: {
                             notEmpty: {
                                 message: '请输入账号!'
                             },
                         }
                     },
-                    alipayusername: {
+                    accountType: {
                         validators: {
                             notEmpty: {
-                                message: '请输入账号实名!'
+                                message: '请输入账户类型!'
                             },
                         }
                     },
-                    alipayuserid: {
+                    bank_name: {
                         validators: {
                             notEmpty: {
-                                message: '请输入账号id!'
+                                message: '请输入银行名称!'
+                            },
+                        },
+                    },
+                    cardNo: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入银行卡号!'
+                            },
+                            regexp: {
+                                regexp: /^([1-9]{1})(\d{14}|\d{18})$/,
+                                message: '请输入正确的银行卡号！'
+                            },
+                            remote: {
+                                url: "{{route('user.checkBank')}}",
+                                message: "该卡号已存在!",
+                                type: "post",
+                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value": $("input[name='cardNo']").val().trim(),
+                                        "type": 'cardNo',
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id": $('#id').val(),
+                                    };
+                                },
+                                delay: 500,
                             },
                         },
                     },

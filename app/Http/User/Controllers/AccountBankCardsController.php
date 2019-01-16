@@ -10,16 +10,19 @@ namespace App\Http\User\Controllers;
 
 
 use App\Services\AccountBankCardsService;
+use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AccountBankCardsController extends Controller
 {
     protected $accountBankCardsService;
+    protected $checkUniqueService;
 
-    public function __construct(AccountBankCardsService $accountBankCardsService)
+    public function __construct(AccountBankCardsService $accountBankCardsService, CheckUniqueService $checkUniqueService)
     {
         $this->accountBankCardsService=$accountBankCardsService;
+        $this->checkUniqueService = $checkUniqueService;
     }
 
     /**
@@ -108,6 +111,21 @@ class AccountBankCardsController extends Controller
             return ajaxSuccess('账号已删除！');
         } else {
             return ajaxError('删除失败！');
+        }
+    }
+
+    /**
+     * 检测唯一性
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkUnique(Request $request)
+    {
+        $result = $this->checkUniqueService->check('account_phones', $request->type, $request->value, $request->id, $request->name);
+        if ($result) {
+            return response()->json(array("valid" => "true"));
+        } else {
+            return response()->json(array("valid" => "false"));
         }
     }
 
