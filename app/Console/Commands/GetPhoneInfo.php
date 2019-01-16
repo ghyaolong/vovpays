@@ -68,7 +68,8 @@ class GetPhoneInfo extends Command
         }else{
             $params = array(
                 'phoneid' => $data['phoneid'],
-                'amount'  => 0,
+                'amount'  => 0,   // 交易额
+                'bankamount' => 0,// 银行卡交易额
                 'weight'  => 1,
                 'update'  => date('Y-m-d H:i:s', time()),
                 'comment' => $data['comment'],
