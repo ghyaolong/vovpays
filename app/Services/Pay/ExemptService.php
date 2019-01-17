@@ -18,7 +18,7 @@ use App\Jobs\SendOrderAsyncNotify;
 use App\Common\RespCode;
 use Illuminate\Support\Facades\Redis;
 
-class TestService implements PayInterface
+class ExemptService implements PayInterface
 {
     public function pay(User $user, Channel $channel, Channel_payment $Channel_payment, User_rates $user_rates, Request $request )
     {

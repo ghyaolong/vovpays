@@ -78,7 +78,7 @@
     var checkOrderStatus = function () {
         clearTimeout(qi);
         $.ajax({
-            url: '{{ route('pay.success','test') }}',
+            url: '{{ route('pay.success','exempt') }}',
             data: {"trade_no": "{{$data['orderNo']}}"},
             type:'get',
             success: function (ret) {

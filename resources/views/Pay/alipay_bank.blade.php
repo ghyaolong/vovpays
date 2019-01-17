@@ -106,12 +106,11 @@ function qrcode_timeout(){
 
 function checkdata(){
     $.ajax({
-        url: '{{ route('pay.success','test') }}',
+        url: '{{ route('pay.success','exempt') }}',
         data: {"trade_no": "{{$data['orderNo']}}"},
         type:'get',
         dataType:'json',
         success: function (data) {
-            console.log(data.status );
             if (data.status == 'success'){
                 window.clearInterval(timer);
                 $("#show_qrcode").attr("src","{{ asset('images/Pay/pay_ok.png') }}");
@@ -134,7 +133,6 @@ $().ready(function(){
         $('.paybtn').show();
     }
     var strcode = toUtf8("{!! $data['payurl'] !!}");
-    console.log(strcode);
     var qrcode = $('#show_qrcode').qrcode({ text: strcode });
     var canvas = qrcode.find('canvas').get(0);
     $('#show_qrcode').attr('src', canvas.toDataURL('image/jpg'));

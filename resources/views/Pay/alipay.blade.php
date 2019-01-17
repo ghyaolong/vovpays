@@ -106,7 +106,7 @@ function qrcode_timeout(){
 
 function checkdata(){
     $.ajax({
-        url: '{{ route('pay.success','test') }}',
+        url: '{{ route('pay.success','exempt') }}',
         data: {"trade_no": "{{$data['orderNo']}}"},
         type:'get',
         dataType:'json',

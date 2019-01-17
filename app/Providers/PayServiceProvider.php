@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\Pay\TestService;
+use App\Services\Pay\ExemptService;
 use Illuminate\Support\ServiceProvider;
 
 class PayServiceProvider extends ServiceProvider
@@ -27,8 +27,8 @@ class PayServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('test', function () {
-            return new TestService();
+        $this->app->singleton('exempt', function () {
+            return new ExemptService();
         });
     }
 
@@ -39,6 +39,6 @@ class PayServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['test'];
+        return ['exempt'];
     }
 }
