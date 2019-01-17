@@ -36,9 +36,10 @@ class OrderDayCountRepository
 
     /**
      * 统计7天数据
+     * @param int $agentId
      * @return mixed
      */
-    public function getAgentSevenDaysCount($agentId)
+    public function getAgentSevenDaysCount(int $agentId)
     {
         return DB::select("select date(`updated_at`) as tm, sys_amount,sys_income, sys_order_suc_count FROM pay_order_day_counts where date(`updated_at`) <= date(NOW()) and `agent_id`=$agentId GROUP BY date(`updated_at`)");
     }
@@ -46,11 +47,30 @@ class OrderDayCountRepository
 
     /**
      * 统计7天数据
+     * @param int $uid
      * @return mixed
      */
-    public function getUserSevenDaysCount($userId)
+    public function getUserSevenDaysCount(int $uid)
     {
-        return DB::select("select date(`updated_at`) as tm, sys_amount,sys_income, sys_order_suc_count FROM pay_order_day_counts where date(`updated_at`) <= date(NOW()) and `user_id`=$userId GROUP BY date(`updated_at`)");
+        return DB::select("select date(`updated_at`) as tm, sys_amount,sys_income, sys_order_suc_count FROM pay_order_day_counts where date(`updated_at`) <= date(NOW()) and `user_id`=$uid GROUP BY date(`updated_at`)");
+    }
+
+    /**
+     * 获取平台今日统计
+     * @return mixed
+     */
+    public function findSysDayCount(){
+        return  $this->order_day_count->whereDate( 'updated_at',date('Y-m-d',time()))->first();
+    }
+
+    /**
+     * 获取用户当日统计
+     * @param int $uid
+     * @return mixed
+     */
+    public function findDayAndUserCount(int $uid)
+    {
+        return  $this->order_day_count->whereUserId($uid)->whereDate( 'updated_at',date('Y-m-d',time()))->first();
     }
 
 }
