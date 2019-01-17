@@ -37,7 +37,7 @@
 
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-paper-plane"></i>
+                    <i class="fa fa-circle-o  text-aqua"></i>
                     <span>账号管理</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>

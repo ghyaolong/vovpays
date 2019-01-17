@@ -78,6 +78,13 @@ Route::group([], function () {
         Route::get('account/{id}/edit','AccountPhoneController@edit')->name('account.edit');
         Route::delete('account','AccountPhoneController@destroy')->name('account.destroy');
         Route::post('account/check','AccountPhoneController@checkUnique')->name('account.check');
+        //银行卡账号
+        Route::get('accountBank','AccountBankCardsController@index')->name('accountBank.index');
+        Route::post('accountBank','AccountBankCardsController@store')->name('accountBank.store');
+        Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('accountBank.edit');
+        Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('accountBank.saveStatus');
+        Route::delete('accountBank','AccountBankCardsController@destroy')->name('accountBank.destroy');
+        Route::post('accountBank/checkBank','AccountBankCardsController@checkUnique')->name('checkBank.check');
         //系统配置
         Route::get('system','SystemController@index')->name('system.index');
         Route::get('system/{id}/edit', 'SystemController@edit')->name('system.edit');
