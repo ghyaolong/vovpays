@@ -20,7 +20,6 @@
                         <th>通道名称</th>
                         <th>通道编码</th>
                         <th>接口状态</th>
-                        <th>结算方式</th>
                         <th>通道限额</th>
                         <th>操作</th>
                     </tr>
@@ -31,7 +30,6 @@
                             <td>{{ $v['channelName'] }}</td>
                             <td>{{ $v['channelCode'] }}</td>
                             <td><input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif ></td>
-                            <td><input class="switch-planType" data-id="{{ $v['id'] }}" type="checkbox" @if($v['planType'] == 1) checked @endif ></td>
                             <td>{{ $v['channelQuota'] }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-sm" onclick="edit('通道编辑',{{ $v['id'] }})">编辑</button>
@@ -87,20 +85,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="col-xs-3 control-label">支付地址</label>
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" name="payGateway" placeholder="支付地址">
-                            <span class="help-block" style="font-size: 12px;"><i class="fa fa-info-circle"></i>地址必须带上http或https</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="col-xs-3 control-label">查询地址</label>
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" name="searchUrl" placeholder="查询地址">
-                            <span class="help-block" style="font-size: 12px;"><i class="fa fa-info-circle"></i>地址必须带上http或https</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="" class="col-xs-3 control-label">通道限额</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" value="0" name="channelQuota" placeholder="通道限额">
@@ -108,12 +92,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="col-xs-3 control-label">结算方式</label>
+                        <label for="" class="col-xs-3 control-label">扩展</label>
                         <div class="col-xs-9">
-                            <select class="form-control" name="planType">
-                                <option value="0">T+0</option>
-                                <option value="1">T+1</option>
-                            </select>
+                            <textarea class="form-control" name="extend" id="" cols="30" rows="10"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -285,28 +266,6 @@
                             },
                         }
                     },
-                    payGateway: {
-                        validators: {
-                            notEmpty: {
-                                message: '支付地址不能为空!'
-                            },
-                            regexp: { //正则校验
-                                regexp: /^(http|https):\/\/\S+$/,
-                                message:'地址格式不正确!'
-                            },
-                        }
-                    },
-                    searchUrl: {
-                        validators:{
-                            notEmpty: {
-                                message: '查询地址不能为空!'
-                            },
-                            regexp: { //正则校验
-                                regexp: /^(http|https):\/\/\S+$/,
-                                message:'地址格式不正确!'
-                            },
-                        }
-                    },
                     channelQuota: {
                         validators:{
                             notEmpty: {
@@ -373,16 +332,14 @@
                         $("input[name='channelName']").val(result.data['channelName']);
                         $("input[name='merchant']").val(result.data['merchant']);
                         $("select[name='status']").val(result.data['status']);
-                        $("select[name='planType']").val(result.data['planType']);
                         $("input[name='id']").val(result.data['id']);
                         $("input[name='signkey']").val(result.data['signkey']);
                         $("input[name='channelCode']").val(result.data['channelCode']);
-                        $("input[name='payGateway']").val(result.data['payGateway']);
-                        $("input[name='searchUrl']").val(result.data['searchUrl']);
                         $("input[name='runRate']").val(result.data['runRate']);
                         $("input[name='costRate']").val(result.data['costRate']);
                         $("input[name='refererDomain']").val(result.data['refererDomain']);
                         $("input[name='channelQuota']").val(result.data['channelQuota']);
+                        $("textarea[name='extend']").val(result.data['extend']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
                     }

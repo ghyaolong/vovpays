@@ -38,16 +38,12 @@ class ChannelsController extends Controller
         $this->validate($request, [
             'channelName'     => 'required|max:30',
             'channelCode'     => 'required|max:20|unique:channels,channelCode,'.$id,
-            'payGateway'      => 'required',
-            'searchUrl'       => 'required',
         ],[
             'channelName.required'      => '通道名称不能为空！',
             'channelName.max'           => '通道名称最大长度30个字符！',
             'channelCode.required'      => '通道编码不能为空！',
             'channelCode.max'           => '通道编码最大长度20个字符!',
             'channelCode.unique'        => '通道编码已存在！',
-            'payGateway.required'       => '支付地址不能为空！',
-            'searchUrl.required'        => '查询不能为空',
         ]);
 
         // id 存在更新。不存在添加
@@ -109,8 +105,6 @@ class ChannelsController extends Controller
      */
     public function savePlanType(Request $request)
     {
-        $data['planType'] = $request->status == 'true' ? '1' : '0';
-
         $result = $this->channelService->updateStatus($request->id, $data);
 
         if($result)
