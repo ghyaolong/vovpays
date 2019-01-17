@@ -117,7 +117,7 @@
                                     <option value="上海浦东发展银行,SPDB">上海浦东发展银行</option>
                                     <option value="兴业银行,CIB">兴业银行</option>
                                     <option value="中国邮政储蓄银行,PSBC">中国邮政储蓄银行</option>
-                                    <option value="网商银行,ANTBANK">浙商银行</option>
+                                    <option value="网商银行,ANTBANK">网商银行</option>
                                     <option value="中信银行,CNCB">中信银行</option>
                                     <option value="支付宝,ALIPAY">支付宝</option>
                                     <option value="微信,WECHAT">微信</option>
