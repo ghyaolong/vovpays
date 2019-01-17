@@ -296,22 +296,22 @@
                                 message: '请输入银行卡号!'
                             },
                             {{--regexp: {--}}
-                                {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
-                                {{--message: '请输入正确的银行卡号！'--}}
+                            {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
+                            {{--message: '请输入正确的银行卡号！'--}}
                             {{--},--}}
                             {{--remote: {--}}
-                                {{--url: "{{route('user.checkBank')}}",--}}
-                                {{--message: "该卡号已存在!",--}}
-                                {{--type: "post",--}}
-                                {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
-                                    {{--return {--}}
-                                        {{--"value": $("input[name='cardNo']").val().trim(),--}}
-                                        {{--"type": 'cardNo',--}}
-                                        {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
-                                        {{--"id": $('#id').val(),--}}
-                                    {{--};--}}
-                                {{--},--}}
-                                {{--delay: 500,--}}
+                            {{--url: "{{route('user.checkBank')}}",--}}
+                            {{--message: "该卡号已存在!",--}}
+                            {{--type: "post",--}}
+                            {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
+                            {{--return {--}}
+                            {{--"value": $("input[name='cardNo']").val().trim(),--}}
+                            {{--"type": 'cardNo',--}}
+                            {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
+                            {{--"id": $('#id').val(),--}}
+                            {{--};--}}
+                            {{--},--}}
+                            {{--delay: 500,--}}
                             {{--},--}}
                         },
                     },
@@ -370,7 +370,7 @@
                         $("input[name='accountType']").val(result.data['accountType']);
                         $("input[name='bank_name']").val(result.data['bank_name']);
                         $("input[name='cardNo']").val(result.data['cardNo']);
-                        $("input[name='phone_id']").val(result.data['phone_id']);
+                        $("select[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
                         $("input[name='chard_index']").val(result.data['chard_index']);
                         $("input[name='id']").val(result.data['id']);

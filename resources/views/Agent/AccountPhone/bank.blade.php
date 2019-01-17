@@ -370,7 +370,7 @@
                         $("input[name='accountType']").val(result.data['accountType']);
                         $("input[name='bank_name']").val(result.data['bank_name']);
                         $("input[name='cardNo']").val(result.data['cardNo']);
-                        $("input[name='phone_id']").val(result.data['phone_id']);
+                        $("select[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
                         $("input[name='chard_index']").val(result.data['chard_index']);
                         $("input[name='id']").val(result.data['id']);
