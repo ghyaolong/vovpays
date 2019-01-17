@@ -76,7 +76,7 @@
     </label>
     <label>
         <span>金额 :</span>
-        <input type="text" name="amount" value="0.00">
+        <input type="text" name="amount" value="">
     </label>
     <label>
         <span>支付编码 :</span>
