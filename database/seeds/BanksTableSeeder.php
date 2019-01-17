@@ -16,7 +16,7 @@ class BanksTableSeeder extends Seeder
     {
         //
         $now = Carbon::now()->toDateTimeString();
-        DB::table('banks')->insert([
+        DB::table('banks')->insert(
             ['code' => 'ICBC', 'bankName' => '中国工商银行', 'ico' => 'icbc.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'CCB', 'bankName' => '中国建设银行', 'ico' => 'ccb.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'ABC', 'bankName' => '中国农业银行', 'ico' => 'abc.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
@@ -39,7 +39,7 @@ class BanksTableSeeder extends Seeder
             ['code' => 'ANTBANK','bankName' => '网商银行', 'ico' => 'ANTBANK.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'CNCB', 'bankName' => '中信银行', 'ico' => 'cncb.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'ALIPAY', 'bankName' => '支付宝', 'ico' => 'alipay.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
-            ['code' => 'WECHAT', 'bankName' => '微信', 'ico' => 'wechat.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
-        ]);
+            ['code' => 'WECHAT', 'bankName' => '微信', 'ico' => 'wechat.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now]
+        );
     }
 }
