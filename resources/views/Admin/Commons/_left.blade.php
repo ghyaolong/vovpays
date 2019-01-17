@@ -68,10 +68,9 @@
                     <span>订单管理</span>
                 </a>
             </li>
-            @if(isset($type) && $type >= '2')
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-paper-plane"></i>
+                    <i class="fa fa-user"></i>
                     <span>账号管理</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -80,12 +79,10 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('account.index',[0]) }}"><i class="fa fa-circle-o"></i>微信账号</a></li>
                     <li><a href="{{ route('account.index',[1]) }}"><i class="fa fa-circle-o"></i>支付宝账号</a></li>
-                    <li><a href="{{ route('account.index',[2]) }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
+                    <li><a href="{{ route('accountBank.index') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
                 </ul>
             </li>
-            @else
 
-            @endif
             <li>
                 <a href="{{ route('system.index') }}">
                     <i class="fa fa-cog"></i>

@@ -72,6 +72,7 @@ class WithdrawsController extends Controller
         $banks= $this->banksService->findAll();
 
         $WithdrawRule=$this->withdrawsService->getWithdrawRule();
+        dd($WithdrawRule);
 
         return view('User.Withdraws.withdraws', compact('list','banks', 'clearings','WithdrawRule'));
 

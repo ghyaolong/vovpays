@@ -47,10 +47,9 @@
             {{--<li><a href="{{route('agent.rate')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>商户费率</span></a></li>--}}
             </li>
 
-            @if(isset($type) && $type >= '3')
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-paper-plane"></i>
+                        <i class="fa fa-circle-o  text-aqua"></i>
                         <span>账号管理</span>
                         <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -64,9 +63,7 @@
                         <li><a href="{{ route('agent.accountBank') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
                     </ul>
                 </li>
-            @else
 
-            @endif
 
         </ul>
     </section>
