@@ -56,9 +56,6 @@
                 <div class="col-xs-12">
                     <button type="submit" class="btn btn-primary btn-block btn-flat btn-login">登录</button>
                 </div>
-                <div class="col-xs-12">
-                    <a style="margin-top: 10px" class="center-block" href="">忘记密码</a>
-                </div>
             </div>
         </form>
     </div>

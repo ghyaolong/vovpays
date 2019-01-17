@@ -33,6 +33,7 @@ class AccountPhoneController extends Controller
     {
         $data = $request->input();
         $data['user_id'] = Auth::user()->id;
+        $data['third'] = 1;
         if ($request->type == '0') {
             $data['accountType'] = 'wechat';
         } elseif ($request->type == '1') {
@@ -62,6 +63,7 @@ class AccountPhoneController extends Controller
             }
         } else {
             $request->merge(['user_id' => auth()->user()->id]);
+            $request->merge(['third' => 1]);
             $result = $this->accountPhoneService->add($request->input());
             if ($result) {
                 return ajaxSuccess('账号添加成功！');
