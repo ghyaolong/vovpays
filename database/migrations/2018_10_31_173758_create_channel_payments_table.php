@@ -18,7 +18,7 @@ class CreateChannelPaymentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('channel_id')->comment('通道id');
             $table->string('paymentName',30)->comment('支付名称');
-            $table->string('paymentCode',10)->comment('支付编码');
+            $table->string('paymentCode',30)->comment('支付编码');
             $table->string('ico')->nullable()->comment('支付方式logo');
             $table->decimal('runRate',9,6)->default(0)->comment('运营费率');
             $table->decimal('costRate',9,6)->default(0)->comment('成本费率');

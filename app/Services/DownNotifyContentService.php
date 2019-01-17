@@ -48,7 +48,8 @@ class DownNotifyContentService{
             'out_order_no'  => $orders->underOrderNo,
             'order_time'    => $extend['tm'],
             'attach'        => $extend['attach'],
-            'cuid'          => $extend['cuid']
+            'cuid'          => $extend['cuid'],
+            'realPrice'     => $extend['realPrice'],
         );
 
         return $param;

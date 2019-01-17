@@ -32,7 +32,6 @@ class SendOrderAsyncNotify implements ShouldQueue
      */
     public function handle()
     {
-
         $DownNotifyContentService = new DownNotifyContentService();
         $result = $DownNotifyContentService->send($this->order);
         if(!$result)

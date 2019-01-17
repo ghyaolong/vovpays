@@ -22,15 +22,12 @@
 <body>
 <div class="body">
     <h1 class="mod-title">
-        <span class="ico_log @if($data['type'] == 'alipay') ico-a  @elseif($data['type'] == 'weixin') ico-w @endif"></span>
+        <span class="ico_log ico-w"></span>
     </h1>
     <div class="mod-ct">
-        <h1 style="padding-top:15px;color: #FF0000">注意：一码一单，多支付不能到账</h1>
+        <h1 style="padding-top:15px;color: #FF0000">1.一码一单，多次付款无法到账</h1>
+        <h1 style="padding-top:15px;color: #FF0000">2.需要多次付款，请重新发起订单</h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
-        <!--支付宝app支付-->
-        <div class="paybtn" style="display: none;">
-            <a href="{{ $data['qrurl'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">打开支付宝</a>
-        </div>
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
@@ -40,19 +37,11 @@
             </div>
         </div>
         <div class="time-item">
-            <dvi class="time-item"><h1 style="color: red">验证姓名：{{$data['username']}}</h1></dvi>
             <dvi class="time-item" id="msg"><h1>付款即时到账 未到账可联系我们</h1></dvi>
             <div class="time-item"><h1>订单:{{$data['orderNo']}}</h1> </div>
             <strong id="hour_show"><s id="h"></s>0时</strong>
             <strong id="minute_show"><s></s>0分</strong>
             <strong id="second_show"><s></s>0秒</strong>
-        </div>
-
-        <div class="tip">
-            <div class="ico-scan"></div>
-            <div class="tip-text">
-                <p id="showtext">打开 @if($data['type'] == 'alipay') 支付宝  @elseif($data['type'] == 'weixin') 微信 @endif [扫一扫]</p>
-            </div>
         </div>
     </div>
 </div>
@@ -111,12 +100,13 @@ function qrcode_timeout(){
 }
 
 function checkdata(){
-    var no = $("#trade_no").val();
-    $.get(
-        "{{ route('pay.success','test') }}", {
-            trade_no : no,
-        },
-        function(data){
+    $.ajax({
+        url: '{{ route('pay.success','test') }}',
+        data: {"trade_no": "{{$data['orderNo']}}"},
+        type:'get',
+        dataType:'json',
+        success: function (data) {
+            console.log(data.status );
             if (data.status == 'success'){
                 window.clearInterval(timer);
                 $("#show_qrcode").attr("src","{{ asset('images/Pay/pay_ok.png') }}");
@@ -124,18 +114,13 @@ function checkdata(){
                 $("#msg").html("<h1>订单已支付成功</h1>");
                 $(".paybtn").hide();
                 clearInterval(myTimer);
-                clearInterval(timers);
             }
         }
-    );
+    })
 }
 
 $().ready(function(){
     timer(180);
-    if(isMobile() == 1 && "{{ $data['type'] == 'alipay' }}")
-    {
-        $('.paybtn').show();
-    }
 })
 </script>
 </body>

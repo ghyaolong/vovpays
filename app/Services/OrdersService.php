@@ -31,12 +31,19 @@ class OrdersService
      */
     public function add(User $user, Channel $channel, Channel_payment $Channel_payment, Request $request, User_rates $user_rates, array $account_array)
     {
+        if( $request->pay_code == "alipay_bank" )
+        {
+            $amount = $account_array['realPrice'];
+        }else{
+            $amount = $request->amount;
+        }
         // 订单收益计算
-        $order_amount_array = $this->orderRateService->orderFee($user, $Channel_payment, $user_rates, $request->amount);
+        $order_amount_array = $this->orderRateService->orderFee($user, $Channel_payment, $user_rates, $amount);
         $extend = array(
             'tm'        => $request->order_time ? $request->order_time : date('Y-m-d H:i:s',time()),
             'attach'    => $request->attach ? $request->attach : '',
             'cuid'      => $request->cuid ? $request->cuid : '',
+            'realPrice' => $request->amount,
         );
 
         $param = array(
@@ -50,7 +57,7 @@ class OrdersService
             'account'       => $account_array['account'] ?: $account_array['account'] ,
             'orderNo'       => getOrderId(),
             'underOrderNo'  => $request->order_no,
-            'amount'        => $request->amount,
+            'amount'        => $amount,
             'orderRate'     => $order_amount_array['orderFee'],
             'sysAmount'     => $order_amount_array['sysAmount'],
             'agentAmount'   => $order_amount_array['agentAmount'],

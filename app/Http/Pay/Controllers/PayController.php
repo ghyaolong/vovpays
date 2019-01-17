@@ -12,6 +12,7 @@ use App\Common\RespCode;
 use App\Tool\Md5Verify;
 use App;
 use Illuminate\Support\Facades\Redis;
+use App\Jobs\SendOrderAsyncNotify;
 
 class PayController extends Controller
 {
@@ -296,14 +297,14 @@ class PayController extends Controller
     public function demo()
     {
         $pay_memberid = 'zKWbxbpNHY';
-        $pay_amount  = "0.01";    //交易金额
+        $pay_amount  = "0.1";    //交易金额
         $pay_applydate = date('Y-m-d H:i:s');  //订单时间
-        $pay_code  = "wechat";   //支付方式
+        $pay_code    = "alipay_bank";   //支付方式
         $pay_orderid = date('YmdHis').rand(0000,9999);    //订单号
         $pay_notifyurl = "http://cc.vovpay.com/Pay_Exemption_test.html";   //服务端返回地址
         $pay_callbackurl = "http://b.com:8080";  //页面跳转返回地址
         $Md5key = '$2y$10$W6n77XJ8daHSI27P3sf.y.odjEbdHMgSWLOoW7GcHevanhwk2ZpGS';   //密钥
-
+        $tjurl = "http://8tft85.natappfree.cc/pay";
         $jsapi = array(
             "merchant"      => $pay_memberid,
             "amount"        => $pay_amount,
@@ -320,7 +321,7 @@ class PayController extends Controller
         $sign = $md5Verify->getSign($jsapi,$Md5key);
 
         $jsapi["sign"] = $sign;
-        return view('pay.demo',compact('jsapi'));
+        return view('pay.demo',compact('jsapi','tjurl'));
     }
 
 }

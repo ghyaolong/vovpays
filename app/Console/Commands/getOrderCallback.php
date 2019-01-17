@@ -42,7 +42,6 @@ class getOrderCallback extends Command
      */
     public function handle()
     {
-        Redis::select(1);
         $queue = 'orderback';
         $connection = AMQPStreamConnection::create_connection([
             ['host' => env('MQ_Local_HOST'), 'port' => env('MQ_PORT'), 'user' => env('MQ_USER'), 'password' => env('MQ_PWD'), 'vhost' => env('MQ_VHOST')],
@@ -68,20 +67,32 @@ class getOrderCallback extends Command
      */
     protected function orderCallback($json_str)
     {
+        Redis::select(1);
         Log::info('orderCallback:',[$json_str]);
         $data = json_decode($json_str, true);
         if(!$data) return;
+        if($data['type'] == 'alipay_bank')
+        {
+            $key = $data['phoneid']."_".$data['type'].'_'.$data['money'];
+            if(Redis::exists($key))
+            {
+                $order_id = Redis::get($key);
+            }else{
+                return 1;
+            }
+        }else{
+            $order_id = $data['mark'];
+        }
 
         $ordersService = app(OrdersService::class);
-        $order = $ordersService->findOrderNo($data['mark']);
-
-        if(!$order) return;
-        if($order->status != 0 ) return;
-        if(floatval($order->amount) != floatval($data['money'])) return;
+        $order = $ordersService->findOrderNo($order_id);
+        if(!$order) return 2;
+        if($order->status != 0 ) return 3;
+        if(floatval($order->amount) != floatval($data['money'])) return 4;
 
         $userService = app(UserService::class);
         $user = $userService->findId($order->user_id);
-        if(!$user) return;
+        if(!$user) return 5;
 
         if(!$this->checkSign($data,$user->apiKey)) Log::info('orderCallback_sign_error:',[$json_str]);
 
@@ -90,7 +101,7 @@ class getOrderCallback extends Command
             'onOrderNo' => $data['no']
         );
         $result = $ordersService->update($order->id,$params);
-        if(!$result) return;
+        if(!$result) return 6;
         // 商户收益增加
         $statisticalService = app(StatisticalService::class);
         $statisticalService->updateUseridHandlingFeeBalanceIncrement($user->id,$order->amount);
@@ -101,15 +112,28 @@ class getOrderCallback extends Command
         }
         // 更新订单状态
         if(Redis::exists($order->orderNo)){
-            Redis::hmset($result->orderNo,['status'=>1]);
-            Redis::expire($result->orderNo,180);
+            Redis::hmset($order->orderNo,['status'=>1]);
+            Redis::expire($order->orderNo,180);
         }
 
         // 更新账号交易额
-        if(Redis::exists($data['phoneid'].$data['type']))
-        {
-            Redis::hIncrByFloat($data['phoneid'].$data['type'], 'amount', $order->amount);
+        if($data['type'] == 'alipay_bank'){
+            if(Redis::exists($data['phoneid'].'alipay'))
+            {
+                Redis::hIncrByFloat($data['phoneid'].'alipay', 'bankamount', $order->amount);
+            }
+            if(isset($key))
+            {
+                Redis::del($key);
+            }
+
+        }else{
+            if(Redis::exists($data['phoneid'].$data['type']))
+            {
+                Redis::hIncrByFloat($data['phoneid'].$data['type'], 'amount', $order->amount);
+            }
         }
+        Redis::select(0);
         SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
     }
 

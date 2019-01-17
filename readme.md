@@ -36,6 +36,7 @@
 4. bootstrap-switch
 5. bootstrap-fileinput-4.5.1
 6. Chart.min.js
+7. jquery.qrcode.min.js
 
 ##命令使用
 1. ``php artisan queue:work --queue=orderNotify`` 运行异步下游通知
