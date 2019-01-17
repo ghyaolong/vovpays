@@ -129,7 +129,8 @@ class ChooseAccountService{
                     'phone_id'  => $account->phone_id,
                     'type'      => $this->pay_code,
                     'userId'    => $account->alipayuserid,
-                    'username'  => $account->alipayusername
+                    'username'  => $account->alipayusername,
+                    'phone_id'  => $account->phone_id,
                 ];
             }
         }
@@ -178,6 +179,7 @@ class ChooseAccountService{
                     'bank_name'         => $account->bank_name,
                     'bank_code'         => $account->bank_mark,
                     'chard_index'       => $account->chard_index,
+                    'phone_id'          => $account->phone_id,
                 ];
             }
         }
