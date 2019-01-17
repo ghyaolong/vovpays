@@ -120,7 +120,9 @@ class getOrderCallback extends Command
         if($data['type'] == 'alipay_bank'){
             if(Redis::exists($data['phoneid'].'alipay'))
             {
-                Redis::hIncrByFloat($data['phoneid'].'alipay', 'bankamount', $order->amount);
+                $pahone_info = Redis::hGetAll($data['phoneid'].'alipay');
+                $pahone_info['bankamount'] = bcadd($pahone_info['bankamount'], $order->amount ,2);
+                Redis::hmset($data['phoneid'].'alipay',$pahone_info);
             }
             if(isset($key))
             {
@@ -128,9 +130,11 @@ class getOrderCallback extends Command
             }
 
         }else{
-            if(Redis::exists($data['phoneid'].$data['type']))
+            if( Redis::exists($data['phoneid'].$data['type']) )
             {
-                Redis::hIncrByFloat($data['phoneid'].$data['type'], 'amount', $order->amount);
+                $pahone_info = Redis::hGetAll($data['phoneid'].$data['type']);
+                $pahone_info['amount'] = bcadd($pahone_info['amount'], $order->amount ,2);
+                Redis::hmset( $data['phoneid'].$data['type'], $pahone_info);
             }
         }
         Redis::select(0);
