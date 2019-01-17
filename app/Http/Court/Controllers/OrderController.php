@@ -31,13 +31,13 @@ class OrderController extends Controller
         $query = $request->input();
 
         if (count($query)) {
-            $query['court_id'] = Auth::user()->id;
+            $query['user_id'] = Auth::user()->id;
             $list = $this->ordersService->searchPage($query, 10);
             //订单金额
             $orderInfoSum = $this->ordersService->orderInfoSum($query);
         } else {
-            $data['court_id'] = Auth::user()->id;
-            $list = $this->ordersService->getAllPage($data,10);
+            $query['user_id'] = Auth::user()->id;
+            $list = $this->ordersService->getAllPage($query,10);
             //订单金额
             $orderInfoSum = $this->ordersService->orderInfoSum($query);
         }

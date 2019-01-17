@@ -59,8 +59,9 @@ class OrderDayCountRepository
      * 获取平台今日统计
      * @return mixed
      */
-    public function findSysDayCount(){
-        return  $this->order_day_count->whereDate( 'updated_at',date('Y-m-d',time()))->first();
+    public function findSysDayCount()
+    {
+        return $this->order_day_count->whereDate('updated_at', date('Y-m-d', time()))->first();
     }
 
     /**
@@ -70,7 +71,7 @@ class OrderDayCountRepository
      */
     public function findDayAndUserCount(int $uid)
     {
-        return  $this->order_day_count->whereUserId($uid)->whereDate( 'updated_at',date('Y-m-d',time()))->first();
+        return $this->order_day_count->whereUserId($uid)->whereDate('updated_at', date('Y-m-d', time()))->first();
     }
 
 }

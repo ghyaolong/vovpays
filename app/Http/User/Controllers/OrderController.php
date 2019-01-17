@@ -40,8 +40,8 @@ class OrderController extends Controller
             //订单金额
             $orderInfoSum = $this->ordersService->orderInfoSum($query);
         } else {
-            $data['user_id'] = Auth::user()->id;
-            $orders = $this->ordersService->getAllPage($data,10);
+            $query['user_id'] = Auth::user()->id;
+            $orders = $this->ordersService->getAllPage($query,10);
             //订单金额
             $orderInfoSum = $this->ordersService->orderInfoSum($query);
         }
