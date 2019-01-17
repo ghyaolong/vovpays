@@ -291,36 +291,59 @@ class PayController extends Controller
     }
 
     /**
-     *
+     *  测试支付
      */
     public function demo()
     {
-        $pay_memberid = 'zKWbxbpNHY';
-        $pay_amount  = "0.1";    //交易金额
-        $pay_applydate = date('Y-m-d H:i:s');  //订单时间
-        $pay_code    = "alipay_bank";   //支付方式
-        $pay_orderid = date('YmdHis').rand(0000,9999);    //订单号
-        $pay_notifyurl = "http://cc.vovpay.com/Pay_Exemption_test.html";   //服务端返回地址
+        return view('pay.demo');
+    }
+
+    public function demoStore(Request $request)
+    {
+        $merchant = $request->merchant;
+        $amount   = sprintf('%0.2f',$request->amount);
+        $pay_code = $request->pay_code;
+        if(!$merchant){
+            return ajaxError('5');
+        }
+
+        if(!$amount){
+            return ajaxError('4');
+        }
+
+        if(!$pay_code){
+            return ajaxError('3');
+        }
+
+        $user = $this->userService->findMerchant($request->merchant);
+        if(!$user)
+        {
+            return ajaxError('12');
+        }
+        $pay_notifyurl   = "http://cc.vovpay.com/Pay_Exemption_test.html";   //服务端返回地址
         $pay_callbackurl = "http://b.com:8080";  //页面跳转返回地址
-        $Md5key = '$2y$10$W6n77XJ8daHSI27P3sf.y.odjEbdHMgSWLOoW7GcHevanhwk2ZpGS';   //密钥
-        $tjurl = "http://8tft85.natappfree.cc/pay";
         $jsapi = array(
-            "merchant"      => $pay_memberid,
-            "amount"        => $pay_amount,
+            "merchant"      => $merchant,
+            "amount"        => $amount,
             "pay_code"      => $pay_code,
-            "order_no"      => $pay_orderid,
+            "order_no"      => date('YmdHis').rand(0000,9999),
             "notify_rul"    => $pay_notifyurl,
             "return_url"    => $pay_callbackurl,
-            "order_time"    => $pay_applydate,
-            "attach"        => '',
-            "cuid"          => '',
         );
 
         $md5Verify = new Md5Verify();
-        $sign = $md5Verify->getSign($jsapi,$Md5key);
-
+        $sign = $md5Verify->getSign($jsapi,$user->apiKey);
         $jsapi["sign"] = $sign;
-        return view('pay.demo',compact('jsapi','tjurl'));
-    }
 
+        $sHtml = "<form id='alipaysubmit' action='".route('pay')."' method='POST'>";
+       foreach ($jsapi as $key=>$val){
+            $sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
+        }
+
+        $sHtml = $sHtml."<input type='submit' value='ok' style='display:none;''></form>";
+        $sHtml = $sHtml."<script>document.forms['alipaysubmit'].submit();</script>";
+
+        return $sHtml;
+
+    }
 }
