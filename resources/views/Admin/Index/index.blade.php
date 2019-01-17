@@ -10,7 +10,7 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 100%"></div>
                 </div>
-                <span class="info-box-number">{{ $sys_day_count->sys_amount }} 元</span>
+                <span class="info-box-number">@if(isset($sys_day_count->sys_amount)){{ $sys_day_count->sys_amount }} @else 0 @endif  元</span>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 100%"></div>
                 </div>
-                <span class="info-box-number">{{ $sys_day_count->sys_income }} 元</span>
+                <span class="info-box-number">@if(isset($sys_day_count->sys_income)){{ $sys_day_count->sys_amount }} @else 0 @endif 元</span>
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 100%"></div>
                 </div>
-                <span class="info-box-number">{{ $sys_day_count->sys_order_suc_count }} 笔</span>
+                <span class="info-box-number">@if(isset($sys_day_count->sys_order_suc_count)){{ $sys_day_count->sys_amount }} @else 0 @endif 笔 笔</span>
             </div>
         </div>
     </div>
