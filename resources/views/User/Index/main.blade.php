@@ -6,53 +6,6 @@
 @endsection
 @section('content')
     <div class="row" style="margin-top: 20px">
-
-        {{--接口文档--}}
-        {{--<div class="col-md-12">--}}
-            {{--<div class="box box-primary box-solid">--}}
-                {{--<div class="box-header with-border">--}}
-                    {{--<h3 class="box-title">接口文档</h3>--}}
-
-                    {{--<div class="box-tools pull-right">--}}
-                        {{--<button type="button" class="btn btn-box-tool" data-widget="collapse">--}}
-                            {{--<i class="fa fa-minus"></i>--}}
-                        {{--</button>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="box-body" style="padding:20px auto;font-size: 15px">--}}
-                    {{--<table class="table table-bordered" style="margin: 10px auto">--}}
-                        {{--<tr>--}}
-                            {{--<th style="width: 30px">#</th>--}}
-                            {{--<th style="width: 500px">必要前提</th>--}}
-                            {{--<th style="width: 1200px">说明</th>--}}
-                            {{--<th style="width: 30px"></th>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>1.</td>--}}
-                            {{--<td>已有商户ID和Token。</td>--}}
-                            {{--<td>注册账号，在“我的”-“基本资料”中获取。</td>--}}
-                            {{--<td><span class="glyphicon glyphicon-ok"></span></td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>2.</td>--}}
-                            {{--<td>已上传支付宝、微信不设金额收款码各一张</td>--}}
-                            {{--<td>可能用到的固定金额收款码多多益善。在“账号轮询”-“支付宝或微信账号”中上传“任意金额码”和“固定金额码”。</td>--}}
-                            {{--<td><span class="glyphicon glyphicon-ok"></span></td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>2.</td>--}}
-                            {{--<td>已挂载网关程序，并按要求设置完毕。</td>--}}
-                            {{--<td>打开网关程序，配置商户ID、Token、收款账号，配置完成后登陆微信或支付宝并保持在线状态。</td>--}}
-                            {{--<td><span class="glyphicon glyphicon-ok"></span></td>--}}
-                        {{--</tr>--}}
-                    {{--</table>--}}
-                {{--</div>--}}
-
-            {{--</div>--}}
-        {{--</div>--}}
-
-
         {{--发起付款--}}
         <div class="col-md-12">
             <div class="box box-primary box-solid">
@@ -72,14 +25,6 @@
                         <b>传参方式：</b> Post<br>
                         <b>使用方法：</b> 用表单post的方式，post参数并跳转到此网址，显示我们的支付页<br>
                     </div>
-
-                    {{--<div style="height: 150px;background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">--}}
-                        {{--<b>方式二：自定义支付页</b><br>--}}
-                        {{--<b>获取支付JSON数据接口URL：</b> https://www.***.com/pay/json<br>--}}
-                        {{--<b>传参方式：</b> Post (Content-Type: application/json;charset=utf-8)<br>--}}
-                        {{--<b>使用方法：</b> 用curl的post方式传参数，并直接获取JSON返回值，显示在您自定义的支付页上。<br>--}}
-                    {{--</div>--}}
-
                     <div class="box-body" style="padding:20px auto;font-size: 15px">
                         <table class="table table-bordered" style="margin: 10px auto">
                             <tr bgcolor="#DEEFD7">
@@ -163,7 +108,7 @@
                                 <td>备注消息</td>
                                 <td> string(1000)</td>
                                 <td>回调时将会根据传入内容原样返回（为防止乱码情况，请尽量不填写中文）</td>
-                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td>有值时加入</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
@@ -172,7 +117,7 @@
                                 <td>请求时间</td>
                                 <td> string(50)</td>
                                 <td>格式YYYY-MM-DD hh:ii:ss，回调时原样返回</td>
-                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td>有值时加入</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
@@ -181,7 +126,7 @@
                                 <td>商户的用户id</td>
                                 <td>string(50)</td>
                                 <td>商户名下的能表示用户的标识，方便对账，回调时原样返回</td>
-                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td>有值时加入</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
@@ -196,29 +141,7 @@
                             </tr>
                         </table>
                         <br>
-                        {{--<b>注意：Token在安全上非常重要，一定不要显示在任何网页代码、网址参数中。只可以放在服务端。计算sign时，先在服务端计算好，把计算出来的sign传出来。严禁在客户端计算、存储Token。</b>--}}
                     </div>
-
-                    {{--<div style="background: #F5F5F5;margin:15px 10px;">--}}
-                    {{--<pre>   <b>JSON请求的返回值：</b><br>                 {--}}
-		    {{--//0失败 1成功--}}
-		    {{--"Code": 1,--}}
-		    {{--//返回消息--}}
-		    {{--"Msg": "success",--}}
-		    {{--//支付渠道 1支付宝 2微信--}}
-		    {{--"PayType": 1,--}}
-		    {{--//收款码解析路径--}}
-		    {{--"QRCodeLink": "HTTPS://QR.ALIPAY.COM/XXXXXXXX",--}}
-		    {{--//实际支付金额(一定要把这个价格显示在支付页上，而不是订单金额)--}}
-		    {{--"RealPrice": 0.01,--}}
-		    {{--//订单有效期（秒），订单创建时间 + 有效期 小于当前时间则此单失效--}}
-		    {{--"TimeOut": 180,--}}
-		    {{--//订单创建时间--}}
-		    {{--"CreateTime": "2018-10-30 09:22:33"--}}
-		{{--}--}}
-                    {{--</pre>--}}
-                    {{--</div>--}}
-
                 </div>
             </div>
         </div>
@@ -345,7 +268,7 @@
                                 <td>订单请求时间</td>
                                 <td>datetime</td>
                                 <td>order_time 原样返回</td>
-                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td>有值时加入</td>
                             </tr>
                             <tr>
                                 <td>6.</td>
@@ -355,7 +278,7 @@
                                 <td>
                                     attach原样返回
                                 </td>
-                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td>有值时加入</td>
                             </tr>
                             <tr>
                                 <td>7.</td>
@@ -363,10 +286,18 @@
                                 <td> 商户的用户id</td>
                                 <td>string(50)</td>
                                 <td>如果您在发起付款接口带入此参数，我们会原封不动传回</td>
-                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td>有值时加入</td>
                             </tr>
                             <tr>
                                 <td>8.</td>
+                                <td>realPrice</td>
+                                <td>商户提交金额</td>
+                                <td>float</td>
+                                <td>单位：元。精确小数点后2位</td>
+                                <td>有值时加入</td>
+                            </tr>
+                            <tr>
+                                <td>9.</td>
                                 <td>sign</td>
                                 <td>签名</td>
                                 <td>string(32)</td>
