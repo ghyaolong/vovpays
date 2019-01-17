@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
 use App\Services\StatisticalService;
-
+use App\Services\SystemsService;
 
 class IndexController extends Controller
 {
@@ -22,17 +22,19 @@ class IndexController extends Controller
     protected $userService;
     protected $orderDayCountService;
     protected $statisticalService;
+    protected $systemsService;
 
     /**
      * IndexController constructor.
      * @param OrdersService $ordersService
      * @param OrderDayCountService $orderDayCountService
      */
-    public function __construct(OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
+    public function __construct(SystemsService $systemsService, OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
     {
         $this->ordersService = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
         $this->statisticalService = $statisticalService;
+        $this->systemsService = $systemsService;
     }
 
 
@@ -52,8 +54,11 @@ class IndexController extends Controller
 
         //当日统计
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getAgentSevenDaysCount($agentId), 'tm'));
-
-        return view('Agent.Index.index', compact('orderInfoSum', 'order_day_count','agentAccount'));
+        //是否代理商挂号
+        $type = $this->systemsService->findId(1);
+        $type = json_decode($type, true);
+        $type = $type['value'];
+        return view('Agent.Index.index', compact('orderInfoSum', 'order_day_count', 'agentAccount', 'type'));
     }
 
 

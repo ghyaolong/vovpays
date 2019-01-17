@@ -1,5 +1,5 @@
-@extends("User.Commons.layout")
-@section('title','银行卡号')
+@extends("Agent.Commons.layout")
+@section('title','支付宝账号')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
@@ -17,7 +17,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.account',1)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('agent.account',1)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="account" placeholder="账号">
                         </div>
@@ -43,7 +43,7 @@
                                 @foreach($list as $v)
                                     <tr>
                                         <td>{{ $v->phone_id }}</td>
-                                        <td style="color: red">{{ $v->bank_account }}</td>
+                                        <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         {{--<td>备注</td>--}}
                                         <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
@@ -83,71 +83,36 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.accountBankAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('agent.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">卡号实名:</label>
+                            <label for="" class="col-xs-3 control-label">账号:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="bank_account" placeholder="请输入账号实名">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">银行名称:</label>
-                            <div class="col-xs-9">
-                                <select class="form-control" id="channelId" name="bank_name">
-                                    <option value="">选择银行</option>
-                                    <option value="中国银行,BOC">中国银行</option>
-                                    <option value="中国工商银行,ICBC">中国工商银行</option>
-                                    <option value="中国建设银行,CCB">中国建设银行</option>
-                                    <option value="中国农业银行,ABC">中国农业银行</option>
-                                    <option value="中国光大银行,CEB">中国光大银行</option>
-                                    <option value="招商银行,CMBC">招商银行</option>
-                                    <option value="广发银行,GDB">广发银行</option>
-                                    <option value="华夏银行,HXB">华夏银行</option>
-                                    <option value="交通银行,BCM">交通银行</option>
-                                    <option value="中国民生银行,CMSB">中国民生银行</option>
-                                    <option value="北京银行,BOB">北京银行</option>
-                                    <option value="东亚银行,BEA">东亚银行</option>
-                                    <option value="南京银行,NJCB">南京银行</option>
-                                    <option value="宁波银行,NBCB">宁波银行</option>
-                                    <option value="平安银行,PAB">平安银行</option>
-                                    <option value="上海银行,BOS">上海银行</option>
-                                    <option value="上海浦东发展银行,SPDB">上海浦东发展银行</option>
-                                    <option value="兴业银行,CIB">兴业银行</option>
-                                    <option value="中国邮政储蓄银行,PSBC">中国邮政储蓄银行</option>
-                                    <option value="网商银行,ANTBANK">浙商银行</option>
-                                    <option value="中信银行,CNCB">中信银行</option>
-                                    <option value="支付宝,ALIPAY">支付宝</option>
-                                    <option value="微信,WECHAT">微信</option>
-                                </select>
+                                <input type="text" id="account" class="form-control" name="account" placeholder="请输入账号">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">银行卡号:</label>
+                            <label for="" class="col-xs-3 control-label">账号实名:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="cardNo"
-                                       placeholder="请输入银行卡号">
+                                <input type="text" class="form-control" name="alipayusername" placeholder="请输入账号实名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">账号ID:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="alipayuserid" placeholder="请输入账号ID">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-7" style="margin-top:-10px;">
+                                <a onclick="aliid('二维码')" style="margin-left: 150px">点击扫码，获取账号ID</a>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <select class="form-control" id="phone_id" name="phone_id">
-                                    <option value="">选择手机标识</option>
-                                    @foreach($alist as $v)
-                                        <option value="{{$v->phone_id}}">{{$v->phone_id}}</option>
-                                    @endforeach
-                                </select>
-                                <p style="margin-bottom: -8px;color: red">必须先配置支付宝账号</p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">索引:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="chard_index"
-                                       placeholder="请输入索引">
+                                <input type="text" class="form-control" id="phone_id" name="phone_id" placeholder="请输入手机标识">
                             </div>
                         </div>
                         <div class="form-group">
@@ -173,6 +138,28 @@
         </div>
     </div>
 
+    {{--二维码模态框--}}
+    <div class="modal fade" id="aliidModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;text-align: center">
+                    <img src="{{ asset('/AdminLTE/dist/img/user/aliewm.png') }}" alt="二维码获取失败！">
+                    <br>
+                    <br>
+                    <br>
+                    <p style="color: red;font-size: 20px">打开支付宝扫一扫，获取账号ID</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 
@@ -193,7 +180,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/accountBank/saveStatus',
+                        url: '/agent/account/saveStatus',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -269,50 +256,25 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    bank_account: {
+                    account: {
                         validators: {
                             notEmpty: {
                                 message: '请输入账号!'
                             },
                         }
                     },
-                    accountType: {
+                    alipayusername: {
                         validators: {
                             notEmpty: {
-                                message: '请输入账户类型!'
+                                message: '请输入账号实名!'
                             },
                         }
                     },
-                    bank_name: {
+                    alipayuserid: {
                         validators: {
                             notEmpty: {
-                                message: '请选择银行!'
+                                message: '请输入账号id!'
                             },
-                        },
-                    },
-                    cardNo: {
-                        validators: {
-                            notEmpty: {
-                                message: '请输入银行卡号!'
-                            },
-                            {{--regexp: {--}}
-                                {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
-                                {{--message: '请输入正确的银行卡号！'--}}
-                            {{--},--}}
-                            {{--remote: {--}}
-                                {{--url: "{{route('user.checkBank')}}",--}}
-                                {{--message: "该卡号已存在!",--}}
-                                {{--type: "post",--}}
-                                {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
-                                    {{--return {--}}
-                                        {{--"value": $("input[name='cardNo']").val().trim(),--}}
-                                        {{--"type": 'cardNo',--}}
-                                        {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
-                                        {{--"id": $('#id').val(),--}}
-                                    {{--};--}}
-                                {{--},--}}
-                                {{--delay: 500,--}}
-                            {{--},--}}
                         },
                     },
                     phone_id: {
@@ -320,6 +282,21 @@
                             notEmpty: {
                                 message: '请输入手机标识!'
                             },
+                            remote: {
+                                url: "{{route('agent.check')}}",
+                                message: "该手机已添加过支付宝账号!",
+                                type: "post",
+                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value": $("#phone_id").val().trim(),
+                                        "type": 'phone_id',
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id": $('#id').val(),
+                                        "name": '支付宝'
+                                    };
+                                },
+                                delay: 500,
+                            }
                         },
                     },
                     dayQuota: {
@@ -331,6 +308,7 @@
                                 regexp: /^[1-9]\d*$/,
                                 message: '请输入正确的数字限额'
                             }
+
                         },
                     },
                 }
@@ -359,20 +337,18 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/accountBank/' + id + '/edit',
+                url: '/agent/account/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (result) {
                     if (result.status == 1) {
-                        $("input[name='bank_account']").val(result.data['bank_account']);
-                        $("input[name='accountType']").val(result.data['accountType']);
-                        $("input[name='bank_name']").val(result.data['bank_name']);
-                        $("input[name='cardNo']").val(result.data['cardNo']);
+                        $("input[name='account']").val(result.data['account']);
+                        $("input[name='alipayusername']").val(result.data['alipayusername']);
+                        $("input[name='alipayuserid']").val(result.data['alipayuserid']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
-                        $("input[name='chard_index']").val(result.data['chard_index']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
@@ -400,7 +376,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/accountBank',
+                    url: '/agent/account',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

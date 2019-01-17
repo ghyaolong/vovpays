@@ -44,8 +44,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('user.account',0)}}"><i class="fa fa-circle-o"></i> <span>微信账号</span></a></li>
-                    <li><a href="{{route('user.account',1)}}"><i class="fa fa-circle-o"></i> <span>支付宝账号</span></a></li>
+                    <li><a href="{{route('user.account',[0])}}"><i class="fa fa-circle-o"></i> <span>微信账号</span></a></li>
+                    <li><a href="{{route('user.account',[1])}}"><i class="fa fa-circle-o"></i> <span>支付宝账号</span></a></li>
                     <li><a href="{{ route('user.accountBank') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
                 </ul>
             </li>

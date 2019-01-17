@@ -1,4 +1,4 @@
-@extends("User.Commons.layout")
+@extends("Agent.Commons.layout")
 @section('title','银行卡号')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
@@ -17,7 +17,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.account',1)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('agent.account',1)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="account" placeholder="账号">
                         </div>
@@ -83,7 +83,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.accountBankAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('agent.accountBankAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -193,7 +193,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/accountBank/saveStatus',
+                        url: '/agent/accountBank/saveStatus',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -300,7 +300,7 @@
                                 {{--message: '请输入正确的银行卡号！'--}}
                             {{--},--}}
                             {{--remote: {--}}
-                                {{--url: "{{route('user.checkBank')}}",--}}
+                                {{--url: "{{route('agent.checkBank')}}",--}}
                                 {{--message: "该卡号已存在!",--}}
                                 {{--type: "post",--}}
                                 {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
@@ -359,7 +359,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/accountBank/' + id + '/edit',
+                url: '/agent/accountBank/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -400,7 +400,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/accountBank',
+                    url: '/agent/accountBank',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

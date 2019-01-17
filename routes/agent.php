@@ -41,6 +41,21 @@ Route::group([], function ($router) {
         Route::get('withdraws/clearing','WithdrawsController@clearing')->name('agent.clearing');
         Route::post('withdraws/apply','WithdrawsController@store')->name('agent.apply');
 
+        //账号管理
+        Route::get('account/{type}','AccountPhoneController@index')->name('agent.account');
+        Route::post('account','AccountPhoneController@store')->name('agent.accountAdd');
+        Route::post('account/saveStatus','AccountPhoneController@saveStatus')->name('agent.accountStatus');
+        Route::get('account/{id}/edit','AccountPhoneController@edit')->name('agent.accountEdit');
+        Route::delete('account','AccountPhoneController@destroy')->name('agent.accountDel');
+        Route::post('account/check','AccountPhoneController@checkUnique')->name('agent.check');
+        //银行卡账号
+        Route::post('accountBank','AccountBankCardsController@store')->name('agent.accountBankAdd');
+        Route::get('accountBank','AccountBankCardsController@index')->name('agent.accountBank');
+        Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('agent.accountBankEdit');
+        Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('agent.accountBankStatus');
+        Route::delete('accountBank','AccountBankCardsController@destroy')->name('agent.accountBankDel');
+        Route::post('accountBank/checkBank','AccountBankCardsController@checkUnique')->name('agent.checkBank');
+
     });
 
 });

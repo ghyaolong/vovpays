@@ -42,18 +42,20 @@
                     <span>代理管理</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('users.index',['user']) }}">
-                    <i class="fa fa-user"></i>
-                    <span>商户管理</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('channels.index') }}">
-                    <i class="fa fa-exchange"></i>
-                    <span>通道管理</span>
-                </a>
-            </li>
+
+                <li>
+                    <a href="{{ route('users.index',['user']) }}">
+                        <i class="fa fa-user"></i>
+                        <span>商户管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('channels.index') }}">
+                        <i class="fa fa-exchange"></i>
+                        <span>通道管理</span>
+                    </a>
+                </li>
+
             <li>
                 <a href="{{ route('channelPayments.index') }}">
                     <i class="fa fa-credit-card"></i>
@@ -66,6 +68,7 @@
                     <span>订单管理</span>
                 </a>
             </li>
+            @if(isset($type) && $type >= '2')
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-paper-plane"></i>
@@ -80,6 +83,9 @@
                     <li><a href="{{ route('account.index',[2]) }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
                 </ul>
             </li>
+            @else
+
+            @endif
             <li>
                 <a href="{{ route('system.index') }}">
                     <i class="fa fa-cog"></i>
