@@ -50,7 +50,6 @@ class AccountBankCardsController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->input());
         $id = $request->id ?? '';
 
         if (!empty($id)) {
