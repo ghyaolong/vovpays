@@ -8,29 +8,31 @@
 
 namespace App\Http\Court\Controllers;
 
-
-use App\Exceptions\Handler;
 use App\Services\OrdersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
+use App\Services\SystemsService;
+
 
 class IndexController extends Controller
 {
     protected $ordersService;
     protected $userService;
     protected $orderDayCountService;
+    protected $systemsService;
 
     /**
      * IndexController constructor.
      * @param OrdersService $ordersService
      * @param OrderDayCountService $orderDayCountService
      */
-    public function __construct( OrdersService $ordersService,OrderDayCountService $orderDayCountService)
+    public function __construct(SystemsService $systemsService, OrdersService $ordersService,OrderDayCountService $orderDayCountService)
     {
         $this->ordersService  = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
+        $this->systemsService = $systemsService;
     }
 
 
@@ -40,7 +42,9 @@ class IndexController extends Controller
      */
     public function show(Request $request)
     {
-//        echo 123;die();
+        $type = $this->systemsService->findId(1);
+        $type = json_decode($type);
+        Cache::put($type->name, $type->value, 30);
         $query = $request->input();
         $agentId=Auth::user()->id;
         //订单金额

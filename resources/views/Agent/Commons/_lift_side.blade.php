@@ -46,7 +46,7 @@
             </li>
             {{--<li><a href="{{route('agent.rate')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>商户费率</span></a></li>--}}
             </li>
-
+            @if(Cache::get('add_account_type') && Cache::get('add_account_type')>=3)
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>
@@ -60,9 +60,13 @@
                                 <span>微信账号</span></a></li>
                         <li><a href="{{route('agent.account',[1])}}"><i class="fa fa-circle-o"></i>
                                 <span>支付宝账号</span></a></li>
-                        <li><a href="{{ route('agent.accountBank') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
+                        <li><a href="{{ route('agent.accountBank') }}"><i class="fa fa-circle-o"></i> <span>银行卡号</span></a>
+                        </li>
                     </ul>
                 </li>
+            @else
+
+            @endif
 
 
         </ul>

@@ -10,11 +10,12 @@ namespace App\Http\Agent\Controllers;
 
 
 use App\Services\OrdersService;
+use Illuminate\Support\Facades\Cache;
+use App\Services\SystemsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
 use App\Services\StatisticalService;
-use App\Services\SystemsService;
 
 class IndexController extends Controller
 {
@@ -44,6 +45,9 @@ class IndexController extends Controller
      */
     public function show(Request $request)
     {
+        $type = $this->systemsService->findId(1);
+        $type = json_decode($type);
+        Cache::put($type->name, $type->value, 30);
         $query = $request->input();
         $agentId = Auth::user()->id;
         //订单金额
@@ -55,10 +59,7 @@ class IndexController extends Controller
         //当日统计
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getAgentSevenDaysCount($agentId), 'tm'));
         //是否代理商挂号
-        $type = $this->systemsService->findId(1);
-        $type = json_decode($type, true);
-        $type = $type['value'];
-        return view('Agent.Index.index', compact('orderInfoSum', 'order_day_count', 'agentAccount', 'type'));
+        return view('Agent.Index.index', compact('orderInfoSum', 'order_day_count', 'agentAccount'));
     }
 
 

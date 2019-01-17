@@ -35,7 +35,7 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 100%"></div>
                 </div>
-                <span class="info-box-number">@if(isset($sys_day_count->sys_order_suc_count)){{ $sys_day_count->sys_amount }} @else 0 @endif 笔 笔</span>
+                <span class="info-box-number">@if(isset($sys_day_count->sys_order_suc_count)){{ $sys_day_count->sys_amount }} @else 0 @endif 笔</span>
             </div>
         </div>
     </div>

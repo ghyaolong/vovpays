@@ -23,13 +23,8 @@ class SystemController extends Controller
     {
         $title = '系统配置';
         $list = $this->systemsService->getAll();
-        $type = $this->systemsService->findId(1);
 
-        $type = json_decode($type, true);
-
-        $type = $type['value'];
-
-        return view('Admin.System.index', compact('title', 'list', 'type'));
+        return view('Admin.System.index', compact('title', 'list'));
     }
 
     public function store(Request $request)

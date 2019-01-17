@@ -47,7 +47,7 @@
             {{--<li><a href="{{route('agent.rate')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>商户费率</span></a></li>--}}
             </li>
 
-            {{--@if(isset($type) && $type >= '4')--}}
+            @if(Cache::get('add_account_type') && Cache::get('add_account_type')>=4)
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>
@@ -64,9 +64,9 @@
                         <li><a href="{{ route('court.accountBank') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
                     </ul>
                 </li>
-            {{--@else--}}
+            @else
 
-            {{--@endif--}}
+            @endif
 
         </ul>
     </section>

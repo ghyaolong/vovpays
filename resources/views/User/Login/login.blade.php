@@ -52,25 +52,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="checkbox icheck">
-                        <label>
-                            <a style="margin-left: 35px;" href="{{route('user.registerShow')}}">用户注册</a>
-                        </label>
-                    </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-xs-6">
-                    <div class="checkbox icheck">
-                        <label>
-                            <a style="margin-left: 35px;" class="center-block" href="">忘记密码</a>
-                        </label>
-                    </div>
-                </div>
-                <!-- /.col -->
-            </div>
             <div class="row">
                 <div class="col-xs-12">
                     <button type="submit" class="btn btn-primary btn-block btn-flat btn-login">登录</button>

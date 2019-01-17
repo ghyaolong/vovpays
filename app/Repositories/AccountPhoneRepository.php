@@ -51,6 +51,10 @@ class AccountPhoneRepository
             $sql .= ' and accountType = ?';
             $where['accountType'] = $data['accountType'];
         }
+        if (isset($data['third']) && $data['third']==1) {
+            $sql .= ' and third = ?';
+            $where['third'] = $data['third'];
+        }
 
         return $this->account_phone->whereRaw($sql, $where)->paginate($page);
     }

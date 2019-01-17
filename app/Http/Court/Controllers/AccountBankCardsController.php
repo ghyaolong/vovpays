@@ -35,10 +35,11 @@ class AccountBankCardsController extends Controller
     public function index(Request $request)
     {
         $data = $request->input();
+        $data['third'] = 1;
         $data['user_id'] = Auth::user()->id;
 
         $list = $this->accountBankCardsService->getAllPage($data, 6);
-        $data['accountType'] = 'bank';
+        $data['accountType'] = '支付宝';
         $alist= $this->accountPhoneService->getAllPage($data, 1000);
         return view("Court.AccountPhone.bank", compact('list','alist'));
     }
@@ -62,6 +63,7 @@ class AccountBankCardsController extends Controller
         } else {
 
             $request->merge(['user_id' => Auth::user()->id]);
+            $request->merge(['third' => 1]);
             $result = $this->accountBankCardsService->add($request->input());
             if ($result) {
                 return ajaxSuccess('账号添加成功！');
