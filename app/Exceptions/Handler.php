@@ -58,10 +58,12 @@ class Handler extends ExceptionHandler
             if ( in_array('admin', $exception->guards() ))
             {
                 return redirect('/admin/login');
-            }elseif( in_array('agent', $exception->guards()) ){
+            }elseif( in_array('agent', $exception->guards() )){
                 return redirect('/agent/login');
-            }elseif( in_array('user', $exception->guards()) ) {
+            }elseif( in_array('user', $exception->guards() )) {
                 return redirect('/user/login');
+            }elseif(in_array('court', $exception->guards() )){
+                return redirect('/court/login');
             }
         }else if( $exception instanceof ValidationException) { // 表单验证错误
             if( $request->expectsJson() )

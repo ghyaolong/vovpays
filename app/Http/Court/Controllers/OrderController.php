@@ -31,12 +31,12 @@ class OrderController extends Controller
         $query = $request->input();
 
         if (count($query)) {
-            $query['agent_id'] = Auth::user()->id;
+            $query['court_id'] = Auth::user()->id;
             $list = $this->ordersService->searchPage($query, 10);
             //订单金额
             $orderInfoSum = $this->ordersService->orderInfoSum($query);
         } else {
-            $data['agent_id'] = Auth::user()->id;
+            $data['court_id'] = Auth::user()->id;
             $list = $this->ordersService->getAllPage($data,10);
             //订单金额
             $orderInfoSum = $this->ordersService->orderInfoSum($query);
@@ -46,7 +46,7 @@ class OrderController extends Controller
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('Agent.Order.order', compact('list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
+        return view('Court.Order.order', compact('list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
 
     }
 

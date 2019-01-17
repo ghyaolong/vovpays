@@ -9,10 +9,12 @@
 namespace App\Http\Court\Controllers;
 
 
+use App\Exceptions\Handler;
 use App\Services\OrdersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
+use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
 {
@@ -38,13 +40,14 @@ class IndexController extends Controller
      */
     public function show(Request $request)
     {
+//        echo 123;die();
         $query = $request->input();
         $agentId=Auth::user()->id;
         //订单金额
         $orderInfoSum = $this->ordersService->orderInfoSum($query);
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getAgentSevenDaysCount($agentId),'tm'));
 
-        return view('Agent.Index.index',compact('orderInfoSum','order_day_count'));
+        return view('Court.Index.index',compact('orderInfoSum','order_day_count'));
     }
 
 
@@ -54,7 +57,7 @@ class IndexController extends Controller
      */
     public function rate()
     {
-        return view('Agent.Index.memberRate');
+        return view('Court.Index.memberRate');
     }
 
 }

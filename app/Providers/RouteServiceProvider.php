@@ -124,7 +124,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapCourtRoutes()
     {
-        Route::prefix('appPay')
+        Route::prefix('court')
             ->middleware('web')
             ->namespace('App\Http\Court\Controllers')
             ->group(base_path('routes/court.php'));

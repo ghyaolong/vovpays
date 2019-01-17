@@ -20,7 +20,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/Agent';
+    protected $redirectTo = '/Court';
     protected $loginLogoutService;
     protected $userService;
 
@@ -41,13 +41,14 @@ class LoginController extends Controller
      */
     public function show()
     {
-        $user = Auth::guard('agent')->user();
-        if ($user) return redirect('agent');
-        return view('Agent.Login.login');
+//        echo 123;die();
+        $user = Auth::guard('court')->user();
+        if ($user) return redirect('court');
+        return view('Court.Login.login');
     }
 
     /**
-     * 代理商登录
+     * 场外第三方登录
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -62,10 +63,10 @@ class LoginController extends Controller
             'captcha.captcha'  => '请输入正确的验证码',
         ]);
         // 添加验证用户登录标识
-        $request->merge(['group_type' => '2']);
+        $request->merge(['group_type' => '3']);
 
         $check_data = $request->only('username','password','group_type');
-        $result = $this->loginLogoutService->Login('agent',$check_data);
+        $result = $this->loginLogoutService->Login('court',$check_data);
         if($result)
         {
             return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
@@ -81,9 +82,9 @@ class LoginController extends Controller
      */
     public function destroy(Request $request)
     {
-        $this->loginLogoutService->destroy($request,'agent');
+        $this->loginLogoutService->destroy($request,'court');
 
-        return redirect()->route('agent.login');
+        return redirect()->route('court.login');
     }
 
 

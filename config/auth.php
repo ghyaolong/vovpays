@@ -57,6 +57,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'court' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -86,6 +90,10 @@ return [
             'model' => App\Models\Admin::class,
         ],
         'agents' => [
+            'driver' => 'eloquent',
+            'provider' => App\Models\User::class,
+        ],
+        'court'  => [
             'driver' => 'eloquent',
             'provider' => App\Models\User::class,
         ],
