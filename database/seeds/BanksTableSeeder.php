@@ -36,7 +36,7 @@ class BanksTableSeeder extends Seeder
             ['code' => 'CIB', 'bankName' => '兴业银行', 'ico' => 'cib.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'PSBC', 'bankName' => '中国邮政储蓄银行', 'ico' => 'psbc.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'CMBC', 'bankName' => '招商银行', 'ico' => 'cmbc.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
-            ['code' => 'CZB', 'bankName' => '浙商银行', 'ico' => 'czb.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
+            ['code' => 'ANTBANK','bankName' => '网商银行', 'ico' => 'ANTBANK.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'CNCB', 'bankName' => '中信银行', 'ico' => 'cncb.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'ALIPAY', 'bankName' => '支付宝', 'ico' => 'alipay.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
             ['code' => 'WECHAT', 'bankName' => '微信', 'ico' => 'wechat.png', 'status' => '1', 'created_at'=> $now, 'updated_at'=> $now],
