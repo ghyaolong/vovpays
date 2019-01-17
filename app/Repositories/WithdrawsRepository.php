@@ -72,6 +72,16 @@ class WithdrawsRepository
 
     }
 
+    /**更新结算记录
+     * @param $orderId
+     * @param $data
+     */
+    public function update($id,$data){
+        $sql = " id = {$id} ";
+        $where = [];
+        $this->withdraw->whereRaw($sql, $where)->update($data);
+    }
+
 
 
 

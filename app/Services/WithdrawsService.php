@@ -215,18 +215,42 @@ class WithdrawsService
         return $serach;
     }
 
-    /**
-     * 结算记录
-     * @param int $id
-     * @param int $page
-     * @return mixed
+    /**普通结算处理
+     * @param $info
      */
-    public function getAllPage(int $page)
+    public function commonWithdraw($info)
     {
-        $data['list'] = $this->withdrawsRepository->getAllPage($page);
-        $data['info'] = $this->withdrawsRepository->withdrawInfoSum();
-        return $data;
+        $id = $info['id'];
+        $info = array_except($info, ['_token', 'id']);
+        if ($info['status'] == 2) {
+            $this->withdrawsRepository->update($id, $info);
+        } elseif ($info['status'] == 4) {
+            $this->withdrawsRepository->update($id, $info);
+        }
     }
+
+    /**普通结算处理
+     * @param $info
+     */
+    public function paidWithdraw($info)
+    {
+        $id = $info['id'];
+        $info = array_except($info, ['_token', 'id']);
+        if ($info['status'] == 2 || $info['status'] == 3) {
+
+            $this->withdrawsRepository->update($id, $info);
+            //调用代付接口
+
+
+        } elseif ($info['status'] == 4) {
+
+            //取消结算退回账户
+
+            $this->withdrawsRepository->update($id, $info);
+
+        }
+    }
+
 
 
     /**生成提款订单号

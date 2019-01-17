@@ -169,11 +169,11 @@
                                     @if($v['status']=='未处理')
 
                                         <button type="button" class="btn btn-success btn-sm"
-                                                onclick="common('普通结算',{{ $v['id'] }})">普通
+                                                onclick="common('普通结算','{{ $v['id'] }}')">普通
                                         </button>
-                                        {{--<button type="button" class="btn btn-success btn-sm"--}}
-                                                {{--onclick="quick('代付结算',{{ $v['id'] }})">代付--}}
-                                        {{--</button>--}}
+                                        <button type="button" class="btn btn-success btn-sm"
+                                                onclick="paid('代付结算','{{ $v['id'] }}')">代付
+                                        </button>
                                     @endif
                                 </td>
                             </tr>
@@ -190,7 +190,8 @@
     </div>
     <!-- /.row -->
 
-    <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    <div class="modal fade" id="CommonWithdraw" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true"
          data-backdrop="static">
         <div class="modal-dialog" style="margin-top: 123px">
             <div class="modal-content">
@@ -198,14 +199,15 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="usersForm" action="{{route('withdraws.update')}}" class="form-horizontal" role="form">
-                        <input type="hidden" name="id" id="withdrawid">
+                    <form id="withdrawForm" action="{{route('withdraws.update')}}" class="form-horizontal" role="form">
+                        <input type="hidden" name="id" id="orderId1">
+                        <input type="hidden" name="type" value="1">
                         {{ csrf_field() }}
 
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">结算通道</label>
                             <div class="col-xs-9">
-                                <select class="form-control" name="channelCode" id="channelCode">
+                                <select class="form-control" name="channelCode" id="channelCode1">
 
                                 </select>
                             </div>
@@ -215,11 +217,64 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">结算操作</label>
                             <div class="col-xs-9">
-                                <select class="form-control" name="action" id="action">
+                                <select class="form-control" name="status" >
+                                    <option value='2'>已经结算</option>
+                                    <option value='3'>结算异常</option>
+                                    <option value='4'>取消结算</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">结算备注</label>
+                            <div class="col-xs-9">
+                                <textarea name="comment" class="form-control" id="" cols="20" rows="10"
+                                          placeholder="结算备注"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="paidWithdraw" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true"
+         data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;">
+                    <form id="withdrawForm" action="{{route('withdraws.update')}}" class="form-horizontal" role="form">
+                        <input type="hidden" name="id" id="orderId2">
+                        <input type="hidden" name="type" value="2">
+                        {{ csrf_field() }}
+
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">结算通道</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" name="channelCode" id="channelCode2">
 
                                 </select>
                             </div>
                         </div>
+
+
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">结算操作</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" name="status" >
+                                    <option value='2'>同意代付</option>
+                                    <option value='4'>取消结算</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
@@ -276,6 +331,31 @@
                 });
         })
 
+        /**
+         * 结算操作提交
+         */
+
+        function save(_this) {
+
+            _this.removeAttr('onclick');
+
+            var $form = $(_this).parents('.form-horizontal');
+
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if (result.status) {
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                    toastr.success(result.msg);
+                } else {
+                    _this.attr("onclick", "save($(this))");
+                    toastr.error(result.msg);
+                }
+            }, 'json');
+
+        }
+
 
         /**
          * 普通结算
@@ -283,7 +363,15 @@
          * @param title
          */
         function common(title, id) {
-            $("#withdrawid").empty();
+            //清空结算信息
+            $("#orderId1").empty();
+
+            //设置结算信息
+            $("#orderId1").val(id);
+
+            //清空option
+            $("#channelCode1").empty();
+
             $.ajax({
                 type: 'get',
                 url: '/admin/withdraws/' + id + '/manage',
@@ -294,21 +382,14 @@
                 },
                 success: function (result) {
                     if (result.status == 1) {
-                        //清空option
-                        $("#channelCode").empty();
-                        $("#action").empty();
+
                         //添加option
-                        for(i=0;i<result.data.length;i++){
-                            $("#channelCode").append("<option value='"+result.data[i].channelCode+"'>"+result.data[i].channelName+"</option>");
+                        for (i = 0; i < result.data.length; i++) {
+                            $("#channelCode1").append("<option value='" + result.data[i].channelCode + "'>" + result.data[i].channelName + "</option>");
                         }
 
-                        $("#action").append("<option value='2'>已经结算</option>");
-                        $("#action").append("<option value='3'>结算异常</option>");
-                        $("#action").append("<option value='4'>取消结算</option>");
-
-
-                        $('.modal-title').html(title);
-                        $('#addModel').modal('show');
+                        $('#CommonWithdraw .modal-title').html(title);
+                        $('#CommonWithdraw').modal('show');
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {
@@ -322,7 +403,16 @@
          * @param id
          * @param title
          */
-        function quick(title, id) {
+        function paid(title, id) {
+            //清空结算信息
+            $("#orderId2").empty();
+
+            //设置结算信息
+            $("#orderId2").val(id);
+
+            //清空option
+            $("#channelCode2").empty();
+
             $.ajax({
                 type: 'get',
                 url: '/admin/withdraws/' + id + '/manage',
@@ -332,21 +422,19 @@
                 },
                 success: function (result) {
                     if (result.status == 1) {
+
                         //添加option
-                        for(i=0;i<result.data.length;i++){
-                            $("#channelCode").append("<option value='"+result.data[i].channelCode+"'>"+result.data[i].channelName+"</option>");
+                        for (i = 0; i < result.data.length; i++) {
+                            $("#channelCode2").append("<option value='" + result.data[i].channelCode + "'>" + result.data[i].channelName + "</option>");
                         }
 
-                        $("#action").append("<option value='2'>同意代付</option>");
-                        $("#action").append("<option value='4'>取消结算</option>");
 
-
-
-                        $('.modal-title').html(title);
-                        $('#addModel').modal('show');
+                        $('#paidWithdraw .modal-title').html(title);
+                        $('#paidWithdraw').modal('show');
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {
+
                     toastr.error('通信失败');
                 }
             })
