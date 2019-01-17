@@ -63,6 +63,7 @@ class ExemptService implements PayInterface
             $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);
             Redis::set($key,$result->orderNo);
             Redis::expire($key,600);
+
             $order_date = array(
                 'amount'  => $result->amount,
                 'account' => $account_array['account'],
@@ -82,7 +83,7 @@ class ExemptService implements PayInterface
         }
 
         Redis::hmset($result->orderNo, $order_date);
-        Redis::expire($result->orderNo,180);
+        Redis::expire($result->orderNo,600);
         return view("Pay.{$request->pay_code}",compact('data'));
     }
 
