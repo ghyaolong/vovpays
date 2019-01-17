@@ -53,16 +53,12 @@ class WithdrawsController extends Controller
     public function manage(Request $request, $id)
     {
 
-        if (!is_numeric($id)) {
-            return ajaxError('操作错误！');
-        }
-
         if($request->type==1) {
             //普通结算
             $chanel_list = $this->channelService->getAll();
-        }else{
+        }elseif($request->type==2){
             //代付计结算
-//            $chanel_list = $this->PaidService->getAll();
+            $chanel_list = $this->channelService->getAll();
         }
 
         if ($chanel_list) {
@@ -78,10 +74,20 @@ class WithdrawsController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update($id)
+    public function update(Request $request)
     {
-        $rule = $this->userService->findId($id);
-        return ajaxSuccess('获取成功', $rule->toArray());
+        $data=$request->input();
+
+        if($data['type']==1) {
+            //普通结算
+            $this->withdrawsService->commonWithdraw($data);
+        }elseif($data['type']==2){
+            //代付计结算
+            $chanel_list = $this->withdrawsService->paidWithdraw($data);
+        }
+
+
+        return ajaxSuccess('获取成功');
     }
 
 
