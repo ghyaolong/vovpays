@@ -11,6 +11,7 @@ namespace App\Http\User\Controllers;
 
 use App\Services\BankCardService;
 use App\Services\BanksService;
+use App\Http\Requests\BankcardRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,7 +58,7 @@ class BankCardController extends Controller
     /*
      * 银行卡添加
      */
-    public function store(Request $request)
+    public function store(BankcardRequest $request)
     {
         $id = $request->id ? $request->id : '';
 

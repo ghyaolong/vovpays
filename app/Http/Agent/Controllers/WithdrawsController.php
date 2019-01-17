@@ -64,15 +64,25 @@ class WithdrawsController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function clearing()
+    public function clearing(Request $request)
     {
         $uid = Auth::user()->id;
         $list = $this->bankCardService->getUserIdAll($uid);
 
-        $clearings = $this->withdrawsService->getAllPage(6);
+
+        $data = $request->input();
+        $data['user_id'] = $uid;
+
+        $search = $this->withdrawsService->searchPage($data,10);
+        $clearings = $search['list'];
+        $info = $search['info'];
+
 
         $banks= $this->banksService->findAll();
+
         $WithdrawRule=$this->withdrawsService->getWithdrawRule();
+
+
 
         return view('Agent.Withdraws.clearing', compact('list','banks', 'clearings','WithdrawRule'));
     }

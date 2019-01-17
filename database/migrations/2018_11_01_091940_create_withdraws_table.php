@@ -29,9 +29,10 @@ class CreateWithdrawsTable extends Migration
             $table->string('outOrderId')->nullable()->index()->comment('商户侧提交结算单号');
             $table->string('upOrderId')->unique()->index()->nullable()->comment('上游结算单号');
             $table->string('channelCode')->comment('结算通道编码');
+            $table->unsignedTinyInteger('type')->default(1)->comment('结算类型:1普通结算 2代付结算');
             $table->string('comment')->nullable()->comment('结算备注信息');
             $table->text('extend')->nullable()->comment('扩展银行卡信息,json格式');
-            $table->unsignedTinyInteger('status')->default(0)->comment('体现状态：0未处理，1处理中，2已结算，3已取消');
+            $table->unsignedTinyInteger('status')->default(0)->comment('体现状态：0未处理，1处理中，2已结算，3结算异常,4取消结算');
             $table->timestamps();
         });
 

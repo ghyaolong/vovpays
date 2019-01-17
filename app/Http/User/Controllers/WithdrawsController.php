@@ -43,18 +43,21 @@ class WithdrawsController extends Controller
         $query = $request->input();
         $data = [];
 
-        if (count($request->input()) > 1) {
-
+//        if (count($request->input()) > 1) {
+//
             $data = $request->input();
+            $data['user_id'] = Auth::user()->id;
+//            $list = $this->withdrawsService->searchPage($data, 10);
+//
+//        } else {
 
-            $list = $this->withdrawsService->searchPage($data, 10);
+            $search = $this->withdrawsService->searchPage(10);
+            $list = $search['list'];
+            $info = $search['info'];
+            dd($list);
+//        }
 
-        } else {
-
-            $list = $this->withdrawsService->getAllPage(10);
-        }
-
-        return view('User.Withdraws.withdraws', compact('list', 'data', 'query'));
+        return view('User.Withdraws.withdraws', compact('list','info','data', 'query'));
     }
 
 
@@ -62,17 +65,24 @@ class WithdrawsController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function clearing()
+    public function clearing(Request $request)
     {
         $uid = Auth::user()->id;
         $list = $this->bankCardService->getUserIdAll($uid);
 
-        $clearings = $this->withdrawsService->getAllPage(6);
+
+        $data = $request->input();
+        $data['user_id'] = $uid;
+
+        $search = $this->withdrawsService->searchPage($data,10);
+        $clearings = $search['list'];
+        $info = $search['info'];
+
 
         $banks= $this->banksService->findAll();
 
         $WithdrawRule=$this->withdrawsService->getWithdrawRule();
-        dd($WithdrawRule);
+
 
         return view('User.Withdraws.withdraws', compact('list','banks', 'clearings','WithdrawRule'));
 

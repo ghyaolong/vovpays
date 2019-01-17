@@ -13,11 +13,11 @@ use App\Repositories\BanksRepository;
 
 class BanksService
 {
-    protected $bankCardRepository;
+    protected $banksRepository;
 
     public function __construct(BanksRepository $banksRepository)
     {
-        $this->bankCardRepository = $banksRepository;
+        $this->banksRepository = $banksRepository;
     }
 
 
@@ -31,7 +31,7 @@ class BanksService
      */
     public function findId(int $id)
     {
-        return $this->bankCardRepository->findId($id);
+        return $this->banksRepository->findId($id);
     }
 
     /**
@@ -41,7 +41,7 @@ class BanksService
      */
     public function findAll()
     {
-        return  $this->bankCardRepository->findStatus();
+        return  $this->banksRepository->findStatus();
     }
 
     /**
@@ -53,7 +53,7 @@ class BanksService
     public function update(int $id, array $data)
     {
         $data = array_except($data, ['id', '_token', 'user_id']);
-        return $this->bankCardRepository->update($id, $data);
+        return $this->banksRepository->update($id, $data);
     }
 
     /**
@@ -65,12 +65,12 @@ class BanksService
     public function updateStatus(int $id, array $data)
     {
 
-        if ($this->bankCardRepository->findStatus($data['user_id'])) {
+        if ($this->banksRepository->findStatus($data['user_id'])) {
 
-            $this->bankCardRepository->updateStatus($data['user_id'], ['status' => 0]);
+            $this->banksRepository->updateStatus($data['user_id'], ['status' => 0]);
         }
 
-        return $this->bankCardRepository->update($id, $data);
+        return $this->banksRepository->update($id, $data);
     }
 
 }

@@ -13,6 +13,7 @@ use App\Http\Agent\Controllers\Controller;
 use App\Services\BankCardService;
 use App\Services\BanksService;
 use Illuminate\Http\Request;
+use App\Http\Requests\BankcardRequest;
 use Illuminate\Support\Facades\Auth;
 
 class BankCardController extends Controller
@@ -60,8 +61,9 @@ class BankCardController extends Controller
     /*
      * 银行卡添加
      */
-    public function store(Request $request)
+    public function store(BankcardRequest $request)
     {
+
         $id = $request->id ? $request->id : '';
 
         if ($id) {

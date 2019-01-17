@@ -71,6 +71,12 @@ Route::group([], function () {
         Route::delete('orders','OrdersController@destroy')->name('orders.destroy');
         Route::post('orders/saveStatus','OrdersController@saveStatus')->name('orders.saveStatus');
         Route::post('orders/reissue','OrdersController@reissue')->name('orders.reissue');
+        //结算管理
+        Route::get('withdraws','WithdrawsController@index')->name('withdraws.index');
+        Route::get('withdraws/{id}/manage', 'WithdrawsController@manage')->name('withdraws.manage');
+        Route::delete('withdraws','WithdrawsController@destroy')->name('withdraws.destroy');
+        Route::post('withdraws/saveStatus','WithdrawsController@saveStatus')->name('withdraws.saveStatus');
+        Route::post('withdraws/update','WithdrawsController@update')->name('withdraws.update');
         //账号管理
         Route::get('account/{type}','AccountPhoneController@index')->name('account.index');
         Route::post('account','AccountPhoneController@store')->name('account.store');

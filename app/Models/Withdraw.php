@@ -30,4 +30,59 @@ class Withdraw extends Model
     {
         return $this->belongsTo('App\models\User');
     }
+
+
+    /**
+     * 获取结算状态。
+     *
+     * @return string
+     */
+    public function getStatusAttribute($value)
+    {
+        switch ($value){
+            case 0:
+                return '未处理';
+            case 1:
+                return '处理中';
+            case 2:
+                return '已结算';
+            case 3:
+                return '结算异常';
+            case 4:
+                return '已取消';
+            default:
+                return '错误状态';
+        }
+
+    }
+
+    /**
+     * 获取结算处理时间。
+     *
+     * @return string
+     */
+    public function getUpdatedAtAttribute($value)
+    {
+       return $value==$this->created_at?'---':$value;
+    }
+    /**
+     * 获取银行卡号。
+     *
+     * @return string
+     */
+    public function getBankCardNoAttribute($value)
+    {
+        return substr($value,0,3).'**********'.substr($value,-3,3);
+    }
+    /**
+     * 获取商户订单号。
+     *
+     * @return string
+     */
+    public function getOutOrderIdAttribute($value)
+    {
+        return $value?:'---';
+    }
+
+
 }

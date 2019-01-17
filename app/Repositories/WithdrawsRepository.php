@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 use App\Models\Withdraw;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class WithdrawsRepository
 {
@@ -38,11 +39,40 @@ class WithdrawsRepository
      * @param int $page
      * @return mixed
      */
-    public function searchPage(int $page)
+    public function searchPage($sql,$where,int $page)
     {
-        $user_id=Auth::user()->id;
-        $sql = " user_id = {$user_id} ";
-        $where=[];
+//        $user_id = Auth::user()->id;
+//        $sql = " user_id = {$user_id} ";
+//        $where = [];
+
         return $this->withdraw->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
     }
+
+    /**获取所有结算记录
+     * @return mixed
+     */
+    public function getAllPage(int $page)
+    {
+        $user_id = Auth::user()->id;
+        $sql = " user_id = {$user_id} ";
+        $where = [];
+        return $this->withdraw->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
+    }
+
+
+    /**获取所有结算统计数据
+     * @return mixed
+     */
+    public function searchWithdrawInfoSum($sql, $where, $page)
+    {
+
+        return $this->withdraw
+            ->select(DB::raw('sum(withdrawAmount) as amountSum ,count(id) as withdrawCount,sum(withdrawRate) as withdrawRateSum, sum(toAmount) as toAmountSum'))
+            ->whereRaw($sql, $where)->get()->toArray();;
+
+    }
+
+
+
+
 }

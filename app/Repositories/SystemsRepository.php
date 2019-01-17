@@ -11,6 +11,7 @@ namespace App\Repositories;
 use App\Models\System;
 use Illuminate\Support\Facades\Cache;
 
+
 class SystemsRepository
 {
     protected $system;

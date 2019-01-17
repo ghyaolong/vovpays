@@ -68,6 +68,12 @@
                     <span>订单管理</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('withdraws.index') }}">
+                    <i class="fa fa-reorder"></i>
+                    <span>结算管理</span>
+                </a>
+            </li>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-user"></i>

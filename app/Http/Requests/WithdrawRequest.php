@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Repositories\SystemsRepository;
 
 class WithdrawRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class WithdrawRequest extends FormRequest
     {
 
         return [
-            'withdrawAmount' => 'required|numeric|min:100',
+            'withdrawAmount' => 'required|numeric',
             'bank_id' => 'required|integer',
             'auth_code' => 'required|alpha_num',
         ];

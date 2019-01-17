@@ -32,6 +32,10 @@ class WithdrawsService
     }
 
 
+    /**账户结算(提款)处理
+     * @param array $data
+     * @return array
+     */
     public function add(array $data)
     {
         try {
@@ -44,12 +48,13 @@ class WithdrawsService
             $withdrawRule = $this->getWithdrawRule($data);
             //验证账户余额
             $this->accountVerify($data, $withdrawRule);
+            //填充结算银行卡/订单等信息
+            $data = $this->buildWithdrawInfo($data);
             //手续费计算
             $this->caculateRate($data, $withdrawRule);
 
-            //添加提款记录
-            $data = $this->buildWithdrawInfo($data);
-
+            // 去掉无用数据
+            $data = array_except($data, ['_token', 'auth_code', 'bank_id']);
 
             DB::connection('mysql')->transaction(function () use ($data) {
                 //账户余额更新
@@ -57,12 +62,10 @@ class WithdrawsService
                 $this->statisticalRepository->updateUseridBalanceDecrement($data['user_id'], $data['withdrawAmount']);
                 //资金变动记录
 //              $this->addMoneyDetail($data);
+                //添加结算信息
                 $this->withdrawsRepository->add($data);
 
-//                DB::connection('mysql')->table('statisticals')->whereUserId($data['user_id'])->decrement('balance', $data['withdrawAmount']);
-//                DB::connection('mysql')->table('withdraws')->insert($data);
-
-            }, 3);
+            }, 2);
 
             return ['status' => true];
 
@@ -78,14 +81,6 @@ class WithdrawsService
 
     }
 
-    /**
-     * @param $data
-     * @return bool
-     */
-    protected function addMoneyDetail($data)
-    {
-        return true;
-    }
 
     /**获取提款规则信息
      * @param $data
@@ -103,7 +98,7 @@ class WithdrawsService
     /**金额验证
      * @return bool
      */
-    protected function accountVerify($data, $withdrawRule)
+    protected function accountVerify(&$data, $withdrawRule)
     {
         if ($withdrawRule['withdraw_downline'] > $data['withdrawAmount']) {
             throw   new CustomServiceException('提现金额不能少于' . $withdrawRule['withdraw_downline'] . '元');
@@ -146,15 +141,16 @@ class WithdrawsService
     protected function buildWithdrawInfo($data)
     {
 
-        // 去掉无用数据
-        $data = array_except($data, ['_token', 'auth_code']);
-
         //银行卡信息
         $bankCard = $this->bankCardRepository->findId($data['bank_id']);
-        unset($data['bank_id']);
+        if (!$bankCard || $bankCard['user_id'] != $data['user_id']) {
+            throw   new CustomServiceException('指定银行卡不存在');
+        }
         //银行信息
-
         $bankInfo = $bankCard->Bank->toArray();
+        if (!$bankCard) {
+            throw   new CustomServiceException('不支持的银行');
+        }
 
         $data['accountName'] = $bankCard['accountName'];
         $data['branchName'] = $bankCard['branchName'];
@@ -162,7 +158,9 @@ class WithdrawsService
 
         $data['bankName'] = $bankInfo['bankName'];
         $data['bankCode'] = $bankInfo['code'];
-        $data['orderId'] = static::buildWithdrawOrderid();
+
+        //提款流水号
+        $data['orderId'] = $this->buildWithdrawOrderid();
 
         return $data;
 
@@ -175,32 +173,47 @@ class WithdrawsService
      * @param int $page
      * @return mixed
      */
-//    public function searchPage(array $data, int $page)
-//    {
-//        $sql = '1=1';
-//        $time=explode(" - ",$data['orderTime']);
-//
-//        if (isset($data['user_id']) && $data['user_id']) {
-//            $sql .= ' and user_id = ?';
-//            $where['user_id'] = $data['user_id'];
-//        }
-//
-//        if (isset($time[0]) && $time[0]) {
-//            $sql .= ' and created_at >= ?';
-//            $where['created_at'] = $time[0];
-//        }
-//
-//        if (isset($time[1]) && $time[1]) {
-//            $sql .= ' and created_at <= ?';
-//            $where['updated_at'] = $time[1];
-//        }
-//
-//        if (isset($data['status']) && $data['status'] != '-1') {
-//            $sql .= ' and status = ?';
-//            $where['status'] = $data['status'];
-//        }
-//        return $this->withdrawsService->searchPage($sql, $where, $page);
-//    }
+    public function searchPage(array $data, int $page)
+    {
+        $sql = '1=1';
+        $where = [];;
+
+        if (isset($data['created_at'])) {
+            $time = explode(" - ", $data['created_at']);
+            if (isset($time[0]) && $time[0]) {
+                $sql .= ' and created_at >= ?';
+                $where['created_at'] = $time[0];
+            }
+            if (isset($time[1]) && $time[1]) {
+                $sql .= ' and created_at <= ?';
+                $where['updated_at'] = $time[1];
+            }
+        }
+
+        if (isset($data['orderId'])) {
+            $sql .= ' and orderId = ?';
+            $where['orderId'] = $data['orderId'];
+        }
+        if (isset($data['channel_id']) && $data['channel_id'] != '-1') {
+            $sql .= ' and channel_id = ?';
+            $where['channel_id'] = $data['channel_id'];
+        }
+        if (isset($data['user_id']) && $data['user_id']) {
+            $sql .= ' and user_id = ?';
+            $where['user_id'] = $data['user_id'];
+        }
+        if (isset($data['outOrderId']) && $data['outOrderId']) {
+            $sql .= ' and outOrderId = ?';
+            $where['outOrderId'] = $data['outOrderId'];
+        }
+        if (isset($data['status']) && $data['status'] != '-1') {
+            $sql .= ' and status = ?';
+            $where['status'] = $data['status'];
+        }
+        $serach['list'] = $this->withdrawsRepository->searchPage($sql, $where, $page);
+        $serach['info'] = $this->withdrawsRepository->searchWithdrawInfoSum($sql, $where, $page);
+        return $serach;
+    }
 
     /**
      * 结算记录
@@ -210,15 +223,17 @@ class WithdrawsService
      */
     public function getAllPage(int $page)
     {
-        return $this->withdrawsRepository->searchPage($page);
+        $data['list'] = $this->withdrawsRepository->getAllPage($page);
+        $data['info'] = $this->withdrawsRepository->withdrawInfoSum();
+        return $data;
     }
+
 
     /**生成提款订单号
      * @return string
      */
-    static private function buildWithdrawOrderid()
+    private function buildWithdrawOrderid()
     {
-
-        return 'W' . date('ymdhis') . mt_rand(10000, 99999);
+        return 'W' . date('YmdHis') . mt_rand(10000, 99999);
     }
 }
