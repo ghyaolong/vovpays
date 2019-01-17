@@ -263,7 +263,7 @@
                                 message: '支付编码最大长度%s个字符!'
                             },
                             regexp: { //正则校验
-                                regexp: /^[A-Za-z0-9]+$/,
+                                regexp: /^[A-Za-z0-9_]+$/,
                                 message:'支付编码格式不正确!'
                             },
                         }

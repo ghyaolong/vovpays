@@ -46,7 +46,7 @@ class ChannelPaymentsController extends Controller
         $id = $request->id ? $request->id : '';
         $this->validate($request, [
             'paymentName'     => 'required|max:30',
-            'paymentCode'     => 'required|max:10|unique:channel_payments,paymentCode,'.$id,
+            'paymentCode'     => 'required|max:30|unique:channel_payments,paymentCode,'.$id,
             'channel_id'      => [ 'required', Rule::exists('channels','id')],
         ],[
             'paymentName.required'      => '支付名称不能为空！',
