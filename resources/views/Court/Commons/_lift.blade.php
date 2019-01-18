@@ -22,7 +22,7 @@
             <li><a href="{{route('court.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>主页</span></a></li>
             </li>
 
-            <li><a href="{{route('court.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
+            {{--<li><a href="{{route('court.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>--}}
             <li><a href="{{route('user.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>我的账户</span></a></li>
 
 

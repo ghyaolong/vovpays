@@ -97,7 +97,7 @@
                                     <div class="box-body">
                                         <table class="table table-bordered table-hover">
                                             <tr style="color: #999999;background:#f5f6f9">
-                                                <th>商户名</th>
+                                                <th>#</th>
                                                 <th>操作分数</th>
                                                 <th>上分类型</th>
                                                 <th>操作类型</th>
@@ -105,7 +105,7 @@
                                             </tr>
                                             @foreach($list as $v)
                                             <tr>
-                                                <td>{{ $v->user->username }}</td>
+                                                <td>#</td>
                                                 <td>{{ $v['quota'] }}</td>
                                                 <td>
                                                     @if($v['quota_type'] == 0)
