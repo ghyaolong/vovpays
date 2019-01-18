@@ -16,7 +16,25 @@
 
 ``php artisan migrate:refresh --seed``
 
+4. 运行根目录count_event.sql里面的sql语句
 
+5. 查看数据库事件是否开启
+
+``SHOW VARIABLES LIKE 'event_scheduler'``
+
+6. 数据库事件没有开启运行
+
+``set GLOBAL event_scheduler = 1``
+
+7. 开启定时任务
+
+``alter event user_order_day_event on completion preserve enable``
+
+``alter event user_yesterdyay_order_event on completion preserve enable``
+
+8. 查看事件运行状态
+
+``select * from mysql.event;``
 
 ##安装报错解决
 安装时报错，提示 Your requirements could not be resolved to an installable set of packages?
