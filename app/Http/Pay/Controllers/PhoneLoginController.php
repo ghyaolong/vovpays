@@ -47,7 +47,7 @@ class PhoneLoginController extends Controller
             if($fans)
             {
                 $type = 'admin';
-                $fans->apikey = md5(env('SIGNKEY'));
+                $fans->apikey = env('SIGNKEY');
             }
 
         }
