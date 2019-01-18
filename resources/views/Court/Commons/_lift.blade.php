@@ -26,7 +26,7 @@
             <li><a href="{{route('user.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>我的账户</span></a></li>
 
 
-            @if(Cache::get('systems')['add_account_type']->value && Cache::get('systems')['add_account_type']->value==4)
+            @if(isset(Cache::get('systems')['add_account_type']->value) && Cache::get('systems')['add_account_type']->value==4)
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>
