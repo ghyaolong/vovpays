@@ -111,7 +111,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('pay')
             ->middleware('web')
             ->namespace('App\Http\Pay\Controllers')
-            ->group(base_path('routes/Pay.php'));
+            ->group(base_path('routes/pay.php'));
     }
 
     protected function mapAppPayRoutes()
