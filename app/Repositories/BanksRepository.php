@@ -36,7 +36,7 @@ class BanksRepository
         return $this->banks->whereId($id)->first();
     }
 
-    /**获取所有英航
+    /**获取所有银行
      * @return mixed
      */
     public function findStatus()
