@@ -29,7 +29,7 @@
 @include('Agent.Commons._header')
 
 <!-- Left side column. contains the logo and sidebar -->
-@include('Agent.Commons._lift_side')
+@include('Agent.Commons._lift')
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

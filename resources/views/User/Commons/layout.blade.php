@@ -27,7 +27,7 @@
 @include('User.Commons._header')
 
 <!-- Left side column. contains the logo and sidebar -->
-@include('User.Commons._lift_side')
+@include('User.Commons._lift')
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
