@@ -38,18 +38,6 @@
                                             <input type="text" class="form-control" placeholder="用户名" name="username"
                                                    @if(isset($query['username'])) value="{{ $query['username'] }}" @endif />
                                         </div>
-                                        {{--<div class="form-group">--}}
-                                            {{--<select class="form-control" id="groupType" name="groupType">--}}
-                                                {{--<option value="1"--}}
-                                                        {{--@if(isset($query['groupType']) && $query['groupType'] =='1') selected @endif>--}}
-                                                    {{--商户--}}
-                                                {{--</option>--}}
-                                                {{--<option value="2"--}}
-                                                        {{--@if(isset($query['groupType']) && $query['groupType'] =='2') selected @endif>--}}
-                                                    {{--代理商--}}
-                                                {{--</option>--}}
-                                            {{--</select>--}}
-                                        {{--</div>--}}
                                         <div class="form-group">
                                             <select class="form-control" id="status" name="status">
                                                 <option value="-1"
@@ -84,8 +72,6 @@
                                 <th>用户名</th>
                                 <th>用户类型</th>
                                 <th>状态</th>
-                                <th>认证</th>
-                                {{--<th>账户总额</th>--}}
                                 <th>注册时间</th>
                                 <th>操作</th>
                             </tr>
@@ -102,12 +88,6 @@
                                                    type="checkbox"
                                                    @if($v->status==1) checked @endif >
                                         </td>
-                                        <td>
-                                            <span class="label label-success">已认证</span>
-                                        </td>
-                                        {{--<td>--}}
-                                            {{--1000--}}
-                                        {{--</td>--}}
                                         <td>{{$v->created_at}}</td>
                                         <td>
                                             <div class="btn-group">
