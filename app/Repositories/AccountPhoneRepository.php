@@ -172,6 +172,22 @@ class AccountPhoneRepository
     }
 
     /**
+     * @param string $type
+     * @param int $status
+     * @param int $third
+     * @return mixed
+     */
+    public function getStatusAndAccountTypeAndThird(string $type, int $status,int $third)
+    {
+        if ($type == 'alipay') {
+            $type = '支付宝';
+        } elseif ($type == 'wechat') {
+            $type = '微信';
+        }
+        return $this->account_phone->whereStatus($status)->whereThird($third)->whereAccounttype($type)->get();
+    }
+
+    /**
      * @param string $phoneId
      * @param int $status
      * @param int $uid

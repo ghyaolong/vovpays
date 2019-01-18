@@ -29,7 +29,7 @@
 @include('Court.Commons._header')
 
 <!-- Left side column. contains the logo and sidebar -->
-@include('Court.Commons._lift_side')
+@include('Court.Commons._lift')
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

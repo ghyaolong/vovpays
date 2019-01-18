@@ -104,6 +104,16 @@ class AccountBankCardsRepository
     }
 
     /**
+     * @param int $third
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAndThird(int $status, int $third )
+    {
+        return $this->account_bank_cards->whereStatus($status)->whereThird($third)->get();
+    }
+
+    /**
      * 检测唯一
      * @param string $field
      * @param string $value

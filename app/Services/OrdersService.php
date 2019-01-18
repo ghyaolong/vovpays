@@ -56,6 +56,7 @@ class OrdersService
             'paymentName'           => $Channel_payment->paymentName,
             'account'       => $account_array['account'] ?: $account_array['account'],
             'phone_id'      => $account_array['phone_id'],
+            'phone_uid'     => $account_array['phone_uid'],
             'orderNo'       => getOrderId(),
             'underOrderNo'  => $request->order_no,
             'amount'        => $amount,

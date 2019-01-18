@@ -57,9 +57,12 @@ class AccountBankCardsService
     public function update(int $id, int $uid, array $data)
     {
         $data = array_except($data, ['_token']);
-        $bank = explode(",", $data['bank_name']);
-        $data['bank_name'] = $bank[0];
-        $data['bank_mark'] = $bank[1];
+        if(isset($data['bank_name']))
+        {
+            $bank = explode(",", $data['bank_name']);
+            $data['bank_name'] = $bank[0];
+            $data['bank_mark'] = $bank[1];
+        }
         return $this->accountBankCardsRepository->update($id, $uid, $data);
     }
 
@@ -71,6 +74,17 @@ class AccountBankCardsService
     public function getStatusAndUserId(int $uid, int $status)
     {
         return $this->accountBankCardsRepository->getStatusAndUserId($uid, $status);
+    }
+
+    /**
+     * 跟据状态和是否三方挂号
+     * @param int $status
+     * @param int $third
+     * @return mixed
+     */
+    public function getStatusAndThird(int $status, int $third )
+    {
+        return $this->accountBankCardsRepository->getStatusAndThird($status,$third);
     }
 
     /**

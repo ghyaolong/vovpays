@@ -46,35 +46,35 @@ class ChooseAccountService{
         // 根据挂号方式获取所有开启的账号:1商户后台挂号,2总后台挂号,3代理后台挂号,4三方挂号
         if($systems['add_account_type']->value == 1 )
         {
-            if($this->pay_code == 'alipay')
+            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat')
             {
-                $account_list = $this->accountPhoneService->getStatusAndAccountType($type,$user->id,1);
-            }else if($this->pay_code == 'wechat'){
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,$user->id,1);
             }else if($this->pay_code == 'alipay_bank'){
                 $account_list = $this->accountBankCardsService->getStatusAndUserId($user->id,1);
             }
         }else if($systems['add_account_type']->value == 2 ){
 
-            if($this->pay_code == 'alipay')
+            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat')
             {
-                $account_list = $this->accountPhoneService->getStatusAndAccountType($type,100000,1);
-            }else if($this->pay_code == 'wechat'){
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,100000,1);
             }else if($this->pay_code == 'alipay_bank'){
                 $account_list = $this->accountBankCardsService->getStatusAndUserId($user->id,1);
             }
         }else if( $systems['add_account_type']->value == 3 ){
-            if($this->pay_code == 'alipay')
-            {
-                $account_list = $this->accountPhoneService->getStatusAndAccountType($type,$user->parentId,1);
-            }else if($this->pay_code == 'wechat'){
-                $account_list = $this->accountPhoneService->getStatusAndAccountType($type,$user->parentId,1);
+
+            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' ) {
+
+                $account_list = $this->accountPhoneService->getStatusAndAccountType($type, $user->parentId, 1);
             }else if($this->pay_code == 'alipay_bank'){
                 $account_list = $this->accountBankCardsService->getStatusAndUserId($user->parentId,1);
             }
         }else if( $systems['add_account_type']->value == 4 ){
-
+            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat')
+            {
+                $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndThird($type,1,1);
+            }else if($this->pay_code == 'alipay_bank'){
+                $account_list = $this->accountBankCardsService->getStatusAndThird(1,1);
+            }
         }
 
         if(!count($account_list))
@@ -131,6 +131,7 @@ class ChooseAccountService{
                     'userId'    => $account->alipayuserid,
                     'username'  => $account->alipayusername,
                     'phone_id'  => $account->phone_id,
+                    'phone_uid' => $account->user_id
                 ];
             }
         }
@@ -180,6 +181,7 @@ class ChooseAccountService{
                     'bank_code'         => $account->bank_mark,
                     'chard_index'       => $account->chard_index,
                     'phone_id'          => $account->phone_id,
+                    'phone_uid' => $account->user_id
                 ];
             }
         }

@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('channel_payment_id')->comment('支付方式id');
             $table->string('account',255)->default('account')->comment('账号');
             $table->string('phone_id',100)->default(0)->comment('设备号');
+            $table->unsignedInteger('phone_uid')->default(0)->comment('设备归属商户id');
             $table->string('orderMk',4)->default('0000')->comment('固码备注');
             $table->char('orderNo',30)->unique()->comment('系统订单号');
             $table->string('underOrderNo',50)->comment('下游订单号');

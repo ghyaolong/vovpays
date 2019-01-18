@@ -295,6 +295,9 @@ class PayController extends Controller
      */
     public function demo()
     {
+//        $app = new App\Services\RabbitMqService();
+//        $msg = '{"phoneid": "028624708057827","type": "alipay_bank","no": "2019011810120520154000MYBKC1CN000100011426939","money": "1.00","mark": "","dt": "1547780928324","sign": "573f783b77cc661e044ae9acb80fbf31"}';
+//        $app->send('orderback',$msg);
         return view('pay.demo');
     }
 

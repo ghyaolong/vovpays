@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\OrdersService;
+use App\Services\QuotalogService;
 use App\Services\StatisticalService;
 use App\Services\UserService;
 use Illuminate\Console\Command;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use App\Jobs\SendOrderAsyncNotify;
+use Illuminate\Support\Facades\Cache;
 
 class getOrderCallback extends Command
 {
@@ -67,10 +69,15 @@ class getOrderCallback extends Command
      */
     protected function orderCallback($json_str)
     {
+
+        Redis::select(0);
+        $systems = Cache::get('systems');
+
         Redis::select(1);
         Log::info('orderCallback:',[$json_str]);
         $data = json_decode($json_str, true);
         if(!$data) return;
+        // 获取订单号
         if($data['type'] == 'alipay_bank')
         {
             $key = $data['phoneid']."_".$data['type'].'_'.$data['money'];
@@ -100,23 +107,29 @@ class getOrderCallback extends Command
             'status'    => 1,
             'onOrderNo' => $data['no']
         );
+        // 更新订单状态
         $result = $ordersService->update($order->id,$params);
         if(!$result) return 6;
-        // 商户收益增加
+
         $statisticalService = app(StatisticalService::class);
-        $statisticalService->updateUseridHandlingFeeBalanceIncrement($user->id,$order->amount);
+        // 商户收益增加
+        if( $systems['add_account_type']->value != 1 )
+        {
+            $statisticalService->updateUseridHandlingFeeBalanceIncrement($user->id,$order->amount);
+        }
+
         // 代理收益增加
         if($order->agentAmount > 0)
         {
             $statisticalService->updateUseridHandlingFeeBalanceIncrement($order->agent_id,$order->agentAmount);
         }
-        // 更新订单状态
+        // 更新redis订单状态,前端查询
         if(Redis::exists($order->orderNo)){
             Redis::hmset($order->orderNo,['status'=>1]);
             Redis::expire($order->orderNo,180);
         }
 
-        // 更新账号交易额
+        // 更新redis账号交易额
         if($data['type'] == 'alipay_bank'){
             if(Redis::exists($data['phoneid'].'alipay'))
             {
@@ -128,7 +141,6 @@ class getOrderCallback extends Command
             {
                 Redis::del($key);
             }
-
         }else{
             if( Redis::exists($data['phoneid'].$data['type']) )
             {
@@ -137,7 +149,20 @@ class getOrderCallback extends Command
                 Redis::hmset( $data['phoneid'].$data['type'], $pahone_info);
             }
         }
-        Redis::select(0);
+
+        // 场外挂号时
+        if( $systems['add_account_type']->value == 4 )
+        {
+            $userService->userAddOrReduceQuota($order->phone_uid,$order->amount,1);
+            $quotalogService = app(QuotalogService::class);
+            $quota_array = [
+                'user_id'       => $order->phone_uid,
+                'quota'         => $order->amount,
+                'quota_type'    => 1,
+                'action_type'   => 1,
+            ];
+            $quotalogService->add($quota_array);
+        }
         SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
     }
 
