@@ -32,23 +32,20 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         $title = '订单管理';
-        $query = $request->query();
-        if (count($query)) {
-            $list = $this->ordersService->searchPage($query, 10);
-            //订单金额
-            $orderInfoSum = $this->ordersService->orderInfoSum($query);
-            //手续费
-        } else {
-            $query = [];
-            $list = $this->ordersService->getAllPage($query,10);
-            //订单金额
-            $orderInfoSum = $this->ordersService->orderInfoSum($query);
-        }
+        $query = $request->input();
+
+        $search = $this->ordersService->searchPage($query, 10);
+        $list = $search['list'];
+        $orderInfoSum = $search['info'];
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('Admin.Orders.index', compact('title', 'list', 'query', 'chanel_list', 'payments_list','orderInfoSum'));
+        unset($query['_token']);
+
+        return view('Admin.Orders.index', compact('title','list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
+
+
 
     }
 

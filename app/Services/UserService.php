@@ -30,7 +30,7 @@ class UserService
             $data['agentName'] = '';
         }
 
-        // 用户选着上级代理的时候，检测上级代理是否存在
+        // 用户选择上级代理的时候，检测上级代理是否存在
         if ($data['parentId'] != '0') {
             $agent = $this->usersRepository->findIdAndGrouptype($data['parentId'], 2);
             if ($agent) {
@@ -124,7 +124,7 @@ class UserService
             $data['agentName'] = '';
         }
 
-        // 用户选着上级代理的时候，检测上级代理是否存在
+        // 用户选择上级代理的时候，检测上级代理是否存在
         if ($data['parentId'] != '0') {
             $agent = $this->usersRepository->findIdAndGrouptype($data['parentId'], 2);
             if ($agent) {

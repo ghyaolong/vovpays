@@ -73,56 +73,66 @@
                 </div>
                 <div class="box-body">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.order')}}" method="get">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
-                                   placeholder="订单时间" name="orderTime"
-                                   @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
-                        </div>
-
-                        <div class="form-group">
-                            <select class="form-control" id="channelId" name="channelId">
-                                <option value="-1">选着通道</option>
-                                @foreach($chanel_list as $v )
-                                    <option value="{{ $v['id'] }}">{{ $v['channelName'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" id="paymentId" name="paymentId">
-                                <option value="-1">选着支付方式</option>
-                                @foreach($payments_list as $v )
-                                    <option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" id="status" name="status">
-                                <option value="-1"
-                                        @if(!isset($query['status']) || $query['status'] =='-1') selected @endif >
-                                    订单状态
-                                </option>
-                                <option value="0"
-                                        @if(isset($query['status']) && $query['status'] =='0') selected @endif>
-                                    未支付
-                                </option>
-                                <option value="1"
-                                        @if(isset($query['status']) && $query['status'] =='1') selected @endif >
-                                    支付成功
-                                </option>
-                                <option value="2"
-                                        @if(isset($query['status']) && $query['status'] =='2') selected @endif>
-                                    支付异常
-                                </option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="orderNo" placeholder="系统订单">
-                        </div>&nbsp;&nbsp;
-
-                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
-                    </form>
+                    <div class="box-body">
+                        <form action="{{ route('user.order') }}" method="get">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="系统订单" name="orderNo"
+                                           @if(isset($query['orderNo'])) value="{{ $query['orderNo'] }}" @endif />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="商户订单" name="underOrderNo"
+                                           @if(isset($query['underOrderNo'])) value="{{ $query['underOrderNo'] }}" @endif />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="商户号" name="userNo"
+                                           @if(isset($query['underOrderNo'])) value="{{ $query['underOrderNo'] }}" @endif />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
+                                           placeholder="订单时间" name="orderTime"
+                                           @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="channelId" name="channel_id">
+                                        <option value="-1">选择通道</option>
+                                        @foreach($chanel_list as $v )
+                                            <option value="{{ $v['id'] }}"
+                                                    @if(isset($query['channel_id']) && $query['channel_id'] == $v['id']) selected @endif>{{ $v['channelName'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="paymentId" name="channel_payment_id">
+                                        <option value="-1">选择支付方式</option>
+                                        @foreach($payments_list as $v )
+                                            <option value="{{ $v['id'] }}"
+                                                    @if(isset($query['channel_payment_id']) && $query['channel_payment_id'] == $v['id']) selected @endif>{{ $v['paymentName'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="status" name="status">
+                                        <option value="-1"
+                                                @if(!isset($query['status']) || $query['status'] =='-1') selected @endif >
+                                            订单状态
+                                        </option>
+                                        <option value="0"
+                                                @if(isset($query['status']) && $query['status'] =='0') selected @endif>未支付
+                                        </option>
+                                        <option value="1"
+                                                @if(isset($query['status']) && $query['status'] =='1') selected @endif >支付成功
+                                        </option>
+                                        <option value="2"
+                                                @if(isset($query['status']) && $query['status'] =='2') selected @endif>支付异常
+                                        </option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
+                            </div>
+                        </form>
+                    </div>
                     <div class="box-body" style="margin-top: 45px">
                         <table id="example2" class="table table-condensed table-bordered table-hover">
                             <tr style="color: #999999">
@@ -168,7 +178,7 @@
                             @endif
 
                         </table>
-                        {{$orders->appends($query)->links()}}
+                        @include('User.Commons._page')
                     </div>
                 </div>
             </div>
@@ -267,7 +277,7 @@
     <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
         $(function () {
-            $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+            // $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
 
             $('#daterange-btn').daterangepicker(
                 {

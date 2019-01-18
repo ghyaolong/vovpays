@@ -28,21 +28,20 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        $uid = Auth::user()->id;
         $query = $request->input();
+        $data['agent_id'] = $uid;
 
-        if (count($query)) {
-            $query['agent_id'] = Auth::user()->id;
-            $list = $this->ordersService->searchPage($query, 10);
-            $orderInfoSum = $this->ordersService->orderInfoSum($query);
-        } else {
-            $query['agent_id'] = Auth::user()->id;
-            $list = $this->ordersService->getAllPage($query,10);
-            $orderInfoSum = $this->ordersService->orderInfoSum($query);
-        }
+        $search = $this->ordersService->searchPage($query, 10);
+        $list = $search['list'];
+        $orderInfoSum = $search['info'];
 
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
+
+        unset($query['_token']);
+        unset($query['agent_id']);
 
         return view('Agent.Order.order', compact('list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
 
