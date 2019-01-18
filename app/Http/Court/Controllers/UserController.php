@@ -25,32 +25,23 @@ class UserController extends Controller
      * UserController constructor.
      * @param UserService $userService
      */
-    public function __construct(UserService $userService,CheckUniqueService $checkUniqueService)
+    public function __construct(UserService $userService, CheckUniqueService $checkUniqueService)
     {
         $this->userService = $userService;
-        $this->checkUniqueService=$checkUniqueService;
+        $this->checkUniqueService = $checkUniqueService;
     }
 
     /**
-     * 下属用户展示
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $query = $request->input();
-        $pid = Auth::user()->id;
+        $courtId = Auth::user()->id;
 
-        if(count($query))
-        {
-            $query['parentId']=$pid;
-            $list = $this->userService->searchPage($query, 10);
-        }else{
-            $list = $this->userService->getParentIdPage($pid,10);
-        }
+        $court = $this->userService->findId($courtId);
 
-
-        return view('Court.User.user',compact( 'list', 'query'));
+        return view('Court.User.user', compact('court'));
 
 
     }
@@ -83,14 +74,14 @@ class UserController extends Controller
 
         $result = $this->userService->updateStatus($request->id, $data);
 
-        if($result)
-        {
+        if ($result) {
             return ajaxSuccess('修改成功！');
-        }else{
+        } else {
             return ajaxError('修改失败！');
         }
 
     }
+
     /**
      * 唯一验证
      * @param Request $request
@@ -100,10 +91,10 @@ class UserController extends Controller
     {
         $result = $this->checkUniqueService->check('users', $request->type, $request->value, $request->id);
 
-        if($result){
-            return  response()->json(array("valid"=>"true"));
-        }else{
-            return  response()->json(array("valid"=>"false"));
+        if ($result) {
+            return response()->json(array("valid" => "true"));
+        } else {
+            return response()->json(array("valid" => "false"));
         }
     }
 
