@@ -147,6 +147,7 @@
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="chard_index"
                                        placeholder="请输入索引">
+                                <a href="https://www.showdoc.cc/258628029269764" target="_blank">索引获取说明</a> 密码：000000
                             </div>
                         </div>
                         <div class="form-group">
