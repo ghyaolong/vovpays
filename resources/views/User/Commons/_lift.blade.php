@@ -15,6 +15,7 @@
 
         <ul class="sidebar-menu" data-widget="tree">
             <li><a href="{{route('user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>首页</span></a></li>
+            <li><a href="{{route('user.show')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户信息</span></a></li>
             <li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>
             <li><a href="{{route('user.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
             <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a>
