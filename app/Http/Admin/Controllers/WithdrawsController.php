@@ -94,7 +94,7 @@ class WithdrawsController extends Controller
 
         ]);
 
-        try {
+//        try {
 
             $data = $request->input();
 
@@ -113,13 +113,13 @@ class WithdrawsController extends Controller
                 return ajaxError('结算操作失败');
             }
 
-        } catch (CustomServiceException $customexception) {
-            $msg = $customexception->getMessage();
-            return ajaxError($msg);
-        } catch (\Exception $exception) {
-            $msg = $exception->getMessage();
-            return ajaxError($msg);
-        }
+//        } catch (CustomServiceException $customexception) {
+//            $msg = $customexception->getMessage();
+//            return ajaxError($msg);
+//        } catch (\Exception $exception) {
+//            $msg = $exception->getMessage();
+//            return ajaxError($msg);
+//        }
 
 
     }

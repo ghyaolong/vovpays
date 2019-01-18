@@ -72,9 +72,13 @@ class IndexController extends Controller
     }
 
     //开发者
-    public function main()
+    public function main(Request $request)
     {
-        return view('User.Index.main');
+
+        $httpType = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
+        $host= $httpType . $_SERVER['HTTP_HOST'];
+
+        return view('User.Index.main',compact('host'));
     }
 
     //验证器

@@ -120,9 +120,6 @@ class PayController extends Controller
      */
     public function queryOrder(Request $request)
     {
-        $mq = new App\Services\RabbitMqService();
-        $msg = '{"phoneid": "028624708057827","type": "alipay","no": "20190112200040011100200063409562","money": "0.01","mark": "20190112135657571015","dt": "1547272792966","sign": "91e59044b4da2a8560d68559f4e42651"}';
-        $mq->send('orderback',$msg);exit;
 
         if( !isset($request->merchant) || !isset($request->sign) || (!isset($request->sys_order_no) && !isset($request->out_order_no)) )
         {

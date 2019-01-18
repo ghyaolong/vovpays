@@ -19,9 +19,8 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div style="height: 150px;background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
-                        <b>方式一：跳转我方平台支付网关支付</b><br>
-                        <b>跳转支付页接口URL：</b> https://www.***.com/pay<br>
+                    <div style="height: 100px;background: #F5F5F5;margin:15px 10px;padding: 10px 20px;line-height: 30px">
+                        <b>跳转支付页接口URL：</b>{{$host}}/pay<br>
                         <b>传参方式：</b> Post<br>
                         <b>使用方法：</b> 用表单post的方式，post参数并跳转到此网址，显示我们的支付页<br>
                     </div>
@@ -33,7 +32,7 @@
                                 <th>含义</th>
                                 <th>类型</th>
                                 <th style="width: 900px">说明</th>
-                                <th style="width: 90px;">参与加密</th>
+                                <th style="width: 100px;">参与加密</th>
                                 <th style="width: 70px;">必填</th>
                             </tr>
                             <tr>
@@ -130,7 +129,7 @@
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
-                                <td>10.</td>
+                                <td>11.</td>
                                 <td>sign</td>
                                 <td>MD5签名</td>
                                 <td>string(32)</td>
@@ -145,52 +144,6 @@
                 </div>
             </div>
         </div>
-
-
-        {{--同步跳转--}}
-        <div class="col-md-12">
-            <div class="box box-primary box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">同步跳转</h3>
-
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="box-body">
-                    <div style="height: 80px;background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
-                        <b>传参方式：</b> Get<br>
-                        <b></b> 用户付款成功后，我们会先进行同步回调，跳转到您在发起付款接口传入的return_url网址 ，附带参数user_order_no，再过1-3秒后将发出异步通知(三)<br>
-                    </div>
-
-
-                    <div class="box-body" style="padding:20px auto;font-size: 15px">
-                        <table class="table table-bordered" style="margin: 10px auto">
-                            <tr bgcolor="#DEEFD7">
-                                <th style="width: 30px">#</th>
-                                <th>参数名</th>
-                                <th>含义</th>
-                                <th>类型</th>
-                                <th style="width: 1100px">说明</th>
-                            </tr>
-                            <tr>
-                                <td>1.</td>
-                                <td>user_order_no</td>
-                                <td>您的自定义订单号</td>
-                                <td>string(50)</td>
-                                <td>一定存在。您可以通过此参数在您后台查询到付款确实成功后，给用户一个付款成功的展示</td>
-                            </tr>
-                        </table>
-                        <br>
-                        <b>注意：请不要将此跳转认为是用户付款成功的判断条件，此行为极不安全。请根据我们的付款成功异步回调通知是否送到，来判断交易是否成功。</b>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         {{--异步通知--}}
         <div class="col-md-12">
             <div class="box box-primary box-solid">
@@ -219,8 +172,8 @@
                                 <th>参数名</th>
                                 <th>含义</th>
                                 <th>类型</th>
-                                <th style="width: 1010px">说明</th>
-                                <th style="width: 90px">参与加密</th>
+                                <th style="width: 1000px">说明</th>
+                                <th style="width: 100px">参与加密</th>
                             </tr>
                             <tr>
                                 <td>1.</td>
@@ -313,6 +266,176 @@
             </div>
         </div>
 
+        {{--同步跳转--}}
+        <div class="col-md-12">
+            <div class="box box-primary box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">同步跳转</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div style="height: 80px;background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
+                        <b>传参方式：</b> Get<br>
+                        <b></b> 用户付款成功后，我们会先进行同步回调，跳转到您在发起付款接口传入的return_url网址 ，附带参数user_order_no，再过1-3秒后将发出异步通知(三)<br>
+                    </div>
+
+
+                    <div class="box-body" style="padding:20px auto;font-size: 15px">
+                        <table class="table table-bordered" style="margin: 10px auto">
+                            <tr bgcolor="#DEEFD7">
+                                <th style="width: 30px">#</th>
+                                <th>参数名</th>
+                                <th>含义</th>
+                                <th>类型</th>
+                                <th style="width: 1100px">说明</th>
+                            </tr>
+                            <tr>
+                                <td>1.</td>
+                                <td>user_order_no</td>
+                                <td>您的自定义订单号</td>
+                                <td>string(50)</td>
+                                <td>一定存在。您可以通过此参数在您后台查询到付款确实成功后，给用户一个付款成功的展示</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <b>注意：请不要将此跳转认为是用户付款成功的判断条件，此行为极不安全。请根据我们的付款成功异步回调通知是否送到，来判断交易是否成功。</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{--订单查询--}}
+        <div class="col-md-12">
+            <div class="box box-primary box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">订单查询</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div style="height: 100px;background: #F5F5F5;margin:15px 10px;padding: 10px 20px;line-height: 30px">
+                        <b>订单查询接口URL：</b>{{$host}}/pay/query<br>
+                        <b>传参方式：</b> Get<br>
+                        <b>返回数据类型：</b> json字符串<br>
+                    </div>
+                    <div class="box-body" style="padding:20px auto;font-size: 15px">
+                        <table class="table table-bordered" style="margin: 10px auto">
+                            <tr bgcolor="#DEEFD7">
+                                <th style="width: 30px">#</th>
+                                <th>参数名</th>
+                                <th>含义</th>
+                                <th>类型</th>
+                                <th style="width: 900px">说明</th>
+                                <th style="width: 100px;">参与加密</th>
+                                <th style="width: 70px;">必填</th>
+                            </tr>
+                            <tr>
+                                <td>1.</td>
+                                <td>merchant</td>
+                                <td>商户号</td>
+                                <td>string(50)</td>
+                                <td>您的商户唯一标识，注册后在基本资料里获得</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>2.</td>
+                                <td>out_order_no</td>
+                                <td>商户订单号</td>
+                                <td>string</td>
+                                <td> 商户订单号和平台订单号二选一,请确保商户订单号在商户系统唯一</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>3.</td>
+                                <td>sys_order_no</td>
+                                <td>平台订单号</td>
+                                <td>string</td>
+                                <td>商户订单号和平台订单号二选一</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>4.</td>
+                                <td>sign</td>
+                                <td>MD5签名</td>
+                                <td>string(32)</td>
+                                <td>
+                                    32位小写MD5签名值                    </td>
+                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                        </table>
+                        <br>
+                    </div>
+                    <div style="height: 50px;background: #F5F5F5;margin:10px 10px;padding: 10px 20px;line-height: 30px">
+                        <b>查询返回数据：</b><br>
+                    </div>
+                    <div class="box-body" style="padding:10px auto;font-size: 15px">
+                        <table class="table table-bordered" style="margin: 10px auto">
+                            <tr bgcolor="#DEEFD7">
+                                <th style="width: 30px">#</th>
+                                <th>参数名</th>
+                                <th>含义</th>
+                                <th>类型</th>
+                                <th style="width: 900px">说明</th>
+                                <th style="width: 100px;">参与加密</th>
+                                <th style="width: 70px;">必填</th>
+                            </tr>
+                            <tr>
+                                <td>1.</td>
+                                <td>respCode</td>
+                                <td>状态码</td>
+                                <td>string(4)</td>
+                                <td>0000，表示查询成功，其他失败</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>2.</td>
+                                <td>out_order_no</td>
+                                <td>商户订单号</td>
+                                <td>string</td>
+                                <td> 商户订单号和平台订单号二选一,请确保商户订单号在商户系统唯一</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>3.</td>
+                                <td>sys_order_no</td>
+                                <td>平台订单号</td>
+                                <td>string</td>
+                                <td>商户订单号和平台订单号二选一</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>4.</td>
+                                <td>sign</td>
+                                <td>MD5签名</td>
+                                <td>string(32)</td>
+                                <td>
+                                    32位小写MD5签名值                    </td>
+                                <td><span class="glyphicon glyphicon-remove"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {{--MD5签名--}}
         <div class="col-md-12">
@@ -329,11 +452,8 @@
 
                 <div class="box-body">
                     <div style="background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
-                        <b>待签名数据为表1中必须加入签名和有值加入签名的数据，以ASCII码升序(字典序)排序，然后以key=value&key1=value1......&key=密钥，生成签名串。具体MD5签名源串及格式如下： amount=10.01&merchant=HPWBCimj4e&notify_rul=http://baidu.com&order_no=20190104055920&order_time=2018-12-0813:46:01&pay_code=alipay&return_url=http://baidu.com&key=$2y$10$YCJ1PkNmlBzm1Fm0r9wfpPu8oH4WnoSevO1ir249kHgBSkQDYPa5oa</b><br><br>
+                        待签名数据为必须加入签名的和非空参数，以ASCII码升序(字典序)排序，然后以key=value&key1=value1......&key=密钥，生成签名串。具体MD5签名源串及格式如下： amount=10.01&merchant=HPWBCimj4e&notify_rul=http://baidu.com&order_no=20190104055920&order_time=2018-12-0813:46:01&pay_code=alipay&return_url=http://baidu.com&key=$2y$10$YCJ1PkNmlBzm1Fm0r9wfpPu8oH4WnoSevO1ir249kHgBSkQDYPa5oa<br><br>
                     </div>
-
-
-
                 </div>
             </div>
         </div>

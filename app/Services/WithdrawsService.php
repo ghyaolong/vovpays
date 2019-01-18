@@ -263,6 +263,7 @@ class WithdrawsService
             $withdrawInfo->status=$info['status'];
             $withdrawInfo->comment=$info['comment'];;
             $status&&$status=$withdrawInfo->save();
+
             if(!$status){
                 throw new CustomServiceException('取消结算操作失败');
             }
