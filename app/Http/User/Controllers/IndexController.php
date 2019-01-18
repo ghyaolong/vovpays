@@ -39,10 +39,10 @@ class IndexController extends Controller
         $query = $request->input();
         $query['user_id'] = Auth::user()->id;
         $user=$this->userService->findId($query['user_id']);
-        //订单金额
-        $orderInfoSum = $this->ordersService->orderInfoSum($query);
+
+        $user_day_count   = $this->orderDayCountService->findDayAndUserCount($query['user_id']);
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query), 'tm'));
-        return view('User.Index.home', compact('user','orderInfoSum', 'order_day_count'));
+        return view('User.Index.home', compact('user','user_day_count', 'order_day_count'));
     }
 
     //用户列表展示

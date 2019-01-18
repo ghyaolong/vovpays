@@ -33,12 +33,10 @@ class OrderController extends Controller
         if (count($query)) {
             $query['agent_id'] = Auth::user()->id;
             $list = $this->ordersService->searchPage($query, 10);
-            //订单金额
             $orderInfoSum = $this->ordersService->orderInfoSum($query);
         } else {
             $query['agent_id'] = Auth::user()->id;
             $list = $this->ordersService->getAllPage($query,10);
-            //订单金额
             $orderInfoSum = $this->ordersService->orderInfoSum($query);
         }
 

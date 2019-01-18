@@ -38,7 +38,8 @@ class IndexController extends Controller
     public function show()
     {
         $query['user_id'] = Auth::user()->id;
-        //订单金额
+        $query['today']=date('Y-m-d',time());
+        $query['day']=date('Y-m-d',time()+24*60*60);
         $orderInfoSum = $this->ordersService->orderInfoSum($query);
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query),'tm'));
 

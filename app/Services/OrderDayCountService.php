@@ -46,4 +46,14 @@ class OrderDayCountService
     {
         return $this->orderDayCountRepository->findSysDayCount();
     }
+
+    /**
+     * 平台今日数据
+     * @return mixed
+     */
+    public function findDayAndUserCount(int $uid)
+    {
+        return $this->orderDayCountRepository->findDayAndUserCount($uid);
+    }
+
 }

@@ -37,6 +37,19 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-aqua">
+                <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
+                <div class="info-box-content">
+                    <span class="progress-description" style="padding-top: 10px;">我的收入</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="info-box-number">{{$orderInfoSum[0]['userSum'] ?: 0}} 元</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
                 <div class="info-box-content">
                     <span class="progress-description" style="padding-top: 10px;">成功笔数</span>

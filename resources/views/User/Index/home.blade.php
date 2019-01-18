@@ -10,11 +10,11 @@
             <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
                 <div class="info-box-content">
-                    <span class="progress-description" style="padding-top: 10px;">订单金额 </span>
+                    <span class="progress-description" style="padding-top: 10px;">订单金额 （今日统计） </span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="info-box-number">{{$orderInfoSum[0]['amountSum'] ?: 0}} 元</span>
+                    <span class="info-box-number">@if(isset($user_day_count->merchant_amount)){{ $user_day_count->merchant_amount }} @else 0 @endif  元</span>
                 </div>
             </div>
         </div>
@@ -23,11 +23,11 @@
             <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
                 <div class="info-box-content">
-                    <span class="progress-description" style="padding-top: 10px;">我的收入 </span>
+                    <span class="progress-description" style="padding-top: 10px;">我的收入 （今日统计） </span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="info-box-number">{{$orderInfoSum[0]['agentSum'] ?: 0 }} 元</span>
+                    <span class="info-box-number">@if(isset($user_day_count->merchant_income)){{ $user_day_count->merchant_income }} @else 0 @endif  元</span>
                 </div>
             </div>
         </div>
@@ -36,11 +36,11 @@
                 <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
 
                 <div class="info-box-content">
-                    <span class="progress-description" style="padding-top: 10px;">成功笔数 </span>
+                    <span class="progress-description" style="padding-top: 10px;">成功笔数 （今日统计） </span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="info-box-number">{{$orderInfoSum[0]['orderCount'] ?: 0 }}笔</span>
+                    <span class="info-box-number">@if(isset($user_day_count->merchant_order_suc_count)){{ $user_day_count->merchant_order_suc_count }} @else 0 @endif  笔</span>
                 </div>
             </div>
         </div>
@@ -116,14 +116,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">余额</label>
-                                        <div class="col-sm-8">
-                                            <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-                                                {{--{{$member->balance}}--}}
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-sm-4 control-label">登陆时间</label>
                                         <div class="col-sm-8">
                                             <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
@@ -138,58 +130,6 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="box box-primary box-solid collapsed-box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">基本资料</h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-body" style="display: none">
-                            <form class="form-horizontal" id="info">
-                                <input type="hidden" id="UserID2" name="UserID2" value="24508">
-                                <div class="box-body">
-
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">真实姓名</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="UserRealName" name="UserRealName" value="重庆威付宝科技有限公司">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">收款名称</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="UserCompany" name="UserCompany" value="重庆威付宝科技有限公司">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">手机号码</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="UserMobile" name="UserMobile" value="{{$user->phone}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="" class="col-sm-4 control-label">联系 QQ</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="UserQQ" name="UserQQ" value="920299697">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="box-footer">
-                                    <button type="button" class="btn btn-primary pull-right">保存</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </section>

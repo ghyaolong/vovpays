@@ -117,8 +117,18 @@ class OrdersRepository
             $where['updated_at'] = $time[1];
         }
 
+        if (isset($data['today']) && $data['today']) {
+            $sql .= ' and created_at >= ?';
+            $where['created_at'] = $data['today'];
+        }
+
+        if (isset($data['day']) && $data['day']) {
+            $sql .= ' and updated_at <= ?';
+            $where['updated_at'] = $data['day'];
+        }
+
         return $this->order->whereRaw($sql, $where)
-            ->select(DB::raw('sum(amount) as amountSum ,count(id) as orderCount,sum(orderRate) as orderRateSum, sum(agentAmount) as agentSum'))
+            ->select(DB::raw('sum(amount) as amountSum ,count(id) as orderCount,sum(orderRate) as orderRateSum, sum(agentAmount) as agentSum,sum(userAmount) as userSum'))
             ->get()->toArray();
     }
 

@@ -28,7 +28,7 @@ class IndexController extends Controller
      * @param OrdersService $ordersService
      * @param OrderDayCountService $orderDayCountService
      */
-    public function __construct( OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
+    public function __construct(OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
     {
         $this->ordersService = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
@@ -44,16 +44,16 @@ class IndexController extends Controller
     {
         $query = $request->input();
 
-        //订单金额
-        $orderInfoSum = $this->ordersService->orderInfoSum($query);
-
         $query['agent_id'] = Auth::user()->id;
-        //账户信息
+
         $agentAccount = $this->statisticalService->findUserId($query['agent_id']);
 
-        //当日统计
+        $query['today'] = date('Y-m-d', time());
+        $query['day'] = date('Y-m-d', time() + 24 * 60 * 60);
+        $orderInfoSum = $this->ordersService->orderInfoSum($query);
+
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query), 'tm'));
-        //是否代理商挂号
+
         return view('Agent.Index.index', compact('orderInfoSum', 'order_day_count', 'agentAccount'));
     }
 
