@@ -42,7 +42,7 @@ class AccountPhoneController extends Controller
             $data['accountType'] = 'bank';
         }
         $list = $this->accountPhoneService->getAllPage($data, 6);
-        return view("court.AccountPhone.{$data['accountType']}", compact('list'));
+        return view("Court.AccountPhone.{$data['accountType']}", compact('list'));
     }
 
     /**
