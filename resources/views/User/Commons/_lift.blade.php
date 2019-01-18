@@ -14,16 +14,11 @@
         </div>
 
         <ul class="sidebar-menu" data-widget="tree">
-
-            <li class="active treeview">
             <li><a href="{{route('user.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>主页</span></a></li>
             <li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>
-            <li class="active treeview">
             <li><a href="{{route('user.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
-            <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a>
-            <li class="active treeview">
-                <a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a>
-            </li>
+            <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a></li>
+            <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
             @if(Cache::get('systems')['add_account_type']->value && Cache::get('systems')['add_account_type']->value ==3)
                 <li class="treeview">
                     <a href="#">
