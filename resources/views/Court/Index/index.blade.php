@@ -19,7 +19,7 @@
             <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
                 <div class="info-box-content">
-                    <span class="progress-description" style="padding-top: 10px;">订单金额 </span>
+                    <span class="progress-description" style="padding-top: 10px;">订单金额 （今日统计）</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
@@ -31,11 +31,11 @@
             <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
                 <div class="info-box-content">
-                    <span class="progress-description" style="padding-top: 10px;">我的收入 </span>
+                    <span class="progress-description" style="padding-top: 10px;">我的收入 （今日统计）</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="info-box-number">{{$orderInfoSum[0]['agentSum'] ?: 0 }} 元</span>
+                    <span class="info-box-number">{{$orderInfoSum[0]['userSum'] ?: 0 }} 元</span>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
 
                 <div class="info-box-content">
-                    <span class="progress-description" style="padding-top: 10px;">成功笔数 </span>
+                    <span class="progress-description" style="padding-top: 10px;">成功笔数 （今日统计）</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>

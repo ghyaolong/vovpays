@@ -41,7 +41,6 @@ class LoginController extends Controller
      */
     public function show()
     {
-//        echo 123;die();
         $user = Auth::guard('court')->user();
         if ($user) return redirect('court');
         return view('Court.Login.login');
