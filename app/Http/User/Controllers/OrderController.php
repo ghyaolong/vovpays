@@ -40,7 +40,7 @@ class OrderController extends Controller
         $data['user_id'] = $uid;
 
         $search = $this->ordersService->searchPage($query, 10);
-        $orders = $search['list'];
+        $list = $search['list'];
         $orderInfoSum = $search['info'];
 
 
@@ -50,7 +50,7 @@ class OrderController extends Controller
         unset($query['_token']);
         unset($query['user_id']);
 
-        return view('User.Order.order', compact('orders', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
+        return view('User.Order.order', compact('list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
     }
 
     /**

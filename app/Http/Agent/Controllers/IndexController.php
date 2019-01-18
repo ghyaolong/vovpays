@@ -54,6 +54,14 @@ class IndexController extends Controller
 
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query), 'tm'));
 
+
+//        $query = $request->input();
+//        $query['user_id'] = Auth::user()->id;
+//
+//        $user_day_count   = $this->orderDayCountService->findDayAndUserCount($query['user_id']);
+//        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderUserSevenDaysCount($query), 'tm'));
+//        return view('User.Index.home', compact('user_day_count', 'order_day_count'));
+
         return view('Agent.Index.index', compact('orderInfoSum', 'order_day_count', 'agentAccount'));
     }
 

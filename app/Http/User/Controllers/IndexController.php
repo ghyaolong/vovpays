@@ -40,7 +40,7 @@ class IndexController extends Controller
         $query['user_id'] = Auth::user()->id;
 
         $user_day_count   = $this->orderDayCountService->findDayAndUserCount($query['user_id']);
-        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query), 'tm'));
+        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderUserSevenDaysCount($query), 'tm'));
         return view('User.Index.home', compact('user_day_count', 'order_day_count'));
     }
 

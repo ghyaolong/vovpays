@@ -50,6 +50,21 @@ class OrderDayCountRepository
     }
 
     /**
+     * 统计7天数据
+     * @param int $uid
+     * @return mixed
+     */
+    public function getOrderUserSevenDaysCount(array $query)
+    {
+        if (isset($query['user_id']) && $query['user_id']) {
+            $where = " user_id = {$query['user_id']}";
+        } elseif (isset($query['agent_id']) && $query['agent_id']) {
+            $where = " agent_id = {$query['agent_id']}";
+        }
+        return DB::select("select date(`updated_at`) as tm, merchant_amount,merchant_income, merchant_order_count FROM pay_order_day_counts where date(`updated_at`) <= date(NOW()) and $where GROUP BY date(`updated_at`)");
+    }
+
+    /**
      * 获取平台今日统计
      * @return mixed
      */

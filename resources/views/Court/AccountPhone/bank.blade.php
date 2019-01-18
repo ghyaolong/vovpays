@@ -30,7 +30,6 @@
                                 <th>手机标识</th>
                                 <th>账号</th>
                                 <th>账号类型</th>
-                                {{--<th>备注</th>--}}
                                 <th>单日交易额</th>
                                 <th>状态</th>
                                 <th>操作</th>
@@ -45,7 +44,6 @@
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->bank_account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
-                                        {{--<td>备注</td>--}}
                                         <td>
                                             <span style="color: green">{{$v->tradeAmount}}</span>
                                         <td>
@@ -71,7 +69,6 @@
             </div>
         </div>
     </div>
-    {{--{{$orders->appends($data)->links()}}--}}
 
 
     {{--模态框--}}
@@ -148,14 +145,15 @@
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="chard_index"
                                        placeholder="请输入索引">
+                                <a href="https://www.showdoc.cc/258628029269764" target="_blank">索引获取说明</a> 密码：000000
                             </div>
                         </div>
-                        {{--<div class="form-group">--}}
-                        {{--<label for="" class="col-xs-3 control-label">备注:</label>--}}
-                        {{--<div class="col-xs-9">--}}
-                        {{--<input type="text" class="form-control" name="" placeholder="请填写备注">--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">限额:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
+                            </div>
+                        </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -289,24 +287,6 @@
                             notEmpty: {
                                 message: '请输入银行卡号!'
                             },
-                            {{--regexp: {--}}
-                                {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
-                                {{--message: '请输入正确的银行卡号！'--}}
-                            {{--},--}}
-                            {{--remote: {--}}
-                                {{--url: "{{route('agent.checkBank')}}",--}}
-                                {{--message: "该卡号已存在!",--}}
-                                {{--type: "post",--}}
-                                {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
-                                    {{--return {--}}
-                                        {{--"value": $("input[name='cardNo']").val().trim(),--}}
-                                        {{--"type": 'cardNo',--}}
-                                        {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
-                                        {{--"id": $('#id').val(),--}}
-                                    {{--};--}}
-                                {{--},--}}
-                                {{--delay: 500,--}}
-                            {{--},--}}
                         },
                     },
                     phone_id: {
