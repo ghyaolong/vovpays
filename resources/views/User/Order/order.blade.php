@@ -147,8 +147,8 @@
                                 <th>操作</th>
                             </tr>
 
-                            @if(isset($orders[0]))
-                                @foreach($orders as $v)
+                            @if(isset($list[0]))
+                                @foreach($list as $v)
                                     <tr>
                                         <td>{{ $v['id'] }}</td>
                                         <td>{{ $v['merchant'] }}</td>
