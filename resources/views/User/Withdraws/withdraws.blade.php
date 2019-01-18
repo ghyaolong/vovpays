@@ -242,7 +242,9 @@
 
         }
 
-
+        /**
+         * 银行信息验证
+         */
         $().ready(function () {
             $('#bankForm').bootstrapValidator({
                 message: 'This value is not valid',
@@ -282,7 +284,7 @@
 
 
             /**
-             * 结算申请，条件控制
+             * 结算申请，信息验证
              */
             $('#form1').bootstrapValidator({
                 message: 'This value is not valid',
@@ -299,7 +301,7 @@
                             },
                             between: {
                                 min: {{$WithdrawRule['withdraw_downline']}},
-                                max: 1000000,
+                                max: 1000000000,
                                 // regexp: /^[1-9]\d{2,}[\.]?\d*/,
                                 message: '输入值必须大于'+{{$WithdrawRule['withdraw_downline']}}
                             }

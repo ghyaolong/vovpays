@@ -15,6 +15,7 @@ use App\Services\WithdrawsService;
 use App\Http\Requests\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\CustomServiceException;
 
 class WithdrawsController extends Controller
 {
@@ -91,15 +92,19 @@ class WithdrawsController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
-        $result = $this->withdrawsService->add($request->input());
+        try {
+            $result = $this->withdrawsService->add($request->input());
 
-        if ($result['status']) {
+            if ($result) {
+                return ajaxSuccess('结算申请中，请留意您的账单变化！');
+            }
 
-            return ajaxSuccess('结算申请中，请留意您的账单变化！');
-
-        } else {
-
-            return ajaxError($result['msg']);
+        } catch (CustomServiceException $customexception) {
+            $msg = $customexception->getMessage();
+            return ajaxError($msg);
+        } catch (\Exception $exception) {
+            $msg = $exception->getMessage();
+            return ajaxError($msg);
         }
     }
 }

@@ -210,6 +210,7 @@
                                 <select class="form-control" name="channelCode" id="channelCode1">
 
                                 </select>
+                                <span class="help-block" style="font-size: 12px;"><i class="fa fa-info-circle"></i>结算通道可以为空</span>
                             </div>
                         </div>
 
@@ -219,7 +220,7 @@
                             <div class="col-xs-9">
                                 <select class="form-control" name="status" >
                                     <option value='2'>已经结算</option>
-                                    <option value='3'>结算异常</option>
+                                    {{--<option value='3'>结算异常</option>--}}
                                     <option value='4'>取消结算</option>
                                 </select>
                             </div>
@@ -227,7 +228,7 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">结算备注</label>
                             <div class="col-xs-9">
-                                <textarea name="comment" class="form-control" id="" cols="20" rows="10"
+                                <textarea name="comment" class="form-control" id="" cols="20" rows="5"
                                           placeholder="结算备注"></textarea>
                             </div>
                         </div>
@@ -250,17 +251,18 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="withdrawForm" action="{{route('withdraws.update')}}" class="form-horizontal" role="form">
+                    <form id="paidForm" action="{{route('withdraws.update')}}" class="form-horizontal" role="form">
                         <input type="hidden" name="id" id="orderId2">
                         <input type="hidden" name="type" value="2">
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">结算通道</label>
+                            <label for="" class="col-xs-3 control-label">代付通道</label>
                             <div class="col-xs-9">
                                 <select class="form-control" name="channelCode" id="channelCode2">
 
                                 </select>
+                                <span class="help-block" style="font-size: 12px;"><i class="fa fa-info-circle"></i>代付通道必须选择</span>
                             </div>
                         </div>
 
@@ -269,7 +271,7 @@
                             <label for="" class="col-xs-3 control-label">结算操作</label>
                             <div class="col-xs-9">
                                 <select class="form-control" name="status" >
-                                    <option value='2'>同意代付</option>
+                                    <option value='1'>同意代付</option>
                                     <option value='4'>取消结算</option>
                                 </select>
                             </div>
@@ -290,6 +292,46 @@
     <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
         $(function () {
+            /**
+             * 结算申请，信息验证
+             */
+            $('#withdrawForm,#paidForm').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    channelCode: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择结算通道'
+                            }
+                        }
+                    },
+                    status: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择结算操作！'
+                            },
+                        }
+                    },
+                    comment: {
+                        validators: {
+                            notEmpty: {
+                                message: '请填写结算备注！'
+                            },
+                        }
+                    }
+
+                }
+            })
+
+            /**
+             * 结算操作提交
+             */
+
             $('#daterange-btn').val();
             // moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss')
 
@@ -334,13 +376,18 @@
         /**
          * 结算操作提交
          */
-
         function save(_this) {
 
-            _this.removeAttr('onclick');
 
+            _this.removeAttr('onclick');
             var $form = $(_this).parents('.form-horizontal');
 
+            //表单验证
+            $form.data('bootstrapValidator').validate();
+            if (!$form.data('bootstrapValidator').isValid()) {
+                return;
+            }
+            //提交表单
             $.post($form.attr('action'), $form.serialize(), function (result) {
                 if (result.status) {
                     setInterval(function () {
@@ -353,7 +400,6 @@
                     toastr.error(result.msg);
                 }
             }, 'json');
-
         }
 
 
@@ -365,13 +411,10 @@
         function common(title, id) {
             //清空结算信息
             $("#orderId1").empty();
-
             //设置结算信息
             $("#orderId1").val(id);
-
             //清空option
             $("#channelCode1").empty();
-
             $.ajax({
                 type: 'get',
                 url: '/admin/withdraws/' + id + '/manage',
@@ -382,8 +425,9 @@
                 },
                 success: function (result) {
                     if (result.status == 1) {
-
                         //添加option
+                        $("#channelCode1").append("<option value='0'>选择通道</option>");
+
                         for (i = 0; i < result.data.length; i++) {
                             $("#channelCode1").append("<option value='" + result.data[i].channelCode + "'>" + result.data[i].channelName + "</option>");
                         }
@@ -406,13 +450,10 @@
         function paid(title, id) {
             //清空结算信息
             $("#orderId2").empty();
-
             //设置结算信息
             $("#orderId2").val(id);
-
             //清空option
             $("#channelCode2").empty();
-
             $.ajax({
                 type: 'get',
                 url: '/admin/withdraws/' + id + '/manage',
@@ -422,12 +463,11 @@
                 },
                 success: function (result) {
                     if (result.status == 1) {
-
                         //添加option
+                        $("#channelCode2").append("<option value=''>选择通道</option>");
                         for (i = 0; i < result.data.length; i++) {
                             $("#channelCode2").append("<option value='" + result.data[i].channelCode + "'>" + result.data[i].channelName + "</option>");
                         }
-
 
                         $('#paidWithdraw .modal-title').html(title);
                         $('#paidWithdraw').modal('show');

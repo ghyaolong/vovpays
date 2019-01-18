@@ -53,10 +53,10 @@ class WithdrawsController extends Controller
     public function manage(Request $request, $id)
     {
 
-        if($request->type==1) {
+        if ($request->type == 1) {
             //普通结算
             $chanel_list = $this->channelService->getAll();
-        }elseif($request->type==2){
+        } elseif ($request->type == 2) {
             //代付计结算
             $chanel_list = $this->channelService->getAll();
         }
@@ -76,18 +76,52 @@ class WithdrawsController extends Controller
      */
     public function update(Request $request)
     {
-        $data=$request->input();
 
-        if($data['type']==1) {
-            //普通结算
-            $this->withdrawsService->commonWithdraw($data);
-        }elseif($data['type']==2){
-            //代付计结算
-            $chanel_list = $this->withdrawsService->paidWithdraw($data);
+        $this->validate($request, [
+            'type' => 'required|in:1,2',
+            'status' => 'required|in:1,2,3,4',
+            'comment'  => 'required_if:type,1|max:191',
+            'channelCode'=> 'required_if:type,2|alpha_num',
+        ],[
+            'type.required' => '非法操作',
+            'type.in' => '非法操作',
+            'status.required' => '非法操作',
+            'status.in' => '非法操作',
+            'comment.required_if'  => '备注不能为空',
+            'comment.max'  => '备注过长',
+            'channelCode.required_if'  => '必须选择代付通道',
+            'channelCode.alpha_num'  => '非法操作',
+
+        ]);
+
+        try {
+
+            $data = $request->input();
+
+            $result=false;
+            if ($data['type'] == 1) {
+                //普通结算
+                $result=$this->withdrawsService->commonWithdraw($data);
+            } elseif ($data['type'] == 2) {
+                //代付计结算
+                $result=$this->withdrawsService->paidWithdraw($data);
+            }
+
+            if ($result) {
+                return ajaxSuccess('结算操作成功');
+            }else{
+                return ajaxError('结算操作失败');
+            }
+
+        } catch (CustomServiceException $customexception) {
+            $msg = $customexception->getMessage();
+            return ajaxError($msg);
+        } catch (\Exception $exception) {
+            $msg = $exception->getMessage();
+            return ajaxError($msg);
         }
 
 
-        return ajaxSuccess('获取成功');
     }
 
 

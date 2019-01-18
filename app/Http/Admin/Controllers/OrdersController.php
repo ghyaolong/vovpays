@@ -49,6 +49,7 @@ class OrdersController extends Controller
         $payments_list = $this->channelPaymentsService->getAll();
 
         return view('Admin.Orders.index', compact('title', 'list', 'query', 'chanel_list', 'payments_list','orderInfoSum'));
+
     }
 
 

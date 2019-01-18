@@ -46,7 +46,10 @@ class UserPermissionServer
             default :
                throw new  CustomServiceException('不存在的验证方式:'.$PermissionType.',请联系平台管理员!');
         }
-        return $result;
+
+            return $result;
+
+
     }
 
     /** 支付密码验证
@@ -62,6 +65,8 @@ class UserPermissionServer
         if(!$status){
             throw new CustomServiceException('支付密码不匹配');
         }
+        return $status;
+
 
     }
 

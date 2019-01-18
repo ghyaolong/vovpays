@@ -15,6 +15,7 @@ use App\Services\BanksService;
 use App\Http\Requests\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\CustomServiceException;
 
 class WithdrawsController extends Controller
 {
@@ -45,13 +46,13 @@ class WithdrawsController extends Controller
         $data = $request->input();
         $data['user_id'] = $uid;
 
-        $search = $this->withdrawsService->searchPage($data,10);
+        $search = $this->withdrawsService->searchPage($data, 10);
         $list = $search['list'];
         $info = $search['info'];
         $query = $request->input();
 
 
-        return view('User.Withdraws.withdraws', compact('list','info', 'query'));
+        return view('User.Withdraws.withdraws', compact('list', 'info', 'query'));
     }
 
 
@@ -68,17 +69,17 @@ class WithdrawsController extends Controller
         $data = $request->input();
         $data['user_id'] = $uid;
 
-        $search = $this->withdrawsService->searchPage($data,10);
+        $search = $this->withdrawsService->searchPage($data, 10);
         $clearings = $search['list'];
         $info = $search['info'];
 
 
-        $banks= $this->banksService->findAll();
+        $banks = $this->banksService->findAll();
 
-        $WithdrawRule=$this->withdrawsService->getWithdrawRule();
+        $WithdrawRule = $this->withdrawsService->getWithdrawRule();
 
 
-        return view('User.Withdraws.withdraws', compact('list','banks', 'clearings','WithdrawRule'));
+        return view('User.Withdraws.withdraws', compact('list', 'banks', 'clearings', 'WithdrawRule'));
 
     }
 
@@ -89,16 +90,18 @@ class WithdrawsController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
+        try {
+            $result = $this->withdrawsService->add($request->input());
+            if ($result) {
+                return ajaxSuccess('结算申请中，请留意您的账单变化！');
+            }
 
-        $result = $this->withdrawsService->add($request->input());
-
-        if ($result['status']) {
-
-            return ajaxSuccess('结算申请中，请留意您的账单变化！');
-
-        } else {
-
-            return ajaxError($result['msg']);
+        } catch (CustomServiceException $customexception) {
+            $msg = $customexception->getMessage();
+            return ajaxError($msg);
+        } catch (\Exception $exception) {
+            $msg = $exception->getMessage();
+            return ajaxError($msg);
         }
     }
 }

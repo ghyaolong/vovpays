@@ -79,7 +79,16 @@ class WithdrawsRepository
     public function update($id,$data){
         $sql = " id = {$id} ";
         $where = [];
-        $this->withdraw->whereRaw($sql, $where)->update($data);
+        return $this->withdraw->whereRaw($sql, $where)->update($data);
+    }
+
+    /**根据id获取结算记录
+     * @param $id
+     * @return mixed
+     */
+    public function findById($id){
+
+        return $this->withdraw->where('id',$id)->first();
     }
 
 
