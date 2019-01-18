@@ -1,9 +1,9 @@
 @extends("User.Commons.layout")
 @section('title','开发者')
-@section("css")
-    <link rel="stylesheet"
-          href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
-@endsection
+{{--@section("css")--}}
+    {{--<link rel="stylesheet"--}}
+          {{--href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">--}}
+{{--@endsection--}}
 @section('content')
     <div class="row" style="margin-top: 20px">
         {{--发起付款--}}
@@ -146,7 +146,7 @@
         </div>
         {{--异步通知--}}
         <div class="col-md-12">
-            <div class="box box-primary box-solid">
+            <div class="box box-primary box-solid ">
                 <div class="box-header with-border">
                     <h3 class="box-title">异步通知</h3>
 
@@ -268,7 +268,7 @@
 
         {{--同步跳转--}}
         <div class="col-md-12">
-            <div class="box box-primary box-solid">
+            <div class="box box-primary box-solid collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">同步跳转</h3>
 
@@ -312,7 +312,7 @@
 
         {{--订单查询--}}
         <div class="col-md-12">
-            <div class="box box-primary box-solid">
+            <div class="box box-primary box-solid collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">订单查询</h3>
 
@@ -377,9 +377,9 @@
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                         </table>
-                        <br>
+
                     </div>
-                    <div style="height: 50px;background: #F5F5F5;margin:10px 10px;padding: 10px 20px;line-height: 30px">
+                    <div style="height: 30px;background: #F5F5F5;margin:10px 10px;padding: 10px 20px;line-height: 30px">
                         <b>查询返回数据：</b><br>
                     </div>
                     <div class="box-body" style="padding:10px auto;font-size: 15px">
@@ -404,24 +404,61 @@
                             </tr>
                             <tr>
                                 <td>2.</td>
-                                <td>out_order_no</td>
-                                <td>商户订单号</td>
+                                <td>msg</td>
+                                <td>说明</td>
                                 <td>string</td>
-                                <td> 商户订单号和平台订单号二选一,请确保商户订单号在商户系统唯一</td>
+                                <td> 状态说明</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
+                                <td></td>
+                                <td colspan="6">        respCode 等于0000 的时候，下面的数据才会返回</td>
+
+                            </tr>
+                            <tr>
                                 <td>3.</td>
-                                <td>sys_order_no</td>
-                                <td>平台订单号</td>
+                                <td>out_order_no</td>
+                                <td>商户订单号</td>
                                 <td>string</td>
-                                <td>商户订单号和平台订单号二选一</td>
+                                <td>商户订单号</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>4.</td>
+                                <td>sys_order_no</td>
+                                <td>平台订单号</td>
+                                <td>string</td>
+                                <td>平台订单号</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>5.</td>
+                                <td>status</td>
+                                <td>订单结果</td>
+                                <td>int</td>
+                                <td>
+                                    2：支付异常
+                                    1：支付成功
+                                    0：未支付
+                                    其他：用户还未完成支付或者支付失败                   </td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>6.</td>
+                                <td>money</td>
+                                <td>订单金额</td>
+                                <td>float</td>
+                                <td>
+                                    订单实际金额，单位元                   </td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                            </tr>
+                            <tr>
+                                <td>7.</td>
                                 <td>sign</td>
                                 <td>MD5签名</td>
                                 <td>string(32)</td>
@@ -439,7 +476,7 @@
 
         {{--MD5签名--}}
         <div class="col-md-12">
-            <div class="box box-primary box-solid">
+            <div class="box box-primary box-solid collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">MD5签名</h3>
 
@@ -461,7 +498,7 @@
 
         {{--demo下载--}}
         <div class="col-md-6">
-            <div class="box box-primary box-solid">
+            <div class="box box-primary box-solid collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">demo下载</h3>
 
@@ -498,7 +535,7 @@
 
 
         <div class="col-md-6">
-            <div class="box box-primary box-solid">
+            <div class="box box-primary box-solid collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">资源下载</h3>
 
