@@ -396,7 +396,6 @@
                         $("input[name='phone']").val(result.data['phone']);
                         $("input[name='email']").val(result.data['email']);
                         $("select[name='status']").val(result.data['status']);
-                        $("select[name='groupType']").val(result.data['group_type']);
                         $("select[name='parentId']").val(result.data['parentId']);
                         $("input[name='id']").val(result.data['id']);
                         $("input[name='password']").val(result.data['password']);

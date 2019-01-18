@@ -22,40 +22,44 @@
                     <span>后台首页</span>
                 </a>
             </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-paper-plane"></i>
-                    <span>权限控制</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ route('rules.index') }}"><i class="fa fa-circle-o"></i>菜单管理</a></li>
-                    <li><a href="{{ route('roles.index') }}"><i class="fa fa-circle-o"></i>角色管理</a></li>
-                    <li><a href="{{ route('admins.index') }}"><i class="fa fa-circle-o"></i>管理员管理</a></li>
-                </ul>
-            </li>
+            {{--<li class="treeview">--}}
+                {{--<a href="#">--}}
+                    {{--<i class="fa fa-paper-plane"></i>--}}
+                    {{--<span>权限控制</span>--}}
+                    {{--<span class="pull-right-container">--}}
+                      {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                    {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                    {{--<li><a href="{{ route('rules.index') }}"><i class="fa fa-circle-o"></i>菜单管理</a></li>--}}
+                    {{--<li><a href="{{ route('roles.index') }}"><i class="fa fa-circle-o"></i>角色管理</a></li>--}}
+                    {{--<li><a href="{{ route('admins.index') }}"><i class="fa fa-circle-o"></i>管理员管理</a></li>--}}
+                {{--</ul>--}}
+            {{--</li>--}}
             <li>
                 <a href="{{ route('users.index',['agent']) }}">
                     <i class="fa fa-user"></i>
                     <span>代理管理</span>
                 </a>
             </li>
-
-                <li>
-                    <a href="{{ route('users.index',['user']) }}">
-                        <i class="fa fa-user"></i>
-                        <span>商户管理</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('channels.index') }}">
-                        <i class="fa fa-exchange"></i>
-                        <span>通道管理</span>
-                    </a>
-                </li>
-
+            <li>
+                <a href="{{ route('users.index',['user']) }}">
+                    <i class="fa fa-user"></i>
+                    <span>商户管理</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('users.index',['court']) }}">
+                    <i class="fa fa-user"></i>
+                    <span>场外商户</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('channels.index') }}">
+                    <i class="fa fa-exchange"></i>
+                    <span>通道管理</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ route('channelPayments.index') }}">
                     <i class="fa fa-credit-card"></i>

@@ -3,6 +3,7 @@
 namespace App\Http\Admin\Controllers;
 
 use App\Services\CheckUniqueService;
+use App\Services\QuotalogService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Services\UserRateService;
@@ -12,12 +13,14 @@ class UsersController extends Controller
     protected $userService;
     protected $checkUniqueService;
     protected $userRateService;
+    protected $quotalogService;
 
-    public function __construct( UserService $userService, CheckUniqueService $checkUniqueService, UserRateService $userRateService)
+    public function __construct( UserService $userService, CheckUniqueService $checkUniqueService, UserRateService $userRateService, QuotalogService $quotalogService)
     {
         $this->userService        = $userService;
         $this->checkUniqueService = $checkUniqueService;
         $this->userRateService    = $userRateService;
+        $this->quotalogService    = $quotalogService;
     }
 
     /**
@@ -36,6 +39,9 @@ class UsersController extends Controller
             $title = '代理商户';
             $data['group_type'] = 2;
 
+        } elseif ($request->type == 'court'){
+            $title = '场外商户';
+            $data['group_type'] = 3;
         }
         $list = $this->userService->searchPage($data, 10);
         $agent_list = $this->userService->getGroupAll(2);
@@ -231,6 +237,72 @@ class UsersController extends Controller
         }else{
             return ajaxError('修改失败！');
         }
+    }
+
+    /**
+     * 获取当前用户额度
+     * @param Request $request
+     * @return mixed
+     */
+    public function quota(Request $request)
+    {
+        $uid  = $request->id;
+        $user = $this->userService->findId($uid);
+        if( !$user || $user->group_type != 3){
+            return ajaxError('无权获取');
+        }
+
+        return ajaxSuccess('获取成功',['quota'=>$user->quota]);
+    }
+
+    /**
+     * 场外用户额度提交
+     * @param Request $request
+     * @return mixed
+     */
+    public function quotaStore(Request $request)
+    {
+        $uid  = $request->quota_id;
+        $user = $this->userService->findId($uid);
+        if( !$user || $user->group_type != 3){
+            return ajaxError('无权操作！');
+        }
+        $result = '';
+        if($request->quota <= 0)
+        {
+            return ajaxError('分数错误！');
+        }
+
+        if($request->quota_type == 0)
+        {
+            $result = $this->userService->userAddOrReduceQuota($uid,$request->quota,0);
+        }else if($request->quota_type == 1){
+            if($user->quota < $request->quota) $request->quota = $user->quota;
+            $result = $this->userService->userAddOrReduceQuota($uid,$request->quota,1);
+        }else{
+            return ajaxError('操作错误！');
+        }
+
+        if(!$result)
+        {
+            return ajaxError('添加失败！');
+        }
+        $data = [
+            'user_id' => $uid,
+            'quota'   => $request->quota,
+            'quota_type' => $request->quota_type,
+        ];
+        $this->quotalogService->add($data);
+        return ajaxSuccess('添加成功！');
+    }
+
+
+    public function quotaLog(Request $request)
+    {
+        $title = '商户分数记录';
+        $uid = $request->id;
+        $list = $this->quotalogService->searchPage(['user_id'=>$uid],10);
+        return view('Admin.Users.quota_log',compact('list','title','uid'));
     }
 
 }

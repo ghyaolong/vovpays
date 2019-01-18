@@ -72,15 +72,15 @@
     <h1>测试DEMO</h1>
     <label>
         <span>商户号 :</span>
-        <input type="text" name="merchant" value="">
+        <input type="text" name="merchant" value="zKWbxbpNHY">
     </label>
     <label>
         <span>金额 :</span>
-        <input type="text" name="amount" value="">
+        <input type="text" name="amount" value="1.00">
     </label>
     <label>
         <span>支付编码 :</span>
-        <input type="text" name="pay_code" value="">
+        <input type="text" name="pay_code" value="alipay_bank">
     </label>
     <label>
         <span> </span>

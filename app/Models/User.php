@@ -96,4 +96,12 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Statistical');
     }
+
+    /**
+     * 一对一关联场外商户上分记录表。
+     */
+    public function QuotaLog()
+    {
+        return $this->hasOne('App\Models\Quota_log');
+    }
 }

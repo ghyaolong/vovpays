@@ -257,4 +257,21 @@ class UsersRepository
         $statistical = new $statistical($data);
         return $user->Statistical()->save($statistical);
     }
+
+    /**
+     * 更新用户额度
+     * @param int $uid
+     * @param float $quota
+     * @param int $type
+     * @return mixed
+     */
+    public function userAddOrReduceQuota(int $uid,float $quota, int $type)
+    {
+        if($type == 0)
+        {
+            return $this->user->whereId($uid)->increment('quota',$quota);
+        }else{
+            return $this->user->whereId($uid)->decrement('quota',$quota);
+        }
+    }
 }

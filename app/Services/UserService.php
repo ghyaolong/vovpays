@@ -25,7 +25,7 @@ class UserService
         $data = array_except($data, ['id', '_token', 'password_confirmation']);
 
         // 用户标识等于代理商的时候,没有上级代理
-        if ($data['groupType'] == '2') {
+        if ($data['groupType'] == '2' || $data['groupType'] == '3') {
             $data['parentId'] = 0;
             $data['agentName'] = '';
         }
@@ -119,7 +119,7 @@ class UserService
         }
 
         // 用户标识等于代理商的时候,没有上级代理
-        if ($data['groupType'] == '2') {
+        if ($data['groupType'] == '2' || $data['groupType'] == '3') {
             $data['parentId'] = 0;
             $data['agentName'] = '';
         }
@@ -216,5 +216,18 @@ class UserService
     public function destroy(int $id)
     {
         return $this->usersRepository->update($id, ['status' => 2]);
+    }
+
+
+    /**
+     * 更新用户额度
+     * @param int $uid
+     * @param float $quota
+     * @param int $type
+     * @return mixed
+     */
+    public function userAddOrReduceQuota(int $uid,float $quota, int $type)
+    {
+        return $this->usersRepository->userAddOrReduceQuota($uid, $quota, $type);
     }
 }

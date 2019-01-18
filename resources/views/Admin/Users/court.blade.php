@@ -9,13 +9,13 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" onclick="showModel('添加商户')">添加商户</button>
-                    <a href="{{ route('users.index',['user']) }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
+                    <button type="button" class="btn btn-primary" onclick="showModel('添加场外商户')">添加场外商户</button>
+                    <a href="{{ route('users.index',['court']) }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box box-primary">
                     <div class="box-body">
-                        <form action="{{ route('users.index',['user']) }}" method="get">
+                        <form action="{{ route('users.index',['court']) }}" method="get">
                             <div class="form-inline">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="商户号" name="merchant"
@@ -39,10 +39,6 @@
                                                 @if(isset($query['status']) && $query['status'] =='0') selected @endif>
                                             禁用
                                         </option>
-                                        <option value="2"
-                                                @if(isset($query['status']) && $query['status'] =='2') selected @endif>
-                                            已删除
-                                        </option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
@@ -58,7 +54,7 @@
                             <th>#</th>
                             <th>商户号</th>
                             <th>用户名</th>
-                            <th>上级代理</th>
+                            <th>剩余分数</th>
                             <th>Email</th>
                             <th>电话</th>
                             <th>状态</th>
@@ -71,7 +67,7 @@
                                 <td>{{ $v['id'] }}</td>
                                 <td>{{ $v['merchant'] }}</td>
                                 <td>{{ $v['username'] }}</td>
-                                <td>{{ $v['agentName'] }}</td>
+                                <td>{{ $v['quota'] }}</td>
                                 <td>{{ $v['email'] }}</td>
                                 <td>{{ $v['phone'] }}</td>
                                 <td>
@@ -79,13 +75,12 @@
                                            @if($v['status'] == 1) checked @endif >
                                 </td>
                                 <td>
-                                    <a href="{{ route('users.channel', array('id'=>$v['id'])) }}"
-                                       class="btn btn-success btn-sm">通道设置</a>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                            onclick="quota('上分',{{ $v['id'] }})">上分
+                                    </button>
+                                    <a href="{{ route('users.quotaLog', array('id'=>$v['id'])) }}" class="btn btn-success btn-sm">上分记录</a>
                                     <button type="button" class="btn btn-primary btn-sm"
                                             onclick="edit('会员编辑',{{ $v['id'] }})">编辑
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                            onclick="del($(this),{{ $v['id'] }})">删除
                                     </button>
                                 </td>
                             </tr>
@@ -145,17 +140,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">上级代理</label>
-                            <div class="col-xs-9">
-                                <select class="form-control selectpicker" name="parentId">
-                                    <option value="0">无</option>
-                                    @foreach($agent_list as $v)
-                                        <option value="{{ $v['id'] }}">{{ $v['username'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">状态</label>
                             <div class="col-xs-9">
 
@@ -167,9 +151,52 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="hidden" name="groupType" value="1">
+                            <input type="hidden" name="groupType" value="3">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{--额度modal--}}
+    <div class="modal fade" id="quotaModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title quota_modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;">
+                    <form id="quotaForm" action="{{ route('users.quotaStore') }}" class="form-horizontal" role="form">
+                        <input type="hidden" name="quota_id">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">当前分数</label>
+                            <div class="col-xs-9">
+                                <input type="text" disabled="disabled" name="current_quota" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">分数</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="quota" name="quota" placeholder="分数">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">上分类型</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" name="quota_type">
+                                    <option value="0">增加</option>
+                                    <option value="1">减少</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="quotasave($(this))">提交</button>
                         </div>
                     </form>
                 </div>
@@ -225,7 +252,37 @@
                 formValidator();
             });
 
+            // 模态关闭
+            $('#quotaModel').on('hidden.bs.modal', function () {
+                $('#quotaForm').get(0).reset();
+                $("input[name='current_quota']").val('');
+                $("input[name='quota_id']").val('');
+            });
+
         })
+
+        /**
+         * 上分提交
+         */
+        function quotasave(_this) {
+            var $form = $('#quotaForm');
+            _this.removeAttr('onclick');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if (result.status) {
+                    $('#addModel').modal('hide');
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 1000);
+
+                    toastr.success(result.msg);
+                } else {
+                    $('#quotaModel').modal('hide');
+                    _this.attr("onclick", "quotasave($(this))");
+                    toastr.error(result.msg);
+                }
+            }, 'json');
+
+        }
 
         /**
          * 提交
@@ -409,12 +466,38 @@
                         $("input[name='phone']").val(result.data['phone']);
                         $("input[name='email']").val(result.data['email']);
                         $("select[name='status']").val(result.data['status']);
-                        $("select[name='parentId']").val(result.data['parentId']);
                         $("input[name='id']").val(result.data['id']);
                         $("input[name='password']").val(result.data['password']);
                         $("input[name='password_confirmation']").val(result.data['password']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus) {
+                    toastr.error('通信失败');
+                }
+            })
+        }
+
+        /**
+         * 编辑
+         * @param id
+         * @param title
+         */
+        function quota(title, id) {
+            $.ajax({
+                type: 'get',
+                url: '/admin/users/' + id + '/quota',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (result) {
+                    if (result.status == 1) {
+                        $("input[name='current_quota']").val(result.data['quota']);
+                        $("input[name='quota_id']").val(id);
+                        $('.quota_modal-title').html(title);
+                        $('#quotaModel').modal('show');
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {
