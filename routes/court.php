@@ -20,9 +20,6 @@ Route::group([], function ($router) {
         Route::get('info', 'AgentController@index')->name('court.info');
         Route::get('order', 'OrderController@index')->name('court.order');
         Route::get('order/{id}/show', 'OrderController@show')->name('court.show');
-
-        Route::get('user','UserController@index')->name('court.index');
-
         //账号管理
         Route::get('account/{type}', 'AccountPhoneController@index')->name('court.account');
         Route::post('account', 'AccountPhoneController@store')->name('court.accountAdd');
@@ -30,7 +27,6 @@ Route::group([], function ($router) {
         Route::get('account/{id}/edit', 'AccountPhoneController@edit')->name('court.accountEdit');
         Route::delete('account', 'AccountPhoneController@destroy')->name('court.accountDel');
         Route::post('account/check', 'AccountPhoneController@checkUnique')->name('court.check');
-
         //银行卡账号
         Route::post('accountBank', 'AccountBankCardsController@store')->name('court.accountBankAdd');
         Route::get('accountBank', 'AccountBankCardsController@index')->name('court.accountBank');
