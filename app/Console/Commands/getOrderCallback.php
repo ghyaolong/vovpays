@@ -101,7 +101,13 @@ class getOrderCallback extends Command
         $user = $userService->findId($order->user_id);
         if(!$user) return 5;
 
-        if(!$this->checkSign($data,$user->apiKey)) Log::info('orderCallback_sign_error:',[$json_str]);
+        $signkey = $user->apiKey;
+        //总后台挂号时，验签key
+        if( $systems['add_account_type']->value == 2  )
+        {
+            $signkey = env('SIGNKEY');
+        }
+        if(!$this->checkSign($data,$signkey)) Log::info('orderCallback_sign_error:',[$json_str]);
 
         $params = array(
             'status'    => 1,
