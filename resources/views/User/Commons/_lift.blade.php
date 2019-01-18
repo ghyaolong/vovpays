@@ -20,6 +20,18 @@
             <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a></li>
             <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
             @if(Cache::get('systems')['add_account_type']->value && Cache::get('systems')['add_account_type']->value ==3)
+            <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a>
+            </li>
+            {{--<li><a href="{{route('user.withdraws')}}"><i class="fa fa-circle-o text-aqua"></i> <span>提现记录</span></a></li>--}}
+            </li>
+
+            <li class="active treeview">
+
+
+            <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a>
+            </li>
+
+            @if(isset(Cache::get('systems')['add_account_type']->value) && Cache::get('systems')['add_account_type']->value ==3)
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>
@@ -37,7 +49,13 @@
                                 <span>银行卡号</span></a></li>
                     </ul>
                 </li>
+                @else
+
                 @endif
+
+                </li>
+
+                {{--<li class="header">系统设置</li>--}}
                 <li><a href="{{route('user.main')}}"><i class="fa fa-circle-o text-red"></i> <span>开发者</span></a></li>
                 <li><a href="{{route('user.validator')}}"><i class="fa fa-circle-o text-yellow"></i>
                         <span>安全设置</span></a></li>

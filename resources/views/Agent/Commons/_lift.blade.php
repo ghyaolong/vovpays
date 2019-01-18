@@ -24,7 +24,7 @@
             <li>
                 <a href="{{route('agent.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡信息</span></a>
             </li>
-            @if(Cache::get('systems')['add_account_type']->value && Cache::get('systems')['add_account_type']->value ==3)
+            @if(isset(Cache::get('systems')['add_account_type']->value) && Cache::get('systems')['add_account_type']->value ==3)
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>

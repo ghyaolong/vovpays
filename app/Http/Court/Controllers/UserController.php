@@ -14,21 +14,24 @@ use App\Services\CheckUniqueService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\QuotalogService;
 
 class UserController extends Controller
 {
 
     protected $userService;
     protected $checkUniqueService;
+    protected $quotalogService;
 
     /**
      * UserController constructor.
      * @param UserService $userService
      */
-    public function __construct(UserService $userService, CheckUniqueService $checkUniqueService)
+    public function __construct(UserService $userService, CheckUniqueService $checkUniqueService, QuotalogService $quotalogService)
     {
         $this->userService = $userService;
         $this->checkUniqueService = $checkUniqueService;
+        $this->quotalogService    = $quotalogService;
     }
 
     /**
@@ -40,28 +43,47 @@ class UserController extends Controller
         $courtId = Auth::user()->id;
 
         $court = $this->userService->findId($courtId);
+        $list = $this->quotalogService->searchPage(['user_id'=>$courtId],10);
 
-        return view('Court.User.user', compact('court'));
+        return view('Court.User.user', compact('court','list'));
 
 
     }
 
     /**
-     * 添加
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function add(Request $request)
+    public function store(Request $request)
     {
-        $result = $this->userService->add($request->input());
+        $id = $request->id ? $request->id : '';
 
-        if ($result) {
-            return ajaxSuccess('商户添加成功!');
-        } else {
-            return ajaxError('商户添加失败!');
+        if($id)
+        {
+            $result = $this->userService->update($request->id, $request->all());
+
+            if($result)
+            {
+                return ajaxSuccess('修改成功！');
+            }else{
+                return ajaxError('修改失败！');
+            }
+        }else{
+            return ajaxError('修改失败！');
         }
-
     }
+
+    /**
+     * 编辑
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit($id)
+    {
+        $rule =$this->userService->findId($id);
+        return ajaxSuccess('获取成功',$rule->toArray());
+    }
+
 
     /**
      * 下属商户状态修改
@@ -80,6 +102,22 @@ class UserController extends Controller
             return ajaxError('修改失败！');
         }
 
+    }
+
+    /**
+     * 获取当前用户额度
+     * @param Request $request
+     * @return mixed
+     */
+    public function quota(Request $request)
+    {
+        $uid  = $request->id;
+        $user = $this->userService->findId($uid);
+        if( !$user || $user->group_type != 3){
+            return ajaxError('无权获取');
+        }
+
+        return ajaxSuccess('获取成功',['quota'=>$user->quota]);
     }
 
     /**
