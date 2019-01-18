@@ -32,7 +32,7 @@
                                 <th>账号</th>
                                 <th>账号类型</th>
                                 {{--<th>备注</th>--}}
-                                <th>单日交易额/限额</th>
+                                <th>单日交易额</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -47,8 +47,7 @@
                                         <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         {{--<td>备注</td>--}}
-                                        <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
-                                                    style="color: red">{{ $v->dayQuota - $v->tradeAmount}}</span></td>
+                                        <td><span style="color: green">{{$v->tradeAmount}}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -96,12 +95,6 @@
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" id="phone_id" name="phone_id"
                                        placeholder="请输入手机标识">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">限额:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
                             </div>
                         </div>
                         {{--<div class="form-group">--}}

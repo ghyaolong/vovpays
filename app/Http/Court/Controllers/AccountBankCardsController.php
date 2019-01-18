@@ -38,8 +38,7 @@ class AccountBankCardsController extends Controller
         $data['third'] = 1;
         $data['user_id'] = Auth::user()->id;
 
-        $list = $this->accountBankCardsService->getAllPage($data, 6);
-        $data['accountType'] = '支付宝';
+        $list = $this->accountBankCardsService->getAllPage($data, 10);
         $alist= $this->accountPhoneService->getAllPage($data, 1000);
         return view("Court.AccountPhone.bank", compact('list','alist'));
     }
