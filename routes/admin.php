@@ -60,14 +60,14 @@ Route::group([], function () {
         Route::post('channels/check','ChannelsController@checkUnique')->name('channels.check');
         Route::post('channels/savePlanType','ChannelsController@savePlanType')->name('channels.savePlanType');
         //支付方式管理
-        Route::get('channelPayments','channelPaymentsController@index')->name('channelPayments.index');
-        Route::post('channelPayments','channelPaymentsController@store')->name('channelPayments.store');
-        Route::get('channelPayments/{id}/edit', 'channelPaymentsController@edit')->name('channelPayments.edit');
-        Route::delete('channelPayments','channelPaymentsController@destroy')->name('channelPayments.destroy');
-        Route::post('channelPayments/saveStatus','channelPaymentsController@saveStatus')->name('channelPayments.saveStatus');
-        Route::post('channelPayments/check','channelPaymentsController@checkUnique')->name('channelPayments.check');
-        Route::post('channelPayments/savePlanType','channelPaymentsController@savePlanType')->name('channelPayments.savePlanType');
-        Route::post('channelPayments/upload','channelPaymentsController@upload')->name('channelPayments.upload');
+        Route::get('channelPayments','ChannelPaymentsController@index')->name('channelPayments.index');
+        Route::post('channelPayments','ChannelPaymentsController@store')->name('channelPayments.store');
+        Route::get('channelPayments/{id}/edit', 'ChannelPaymentsController@edit')->name('channelPayments.edit');
+        Route::delete('channelPayments','ChannelPaymentsController@destroy')->name('channelPayments.destroy');
+        Route::post('channelPayments/saveStatus','ChannelPaymentsController@saveStatus')->name('channelPayments.saveStatus');
+        Route::post('channelPayments/check','ChannelPaymentsController@checkUnique')->name('channelPayments.check');
+        Route::post('channelPayments/savePlanType','ChannelPaymentsController@savePlanType')->name('channelPayments.savePlanType');
+        Route::post('channelPayments/upload','ChannelPaymentsController@upload')->name('channelPayments.upload');
         //订单管理
         Route::get('orders','OrdersController@index')->name('orders.index');
         Route::get('orders/{id}/show', 'OrdersController@show')->name('orders.show');
