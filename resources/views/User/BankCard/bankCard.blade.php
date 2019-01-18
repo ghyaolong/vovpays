@@ -45,7 +45,7 @@
                             @foreach($lists as $list)
                                 <tr>
                                     <td>{{$list->id}}</td>
-                                    <td>{{$list->bank->bankName}}</td>
+                                    {{--<td>{{$list->bank->bankName}}</td>--}}
                                     <td>{{$list->branchName}}</td>
                                     <td>{{$list->accountName}}</td>
                                     <td>{{$list->bankCardNo}}</td>

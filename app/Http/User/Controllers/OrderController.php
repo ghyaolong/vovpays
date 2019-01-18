@@ -59,8 +59,15 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+        $query['user_id'] = Auth::user()->id;
+        $query['id'] = $id;
         $rule = $this->ordersService->findId($id);
-        return ajaxSuccess('获取成功', $rule);
+        if ($rule){
+            return ajaxSuccess('获取成功', $rule);
+        }else{
+            return ajaxError('获取失败');
+        }
+
     }
 
     public function recharge()

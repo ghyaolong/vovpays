@@ -9,9 +9,8 @@
 namespace App\Http\Court\Controllers;
 
 use App\Services\OrdersService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
+use Illuminate\Support\Facades\Auth;
 
 
 class IndexController extends Controller
@@ -36,12 +35,12 @@ class IndexController extends Controller
      * 后台主页
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show()
     {
         $query['user_id'] = Auth::user()->id;
         //订单金额
         $orderInfoSum = $this->ordersService->orderInfoSum($query);
-        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getUserSevenDaysCount($query['user_id']),'tm'));
+        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query),'tm'));
 
         return view('Court.Index.index',compact('orderInfoSum','order_day_count'));
     }

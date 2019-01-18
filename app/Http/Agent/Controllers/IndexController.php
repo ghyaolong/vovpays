@@ -11,7 +11,6 @@ namespace App\Http\Agent\Controllers;
 
 use App\Services\OrdersService;
 use Illuminate\Support\Facades\Cache;
-use App\Services\SystemsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
@@ -23,19 +22,17 @@ class IndexController extends Controller
     protected $userService;
     protected $orderDayCountService;
     protected $statisticalService;
-    protected $systemsService;
 
     /**
      * IndexController constructor.
      * @param OrdersService $ordersService
      * @param OrderDayCountService $orderDayCountService
      */
-    public function __construct(SystemsService $systemsService, OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
+    public function __construct( OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
     {
         $this->ordersService = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
         $this->statisticalService = $statisticalService;
-        $this->systemsService = $systemsService;
     }
 
 
@@ -45,19 +42,17 @@ class IndexController extends Controller
      */
     public function show(Request $request)
     {
-        $type = $this->systemsService->findId(1);
-        $type = json_decode($type);
-        Cache::put($type->name, $type->value, 30);
         $query = $request->input();
-        $agentId = Auth::user()->id;
+
         //订单金额
         $orderInfoSum = $this->ordersService->orderInfoSum($query);
 
+        $query['agent_id'] = Auth::user()->id;
         //账户信息
-        $agentAccount = $this->statisticalService->findUserId($agentId);
+        $agentAccount = $this->statisticalService->findUserId($query['agent_id']);
 
         //当日统计
-        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getAgentSevenDaysCount($agentId), 'tm'));
+        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query), 'tm'));
         //是否代理商挂号
         return view('Agent.Index.index', compact('orderInfoSum', 'order_day_count', 'agentAccount'));
     }

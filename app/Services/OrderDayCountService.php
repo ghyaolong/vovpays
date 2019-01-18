@@ -30,20 +30,12 @@ class OrderDayCountService
     }
 
     /**
-     * 统计代理商7天数据
+     * 统计7天数据
      * @return mixed
      */
-    public function getAgentSevenDaysCount($agentId)
+    public function getOrderSevenDaysCount($query)
     {
-        return $this->orderDayCountRepository->getAgentSevenDaysCount($agentId);
-    }
-    /**
-     * 统计用户7天数据
-     * @return mixed
-     */
-    public function getUserSevenDaysCount($userId)
-    {
-        return $this->orderDayCountRepository->getUserSevenDaysCount($userId);
+        return $this->orderDayCountRepository->getOrderSevenDaysCount($query);
     }
 
     /**

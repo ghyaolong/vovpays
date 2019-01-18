@@ -36,23 +36,17 @@ class OrderDayCountRepository
 
     /**
      * 统计7天数据
-     * @param int $agentId
-     * @return mixed
-     */
-    public function getAgentSevenDaysCount(int $agentId)
-    {
-        return DB::select("select date(`updated_at`) as tm, sys_amount,sys_income, sys_order_suc_count FROM pay_order_day_counts where date(`updated_at`) <= date(NOW()) and `agent_id`=$agentId GROUP BY date(`updated_at`)");
-    }
-
-
-    /**
-     * 统计7天数据
      * @param int $uid
      * @return mixed
      */
-    public function getUserSevenDaysCount(int $uid)
+    public function getOrderSevenDaysCount(array $query)
     {
-        return DB::select("select date(`updated_at`) as tm, sys_amount,sys_income, sys_order_suc_count FROM pay_order_day_counts where date(`updated_at`) <= date(NOW()) and `user_id`=$uid GROUP BY date(`updated_at`)");
+        if (isset($query['user_id']) && $query['user_id']) {
+            $where = " user_id = {$query['user_id']}";
+        } elseif (isset($query['agent_id']) && $query['agent_id']) {
+            $where = " agent_id = {$query['agent_id']}";
+        }
+        return DB::select("select date(`updated_at`) as tm, sys_amount,sys_income, sys_order_suc_count FROM pay_order_day_counts where date(`updated_at`) <= date(NOW()) and $where GROUP BY date(`updated_at`)");
     }
 
     /**

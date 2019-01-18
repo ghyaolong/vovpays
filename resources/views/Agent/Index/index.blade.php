@@ -2,19 +2,6 @@
 @section('title','主页')
 @section('content')
     <div class="row">
-    <!-- ./col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-aqua">
-                <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
-                <div class="info-box-content">
-                    <span class="progress-description" style="padding-top: 10px;">账户资产 </span>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 100%"></div>
-                    </div>
-                    {{--<span class="info-box-number">{{$agentAccount->balance}}|{{$agentAccount->freezeBalance}} 元</span>--}}
-                </div>
-            </div>
-        </div>
 
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box bg-aqua">

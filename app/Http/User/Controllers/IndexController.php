@@ -37,11 +37,11 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         $query = $request->input();
-        $userId = Auth::user()->id;
-        $user=$this->userService->findId($userId);
+        $query['user_id'] = Auth::user()->id;
+        $user=$this->userService->findId($query['user_id']);
         //订单金额
         $orderInfoSum = $this->ordersService->orderInfoSum($query);
-        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getUserSevenDaysCount($userId), 'tm'));
+        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query), 'tm'));
         return view('User.Index.home', compact('user','orderInfoSum', 'order_day_count'));
     }
 

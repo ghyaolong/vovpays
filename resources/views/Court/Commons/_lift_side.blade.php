@@ -25,7 +25,7 @@
             <li><a href="{{route('court.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
 
 
-            @if(Cache::get('add_account_type') && Cache::get('add_account_type')>=4)
+            @if(Cache::get('systems')['add_account_type']->value && Cache::get('systems')['add_account_type']->value==4)
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>
@@ -39,7 +39,8 @@
                                 <span>微信账号</span></a></li>
                         <li><a href="{{route('court.account',[1])}}"><i class="fa fa-circle-o"></i>
                                 <span>支付宝账号</span></a></li>
-                        <li><a href="{{ route('court.accountBank') }}"><i class="fa fa-circle-o"></i> <span>银行卡号</span></a></li>
+                        <li><a href="{{ route('court.accountBank') }}"><i class="fa fa-circle-o"></i> <span>银行卡号</span></a>
+                        </li>
                     </ul>
                 </li>
             @else

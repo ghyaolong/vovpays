@@ -53,7 +53,6 @@ class BankCardController extends Controller
         if ($result) {
             return ajaxSuccess('修改成功！');
         } else {
-//            return ajaxError('修改失败！');
             return ajaxSuccess('修改成功！');
         }
     }
@@ -92,7 +91,12 @@ class BankCardController extends Controller
     public function edit($id)
     {
         $result = $this->bankCardService->findId($id);
-        return ajaxSuccess('获取成功', $result->toArray());
+        if (!empty($result) && $result){
+            return ajaxSuccess('获取成功', $result->toArray());
+        }else{
+            return ajaxError('获取失败');
+        }
+
     }
 
     /**

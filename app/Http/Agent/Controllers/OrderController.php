@@ -59,7 +59,13 @@ class OrderController extends Controller
     public function show($id)
     {
         $rule =$this->ordersService->findId($id);
-        return ajaxSuccess('获取成功',$rule);
+        if ($rule && !empty($rule)){
+            return ajaxSuccess('获取成功',$rule);
+        }else{
+            return ajaxError('获取失败');
+        }
+
+
     }
 
     /**
