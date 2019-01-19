@@ -9,6 +9,7 @@
 1. 下载或克隆项目，进入项目根目录执行,等待框架安装
 
 ``composer install``
+
 2. 将.env.example修改为.env,并进行相关配置,然后在项目根目录执行
 
 ``php artisan key:generate``
@@ -18,21 +19,27 @@
 
 4. 运行根目录count_event.sql里面的sql语句
 
-5. 查看数据库事件是否开启
+5. 去掉数据库sql_model中的ONLY_FULL_GROUP_BY
+
+6. 查看数据库事件是否开启
 
 ``SHOW VARIABLES LIKE 'event_scheduler'``
 
-6. 数据库事件没有开启运行
+7. 数据库事件开启运行
 
 ``set GLOBAL event_scheduler = 1``
 
-7. 开启定时任务
+8. 开启定时任务
 
 ``alter event user_order_day_event on completion preserve enable``
 
 ``alter event user_yesterdyay_order_event on completion preserve enable``
 
-8. 查看事件运行状态
+``alter event account_day_event on completion preserve enable``
+
+``alter event account_yesterday_event on completion preserve enable``
+
+9. 查看事件运行状态
 
 ``select * from mysql.event;``
 

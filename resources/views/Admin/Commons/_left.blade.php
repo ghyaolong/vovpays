@@ -48,12 +48,14 @@
                     <span>商户管理</span>
                 </a>
             </li>
+            @if(env('ADD_ACCOUNT_TYPE') == 4)
             <li>
                 <a href="{{ route('users.index',['court']) }}">
                     <i class="fa fa-user"></i>
                     <span>场外商户</span>
                 </a>
             </li>
+            @endif
             <li>
                 <a href="{{ route('channels.index') }}">
                     <i class="fa fa-exchange"></i>
@@ -78,6 +80,7 @@
                     <span>结算管理</span>
                 </a>
             </li>
+            @if(env('ADD_ACCOUNT_TYPE') == 2)
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-user"></i>
@@ -92,6 +95,7 @@
                     <li><a href="{{ route('accountBank.index') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
                 </ul>
             </li>
+            @endif
 
             <li>
                 <a href="{{ route('system.index') }}">

@@ -12,6 +12,7 @@ namespace App\Http\Agent\Controllers;
 use App\Http\Agent\Controllers\Controller;
 use App\Services\BankCardService;
 use App\Services\BanksService;
+use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use App\Http\Requests\BankcardRequest;
 use Illuminate\Support\Facades\Auth;
@@ -20,11 +21,13 @@ class BankCardController extends Controller
 {
     protected $bankCardService;
     protected $banksService;
+    protected $checkUniqueService;
 
-    public function __construct(BankCardService $bankCardService,BanksService $banksService)
+    public function __construct(BankCardService $bankCardService,BanksService $banksService,CheckUniqueService $checkUniqueService)
     {
         $this->bankCardService = $bankCardService;
         $this->banksService = $banksService;
+        $this->checkUniqueService=$checkUniqueService;
     }
 
     /*
@@ -111,6 +114,21 @@ class BankCardController extends Controller
             return ajaxSuccess('删除成功！');
         } else {
             return ajaxError('删除失败！');
+        }
+    }
+
+    /**
+     * 检测唯一性
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkUnique(Request $request)
+    {
+        $result = $this->checkUniqueService->check('bank_cards', $request->type, $request->value, $request->id, $request->name);
+        if ($result) {
+            return response()->json(array("valid" => "true"));
+        } else {
+            return response()->json(array("valid" => "false"));
         }
     }
 }

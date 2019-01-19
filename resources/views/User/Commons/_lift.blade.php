@@ -12,19 +12,15 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> 欢迎登录</a>
             </div>
         </div>
-
         <ul class="sidebar-menu" data-widget="tree">
             <li><a href="{{route('user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>首页</span></a></li>
             <li><a href="{{route('user.show')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户信息</span></a></li>
-            <li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>
+            {{--<li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>--}}
             <li><a href="{{route('user.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
-            <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a>
-            </li>
-            {{--<li><a href="{{route('user.withdraws')}}"><i class="fa fa-circle-o text-aqua"></i> <span>提现记录</span></a></li>--}}
+            <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a></li>
             <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a>
             </li>
-
-            @if(isset(Cache::get('systems')['add_account_type']->value) && Cache::get('systems')['add_account_type']->value ==1)
+            @if(env('ADD_ACCOUNT_TYPE') == 1)
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>

@@ -64,6 +64,10 @@ class PayController extends Controller
             return json_encode(RespCode::MERCHANT_NOT_EXIST);
         }
 
+        if($this->user && ($this->user->status == 0 || $this->user->group_type != 1 )){
+            return json_encode(RespCode::MERCHANT_NOT_EXIST);
+        }
+
         // 数据验签
         $sign = $this->md5Verify->getSign($this->content, $this->user->apiKey);
 

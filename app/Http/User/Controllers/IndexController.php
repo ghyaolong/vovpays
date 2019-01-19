@@ -4,6 +4,7 @@ namespace App\Http\User\Controllers;
 
 use App\Services\BankCardService;
 use App\Services\OrdersService;
+use App\Services\StatisticalService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,18 +16,20 @@ class IndexController extends Controller
     protected $bankCardService;
     protected $orderDayCountService;
     protected $ordersService;
+    protected $statisticalService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(UserService $userService, BankCardService $bankCardService, OrdersService $ordersService, OrderDayCountService $orderDayCountService)
+    public function __construct(StatisticalService $statisticalService, UserService $userService, BankCardService $bankCardService, OrdersService $ordersService, OrderDayCountService $orderDayCountService)
     {
         $this->userService = $userService;
         $this->bankCardService = $bankCardService;
         $this->ordersService = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
+        $this->statisticalService = $statisticalService;
     }
 
     /**
@@ -39,7 +42,7 @@ class IndexController extends Controller
         $query = $request->input();
         $query['user_id'] = Auth::user()->id;
 
-        $user_day_count   = $this->orderDayCountService->findDayAndUserCount($query['user_id']);
+        $user_day_count = $this->orderDayCountService->findDayAndUserCount($query['user_id']);
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderUserSevenDaysCount($query), 'tm'));
         return view('User.Index.home', compact('user_day_count', 'order_day_count'));
     }
@@ -50,8 +53,9 @@ class IndexController extends Controller
     public function show()
     {
         $query['user_id'] = Auth::user()->id;
-        $user=$this->userService->findId($query['user_id']);
-        return view('User.Index.index', compact('user'));
+        $user = $this->userService->findId($query['user_id']);
+        $balance=$this->statisticalService->findUserId($query['user_id']);
+        return view('User.Index.index', compact('user','balance'));
     }
 
     //用户列表展示
@@ -85,9 +89,9 @@ class IndexController extends Controller
     {
 
         $httpType = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
-        $host= $httpType . $_SERVER['HTTP_HOST'];
+        $host = $httpType . $_SERVER['HTTP_HOST'];
 
-        return view('User.Index.main',compact('host'));
+        return view('User.Index.main', compact('host'));
     }
 
     //验证器

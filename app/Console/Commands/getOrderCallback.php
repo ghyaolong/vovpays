@@ -69,9 +69,7 @@ class getOrderCallback extends Command
      */
     protected function orderCallback($json_str)
     {
-
-        Redis::select(0);
-        $systems = Cache::get('systems');
+        $add_account_type = env('ADD_ACCOUNT_TYPE');
 
         Redis::select(1);
         Log::info('orderCallback:',[$json_str]);
@@ -103,7 +101,7 @@ class getOrderCallback extends Command
 
         $signkey = $user->apiKey;
         //总后台挂号时，验签key
-        if( $systems['add_account_type']->value == 2  )
+        if( $add_account_type == 2  )
         {
             $signkey = env('SIGNKEY');
         }
@@ -119,7 +117,7 @@ class getOrderCallback extends Command
 
         $statisticalService = app(StatisticalService::class);
         // 商户收益增加
-        if( $systems['add_account_type']->value != 1 )
+        if( $add_account_type != 1 )
         {
             $statisticalService->updateUseridHandlingFeeBalanceIncrement($user->id,$order->amount);
         }
@@ -157,7 +155,7 @@ class getOrderCallback extends Command
         }
 
         // 场外挂号时
-        if( $systems['add_account_type']->value == 4 )
+        if( $add_account_type == 4 )
         {
             $userService->userAddOrReduceQuota($order->phone_uid,$order->amount,1);
             $quotalogService = app(QuotalogService::class);

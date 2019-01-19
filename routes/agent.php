@@ -36,6 +36,7 @@ Route::group([], function ($router) {
         Route::get('bankCard/{id}/edit','BankCardController@edit')->name('agent.edit');
         Route::post('bankCard/saveStatus','BankCardController@saveStatus')->name('agent.saveStatus');
         Route::delete('bankCard','BankCardController@destroy')->name('agent.destroy');
+        Route::post('bankCard/check','BankCardController@checkUnique')->name('agent.bankCheck');
 
         //提现
         Route::any('withdraws','WithdrawsController@index')->name('agent.withdraws');
