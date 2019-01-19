@@ -22,7 +22,6 @@ class AccountPhoneService
     {
         $this->accountPhoneRepository = $accountPhoneRepository;
     }
-
     /**
      * 带分页统计信息查询
      * @param array $data
@@ -31,9 +30,9 @@ class AccountPhoneService
      */
     public function searchPhoneStastic(array $data, int $page)
     {
-        return $this->buildSearchSql($data,$page);
+        $params = $this->buildSearchSql($data);
+        return $this->accountPhoneRepository->searchPage($params['sql'],$params['where'], $page);
     }
-
     /**
      * 获取所有监听设备
      * @param array $data
@@ -42,10 +41,11 @@ class AccountPhoneService
      */
     public function searchPhone(array $data,int $page)
     {
-        return $this->buildSearchSql($data,$page);
+        $params = $this->buildSearchSql($data);
+        return $this->accountPhoneRepository->searchPhone($params['sql'],$params['where'], $page);
     }
 
-    private function buildSearchSql(array $data, int $page){
+    private function buildSearchSql(array $data){
         $sql = ' 1=1 ';
         $where = [];
 
@@ -57,10 +57,6 @@ class AccountPhoneService
             $sql .= ' and pay_account_phones.user_id = ?';
             $where['user_id'] = $data['user_id'];
         }
-        if (isset($data['third']) && $data['third'] == 1) {
-            $sql .= ' and third = ?';
-            $where['third'] = $data['third'];
-        }
         if (isset($data['accountType']) && $data['accountType']!='-1') {
             if ($data['accountType'] == 'alipay') {
                 $data['accountType'] = '支付宝';
@@ -70,8 +66,16 @@ class AccountPhoneService
             $sql .= ' and accountType = ?';
             $where['accountType'] = $data['accountType'];
         }
+        if (isset($data['third']) && $data['third'] == 1) {
+            $sql .= ' and third = ?';
+            $where['third'] = $data['third'];
+        }
+        $params = [
+            'sql' => $sql,
+            'where' => $where,
+        ];
+        return $params;
 
-        return $this->accountPhoneRepository->searchPhone($sql,$data, $page);
     }
 
 
