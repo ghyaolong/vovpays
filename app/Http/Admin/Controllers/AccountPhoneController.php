@@ -44,6 +44,9 @@ class AccountPhoneController extends Controller
         $data['user_id'] = $this->uid;
 
         $list = $this->accountPhoneService->getAllPage($data, 6);
+
+
+
         return view("Admin.AccountPhone.{$data['accountType']}", compact('list','title'));
     }
 

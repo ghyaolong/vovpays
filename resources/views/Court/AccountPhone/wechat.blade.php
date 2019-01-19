@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="row" style="margin-top: 20px">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">账号列表</h3>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="box-body">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('court.account',0)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('user.account',0)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" id="account1" name="account" placeholder="账号">
                         </div>
@@ -33,6 +33,9 @@
                                 <th>账号类型</th>
                                 {{--<th>备注</th>--}}
                                 <th>单日交易额</th>
+                                <th>今日订单量</th>
+                                <th>今日成功订单量</th>
+                                <th>今日成功率</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -47,7 +50,10 @@
                                         <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         {{--<td>备注</td>--}}
-                                        <td><span style="color: green">{{$v->tradeAmount}}</span></td>
+                                        <td><span style="color: green">{{$v->account_amount}}</span></td>
+                                        <td><span style="color: green">{{$v->account_order_count}}</span></td>
+                                        <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
+                                        <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -81,7 +87,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('court.accountAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('user.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -95,6 +101,12 @@
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" id="phone_id" name="phone_id"
                                        placeholder="请输入手机标识">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">限额:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
                             </div>
                         </div>
                         {{--<div class="form-group">--}}

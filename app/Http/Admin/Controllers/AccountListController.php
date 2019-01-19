@@ -41,4 +41,6 @@ class AccountListController extends Controller
         $account_list->appends($request->query());
         return view("Admin.Account.index", compact('account_list','title','query'));
     }
+
+
 }

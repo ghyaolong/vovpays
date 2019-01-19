@@ -25,15 +25,62 @@ class AccountPhoneService
 
 
     /**
-     * 带分页查询
+     * 带分页统计信息查询
      * @param array $data
      * @param int $page
      * @return mixed
      */
-    public function getAllPage(array $data, int $page)
+    public function searchPhoneStastic(array $data, int $page)
     {
-        return $this->accountPhoneRepository->searchPage($data, $page);
+        $sql=$this->buildSearchSql($data);
+        return $this->accountPhoneRepository->searchPage($sql,$data, $page);
     }
+
+
+    /**
+     * 获取所有监听设备
+     * @param array $data
+     * @param int $page
+     * @return mixed
+     */
+
+    public function searchPhone(array $data,int $page)
+    {
+        $sql=$this->buildSearchSql($data);
+        return $this->accountPhoneRepository->searchPhone($sql,$data, $page);
+    }
+
+    private function buildSearchSql(array &$data){
+        $sql = ' 1=1 ';
+        $where = [];
+
+        if (isset($data['account']) && $data['account']) {
+            $sql .= 'and pay_account_phones.account = ?';
+            $where['account'] = $data['account'];
+        }
+        if (isset($data['user_id']) && $data['user_id']) {
+            $sql .= ' and pay_account_phones.user_id = ?';
+            $where['user_id'] = $data['user_id'];
+        }
+        if (isset($data['accountType']) && $data['accountType']) {
+            if ($data['accountType'] == 'alipay') {
+                $data['accountType'] = '支付宝';
+            } elseif ($data['accountType'] == 'wechat') {
+                $data['accountType'] = '微信';
+            }
+            $sql .= ' and accountType = ?';
+            $where['accountType'] = $data['accountType'];
+        }
+        if (isset($data['third']) && $data['third'] == 1) {
+            $sql .= ' and third = ?';
+            $where['third'] = $data['third'];
+        }
+
+        return $sql;
+
+    }
+
+
 
     /**
      * 添加

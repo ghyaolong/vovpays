@@ -10,6 +10,7 @@ namespace App\Repositories;
 
 
 use App\Models\Account_phone;
+use Illuminate\Support\Facades\DB;
 
 class AccountPhoneRepository
 {
@@ -29,35 +30,34 @@ class AccountPhoneRepository
      * @param int $page
      * @return mixed
      */
-    public function searchPage(array $data, int $page)
+    public function searchPage(string $sql,array $where, int $page)
     {
-        $sql = ' 1=1 ';
-        $where = [];
 
-        if (isset($data['account']) && $data['account']) {
-            $sql .= 'and account = ?';
-            $where['account'] = $data['account'];
-        }
-        if (isset($data['user_id']) && $data['user_id']) {
-            $sql .= ' and user_id = ?';
-            $where['user_id'] = $data['user_id'];
-        }
-        if (isset($data['accountType']) && $data['accountType']) {
-            if ($data['accountType'] == 'alipay') {
-                $data['accountType'] = '支付宝';
-            } elseif ($data['accountType'] == 'wechat') {
-                $data['accountType'] = '微信';
-            }
-            $sql .= ' and accountType = ?';
-            $where['accountType'] = $data['accountType'];
-        }
-        if (isset($data['third']) && $data['third']==1) {
-            $sql .= ' and third = ?';
-            $where['third'] = $data['third'];
-        }
 
-        return $this->account_phone->whereRaw($sql, $where)->paginate($page);
+        $sql .= ' and DATE(pay_account_day_counts.created_at) = ?';
+        $where['created_at'] = date('Y-m-d');
+
+
+        return $this->account_phone->whereRaw($sql, $where)
+            ->leftjoin('account_day_counts', 'account_day_counts.account', '=', 'account_phones.account')
+            ->selectRaw('*,cast(account_order_suc_count/account_order_count as decimal(10,2))*100 as success_rate')
+            ->paginate($page);
+
+
     }
+    /**
+     * @param array $data
+     * @param int $page
+     * @return mixed
+     */
+    public function searchPhone(string $sql,array $where, int $page)
+    {
+        return $this->account_phone->whereRaw($sql, $where)->paginate($page);
+
+
+    }
+
+
 
     /**
      * 添加
@@ -150,7 +150,7 @@ class AccountPhoneRepository
      * @param int $uid
      * @return mixed
      */
-    public function del(int $id,int $uid)
+    public function del(int $id, int $uid)
     {
         return $this->account_phone->whereId($id)->whereUserId($uid)->delete();
     }
@@ -161,7 +161,7 @@ class AccountPhoneRepository
      * @param int $status
      * @return mixed
      */
-    public function getStatusAndAccountType(string $type,int $uid, int $status)
+    public function getStatusAndAccountType(string $type, int $uid, int $status)
     {
         if ($type == 'alipay') {
             $type = '支付宝';
@@ -184,7 +184,7 @@ class AccountPhoneRepository
         } elseif ($type == 'wechat') {
             $type = '微信';
         }
-        return $this->account_phone->whereStatus($status)->whereIn('user_id',$uid_arr)->whereAccounttype($type)->get();
+        return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->get();
     }
 
     /**

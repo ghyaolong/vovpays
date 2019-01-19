@@ -36,11 +36,19 @@ class AccountBankCardsRepository
             $where['bank_account'] = $data['bank_account'];
         }
         if (isset($data['user_id']) && $data['user_id']) {
-            $sql .= ' and user_id = ?';
+            $sql .= ' and pay_account_bank_cards.user_id = ?';
             $where['user_id'] = $data['user_id'];
         }
 
-        return $this->account_bank_cards->whereRaw($sql, $where)->paginate($page);
+        $sql .= ' and DATE(pay_account_day_counts.created_at) = ?';
+        $where['created_at'] = date('Y-m-d');
+
+
+        return $this->account_bank_cards->whereRaw($sql, $where)
+            ->leftjoin('account_day_counts', 'account_day_counts.account', '=', 'account_bank_cards.cardNo')
+            ->selectRaw('*,cast(account_order_suc_count/account_order_count as decimal(10,2))*100 as success_rate')
+            ->paginate($page);
+
 
     }
 

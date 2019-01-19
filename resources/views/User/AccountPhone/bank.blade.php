@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="row" style="margin-top: 20px">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">账号列表</h3>
@@ -30,7 +30,10 @@
                                 <th>手机标识</th>
                                 <th>账号</th>
                                 <th>账号类型</th>
-                                <th>单日交易额/限额</th>
+                                <th>单日交易额</th>
+                                <th>今日订单量</th>
+                                <th>今日成功订单量</th>
+                                <th>今日成功率</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -44,8 +47,10 @@
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->bank_account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
-                                        <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
-                                                    style="color: red">{{ $v->dayQuota - $v->tradeAmount }}</span></td>
+                                        <td><span style="color: green">{{$v->account_amount}}</span></td>
+                                        <td><span style="color: green">{{$v->account_order_count}}</span></td>
+                                        <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
+                                        <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
