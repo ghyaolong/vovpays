@@ -120,12 +120,6 @@
                                 <input type="text" class="form-control" id="phone_id" name="phone_id" placeholder="请输入手机标识">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">限额:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
-                            </div>
-                        </div>
                         {{--<div class="form-group">--}}
                         {{--<label for="" class="col-xs-3 control-label">备注:</label>--}}
                         {{--<div class="col-xs-9">--}}
