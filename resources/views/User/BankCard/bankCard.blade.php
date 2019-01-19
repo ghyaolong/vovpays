@@ -158,6 +158,20 @@
                             regexp: {
                                 regexp: /^([1-9]{1})(\d{14}|\d{18})$/,
                                 message: '请输入正确的银行卡号！'
+                            },
+                            remote: {
+                                url: "{{route('user.bankCheck')}}",
+                                message: "该银行卡已存在!",
+                                type: "post",
+                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value": $("input[name='bankCardNo']").val().trim(),
+                                        "type": 'bankCardNo',
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id": $('#id').val(),
+                                    };
+                                },
+                                delay: 500,
                             }
                         },
                     },

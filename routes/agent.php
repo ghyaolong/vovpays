@@ -21,6 +21,7 @@ Route::group([], function ($router) {
         Route::get('rate', 'IndexController@rate')->name('agent.rate');
 
         Route::get('user', 'UserController@index')->name('agent.user');
+        Route::get('user/show', 'UserController@show')->name('agent.show');
         Route::post('user', 'UserController@add')->name('agent.add');
         Route::post('user/check', 'UserController@checkUnique')->name('agent.check');
         Route::post('user/saveStatus', 'UserController@saveStatus')->name('agent.saveStatus');
@@ -35,6 +36,7 @@ Route::group([], function ($router) {
         Route::get('bankCard/{id}/edit','BankCardController@edit')->name('agent.edit');
         Route::post('bankCard/saveStatus','BankCardController@saveStatus')->name('agent.saveStatus');
         Route::delete('bankCard','BankCardController@destroy')->name('agent.destroy');
+        Route::post('bankCard/check','BankCardController@checkUnique')->name('agent.bankCheck');
 
         //提现
         Route::any('withdraws','WithdrawsController@index')->name('agent.withdraws');

@@ -69,11 +69,19 @@ class ChooseAccountService{
                 $account_list = $this->accountBankCardsService->getStatusAndUserId($user->parentId,1);
             }
         }else if( $systems['add_account_type']->value == 4 ){
+            // 获取有分数，且开启的所有三方用户id
+            $userservice = app(UserService::class);
+            $user_id_array = array_flatten($userservice->getAllQuotaLargeAmount(1,$this->price )->toArray());
+            if(!count($user_id_array))
+            {
+                return RespCode::PARAMETER_ERROR_STOP;
+            }
+
             if($this->pay_code == 'alipay' || $this->pay_code == 'wechat')
             {
-                $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndThird($type,1,1);
+                $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndUidarr($type,1,$user_id_array);
             }else if($this->pay_code == 'alipay_bank'){
-                $account_list = $this->accountBankCardsService->getStatusAndThird(1,1);
+                $account_list = $this->accountBankCardsService->getStatusAndUidarr(1,$user_id_array);
             }
         }
 
@@ -185,11 +193,13 @@ class ChooseAccountService{
                 ];
             }
         }
+        if(!count($valid_account_list))return [];
+
         $rank_key = array_rand($valid_account_list);
         $valid_account = $valid_account_list[$rank_key];
-        if(!$valid_account){
-            return [];
-        }
+
+        if(!$valid_account)return [];
+
 
         // 实现金额唯一;
         $flag = false;

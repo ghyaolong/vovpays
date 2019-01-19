@@ -37,7 +37,7 @@
         <section class="content-header">
             <h1>@yield("title",'后台主页')</h1>
             <ol class="breadcrumb">
-                <li><a href="{{ route('user') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
+                <li><a href="{{ route('agent.index') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
                 <li class="active">@yield("title",'后台主页')</li>
             </ol>
         </section>
