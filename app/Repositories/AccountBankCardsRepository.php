@@ -104,13 +104,13 @@ class AccountBankCardsRepository
     }
 
     /**
-     * @param int $third
      * @param int $status
+     * @param array $uid_arr
      * @return mixed
      */
-    public function getStatusAndThird(int $status, int $third )
+    public function getStatusAndUidarr(int $status, array $uid_arr )
     {
-        return $this->account_bank_cards->whereStatus($status)->whereThird($third)->get();
+        return $this->account_bank_cards->whereStatus($status)->whereIn('user_id',$uid_arr)->get();
     }
 
     /**

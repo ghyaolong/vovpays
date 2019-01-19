@@ -141,7 +141,7 @@ class UsersRepository
      */
     public function findIdAndGrouptype(int $id, int $group_type )
     {
-        return $this->user->whereId($id)->whereGroup_type($group_type)->first();
+        return $this->user->whereId($id)->whereGroupType($group_type)->first();
     }
 
     /**
@@ -273,5 +273,10 @@ class UsersRepository
         }else{
             return $this->user->whereId($uid)->decrement('quota',$quota);
         }
+    }
+
+    public function getAllQuotaLargeAmount(int $status, float $amount)
+    {
+        return $this->user->whereStatus($status)->whereGroupType(3)->where('quota','>=',$amount)->select('id')->get();
     }
 }

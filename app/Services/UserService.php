@@ -230,4 +230,9 @@ class UserService
     {
         return $this->usersRepository->userAddOrReduceQuota($uid, $quota, $type);
     }
+
+    public function getAllQuotaLargeAmount(int $status, float $amount)
+    {
+        return $this->usersRepository->getAllQuotaLargeAmount($status, $amount);
+    }
 }

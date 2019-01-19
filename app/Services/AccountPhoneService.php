@@ -100,15 +100,15 @@ class AccountPhoneService
     }
 
     /**
-     * 根据状态、类型、是否三方挂号获取账号
+     * 根据状态、类型、用户id获取账号
      * @param string $type
      * @param int $status
-     * @param int $third
+     * @param array $uid_arr
      * @return mixed
      */
-    public function getStatusAndAccountTypeAndThird(string $type, int $status,int $third)
+    public function getStatusAndAccountTypeAndUidarr(string $type, int $status,array $uid_arr)
     {
-        return $this->accountPhoneRepository->getStatusAndAccountTypeAndThird($type,$status,$third);
+        return $this->accountPhoneRepository->getStatusAndAccountTypeAndUidarr($type,$status,$uid_arr);
     }
 
     /**

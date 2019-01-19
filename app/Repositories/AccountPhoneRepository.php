@@ -172,19 +172,19 @@ class AccountPhoneRepository
     }
 
     /**
+     * 查询账户指定用户名下的所有账户
      * @param string $type
      * @param int $status
-     * @param int $third
      * @return mixed
      */
-    public function getStatusAndAccountTypeAndThird(string $type, int $status,int $third)
+    public function getStatusAndAccountTypeAndUidarr(string $type, int $status, array $uid_arr)
     {
         if ($type == 'alipay') {
             $type = '支付宝';
         } elseif ($type == 'wechat') {
             $type = '微信';
         }
-        return $this->account_phone->whereStatus($status)->whereThird($third)->whereAccounttype($type)->get();
+        return $this->account_phone->whereStatus($status)->whereIn('user_id',$uid_arr)->whereAccounttype($type)->get();
     }
 
     /**

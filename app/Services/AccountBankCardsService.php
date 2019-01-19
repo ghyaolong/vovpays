@@ -79,12 +79,12 @@ class AccountBankCardsService
     /**
      * 跟据状态和是否三方挂号
      * @param int $status
-     * @param int $third
+     * @param array $uid_arr
      * @return mixed
      */
-    public function getStatusAndThird(int $status, int $third )
+    public function getStatusAndUidarr(int $status, array $uid_arr )
     {
-        return $this->accountBankCardsRepository->getStatusAndThird($status,$third);
+        return $this->accountBankCardsRepository->getStatusAndUidarr($status,$uid_arr);
     }
 
     /**

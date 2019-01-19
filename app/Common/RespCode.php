@@ -18,6 +18,7 @@ class RespCode
     const FAILED             = ['respCode'=>'500', 'msg'=>'处理失败'];
     const TRADE_ORDER_NOT_EXIST = ['respCode'=>'20004', 'msg'=>'交易订单不存在'];
     const SYS_ERROR          = ['respCode'=>'20005','msg'=>'系统错误' ];
+    const PARAMETER_ERROR_STOP = ['respCode'=>'10008','msg'=>'交易已被终止'];
 
     const SUCCESS = ['respCode'=>'200', 'msg'=>'请求成功'];
     const WARN = ['respCode'=>'-1', 'msg'=>'网络异常，请稍后重试'];
