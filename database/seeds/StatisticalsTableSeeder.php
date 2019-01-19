@@ -16,7 +16,8 @@ class StatisticalsTableSeeder extends Seeder
         $now = Carbon::now()->toDateTimeString();
         DB::table('statisticals')->insert([
             [
-            'user_id'  => '1',
+            'user_id'  => 1,
+            'agent_id' => 0,
             'created_at'=> $now,
             'updated_at'=> $now
             ],[
