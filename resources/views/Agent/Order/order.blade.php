@@ -130,6 +130,8 @@
                             <th>系统订单</th>
                             <th>商户订单</th>
                             <th>订单金额</th>
+                            <th>创建时间</th>
+                            <th>更新时间</th>
                             <th>代理收入</th>
                             <th>订单状态</th>
                             <th>操作</th>
@@ -143,6 +145,8 @@
                                     <td>{{ $v['orderNo'] }}</td>
                                     <td>{{ $v['underOrderNo'] }}</td>
                                     <td>{{ $v['amount'] }}</td>
+                                    <td>{{ $v['created_at'] }}</td>
+                                    <td>{{ $v['updated_at'] }}</td>
                                     <td>{{ $v['agentAmount'] }}</td>
                                     <td>
                                         @if($v['status'] == 2)
