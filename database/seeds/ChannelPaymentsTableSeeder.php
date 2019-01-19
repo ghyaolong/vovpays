@@ -15,6 +15,7 @@ class ChannelPaymentsTableSeeder extends Seeder
     {
         $now = Carbon::now()->toDateTimeString();
         DB::table('channel_payments')->insert([
+            [
             'channel_id'   => '1',
             'paymentName'  => '支付宝',
             'paymentCode'  => 'alipay',
@@ -22,24 +23,25 @@ class ChannelPaymentsTableSeeder extends Seeder
             'costRate'     => 0,
             'created_at'=> $now,
             'updated_at'=> $now
-        ]);
-        DB::table('channel_payments')->insert([
-            'channel_id'   => '1',
-            'paymentName'  => '微信',
-            'paymentCode'  => 'wechat',
-            'runRate'      => '0.03',
-            'costRate'     => 0,
-            'created_at'=> $now,
-            'updated_at'=> $now
-        ]);
-        DB::table('channel_payments')->insert([
-            'channel_id'   => '1',
-            'paymentName'  => '转银行卡',
-            'paymentCode'  => 'alipay_bank',
-            'runRate'      => '0.03',
-            'costRate'     => 0,
-            'created_at'=> $now,
-            'updated_at'=> $now
+            ],
+            [
+                'channel_id'   => '1',
+                'paymentName'  => '微信',
+                'paymentCode'  => 'wechat',
+                'runRate'      => '0.03',
+                'costRate'     => 0,
+                'created_at'=> $now,
+                'updated_at'=> $now
+            ],
+            [
+                'channel_id'   => '1',
+                'paymentName'  => '转银行卡',
+                'paymentCode'  => 'alipay_bank',
+                'runRate'      => '0.03',
+                'costRate'     => 0,
+                'created_at'=> $now,
+                'updated_at'=> $now
+            ]
         ]);
     }
 }
