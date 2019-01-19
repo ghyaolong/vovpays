@@ -23,6 +23,10 @@ class DownNotifyContentService{
         $md5Verify = app(Md5Verify::class);
 
         $paraBuild['sign'] = $md5Verify->getSign($paraBuild, $user->apiKey);
+        if($_SERVER['HTTP_HOST'] == $orders->notifyUrl)
+        {
+            return true;
+        }
 
         $result = sendCurl($orders->notifyUrl,$paraBuild);
         if(strtolower($result) == 'success'){
