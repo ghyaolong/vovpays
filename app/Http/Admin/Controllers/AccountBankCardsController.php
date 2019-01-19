@@ -53,6 +53,11 @@ class AccountBankCardsController extends Controller
     public function store(Request $request)
     {
         $id = $request->id ?? '';
+        $this->validate($request, [
+            'account'        => 'required|unique:account_bank_cards,account,'.$id,
+        ],[
+            'account.unique'           => '用户名已存在',
+        ]);
 
         if (!empty($id)) {
             $result = $this->accountBankCardsService->update($id, $this->uid, $request->input());

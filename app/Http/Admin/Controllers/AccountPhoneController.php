@@ -55,6 +55,11 @@ class AccountPhoneController extends Controller
     public function store(Request $request)
     {
         $id = $request->id ?? '';
+        $this->validate($request, [
+            'account'        => 'required|unique:account_phones,account,'.$id,
+        ],[
+            'account.unique'           => '用户名已存在',
+        ]);
 
         if (!empty($id)) {
             $result = $this->accountPhoneService->update($id, $this->uid, $request->input());
