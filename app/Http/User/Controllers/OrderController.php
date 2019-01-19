@@ -62,11 +62,13 @@ class OrderController extends Controller
      */
     public function show($id,Order $order)
     {
-//        $this->authorize('view', $order);
         $query['id'] = $id;
         $rule = $this->ordersService->findId($id);
+//        dd($rule['user_id']);
 
-        if ($rule) {
+//        $this->authorize('view', $value);
+
+        if (isset($rule) && $rule['user_id']==Auth::user()->id) {
             return ajaxSuccess('获取成功', $rule);
         } else {
             return ajaxError('获取失败');
