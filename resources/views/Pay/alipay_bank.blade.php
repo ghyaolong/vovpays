@@ -29,9 +29,9 @@
         <h1 style="padding-top:15px;color: #FF0000">2.需要多次付款，请重新发起订单</h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
         <!--支付宝app支付-->
-        <div class="paybtn" style="display: none;padding: 10px;">
-            <a href="{{ $data['qrurl'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">打开支付宝</a>
-        </div>
+        {{--<div class="paybtn" style="display: none;padding: 10px;">--}}
+            {{--<a href="{{ $data['qrurl'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">打开支付宝</a>--}}
+        {{--</div>--}}
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
