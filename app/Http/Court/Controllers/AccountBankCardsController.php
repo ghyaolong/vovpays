@@ -52,9 +52,9 @@ class AccountBankCardsController extends Controller
     {
         $id = $request->id ?? '';
         $this->validate($request, [
-            'account'        => 'required|unique:account_bank_cards,account,'.$id,
+            'cardNo'        => 'required|unique:account_bank_cards,cardNo,'.$id,
         ],[
-            'account.unique'           => '用户名已存在',
+            'cardNo.unique'           => '卡号已存在',
         ]);
 
         if (!empty($id)) {

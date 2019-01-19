@@ -17,7 +17,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.accountBank')}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('agent.accountBank')}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="bank_account" placeholder="账号">
                         </div>
@@ -28,8 +28,8 @@
                         <table id="example2" class="table table-bordered table-hover">
                             <tr style="color: #666666;background: #f5f6f9">
                                 <th>手机标识</th>
-                                <th>账号</th>
-                                <th>账号类型</th>
+                                <th>银行实名</th>
+                                <th>银行卡号</th>
                                 <th>单日交易额</th>
                                 <th>今日订单量</th>
                                 <th>今日成功订单量</th>
@@ -46,7 +46,7 @@
                                     <tr>
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->bank_account }}</td>
-                                        <td style="color: #00c0ef">{{ $v->accountType }}</td>
+                                        <td style="color: #00c0ef">{{ $v->cardNo }}</td>
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>

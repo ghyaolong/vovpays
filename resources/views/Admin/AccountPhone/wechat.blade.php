@@ -4,10 +4,11 @@
 @endsection
 @section('content')
     <div class="row" style="margin-top: 20px">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">账号列表</h3>
+
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -16,12 +17,12 @@
                 </div>
                 <div class="box-body">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('account.index',0)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('account.store',0)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" id="account1" name="account" placeholder="账号">
                         </div>
                         <button type="submit" class="btn btn-info">搜索</button>
-                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>
+                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>&nbsp;&nbsp;
                     </form>
                     <div class="box-body" style="margin-top: 45px">
                         <table id="example2" class="table table-bordered table-hover">
@@ -30,7 +31,10 @@
                                 <th>账号</th>
                                 <th>账号类型</th>
                                 {{--<th>备注</th>--}}
-                                <th>单日交易额/限额</th>
+                                <th>单日交易额</th>
+                                <th>今日订单量</th>
+                                <th>今日成功订单量</th>
+                                <th>今日成功率</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -39,15 +43,16 @@
                                     <td colspan="10" style="text-align: center">没有找到匹配数据</td>
                                 </tr>
                             @else
-                                {{--<tbody>--}}
                                 @foreach($list as $v)
                                     <tr>
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         {{--<td>备注</td>--}}
-                                        <td><span style="color: green">{{$v->tradeAmount}}</span> / <span
-                                                    style="color: red">{{ $v->dayQuota - $v->tradeAmount}}</span></td>
+                                        <td><span style="color: green">{{$v->account_amount}}</span></td>
+                                        <td><span style="color: green">{{$v->account_order_count}}</span></td>
+                                        <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
+                                        <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -81,7 +86,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('account.store') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('user.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">

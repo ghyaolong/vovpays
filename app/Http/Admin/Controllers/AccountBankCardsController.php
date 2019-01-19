@@ -35,14 +35,18 @@ class AccountBankCardsController extends Controller
      */
     public function index(Request $request)
     {
-        $title = '银行卡号';
-        $data = $request->input();
-        $data['user_id'] = $this->uid;
 
-        $list = $this->accountBankCardsService->getAllPage($data, 6);
+
+
+        $data = $request->input();
+        $data['user_id'] = 100000;
+
+        $list = $this->accountBankCardsService->getAllPage($data, 10);
         $data['accountType'] = 'alipay';
-        $alist= $this->accountPhoneService->getAllPage($data, 1000);
-        return view("Admin.AccountPhone.bank", compact('title','list','alist'));
+        $title = '银行卡号';
+        $alist= $this->accountPhoneService->searchPhone($data, 1000);
+
+        return view("Admin.AccountPhone.bank", compact('list','alist','title'));
     }
 
     /**
@@ -54,9 +58,9 @@ class AccountBankCardsController extends Controller
     {
         $id = $request->id ?? '';
         $this->validate($request, [
-            'account'        => 'required|unique:account_bank_cards,account,'.$id,
+            'cardNo'        => 'required|unique:account_bank_cards,cardNo,'.$id,
         ],[
-            'account.unique'           => '用户名已存在',
+            'cardNo.unique'           => '卡号已存在',
         ]);
 
         if (!empty($id)) {

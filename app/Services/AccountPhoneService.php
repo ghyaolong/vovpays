@@ -62,7 +62,7 @@ class AccountPhoneService
             $sql .= ' and pay_account_phones.user_id = ?';
             $where['user_id'] = $data['user_id'];
         }
-        if (isset($data['accountType']) && $data['accountType']) {
+        if (isset($data['accountType']) && $data['accountType']!='-1') {
             if ($data['accountType'] == 'alipay') {
                 $data['accountType'] = '支付宝';
             } elseif ($data['accountType'] == 'wechat') {

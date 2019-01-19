@@ -26,24 +26,20 @@ class AccountPhoneRepository
     }
 
     /**
-     * @param array $data
+     * @param string $sql
+     * @param array $where
      * @param int $page
      * @return mixed
      */
     public function searchPage(string $sql,array $where, int $page)
     {
-
-
-        $sql .= ' and DATE(pay_account_day_counts.created_at) = ?';
+        $sql .= ' and  (DATE(pay_account_day_counts.created_at) = ? or pay_account_day_counts.created_at is  null)';
         $where['created_at'] = date('Y-m-d');
-
 
         return $this->account_phone->whereRaw($sql, $where)
             ->leftjoin('account_day_counts', 'account_day_counts.account', '=', 'account_phones.account')
-            ->selectRaw('*,cast(account_order_suc_count/account_order_count as decimal(10,2))*100 as success_rate')
+            ->selectRaw('pay_account_phones.*,account_amount,account_order_count,account_order_suc_count,cast(account_order_suc_count/account_order_count as decimal(10,2))*100 as success_rate')
             ->paginate($page);
-
-
     }
     /**
      * @param array $data

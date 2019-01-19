@@ -17,7 +17,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.account',1)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('court.account',1)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="account" placeholder="账号">
                         </div>
@@ -88,7 +88,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.accountAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('court.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">

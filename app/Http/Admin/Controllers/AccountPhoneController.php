@@ -31,23 +31,25 @@ class AccountPhoneController extends Controller
      */
     public function index(Request $request)
     {
+
+
+
+
+
         $data = $request->input();
+        $data['user_id'] = 100000;
         if ($request->type == '0') {
             $data['accountType'] = 'wechat';
             $title = '微信账号';
-
         } elseif ($request->type == '1') {
-            $title = '支付宝账号';
             $data['accountType'] = 'alipay';
-
+            $title = '支付宝账号';
         }
-        $data['user_id'] = $this->uid;
-
-        $list = $this->accountPhoneService->getAllPage($data, 6);
-
+        $list = $this->accountPhoneService->searchPhoneStastic($data, 6);
 
 
         return view("Admin.AccountPhone.{$data['accountType']}", compact('list','title'));
+
     }
 
     /**

@@ -32,6 +32,7 @@ class AccountListController extends Controller
     {
         $query = $request->query();
         $title = '所有账号';
+
         if(count($query) && $query['accountType'] == 'alipay_bank')
         {
             $account_list = $this->accountBankCardsService->getAllPage($query,20);
@@ -39,6 +40,7 @@ class AccountListController extends Controller
             $account_list = $this->accountPhoneService->searchPhoneStastic($query,20);
         }
         $account_list->appends($request->query());
+
         return view("Admin.Account.index", compact('account_list','title','query'));
     }
 
