@@ -63,10 +63,12 @@
 6. Chart.min.js
 7. jquery.qrcode.min.js
 
-##命令使用
-1. ``php artisan queue:work --queue=orderNotify`` 运行异步下游通知
-2. ``php artisan phone:get`` 运行手机监听
-3. ``php artisan order:callback`` 运行免签订单回调监听
+##命令使用---项目根目录下使用
+1. ``nohup php artisan queue:work --queue=orderNotify &`` 运行异步下游通知队列
+2. ``nohup php artisan phone:get &`` 运行手机监听
+3. ``nohup php artisan order:callback &`` 运行免签订单回调监听
+4. ``php artisan queue:restart`` 队列重启命令
+
  
 ##日志
 以天为单位,订单回调详情日志：orderCallback; 异步通知只记录通知失败的信息：orderAsyncNotify;
