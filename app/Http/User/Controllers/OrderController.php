@@ -19,9 +19,10 @@ class OrderController extends Controller
     protected $channelPaymentsService;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * OrderController constructor.
+     * @param OrdersService $ordersService
+     * @param ChannelService $channelService
+     * @param ChannelPaymentsService $channelPaymentsService
      */
     public function __construct(OrdersService $ordersService, ChannelService $channelService, ChannelPaymentsService $channelPaymentsService)
     {
@@ -31,20 +32,18 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-
         $uid = Auth::user()->id;
         $query = $request->input();
-        $data['user_id'] = $uid;
+        $query['user_id'] = $uid;
 
         $search = $this->ordersService->searchPage($query, 10);
         $list = $search['list'];
         $orderInfoSum = $search['info'];
-
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
@@ -60,14 +59,10 @@ class OrderController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id,Order $order)
+    public function show($id)
     {
         $query['id'] = $id;
         $rule = $this->ordersService->findId($id);
-//        dd($rule['user_id']);
-
-//        $this->authorize('view', $value);
-
         if (isset($rule) && $rule['user_id']==Auth::user()->id) {
             return ajaxSuccess('获取成功', $rule);
         } else {

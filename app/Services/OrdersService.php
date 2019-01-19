@@ -149,13 +149,10 @@ class OrdersService
             $sql .= ' and agent_id = ?';
             $where['agent_id'] = $data['agent_id'];
         }
-
         if (isset($data['user_id']) && $data['user_id'] != '-1') {
             $sql .= ' and user_id = ?';
             $where['user_id'] = $data['user_id'];
         }
-
-
 
         if (isset($data['orderTime']) && $data['orderTime']) {
             $time = explode(" - ", $data['orderTime']);
@@ -172,7 +169,6 @@ class OrdersService
             $sql .= ' and updated_at <= ?';
             $where['updated_at2'] = $now;
         }
-
         $serach['list'] = $this->ordersRepository->searchPage($sql,$where, $page);
         $serach['info'] = $this->ordersRepository->searchOrderInfoSum($sql, $where, $page);
         return $serach;
