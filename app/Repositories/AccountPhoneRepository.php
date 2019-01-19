@@ -34,10 +34,10 @@ class AccountPhoneRepository
     public function searchPage(string $sql,array $where, int $page)
     {
         $sql .= ' and  (DATE(pay_account_day_counts.updated_at) = ? or pay_account_day_counts.updated_at is  null)';
-        $where['created_at'] = date('Y-m-d');
+        $where['updated_at'] = date('Y-m-d');
 
         return $this->account_phone->whereRaw($sql, $where)
-            ->leftjoin('account_day_counts', 'account_day_counts.accounts', '=', 'account_phones.account')
+            ->leftjoin('account_day_counts', 'account_day_counts.account', '=', 'account_phones.account')
             ->selectRaw('pay_account_phones.*,account_amount,account_order_count,account_order_suc_count,cast(account_order_suc_count/account_order_count as decimal(10,2))*100 as success_rate')
             ->paginate($page);
     }
