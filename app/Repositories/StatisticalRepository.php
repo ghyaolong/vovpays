@@ -40,7 +40,7 @@ class StatisticalRepository
      */
     public function updateUseridBalanceIncrement(int $uid, float $amount)
     {
-        return $this->statistical->whereUserId($uid)->increment('balance',$amount);
+        return $this->statistical->whereUserId($uid)->increment('handlingFeeBalance',$amount);
     }
 
     /**
@@ -62,7 +62,7 @@ class StatisticalRepository
      */
     public function updateUseridBalanceDecrement(int $uid, float $amount)
     {
-        return $this->statistical->whereUserId($uid)->decrement('balance',$amount);
+        return $this->statistical->whereUserId($uid)->decrement('handlingFeeBalance',$amount);
     }
 
     /**
