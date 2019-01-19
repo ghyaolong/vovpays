@@ -193,11 +193,13 @@ class ChooseAccountService{
                 ];
             }
         }
+        if(!count($valid_account_list))return [];
+
         $rank_key = array_rand($valid_account_list);
         $valid_account = $valid_account_list[$rank_key];
-        if(!$valid_account){
-            return [];
-        }
+
+        if(!$valid_account)return [];
+
 
         // 实现金额唯一;
         $flag = false;
