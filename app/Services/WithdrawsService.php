@@ -101,7 +101,7 @@ class WithdrawsService
 
         $useraccount = $this->statisticalRepository->findUserId($data['user_id']);
 
-        if ($useraccount['balance'] < $data['withdrawAmount']) {
+        if ($useraccount['handlingFeeBalance'] < $data['withdrawAmount']) {
             throw   new CustomServiceException('提现金额超过账户可提现金额');
         }
 
