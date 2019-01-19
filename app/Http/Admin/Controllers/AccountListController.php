@@ -41,8 +41,8 @@ class AccountListController extends Controller
             $account_list = $this->accountPhoneService->searchPhoneStastic($query,20);
         }
         $account_list->appends($request->query());
-        echo  111;
-//        return view("Admin.Account.index", compact('account_list','title','query'));
+
+        return view("Admin.Account.index", compact('account_list','title','query'));
     }
 
 
