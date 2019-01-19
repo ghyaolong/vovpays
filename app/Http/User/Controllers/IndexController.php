@@ -38,11 +38,20 @@ class IndexController extends Controller
     {
         $query = $request->input();
         $query['user_id'] = Auth::user()->id;
-        $user=$this->userService->findId($query['user_id']);
 
         $user_day_count   = $this->orderDayCountService->findDayAndUserCount($query['user_id']);
-        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderSevenDaysCount($query), 'tm'));
-        return view('User.Index.home', compact('user','user_day_count', 'order_day_count'));
+        $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderUserSevenDaysCount($query), 'tm'));
+        return view('User.Index.home', compact('user_day_count', 'order_day_count'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show()
+    {
+        $query['user_id'] = Auth::user()->id;
+        $user=$this->userService->findId($query['user_id']);
+        return view('User.Index.index', compact('user'));
     }
 
     //用户列表展示

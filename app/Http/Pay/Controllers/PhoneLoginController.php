@@ -39,13 +39,15 @@ class PhoneLoginController extends Controller
 
     public function login(Request $request)
     {
+        $type = '';//商户
         $fans = $this->userService->findUsernameAndStatus($request->input('username'),1);
         if(!$fans)
         {
             $fans = $this->adminsService->findUsernameAndStatus($request->input('username'),1);
             if($fans)
             {
-                $fans->apikey = md5('345534ewr');
+                $type = 'admin';
+                $fans->apikey = env('SIGNKEY');
             }
 
         }
@@ -59,7 +61,13 @@ class PhoneLoginController extends Controller
             return json_encode(array('msg'=>'用户名或密码错误'));
         }
 
-        $account_list = $this->accountPhoneService->getPhoneidAndStatusAndUserid($request->input('phoneid'),1,$fans->id);
+        if($type == 'admin')
+        {
+            $account_list = $this->accountPhoneService->getPhoneidAndStatusAndUserid($request->input('phoneid'),1,100000);
+        }else{
+            $account_list = $this->accountPhoneService->getPhoneidAndStatusAndUserid($request->input('phoneid'),1,$fans->id);
+        }
+
         if(!count($account_list))
         {
             return json_encode(array('msg'=>'后台未配置收款账号'));

@@ -39,6 +39,15 @@ class OrderDayCountService
     }
 
     /**
+     * 统计7天数据
+     * @return mixed
+     */
+    public function getOrderUserSevenDaysCount($query)
+    {
+        return $this->orderDayCountRepository->getOrderUserSevenDaysCount($query);
+    }
+
+    /**
      * 平台今日数据
      * @return mixed
      */

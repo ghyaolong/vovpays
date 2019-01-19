@@ -50,10 +50,22 @@ class UserController extends Controller
         }
 
 
-        return view('Agent.User.user',compact( 'list', 'query'));
+        return view('Agent.user.user',compact( 'list', 'query'));
 
 
     }
+
+    /**
+     * 个人信息
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show()
+    {
+        $query['user_id'] = Auth::user()->id;
+        $user=$this->userService->findId($query['user_id']);
+        return view('Agent.user.index', compact('user'));
+    }
+
 
     /**
      * 添加

@@ -68,73 +68,6 @@
     </div>
 
 
-
-    <div class="content-wrapper" style="padding: 0;margin: 0">
-        <section class="content">
-
-
-            <div class="row" style="margin-top: 20px">
-
-                <div class="col-md-4">
-                    <div class="box box-primary box-solid  collapsed-box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">个人信息</h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-body" style="display: none">
-
-
-                            <form class="form-horizontal">
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">登录名</label>
-                                        <div class="col-sm-8">
-                                            <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-                                                {{$user->username}}
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">商户ID</label>
-                                        <div class="col-sm-8">
-                                            <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-                                                {{$user->merchant}}
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">APIKEY</label>
-                                        <div class="col-sm-8">
-                                            <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-                                                {{$user->apiKey}}
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">登陆时间</label>
-                                        <div class="col-sm-8">
-                                            <label class="control-label" style="word-wrap:break-word; word-break:break-all; text-align:left;font-weight: 400;">
-                                            {{date(now())}}
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </section>
-    </div>
-
 @endsection
 
 @section('scripts')
@@ -145,6 +78,7 @@
     <!-- AdminLTE App -->
     <script>
         var data = JSON.parse('{!! $order_day_count !!}');
+
         var chartColors = {
             red: 'rgb(255, 99, 132)',
             orange: 'rgb(255, 159, 64)',
@@ -169,7 +103,7 @@
                         label: '订单金额',
                         backgroundColor: color( chartColors.purple).alpha(0.5).rgbString(),
                         borderColor:  chartColors.red,
-                        data : [getDate(-6) in data ? data[getDate(-6)]['sys_amount'] : 0, getDate(-5) in data ? data[getDate(-5)]['sys_amount'] : 0, getDate(-4) in data ? data[getDate(-4)]['sys_amount'] : 0, getDate(-3) in data ? data[getDate(-3)]['sys_amount'] : 0, getDate(-2) in data ? data[getDate(-2)]['sys_amount'] : 0,  getDate(-1) in data ? data[getDate(-1)]['sys_amount'] : 0, getDate(0) in data ? data[getDate(0)]['sys_amount'] : 0],
+                        data : [getDate(-6) in data ? data[getDate(-6)]['merchant_amount'] : 0, getDate(-5) in data ? data[getDate(-5)]['merchant_amount'] : 0, getDate(-4) in data ? data[getDate(-4)]['merchant_amount'] : 0, getDate(-3) in data ? data[getDate(-3)]['merchant_amount'] : 0, getDate(-2) in data ? data[getDate(-2)]['merchant_amount'] : 0,  getDate(-1) in data ? data[getDate(-1)]['merchant_amount'] : 0, getDate(0) in data ? data[getDate(0)]['merchant_amount'] : 0],
                         yAxisID: 'y-axis-1'
                     } ,
                     {
@@ -177,7 +111,7 @@
                         backgroundColor: color( chartColors.blue).alpha(0.5).rgbString(),
                         borderColor:  chartColors.blue,
                         yAxisID: 'y-axis-2',
-                        data :[getDate(-6) in data ? data[getDate(-6)]['sys_income'] : 0, getDate(-5) in data ? data[getDate(-5)]['sys_income'] : 0, getDate(-4) in data ? data[getDate(-4)]['sys_income'] : 0, getDate(-3) in data ? data[getDate(-3)]['sys_income'] : 0, getDate(-2) in data ? data[getDate(-2)]['sys_income'] : 0,  getDate(-1) in data ? data[getDate(-1)]['sys_income'] : 0, getDate(0) in data ? data[getDate(0)]['sys_income'] : 0],
+                        data :[getDate(-6) in data ? data[getDate(-6)]['merchant_income'] : 0, getDate(-5) in data ? data[getDate(-5)]['merchant_income'] : 0, getDate(-4) in data ? data[getDate(-4)]['merchant_income'] : 0, getDate(-3) in data ? data[getDate(-3)]['merchant_income'] : 0, getDate(-2) in data ? data[getDate(-2)]['merchant_income'] : 0,  getDate(-1) in data ? data[getDate(-1)]['merchant_income'] : 0, getDate(0) in data ? data[getDate(0)]['merchant_income'] : 0],
                     }
                 ]
 

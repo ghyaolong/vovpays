@@ -8,6 +8,8 @@ use App\Services\OrdersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class OrderController extends Controller
 {
     protected $ordersService;
@@ -32,22 +34,23 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $query = $request->input();
 
-        if (count($query)) {
-            $query['user_id'] = Auth::user()->id;
-            $orders = $this->ordersService->searchPage($query, 10);
-            $orderInfoSum = $this->ordersService->orderInfoSum($query);
-        } else {
-            $query['user_id'] = Auth::user()->id;
-            $orders = $this->ordersService->getAllPage($query,10);
-            $orderInfoSum = $this->ordersService->orderInfoSum($query);
-        }
+        $uid = Auth::user()->id;
+        $query = $request->input();
+        $data['user_id'] = $uid;
+
+        $search = $this->ordersService->searchPage($query, 10);
+        $list = $search['list'];
+        $orderInfoSum = $search['info'];
+
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
 
-        return view('User.Order.order', compact('orders', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
+        unset($query['_token']);
+        unset($query['user_id']);
+
+        return view('User.Order.order', compact('list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
     }
 
     /**
@@ -60,9 +63,9 @@ class OrderController extends Controller
         $query['user_id'] = Auth::user()->id;
         $query['id'] = $id;
         $rule = $this->ordersService->findId($id);
-        if ($rule){
+        if ($rule) {
             return ajaxSuccess('获取成功', $rule);
-        }else{
+        } else {
             return ajaxError('获取失败');
         }
 

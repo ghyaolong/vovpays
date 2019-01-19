@@ -82,7 +82,7 @@ class ChooseAccountService{
             return RespCode::APP_ERROR;
         }
 
-        //根据编码选着对应的账号
+        //根据编码选择对应的账号
         if($this->pay_code == "alipay")
         {
             $valid_account = $this->getValidAlipayAccount($account_list);
@@ -101,7 +101,7 @@ class ChooseAccountService{
     }
 
     /**
-     * 选着支付宝账号
+     * 选择支付宝账号
      * @param Collection $account_list
      * @return array
      */
@@ -140,7 +140,7 @@ class ChooseAccountService{
     }
 
     /**
-     * 选着微信
+     * 选择微信
      */
     protected function getValidWechatAccount()
     {
@@ -148,7 +148,7 @@ class ChooseAccountService{
     }
 
     /**
-     * 选着银行卡
+     * 选择银行卡
      * @param Collection $account_list
      * @return array
      */

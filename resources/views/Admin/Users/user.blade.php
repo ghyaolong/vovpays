@@ -39,10 +39,6 @@
                                                 @if(isset($query['status']) && $query['status'] =='0') selected @endif>
                                             禁用
                                         </option>
-                                        <option value="2"
-                                                @if(isset($query['status']) && $query['status'] =='2') selected @endif>
-                                            已删除
-                                        </option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
@@ -84,9 +80,9 @@
                                     <button type="button" class="btn btn-primary btn-sm"
                                             onclick="edit('会员编辑',{{ $v['id'] }})">编辑
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                            onclick="del($(this),{{ $v['id'] }})">删除
-                                    </button>
+                                    {{--<button type="button" class="btn btn-danger btn-sm"--}}
+                                            {{--onclick="del($(this),{{ $v['id'] }})">删除--}}
+                                    {{--</button>--}}
                                 </td>
                             </tr>
                         @endforeach

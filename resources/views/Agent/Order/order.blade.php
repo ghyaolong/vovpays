@@ -80,18 +80,21 @@
                                        @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
                             </div>
                             <div class="form-group">
-                                <select class="form-control" id="channelId" name="channelId">
+                                <select class="form-control" id="channelId" name="channel_id">
                                     <option value="-1">选择通道</option>
                                     @foreach($chanel_list as $v )
-                                        <option value="{{ $v['id'] }}">{{ $v['channelName'] }}</option>
+                                        <option value="{{ $v['id'] }}"
+                                                @if(isset($query['channel_id']) && $query['channel_id'] == $v['id']) selected @endif>{{ $v['channelName'] }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="form-control" id="paymentId" name="paymentId">
+                                <select class="form-control" id="paymentId" name="channel_payment_id">
                                     <option value="-1">选择支付方式</option>
                                     @foreach($payments_list as $v )
-                                        <option value="{{ $v['id'] }}">{{ $v['paymentName'] }}</option>
+                                        <option value="{{ $v['id'] }}"
+                                                @if(isset($query['channel_payment_id']) && $query['channel_payment_id'] == $v['id']) selected @endif>{{ $v['paymentName'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -161,7 +164,7 @@
                             </tr>
                         @endif
                     </table>
-                    @include('Admin.Commons._page')
+                    @include('Agent.Commons._page')
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -251,7 +254,7 @@
     <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
         $(function () {
-            $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+            $('#daterange-btn').val();
 
             $('#daterange-btn').daterangepicker(
                 {

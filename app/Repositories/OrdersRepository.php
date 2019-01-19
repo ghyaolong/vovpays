@@ -193,64 +193,31 @@ class OrdersRepository
         return $this->order->whereId($id)->delete();
     }
 
-    public function searchPage(array $data, int $page)
+    /**获取搜索订单
+     * @param $sql
+     * @param $where
+     * @param int $page
+     * @return mixed
+     */
+    public function searchPage($sql,$where,int $page)
     {
-        $sql = ' 1=1 ';
-        $where = [];
-
-        if (isset($data['merchant']) && $data['merchant']) {
-            $sql .= 'and merchant = ?';
-            $where['merchant'] = $data['merchant'];
-        }
-
-        if (isset($data['orderNo']) && $data['orderNo']) {
-            $sql .= ' and orderNo = ?';
-            $where['orderNo'] = $data['orderNo'];
-        }
-
-        if (isset($data['underOrderNo']) && $data['underOrderNo']) {
-            $sql .= ' and underOrderNo = ?';
-            $where['underOrderNo'] = $data['underOrderNo'];
-        }
-
-        if (isset($data['status']) && $data['status'] != '-1') {
-            $sql .= ' and status = ?';
-            $where['status'] = $data['status'];
-        }
-
-        if (isset($data['channel_id']) && $data['channel_id'] != '-1') {
-            $sql .= ' and channel_id = ?';
-            $where['channel_id'] = $data['channel_id'];
-        }
-
-        if (isset($data['agent_id']) && $data['agent_id'] != '-1') {
-            $sql .= ' and agent_id = ?';
-            $where['agent_id'] = $data['agent_id'];
-        }
-
-        if (isset($data['user_id']) && $data['user_id'] != '-1') {
-            $sql .= ' and user_id = ?';
-            $where['user_id'] = $data['user_id'];
-        }
-
-        if (isset($data['channel_payment_id']) && $data['channel_payment_id'] != '-1') {
-            $sql .= ' and channel_payment_id = ?';
-            $where['channel_payment_id'] = $data['channel_payment_id'];
-        }
-
-        if (isset($data['orderTime']) && $data['orderTime']) {
-            $time = explode(" - ", $data['orderTime']);
-            $sql .= ' and created_at >= ?';
-            $where['created_at'] = $time[0];
-        }
-
-        if (isset($data['orderTime']) && $data['orderTime']) {
-            $time = explode(" - ", $data['orderTime']);
-            $sql .= ' and updated_at <= ?';
-            $where['updated_at'] = $time[1];
-        }
-
 
         return $this->order->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
     }
+
+   /**获取搜索订单统计数据
+     * @param $sql
+     * @param $where
+     * @param $page
+     * @return mixed
+     */
+    public function searchOrderInfoSum($sql, $where, $page)
+    {
+
+        return $this->order->whereRaw($sql, $where)
+            ->select(DB::raw('sum(amount) as amountSum ,count(id) as orderCount,sum(orderRate) as orderRateSum, sum(agentAmount) as agentSum,sum(userAmount) as userSum'))
+            ->get()->toArray();
+
+    }
+
 }

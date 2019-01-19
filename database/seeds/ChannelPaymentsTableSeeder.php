@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class channelPaymentsTableSeeder extends Seeder
+class ChannelPaymentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +22,8 @@ class channelPaymentsTableSeeder extends Seeder
             'costRate'     => 0,
             'created_at'=> $now,
             'updated_at'=> $now
-        ],[
+        ]);
+        DB::table('channel_payments')->insert([
             'channel_id'   => '1',
             'paymentName'  => '微信',
             'paymentCode'  => 'wechat',
@@ -30,7 +31,8 @@ class channelPaymentsTableSeeder extends Seeder
             'costRate'     => 0,
             'created_at'=> $now,
             'updated_at'=> $now
-        ],[
+        ]);
+        DB::table('channel_payments')->insert([
             'channel_id'   => '1',
             'paymentName'  => '转银行卡',
             'paymentCode'  => 'alipay_bank',
