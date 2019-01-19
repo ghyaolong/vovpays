@@ -95,6 +95,13 @@
                     <li><a href="{{ route('accountBank.index') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
                 </ul>
             </li>
+            @else
+                <li>
+                    <a href="{{ route('account.all') }}">
+                        <i class="fa fa-reorder"></i>
+                        <span>所有账号</span>
+                    </a>
+                </li>
             @endif
 
             <li>
