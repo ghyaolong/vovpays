@@ -32,6 +32,10 @@
 
 ``alter event user_yesterdyay_order_event on completion preserve enable``
 
+``alter event account_day_event on completion preserve enable``
+
+``alter event account_yesterday_event on completion preserve enable``
+
 8. 查看事件运行状态
 
 ``select * from mysql.event;``
