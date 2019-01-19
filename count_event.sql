@@ -305,7 +305,7 @@ BEGIN
 				 #------------------------------------------开始遍历----------------------------------------
 				 #1用户，2代理商
 				 IF (ugroup_type=1) THEN
-						select count(id),IFNULL(sum(amount),0.0),IFNULL(sum(userAmount),0.0) INTO dmerchant_order_suc_count,dmerchant_amount,dmerchant_income from pay_orders where  pay_orders.user_id=uid and status=1 and TO_DAYS(updated_at)=TO_DAYS(DATE_SUB(CURDATE(),INTERVAL 1 DAY))  ;
+						select count(id),IFNULL(sum(amount),0.0),IFNULL(sum(userAmount),0.0) INTO dmerchant_order_suc_count,dmerchant_amount,dmerchant_income from pay_orders where  pay_orders.user_id=uid and status=1 and TO_DAYS(updated_at)=TO_DAYS(NOW())  ;
 						select count(id) INTO dmerchant_order_count  from pay_orders where  pay_orders.user_id=uid  and TO_DAYS(updated_at)=TO_DAYS(NOW()) ;
 				 ELSEIF (ugroup_type=2) THEN
 						#按订单的agent_id进行查询 代理收入
