@@ -23,7 +23,6 @@ class AccountPhoneService
         $this->accountPhoneRepository = $accountPhoneRepository;
     }
 
-
     /**
      * 带分页统计信息查询
      * @param array $data
@@ -32,10 +31,8 @@ class AccountPhoneService
      */
     public function searchPhoneStastic(array $data, int $page)
     {
-        $sql=$this->buildSearchSql($data);
-        return $this->accountPhoneRepository->searchPage($sql,$data, $page);
+        return $this->buildSearchSql($data,$page);
     }
-
 
     /**
      * 获取所有监听设备
@@ -43,14 +40,12 @@ class AccountPhoneService
      * @param int $page
      * @return mixed
      */
-
     public function searchPhone(array $data,int $page)
     {
-        $sql=$this->buildSearchSql($data);
-        return $this->accountPhoneRepository->searchPhone($sql,$data, $page);
+        return $this->buildSearchSql($data,$page);
     }
 
-    private function buildSearchSql(array &$data){
+    private function buildSearchSql(array $data, int $page){
         $sql = ' 1=1 ';
         $where = [];
 
@@ -76,8 +71,7 @@ class AccountPhoneService
             $where['third'] = $data['third'];
         }
 
-        return $sql;
-
+        return $this->accountPhoneRepository->searchPhone($sql,$data, $page);
     }
 
 

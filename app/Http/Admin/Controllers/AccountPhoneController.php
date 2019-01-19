@@ -31,11 +31,6 @@ class AccountPhoneController extends Controller
      */
     public function index(Request $request)
     {
-
-
-
-
-
         $data = $request->input();
         $data['user_id'] = 100000;
         if ($request->type == '0') {
@@ -46,8 +41,6 @@ class AccountPhoneController extends Controller
             $title = '支付宝账号';
         }
         $list = $this->accountPhoneService->searchPhoneStastic($data, 6);
-
-
         return view("Admin.AccountPhone.{$data['accountType']}", compact('list','title'));
 
     }
