@@ -14,7 +14,7 @@ class ChannelPaymentsTableSeeder extends Seeder
     public function run()
     {
         $now = Carbon::now()->toDateTimeString();
-        DB::table('channel_payment')->insert([
+        DB::table('channel_payments')->insert([
             [
             'channel_id'   => '1',
             'paymentName'  => '支付宝',
