@@ -40,7 +40,7 @@
                             @else
                                 @foreach($account_list as $v)
                                     <tr>
-                                        {{dd($v->user)}}
+                                        {{dd($v)}}
                                         <td>@if(isset($v->user->username)){{ $v->user->username }} @else 总后台 @endif</td>
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">
