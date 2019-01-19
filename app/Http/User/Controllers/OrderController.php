@@ -19,10 +19,9 @@ class OrderController extends Controller
     protected $channelPaymentsService;
 
     /**
-     * OrderController constructor.
-     * @param OrdersService $ordersService
-     * @param ChannelService $channelService
-     * @param ChannelPaymentsService $channelPaymentsService
+     * Create a new controller instance.
+     *
+     * @return void
      */
     public function __construct(OrdersService $ordersService, ChannelService $channelService, ChannelPaymentsService $channelPaymentsService)
     {
@@ -32,11 +31,12 @@ class OrderController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Show the application dashboard.
+     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
+
         $uid = Auth::user()->id;
         $query = $request->input();
         $query['user_id'] = $uid;
@@ -44,6 +44,7 @@ class OrderController extends Controller
         $search = $this->ordersService->searchPage($query, 10);
         $list = $search['list'];
         $orderInfoSum = $search['info'];
+
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
