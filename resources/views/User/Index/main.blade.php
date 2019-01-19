@@ -494,46 +494,6 @@
                 </div>
             </div>
         </div>
-
-
-        {{--demo下载--}}
-        <div class="col-md-6">
-            <div class="box box-primary box-solid collapsed-box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">demo下载</h3>
-
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="box-body" style="padding:20px auto;font-size: 15px;height: 200px">
-                    <table class="table table-bordered" style="margin: 10px auto">
-                        <tr>
-                            <th style="width: 30px">#</th>
-                            <th>开发语言</th>
-                            <th>文件</th>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>php demo</td>
-                            <td><a class="glyphicon glyphicon-download-alt btn btn-primary" href="/demo/pay-php.rar"
-                                   download="pay-php.rar"> 下载</a></td>
-                        </tr>
-                        <tr>
-                            <td>2.</td>
-                            <td>java demo</td>
-                            <td><a class="glyphicon glyphicon-download-alt btn btn-primary" href="/demo/java-php.rar"
-                                   download="java-php.rar"> 下载</a></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
         <div class="col-md-6">
             <div class="box box-primary box-solid collapsed-box">
                 <div class="box-header with-border">
@@ -557,7 +517,7 @@
                             <td>1.</td>
                             <td>API文档</td>
                             <td><a class="glyphicon glyphicon-download-alt btn btn-primary"
-                                   href="/demo/php-接口文档.doc" download="php-接口文档.doc"> 下载</a></td>
+                                   href="/demo/接口文档.doc" download="接口文档.doc">下载</a></td>
                         </tr>
                     </table>
                 </div>
