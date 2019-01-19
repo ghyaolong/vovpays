@@ -21,6 +21,7 @@ Route::group([], function ($router) {
         Route::get('rate', 'IndexController@rate')->name('agent.rate');
 
         Route::get('user', 'UserController@index')->name('agent.user');
+        Route::get('user/show', 'UserController@show')->name('agent.show');
         Route::post('user', 'UserController@add')->name('agent.add');
         Route::post('user/check', 'UserController@checkUnique')->name('agent.check');
         Route::post('user/saveStatus', 'UserController@saveStatus')->name('agent.saveStatus');

@@ -44,6 +44,9 @@ class IndexController extends Controller
         return view('User.Index.home', compact('user_day_count', 'order_day_count'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show()
     {
         $query['user_id'] = Auth::user()->id;
