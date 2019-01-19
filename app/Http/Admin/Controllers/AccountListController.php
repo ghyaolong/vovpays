@@ -12,7 +12,7 @@ namespace App\Http\Admin\Controllers;
 use App\Services\AccountPhoneService;
 use App\Services\AccountBankCardsService;
 use Illuminate\Http\Request;
-use App\Models\User;
+
 
 class AccountListController extends Controller
 {
@@ -41,8 +41,8 @@ class AccountListController extends Controller
             $account_list = $this->accountPhoneService->searchPhoneStastic($query,20);
         }
         $account_list->appends($request->query());
-
-        return view("Admin.Account.index", compact('account_list','title','query'));
+        echo  111;
+//        return view("Admin.Account.index", compact('account_list','title','query'));
     }
 
 
