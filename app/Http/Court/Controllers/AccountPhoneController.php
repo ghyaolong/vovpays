@@ -42,6 +42,8 @@ class AccountPhoneController extends Controller
             $data['accountType'] = 'bank';
         }
         $list = $this->accountPhoneService->searchPhoneStastic($data, 6);
+        $aa = $this->accountPhoneService->findIdAndUserId(3);
+        dd($aa->user());
         return view("Court.AccountPhone.{$data['accountType']}", compact('list'));
     }
 
