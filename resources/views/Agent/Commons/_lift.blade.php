@@ -15,6 +15,7 @@
             <li class="header">主导航</li>
             <li class="active treeview">
             <li><a href="{{route('agent.index')}}"><i class="fa fa-circle-o text-aqua"></i><span>主页</span></a></li>
+            <li><a href="{{route('agent.show')}}"><i class="fa fa-circle-o text-aqua"></i><span>账户信息</span></a></li>
             {{--<li><a href="{{route('agent.user')}}"><i class="fa fa-circle-o text-aqua"></i><span>商户管理</span></a></li>--}}
             <li><a href="{{route('agent.order')}}"><i class="fa fa-circle-o text-aqua"></i><span>交易管理</span></a></li>
             <li><a href="{{route('agent.clearing')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>结算管理</span></a></li>
