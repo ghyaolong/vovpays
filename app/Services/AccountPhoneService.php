@@ -57,6 +57,10 @@ class AccountPhoneService
             $sql .= ' and pay_account_phones.user_id = ?';
             $where['user_id'] = $data['user_id'];
         }
+        if (isset($data['third']) && $data['third'] == 1) {
+            $sql .= ' and third = ?';
+            $where['third'] = $data['third'];
+        }
         if (isset($data['accountType']) && $data['accountType']!='-1') {
             if ($data['accountType'] == 'alipay') {
                 $data['accountType'] = '支付宝';
@@ -65,10 +69,6 @@ class AccountPhoneService
             }
             $sql .= ' and accountType = ?';
             $where['accountType'] = $data['accountType'];
-        }
-        if (isset($data['third']) && $data['third'] == 1) {
-            $sql .= ' and third = ?';
-            $where['third'] = $data['third'];
         }
 
         return $this->accountPhoneRepository->searchPhone($sql,$data, $page);
