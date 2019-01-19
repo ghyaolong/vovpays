@@ -78,7 +78,7 @@
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="商户号" name="userNo"
-                                   @if(isset($query['underOrderNo'])) value="{{ $query['underOrderNo'] }}" @endif />
+                                   @if(isset($query['userNo'])) value="{{ $query['userNo'] }}" @endif />
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
@@ -134,6 +134,8 @@
                         <th>商户号</th>
                         <th>系统订单</th>
                         <th>商户订单</th>
+                        <th>创建时间</th>
+                        <th>更新时间</th>
                         <th>订单金额</th>
                         <th>手续费</th>
                         <th>平台收入</th>
@@ -151,6 +153,8 @@
                             <td>{{ $v['merchant'] }}</td>
                             <td>{{ $v['orderNo'] }}</td>
                             <td>{{ $v['underOrderNo'] }}</td>
+                            <td>{{ $v['created_at'] }}</td>
+                            <td>{{ $v['updated_at'] }}</td>
                             <td>{{ $v['amount'] }}</td>
                             <td>{{ $v['orderRate'] }}</td>
                             <td>{{ $v['sysAmount'] }}</td>
