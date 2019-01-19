@@ -33,7 +33,7 @@ class AccountPhoneRepository
      */
     public function searchPage(string $sql,array $where, int $page)
     {
-        $sql .= ' and  (DATE(pay_account_day_counts.created_at) = ? or pay_account_day_counts.created_at is  null)';
+        $sql .= ' and  (DATE(pay_account_day_counts.updated_at) = ? or pay_account_day_counts.updated_at is  null)';
         $where['created_at'] = date('Y-m-d');
 
         return $this->account_phone->whereRaw($sql, $where)
