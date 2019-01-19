@@ -30,7 +30,7 @@ class OrderController extends Controller
     {
         $uid = Auth::user()->id;
         $query = $request->input();
-        $data['agent_id'] = $uid;
+        $query['agent_id'] = $uid;
 
         $search = $this->ordersService->searchPage($query, 10);
         $list = $search['list'];
