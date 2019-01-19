@@ -58,7 +58,7 @@ class ChooseAccountService{
             {
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,100000,1);
             }else if($this->pay_code == 'alipay_bank'){
-                $account_list = $this->accountBankCardsService->getStatusAndUserId($user->id,1);
+                $account_list = $this->accountBankCardsService->getStatusAndUserId(100000,1);
             }
         }else if( $systems['add_account_type']->value == 3 ){
 
@@ -189,7 +189,7 @@ class ChooseAccountService{
                     'bank_code'         => $account->bank_mark,
                     'chard_index'       => $account->chard_index,
                     'phone_id'          => $account->phone_id,
-                    'phone_uid' => $account->user_id
+                    'phone_uid'         => $account->user_id
                 ];
             }
         }
