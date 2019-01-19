@@ -155,10 +155,6 @@
                             notEmpty: {
                                 message: '银行卡号不能为空!'
                             },
-                            regexp: {
-                                regexp: /^([1-9]{1})(\d{14}|\d{18})$/,
-                                message: '请输入正确的银行卡号！'
-                            },
                             remote: {
                                 url: "{{route('agent.bankCheck')}}",
                                 message: "该银行卡已存在!",
