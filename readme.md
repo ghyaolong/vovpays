@@ -22,7 +22,7 @@
 
 ``SHOW VARIABLES LIKE 'event_scheduler'``
 
-6. 数据库事件没有开启运行
+6. 数据库事件开启运行
 
 ``set GLOBAL event_scheduler = 1``
 
