@@ -27,7 +27,7 @@ class CreateOrderDayCountsTable extends Migration
             $table->unsignedInteger('sys_order_count')->default(0)->comment('平台单日订单总数量');
             $table->unsignedInteger('sys_order_suc_count')->default(0)->comment('平台单日成功订单数量');
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at');
+            $table->timestamp('updated_at')->useCurrent();
         });
         DB::statement("ALTER TABLE `pay_order_day_counts` comment '单日订单统计表'");
     }

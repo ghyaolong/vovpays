@@ -22,7 +22,7 @@ class CreateAccountDayCountsTable extends Migration
             $table->unsignedInteger('account_order_count')->default(0)->comment('账号单日订单量');
             $table->unsignedInteger('account_order_suc_count')->default(0)->comment('account_order_suc_count');
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at');
+            $table->timestamp('updated_at')->useCurrent();
         });
         DB::statement("ALTER TABLE `pay_account_day_counts` comment '账号订单单日统计'");
     }
