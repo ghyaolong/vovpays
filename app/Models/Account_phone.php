@@ -17,7 +17,7 @@ class Account_phone extends Model
      * 一对多反向 用户表
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function User()
+    public function Users()
     {
         return $this->belongsTo('App\models\User');
     }
