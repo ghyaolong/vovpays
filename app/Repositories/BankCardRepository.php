@@ -92,6 +92,30 @@ class BankCardRepository
         $this->bankCard->whereUserId($id)->update($data);
     }
 
+    /**
+     * 检测唯一
+     * @param string $field
+     * @param string $value
+     * @param int|null $id
+     * @return mixed
+     */
+    public function searchCheck(string $field, string $value, int $id = null)
+    {
+        if ($id) {
+            if ($field == 'bankCardNo') {
+                $sql = "id <> $id and bankCardNo = ?";
+                $where['bankCardNo'] = $value;
+            }
+        } else {
+            if ($field == 'bankCardNo') {
+                $sql = " bankCardNo = ?";
+                $where['bankCardNo'] = $value;
+
+            }
+        }
+        return $this->bankCard->whereRaw($sql, $where)->first();
+    }
+
 
 
 }
