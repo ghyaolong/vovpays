@@ -11,7 +11,7 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 100%"></div>
                 </div>
-                <span class="info-box-number">{{$user_day_count->merchant_amount?:0}}  元</span>
+                <span class="info-box-number">@if(isset($user_day_count->merchant_amount) && $user_day_count->merchant_amount) {{$user_day_count->merchant_amount}} @else 0 @endif 元</span>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 100%"></div>
                 </div>
-                <span class="info-box-number">{{$user_day_count->merchant_income?:0}} 元</span>
+                <span class="info-box-number">@if(isset($user_day_count->merchant_income) && $user_day_count->merchant_income) {{$user_day_count->merchant_income}} @else 0 @endif 元</span>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 100%"></div>
                 </div>
-                <span class="info-box-number">{{$user_day_count->merchant_order_suc_count?:0}}笔</span>
+                <span class="info-box-number">@if(isset($user_day_count->merchant_order_suc_count) && $user_day_count->merchant_order_suc_count) {{$user_day_count->merchant_order_suc_count}} @else 0 @endif 笔</span>
             </div>
         </div>
     </div>
