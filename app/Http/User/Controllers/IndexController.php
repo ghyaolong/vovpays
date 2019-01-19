@@ -52,10 +52,10 @@ class IndexController extends Controller
      */
     public function show()
     {
-        $query['user_id'] = Auth::user()->id;
-        $user = $this->userService->findId($query['user_id']);
-        $balance=$this->statisticalService->findUserId($query['user_id']);
-        return view('User.Index.index', compact('user','balance'));
+        $uid        = Auth::user()->id;
+        $user       = $this->userService->findId($uid);
+        $statistical= $this->statisticalService->findUserId($uid);
+        return view('User.Index.index', compact('user','statistical'));
     }
 
     //用户列表展示

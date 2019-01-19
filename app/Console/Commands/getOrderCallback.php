@@ -119,7 +119,7 @@ class getOrderCallback extends Command
         // 商户收益增加
         if( $add_account_type != 1 )
         {
-            $statisticalService->updateUseridHandlingFeeBalanceIncrement($user->id,$order->amount);
+            $statisticalService->updateUseridHandlingFeeBalanceIncrement($user->id,$order->userAmount);
         }
 
         // 代理收益增加

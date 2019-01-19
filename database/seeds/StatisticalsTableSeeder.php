@@ -15,15 +15,17 @@ class StatisticalsTableSeeder extends Seeder
     {
         $now = Carbon::now()->toDateTimeString();
         DB::table('statisticals')->insert([
-            'user_id'  => '1',
+            [
+            'user_id'  => 1,
+            'agent_id' => 0,
             'created_at'=> $now,
             'updated_at'=> $now
-        ]);
-        DB::table('statisticals')->insert([
-            'user_id'  => 2,
-            'agent_id'  => 1,
-            'created_at'=> $now,
-            'updated_at'=> $now
+            ],[
+                'user_id'  => 2,
+                'agent_id'  => 1,
+                'created_at'=> $now,
+                'updated_at'=> $now
+            ]
         ]);
     }
 }
