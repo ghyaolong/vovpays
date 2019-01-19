@@ -53,7 +53,7 @@ class UserController extends Controller
         }
 
 
-        return view('Agent.user.user',compact( 'list', 'query'));
+        return view('Agent.User.user',compact( 'list', 'query'));
 
 
     }
@@ -64,10 +64,10 @@ class UserController extends Controller
      */
     public function show()
     {
-        $query['user_id'] = Auth::user()->id;
-        $user=$this->userService->findId($query['user_id']);
-        $balance=$this->statisticalService->findUserId($query['user_id']);
-        return view('Agent.user.index', compact('user','balance'));
+        $uid         = Auth::user()->id;
+        $user        = $this->userService->findId($uid);
+        $statistical = $this->statisticalService->findUserId($uid);
+        return view('Agent.User.index', compact('user','statistical'));
     }
 
 

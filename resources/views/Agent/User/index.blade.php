@@ -27,8 +27,9 @@
                                     <td>{{$user->apiKey}}</td>
                                 </tr>
                                 <tr>
+
                                     <td>账户余额</td>
-                                    <td style="color: red"><b>￥ @if(isset($balance->balance)) {{$balance->balance}} @endif</b></td>
+                                    <td style="color: red"><b>￥ @if(isset($statistical->handlingFeeBalance)) {{$statistical->handlingFeeBalance}} @else 0.00 @endif</b></td>
                                 </tr>
                                 <tr>
                                     <td>手机</td>
