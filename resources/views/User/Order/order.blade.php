@@ -167,8 +167,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{--<button type="button" class="btn btn-success btn-sm" onclick="info('订单详情',{{ $v['id'] }})">详情</button>--}}
-                                            <button type="button" class="btn btn-success btn-sm" onclick="info('订单详情',{{ 194 }})">详情</button>
+                                            <button type="button" class="btn btn-success btn-sm" onclick="info('订单详情',{{ $v['id'] }})">详情</button>
                                         </td>
                                     </tr>
                                 @endforeach
