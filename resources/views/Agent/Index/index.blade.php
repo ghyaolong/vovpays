@@ -49,7 +49,7 @@
         <div class="col-xs-12">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">平台订单过去7天统计</h3> <span style="color: #999999">(统计有10分钟延迟)</span>
+                    <h3 class="box-title">过去7天统计</h3> <span style="color: #999999">(统计有10分钟延迟)</span>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
