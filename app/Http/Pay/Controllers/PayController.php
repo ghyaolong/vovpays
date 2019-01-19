@@ -296,14 +296,13 @@ class PayController extends Controller
      */
     public function demo()
     {
-//        $app = new App\Services\RabbitMqService();
-//        $msg = '{"phoneid": "028624708057827","type": "alipay_bank","no": "2019011810120520154000MYBKC1CN000100011426939","money": "1.00","mark": "","dt": "1547780928324","sign": "573f783b77cc661e044ae9acb80fbf31"}';
-//        $app->send('orderback',$msg);
+
         return view('Pay.demo');
     }
 
     public function demoStore(Request $request)
     {
+
         $merchant = $request->merchant;
         $amount   = sprintf('%0.2f',$request->amount);
         $pay_code = $request->pay_code;
@@ -324,8 +323,8 @@ class PayController extends Controller
         {
             return ajaxError('12');
         }
-        $pay_notifyurl   = "http://cc.vovpay.com/Pay_Exemption_test.html";   //服务端返回地址
-        $pay_callbackurl = "http://b.com:8080";  //页面跳转返回地址
+        $pay_notifyurl   = $_SERVER['HTTP_HOST'];   //服务端返回地址
+        $pay_callbackurl = $_SERVER['HTTP_HOST'];  //页面跳转返回地址
         $jsapi = array(
             "merchant"      => $merchant,
             "amount"        => $amount,
