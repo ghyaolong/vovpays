@@ -11,6 +11,7 @@ namespace App\Http\Agent\Controllers;
 
 use App\Services\AgentService;
 use App\Services\CheckUniqueService;
+use App\Services\StatisticalService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,15 +21,17 @@ class UserController extends Controller
 
     protected $userService;
     protected $checkUniqueService;
+    protected $statisticalService;
 
     /**
      * UserController constructor.
      * @param UserService $userService
      */
-    public function __construct(UserService $userService,CheckUniqueService $checkUniqueService)
+    public function __construct(StatisticalService $statisticalService, UserService $userService,CheckUniqueService $checkUniqueService)
     {
         $this->userService = $userService;
         $this->checkUniqueService=$checkUniqueService;
+        $this->statisticalService=$statisticalService;
     }
 
     /**
@@ -63,7 +66,8 @@ class UserController extends Controller
     {
         $query['user_id'] = Auth::user()->id;
         $user=$this->userService->findId($query['user_id']);
-        return view('Agent.user.index', compact('user'));
+        $balance=$this->statisticalService->findUserId($query['user_id']);
+        return view('Agent.user.index', compact('user','balance'));
     }
 
 

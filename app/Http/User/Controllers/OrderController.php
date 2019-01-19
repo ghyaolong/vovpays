@@ -2,6 +2,8 @@
 
 namespace App\Http\User\Controllers;
 
+use App\Models\Order;
+use App\Models\User;
 use App\Services\ChannelPaymentsService;
 use App\Services\ChannelService;
 use App\Services\OrdersService;
@@ -58,11 +60,12 @@ class OrderController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($id,Order $order)
     {
-        $query['user_id'] = Auth::user()->id;
+//        $this->authorize('view', $order);
         $query['id'] = $id;
         $rule = $this->ordersService->findId($id);
+
         if ($rule) {
             return ajaxSuccess('获取成功', $rule);
         } else {
