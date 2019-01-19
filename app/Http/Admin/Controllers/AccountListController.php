@@ -36,7 +36,7 @@ class AccountListController extends Controller
         {
             $account_list = $this->accountBankCardsService->getAllPage($query,20);
         }else{
-            $account_list = $this->accountPhoneService->getAllPage($query,20);
+            $account_list = $this->accountPhoneService->searchPhoneStastic($query,20);
         }
         $account_list->appends($request->query());
         return view("Admin.Account.index", compact('account_list','title','query'));

@@ -27,7 +27,10 @@
                                 <th>手机标识</th>
                                 <th>账号</th>
                                 <th>账号类型</th>
-                                <th>限额</th>
+                                <th>单日交易额</th>
+                                <th>今日订单量</th>
+                                <th>今日成功订单量</th>
+                                <th>今日成功率</th>
                                 <th>状态</th>
                             </tr>
                             @if(!isset($account_list[0]))
@@ -51,7 +54,10 @@
 
                                         </td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
-                                        <td><span style="color: red">{{ $v->dayQuota }}</span></td>
+                                        <td><span style="color: green">{{$v->account_amount}}</span></td>
+                                        <td><span style="color: green">{{$v->account_order_count}}</span></td>
+                                        <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
+                                        <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
