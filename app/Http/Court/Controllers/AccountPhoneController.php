@@ -41,7 +41,7 @@ class AccountPhoneController extends Controller
         } elseif ($request->type == '2') {
             $data['accountType'] = 'bank';
         }
-        $list = $this->accountPhoneService->getAllPage($data, 6);
+        $list = $this->accountPhoneService->searchPhoneStastic($data, 6);
         return view("Court.AccountPhone.{$data['accountType']}", compact('list'));
     }
 

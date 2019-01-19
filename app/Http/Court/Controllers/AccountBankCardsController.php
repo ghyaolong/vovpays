@@ -39,7 +39,7 @@ class AccountBankCardsController extends Controller
         $data['user_id'] = Auth::user()->id;
 
         $list = $this->accountBankCardsService->getAllPage($data, 10);
-        $alist= $this->accountPhoneService->getAllPage($data, 1000);
+        $alist= $this->accountPhoneService->searchPhone($data, 1000);
         return view("Court.AccountPhone.bank", compact('list','alist'));
     }
 

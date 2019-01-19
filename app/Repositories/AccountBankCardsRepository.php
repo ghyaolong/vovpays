@@ -40,9 +40,13 @@ class AccountBankCardsRepository
             $where['user_id'] = $data['user_id'];
         }
 
+        if (isset($data['third']) && $data['third']){
+            $sql .= ' and pay_account_bank_cards.third = ?';
+            $where['third'] = $data['third'];
+        }
+
         $sql .= ' and DATE(pay_account_day_counts.created_at) = ?';
         $where['created_at'] = date('Y-m-d');
-
 
         return $this->account_bank_cards->whereRaw($sql, $where)
             ->leftjoin('account_day_counts', 'account_day_counts.account', '=', 'account_bank_cards.cardNo')
