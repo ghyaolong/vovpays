@@ -176,7 +176,7 @@
                                 @if($v['status'] == 1)
                                     <button type="button" class="btn btn-sm" onclick="send({{ $v['id'] }})">补发通知</button>
                                 @elseif($v['status'] == 0)
-                                    <button type="button" class="btn btn-sm" onclick="orderSave({{ $v['id'] }})">改为成功</button>
+                                    <button type="button" class="btn btn-warning btn-sm" onclick="orderSave({{ $v['id'] }})">改为成功</button>
                                 @endif
                             </td>
                         </tr>
@@ -386,6 +386,7 @@
                     if(result.status == 1)
                     {
                         toastr.success(result.msg);
+                        window.location.reload();
                     }else{
                         toastr.error(result.msg);
                     }

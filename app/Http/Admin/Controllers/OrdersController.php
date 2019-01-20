@@ -115,7 +115,7 @@ class OrdersController extends Controller
         }
 
         SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
-        return ajaxError('修改成功！');
+        return ajaxSuccess('修改成功！');
 
     }
 
