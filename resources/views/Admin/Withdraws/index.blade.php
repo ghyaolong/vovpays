@@ -131,11 +131,11 @@
                             {{--<th>#</th>--}}
                             <th>商户号</th>
                             <th>系统订单号</th>
-                            <th>商户订单号</th>
+                            {{--<th>商户订单号</th>--}}
                             <th>结算金额</th>
                             <th>手续费</th>
                             <th>实际结算</th>
-                            <th>结算通道</th>
+                            {{--<th>结算通道</th>--}}
                             <th>结算银行</th>
                             <th>开户名</th>
                             <th>银行账号</th>
@@ -152,11 +152,11 @@
                                 {{--<td>{{ $v['id'] }}</td>--}}
                                 <td>{{ $v['user_id'] }}</td>
                                 <td>{{ $v['orderId'] }}</td>
-                                <td>{{ $v['outOrderId'] }}</td>
+                                {{--<td>{{ $v['outOrderId'] }}</td>--}}
                                 <td>{{ $v['withdrawAmount'] }}</td>
                                 <td>{{ $v['withdrawRate'] }}</td>
                                 <td>{{ $v['toAmount'] }}</td>
-                                <td>{{ $v['channelCode'] }}</td>
+                                {{--<td>{{ $v['channelCode'] }}</td>--}}
                                 <td>{{ $v['bankName'] }}</td>
                                 <td>{{ $v['accountName'] }}</td>
                                 <td>{{ $v['bankCardNo'] }}</td>
