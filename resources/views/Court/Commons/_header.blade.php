@@ -3,7 +3,7 @@
     <!-- Logo -->
     <a href="#" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><img src="/images/logo/logo-ico.png" alt="User Image"></span>
+        <span class="logo-mini"><img width="41" src="/images/logo/logo-ico.png" alt="User Image"></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><img width="135" src="/images/logo/logo.png" alt="User Image"></span>
     </a>
