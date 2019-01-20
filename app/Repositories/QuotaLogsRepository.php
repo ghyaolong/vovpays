@@ -39,21 +39,21 @@ class QuotaLogsRepository
             $sql .= ' and user_id = ?';
             $where['user_id'] = $data['user_id'];
         }
-        if (isset($data['searchTime']) && $data['searchTime']) {
-            $time = explode(" - ", $data['searchTime']);
-            $sql .= ' and updated_at >= ?';
-            $where['updated_at1'] = $time[0];
-            $sql .= ' and updated_at <= ?';
-            $where['updated_at2'] = $time[1];
-
-        }else{
-            $today = Carbon:: today()->toDateTimeString();
-            $sql .= ' and updated_at >= ?';
-            $where['updated_at1'] = $today;
-            $now = Carbon::now()->toDateTimeString();
-            $sql .= ' and updated_at <= ?';
-            $where['updated_at2'] = $now;
-        }
+//        if (isset($data['searchTime']) && $data['searchTime']) {
+//            $time = explode(" - ", $data['searchTime']);
+//            $sql .= ' and updated_at >= ?';
+//            $where['updated_at1'] = $time[0];
+//            $sql .= ' and updated_at <= ?';
+//            $where['updated_at2'] = $time[1];
+//
+//        }else{
+//            $today = Carbon:: today()->toDateTimeString();
+//            $sql .= ' and updated_at >= ?';
+//            $where['updated_at1'] = $today;
+//            $now = Carbon::now()->toDateTimeString();
+//            $sql .= ' and updated_at <= ?';
+//            $where['updated_at2'] = $now;
+//        }
 
         return $this->quota_log->whereRaw($sql, $where)->orderBy('id', 'desc')->paginate($page);
     }
