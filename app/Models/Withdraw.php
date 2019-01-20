@@ -65,15 +65,7 @@ class Withdraw extends Model
     {
        return $value==$this->created_at?'---':$value;
     }
-    /**
-     * 获取银行卡号。
-     *
-     * @return string
-     */
-    public function getBankCardNoAttribute($value)
-    {
-        return substr($value,0,3).'**********'.substr($value,-3,3);
-    }
+
     /**
      * 获取商户订单号。
      *
