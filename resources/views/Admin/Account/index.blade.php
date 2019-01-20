@@ -43,20 +43,20 @@
                                     <tr>
                                         <td>@if(isset($v->user->username)){{ $v->user->username }} @else 总后台 @endif</td>
                                         <td>{{ $v->phone_id }}</td>
-                                        <td style="color: red">
-                                            @if(isset($v->account))
-                                                {{ $v->account }}
-                                            @elseif(isset($v->cardNo))
-                                                {{ $v->cardNo }}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
                                         <td>
                                             @if(isset($v->alipayusername))
                                                 {{ $v->alipayusername }}
                                             @elseif(isset($v->bank_account))
                                                 {{ $v->bank_account }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td style="color: red">
+                                            @if(isset($v->account))
+                                                {{ $v->account }}
+                                            @elseif(isset($v->cardNo))
+                                                {{ $v->cardNo }}
                                             @else
                                                 -
                                             @endif
