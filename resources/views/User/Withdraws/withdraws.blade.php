@@ -110,7 +110,7 @@
                                 <th>{{$vv->withdrawAmount}}</th>
                                 <th>{{$vv->withdrawRate}}</th>
                                 <th>{{$vv->toAmount}}</th>
-                                <th>{{ withdrawsStatus($vv->status)}}</th>
+                                <th>{{$vv->status}}</th>
                                 <th>{{$vv->created_at}}</th>
                                 <th>{{$vv->updated_at!=$vv->created_at?$vv->updated_at:'---'}}</th>
                             </tr>
