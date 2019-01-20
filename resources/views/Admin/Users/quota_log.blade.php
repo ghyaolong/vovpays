@@ -12,8 +12,9 @@
                         <form action="{{ route('users.quotaLog',array('id'=>$uid)) }}" method="get">
                             <div class="form-inline">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="时间" name="merchant"
-                                           @if(isset($query['merchant'])) value="{{ $query['merchant'] }}" @endif />
+                                    <input type="text" autocomplete="off" class="form-control" style="min-width:300px;" id="daterange-btn"
+                                           placeholder="订单时间" name="orderTime"
+                                           @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
                             </div>
@@ -25,6 +26,7 @@
                     <table id="example2" class="table table-condensed table-bordered table-hover">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>商户名</th>
                             <th>操作分数</th>
                             <th>上分类型</th>
@@ -35,6 +37,7 @@
                         <tbody>
                         @foreach($list as $v)
                             <tr>
+                                <td>{{ $v->id }}</td>
                                 <td>{{ $v->user->username }}</td>
                                 <td>{{ $v['quota'] }}</td>
                                 <td>
@@ -66,6 +69,51 @@
     </div>
     <!-- /.row -->
 @endsection('content')
+@section("scripts")
+<script src="{{ asset('AdminLTE/bower_components/moment/moment.js') }}"></script>
+<script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script>
+    $(function(){
+        $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+
+        $('#daterange-btn').daterangepicker(
+            {
+                dateLimit:{days:30},
+                timePicker : false,
+                timePicker24Hour : false,
+                linkedCalendars : false,
+                autoUpdateInput : false,
+                ranges : {
+                    '今日'    : [moment().startOf('day'), moment()],
+                    '昨日'    : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '最近7天' : [moment().subtract(6, 'days'), moment()],
+                    '最近30天': [moment().subtract(29, 'days'), moment()],
+                    '本月'    : [moment().startOf('month'), moment().endOf('month')],
+                    '上月'    : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                opens : 'right', //日期选择框的弹出位置
+                format : 'YYYY-MM-DD HH:mm:ss', //控件中from和to 显示的日期格式
+                locale : {
+                    applyLabel : '确定',
+                    cancelLabel : '取消',
+                    fromLabel : '起始时间',
+                    toLabel : '结束时间',
+                    customRangeLabel : '自定义',
+                    daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                    monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月' ],
+                    firstDay : 1,
+                    endDate : moment(),
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                },
+                startDate: moment().startOf('day'),
+                endDate  : moment()
+            },
+            function(start, end) {
+                $('#daterange-btn').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'))
+            });
+    })
+    </script>
+@endsection
 
 
 
