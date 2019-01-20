@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +14,6 @@ class Order_day_count extends Model
      */
     public function User()
     {
-        return $this->belongsTo('App\models\User');
+        return $this->belongsTo('App\Models\User');
     }
 }

@@ -28,7 +28,7 @@ class Withdraw extends Model
      */
     public function User()
     {
-        return $this->belongsTo('App\models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
 

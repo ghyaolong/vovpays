@@ -21,7 +21,7 @@ class Bank_card extends Model
      */
     public function User()
     {
-        return $this->belongsTo('App\models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     /**
@@ -30,6 +30,6 @@ class Bank_card extends Model
      */
     public function Bank()
     {
-        return $this->belongsTo('App\models\Bank','bank_id');
+        return $this->belongsTo('App\Models\Bank','bank_id');
     }
 }
