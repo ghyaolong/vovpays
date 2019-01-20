@@ -11,11 +11,9 @@ namespace App\Repositories;
 use App\Models\System;
 use Illuminate\Support\Facades\Cache;
 
-
 class SystemsRepository
 {
     protected $system;
-
     public function __construct(System $system)
     {
         $this->system = $system;
@@ -37,9 +35,7 @@ class SystemsRepository
     static public function findKey(string $name)
     {
         $systems=Cache::get('systems');
-
         return $systems[$name]->value;
-
     }
 
     /**

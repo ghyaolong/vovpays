@@ -8,7 +8,6 @@
 
 namespace App\Http\User\Controllers;
 
-
 use App\Services\BankCardService;
 use App\Services\WithdrawsService;
 use App\Services\BanksService;
@@ -53,37 +52,27 @@ class WithdrawsController extends Controller
         return view('User.Withdraws.withdraws', compact('list', 'info', 'query'));
     }
 
-
     /**
-     * @param $id
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function clearing(Request $request)
     {
-        $uid = Auth::user()->id;
+        $uid  = Auth::user()->id;
         $list = $this->bankCardService->getUserIdAll($uid);
-
-
         $data = $request->input();
         $data['user_id'] = $uid;
-
         $search = $this->withdrawsService->searchPage($data, 10);
         $clearings = $search['list'];
         $info = $search['info'];
-
-
         $banks = $this->banksService->findAll();
-
         $WithdrawRule = $this->withdrawsService->getWithdrawRule();
-
-
         return view('User.Withdraws.withdraws', compact('list', 'banks', 'clearings', 'WithdrawRule'));
-
     }
 
     /**
      * 申请结算
-     * @param Request $request
+     * @param WithdrawRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(WithdrawRequest $request)

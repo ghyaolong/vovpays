@@ -31,54 +31,44 @@ class WithdrawsService
 
     }
 
-
     /**账户结算(提款)处理
      * @param array $data
      * @return array
      */
     public function add(array $data)
     {
+        $data['user_id'] = Auth::user()->id;
+        //权限验证
+        UserPermissionServer::checkPermission($data['auth_code']);
+        //获取提款规则信息
+        $withdrawRule = $this->getWithdrawRule($data);
+        //手续费计算
+        $this->caculateRate($data, $withdrawRule);
+        //验证账户余额
+        $this->accountVerify($data, $withdrawRule);
+        //填充结算银行卡/订单等信息
+        $data = $this->buildWithdrawInfo($data);
 
-            $data['user_id'] = Auth::user()->id;
+        // 去掉无用数据
+        $data = array_except($data, ['_token', 'auth_code', 'bank_id']);
 
-            //权限验证
-            UserPermissionServer::checkPermission($data['auth_code']);
+        DB::connection('mysql')->transaction(function () use ($data) {
+            //账户余额更新
+            $status=$this->statisticalRepository->updateUseridBalanceDecrement($data['user_id'], $data['withdrawAmount']);
+            //添加结算信息
+            $status&&($status=$this->withdrawsRepository->add($data));
 
-            //获取提款规则信息
-            $withdrawRule = $this->getWithdrawRule($data);
-            //验证账户余额
-            $this->accountVerify($data, $withdrawRule);
-            //填充结算银行卡/订单等信息
-            $data = $this->buildWithdrawInfo($data);
-            //手续费计算
-            $this->caculateRate($data, $withdrawRule);
+            if(!$status){
+                throw  new CustomServiceException('系统错误,结算申请失败');
+            }
+        }, 2);
 
-            // 去掉无用数据
-            $data = array_except($data, ['_token', 'auth_code', 'bank_id']);
-
-            DB::connection('mysql')->transaction(function () use ($data) {
-                //账户余额更新
-                $status=$this->statisticalRepository->updateUseridBalanceDecrement($data['user_id'], $data['withdrawAmount']);
-
-                //资金变动记录
-//              $this->addMoneyDetail($data);
-                //添加结算信息
-                $status&&($status=$this->withdrawsRepository->add($data));
-
-                if(!$status){
-                    throw  new CustomServiceException('系统错误,结算申请失败');
-                }
-            }, 2);
-
-            return true;
-
-
-
+        return true;
     }
 
 
-    /**获取提款规则信息
-     * @param $data
+    /**
+     * 获取提款规则信息
      * @return array
      */
     public function getWithdrawRule()
@@ -98,13 +88,15 @@ class WithdrawsService
         if ($withdrawRule['withdraw_downline'] > $data['withdrawAmount']) {
             throw   new CustomServiceException('提现金额不能少于' . $withdrawRule['withdraw_downline'] . '元');
         }
-
         $useraccount = $this->statisticalRepository->findUserId($data['user_id']);
-
         if ($useraccount['handlingFeeBalance'] < $data['withdrawAmount']) {
             throw   new CustomServiceException('提现金额超过账户可提现金额');
         }
-
+        // 提现金额不能小于手续费
+        if($data['withdrawRate'] >=  $data['withdrawAmount'])
+        {
+            throw   new CustomServiceException('提现金额过低');
+        }
     }
 
     /**计算提款手续费
@@ -113,7 +105,6 @@ class WithdrawsService
      */
     protected function caculateRate(&$data, $withdrawRule)
     {
-
         switch ($withdrawRule['withdraw_fee_type']) {
             case 'RATE':
                 $data['withdrawRate'] = bcmul($data['withdrawAmount'], bcdiv($withdrawRule['withdraw_rate'], 100, 2), 2);
