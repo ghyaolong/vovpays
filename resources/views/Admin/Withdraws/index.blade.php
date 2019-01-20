@@ -129,7 +129,7 @@
                         <thead>
                         <tr>
                             {{--<th>#</th>--}}
-                            <th>商户号</th>
+                            <th>商户名</th>
                             <th>系统订单号</th>
                             {{--<th>商户订单号</th>--}}
                             <th>结算金额</th>
@@ -150,7 +150,7 @@
                         @foreach($list as $v)
                             <tr>
                                 {{--<td>{{ $v['id'] }}</td>--}}
-                                <td>{{ $v['user_id'] }}</td>
+                                <td>{{ $v->user->username }}</td>
                                 <td>{{ $v['orderId'] }}</td>
                                 {{--<td>{{ $v['outOrderId'] }}</td>--}}
                                 <td>{{ $v['withdrawAmount'] }}</td>
