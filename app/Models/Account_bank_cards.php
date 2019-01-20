@@ -26,7 +26,7 @@ class Account_bank_cards extends Model
      */
     public function User()
     {
-        return $this->belongsTo('App\models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     /**
@@ -35,7 +35,7 @@ class Account_bank_cards extends Model
      */
     public function ChannelPayment()
     {
-        return $this->belongsTo('App\models\Channel_payment');
+        return $this->belongsTo('App\Models\Channel_payment');
     }
 
 }
