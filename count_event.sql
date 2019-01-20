@@ -21,7 +21,7 @@ BEGIN
     DECLARE done INT DEFAULT FALSE;
 
 		 -- 账号成功订单表游标
-    DECLARE cur_oder CURSOR FOR select count(id),sum(amount),`account`,`phone_uid` from pay_orders where `status`=1 and to_days(`updated_at`) = TO_DAYS(NOW()) GROUP BY `account`;
+    DECLARE cur_oder CURSOR FOR select count(id),sum(amount),`account`,any_value(`phone_uid`) from pay_orders where `status`=1 and to_days(`updated_at`) = TO_DAYS(NOW()) GROUP BY `account`;
 		-- 账号所有订单表游标
 		DECLARE cur_count_oder CURSOR FOR select count(id),`account` from pay_orders where to_days(`updated_at`) = TO_DAYS(NOW()) GROUP BY `account`;
 		 -- 将结束标志'done'绑定到游标,当遍历结束done会被设置为true
@@ -123,7 +123,7 @@ BEGIN
     DECLARE done INT DEFAULT FALSE;
 
 		 -- 账号成功订单表游标
-    DECLARE cur_oder CURSOR FOR select count(id),sum(amount),`account`,`phone_uid` from pay_orders where `status`=1 and to_days(`updated_at`) = TO_DAYS(DATE_SUB(CURDATE(),INTERVAL 1 DAY)) GROUP BY `account`;
+    DECLARE cur_oder CURSOR FOR select count(id),sum(amount),`account`,any_value(`phone_uid`) from pay_orders where `status`=1 and to_days(`updated_at`) = TO_DAYS(DATE_SUB(CURDATE(),INTERVAL 1 DAY)) GROUP BY `account`;
 		-- 账号所有订单表游标
 		DECLARE cur_count_oder CURSOR FOR select count(id), `account` from pay_orders where to_days(`updated_at`) = TO_DAYS(DATE_SUB(CURDATE(),INTERVAL 1 DAY)) GROUP BY `account`;
 		 -- 将结束标志'done'绑定到游标,当遍历结束done会被设置为true
