@@ -54,8 +54,7 @@ class WithdrawsController extends Controller
         $list   = $search['list'];
         $info   = $search['info'];
         $query  = $request->input();
-        $statistical = $this->statisticalService->findUserId($uid);
-        dd($statistical);
+
         return view('User.Withdraws.withdraws', compact('list', 'info', 'query'));
     }
 
@@ -74,7 +73,8 @@ class WithdrawsController extends Controller
         $info = $search['info'];
         $banks = $this->banksService->findAll();
         $WithdrawRule = $this->withdrawsService->getWithdrawRule();
-        return view('User.Withdraws.withdraws', compact('list', 'banks', 'clearings', 'WithdrawRule'));
+        $statistical = $this->statisticalService->findUserId($uid);
+        return view('User.Withdraws.withdraws', compact('list', 'banks', 'clearings', 'WithdrawRule','statistical'));
     }
 
     /**
