@@ -25,6 +25,7 @@
                             <tr style="color: #666666;background: #f5f6f9">
                                 <th>账号拥有者</th>
                                 <th>手机标识</th>
+                                <th>账号实名</th>
                                 <th>账号</th>
                                 <th>账号类型</th>
                                 <th>单日交易额</th>
@@ -50,8 +51,15 @@
                                             @else
                                                 -
                                             @endif
-
-
+                                        </td>
+                                        <td>
+                                            @if(isset($v->alipayusername))
+                                                {{ $v->alipayusername }}
+                                            @elseif(isset($v->bank_account))
+                                                {{ $v->bank_account }}
+                                            @else
+                                                -
+                                            @endif
                                         </td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
