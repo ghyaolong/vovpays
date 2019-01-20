@@ -14,6 +14,7 @@ use App\Services\BanksService;
 use App\Http\Requests\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\StatisticalService;
 use App\Exceptions\CustomServiceException;
 
 class WithdrawsController extends Controller
@@ -21,16 +22,22 @@ class WithdrawsController extends Controller
     protected $withdrawsService;
     protected $bankCardService;
     protected $banksService;
+    protected $statisticalService;
 
     /**
      * WithdrawsController constructor.
      * @param WithdrawsService $withdrawsService
+     * @param BankCardService $bankCardService
+     * @param BanksService $banksService
+     * @param StatisticalService $statisticalService
      */
-    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService, BanksService $banksService)
+    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService, BanksService $banksService,
+                                StatisticalService $statisticalService)
     {
         $this->withdrawsService = $withdrawsService;
         $this->bankCardService = $bankCardService;
         $this->banksService = $banksService;
+        $this->statisticalService = $statisticalService;
     }
 
     /**
@@ -49,7 +56,8 @@ class WithdrawsController extends Controller
         $list = $search['list'];
         $info = $search['info'];
         $query = $request->input();
-        return view('User.Withdraws.withdraws', compact('list', 'info', 'query'));
+        $statistical = $this->statisticalService->findUserId($uid);
+        return view('User.Withdraws.withdraws', compact('list', 'info', 'query','statistical'));
     }
 
     /**
