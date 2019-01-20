@@ -299,10 +299,11 @@ class UsersController extends Controller
 
     public function quotaLog(Request $request)
     {
+        $query = $request->query();
         $title = '商户分数记录';
         $uid = $request->id;
         $list = $this->quotalogService->searchPage(['user_id'=>$uid],10);
-        return view('Admin.Users.quota_log',compact('list','title','uid'));
+        return view('Admin.Users.quota_log',compact('list','title','uid','query'));
     }
 
 }
