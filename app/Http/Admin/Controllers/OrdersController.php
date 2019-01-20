@@ -11,6 +11,7 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Services\QuotalogService;
 use App\Jobs\SendOrderAsyncNotify;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
@@ -73,7 +74,7 @@ class OrdersController extends Controller
      */
     public function saveStatus(Request $request)
     {
-        $uid = auth()->user->id;
+        $uid = Auth::user()->id;
         // 只能是总管理能修改
         if(!isset($uid) || $uid  != 1)
         {
