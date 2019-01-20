@@ -16,8 +16,8 @@
                             <div class="form-inline">
                                 <div class="form-group">
                                     <input type="text" autocomplete="off" class="form-control" style="min-width:300px;" id="daterange-btn"
-                                           placeholder="订单时间" name="orderTime"
-                                           @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
+                                           placeholder="订单时间" name="searchTime"
+                                           @if(isset($query['searchTime'])) value="{{ $query['searchTime'] }}" @endif />
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
                             </div>
