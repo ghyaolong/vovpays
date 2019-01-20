@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label">账户余额</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" value="{{ auth()->user->handlingFeeBalance }}"
+                                <input type="text" class="form-control" value="{{ Auth::user()->handlingFeeBalance }}"
                                        disabled="disabled">
                             </div>
                         </div>
