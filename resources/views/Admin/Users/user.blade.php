@@ -54,6 +54,7 @@
                             <th>#</th>
                             <th>商户号</th>
                             <th>用户名</th>
+                            <th>余额</th>
                             <th>上级代理</th>
                             <th>Email</th>
                             <th>电话</th>
@@ -67,6 +68,7 @@
                                 <td>{{ $v['id'] }}</td>
                                 <td>{{ $v['merchant'] }}</td>
                                 <td>{{ $v['username'] }}</td>
+                                <td>{{ $v->Statistical->handlingFeeBalance }}</td>
                                 <td>{{ $v['agentName'] }}</td>
                                 <td>{{ $v['email'] }}</td>
                                 <td>{{ $v['phone'] }}</td>
