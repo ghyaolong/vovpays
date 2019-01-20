@@ -1,4 +1,7 @@
 @extends('Admin.Layouts.layout')
+@section("css")
+    <link rel="stylesheet" href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
+@endsection
 @section('content')
     <div class="row">
         <div class="col-xs-12">
