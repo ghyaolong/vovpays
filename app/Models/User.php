@@ -71,6 +71,15 @@ class User extends Authenticatable
     }
 
     /**
+     * 一对多 订单表
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Orders()
+    {
+        return $this->hasMany('App\Models\Order','phone_uid');
+    }
+
+    /**
      * 多对多 用户表
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
