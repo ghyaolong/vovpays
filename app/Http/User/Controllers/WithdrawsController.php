@@ -47,15 +47,13 @@ class WithdrawsController extends Controller
      */
     public function index(Request $request)
     {
-        $uid = Auth::user()->id;
-
+        $uid  = Auth::user()->id;
         $data = $request->input();
         $data['user_id'] = $uid;
-
         $search = $this->withdrawsService->searchPage($data, 10);
-        $list = $search['list'];
-        $info = $search['info'];
-        $query = $request->input();
+        $list   = $search['list'];
+        $info   = $search['info'];
+        $query  = $request->input();
         $statistical = $this->statisticalService->findUserId($uid);
         return view('User.Withdraws.withdraws', compact('list', 'info', 'query','statistical'));
     }

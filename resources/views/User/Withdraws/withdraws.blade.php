@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label class="col-xs-3 control-label">账户余额</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" value="{{ $statistical->handlingFeeBalance }}"
+                                <input type="text" class="form-control" value="{{ dd($statistical) }}"
                                        disabled="disabled">
                             </div>
                         </div>
