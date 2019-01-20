@@ -18,8 +18,14 @@
 
                 <div class="box-body" id="bank">
                     <form class="form-horizontal" id="form1" method="post" action="{{route('user.apply')}}">
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">账户余额</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" value="{{ auth()->user->handlingFeeBalance }}"
+                                       disabled="disabled">
+                            </div>
+                        </div>
                         {{ csrf_field() }}
-                        {{--<input type="hidden" id="user_id" name="user_id">--}}
                         <div class="form-group">
                             <label for="" class="col-sm-3 control-label">提现金额</label>
                             <div class="col-sm-9">
