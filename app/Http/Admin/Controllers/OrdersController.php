@@ -81,7 +81,7 @@ class OrdersController extends Controller
             return ajaxError('修改失败！');
         }
 
-        $order = $this->ordersService->findId($request->id);
+        $order = $this->ordersService->findId($request->id,'collection');
         if(!$order) return ajaxError('修改失败！');
         if($order->status != 0) return ajaxError('修改失败！');
         $data['status'] = 1;
