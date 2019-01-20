@@ -50,8 +50,6 @@ class WithdrawsController extends Controller
         $list = $search['list'];
         $info = $search['info'];
         $query = $request->input();
-
-
         return view('User.Withdraws.withdraws', compact('list', 'info', 'query'));
     }
 

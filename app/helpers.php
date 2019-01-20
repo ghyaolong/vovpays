@@ -206,3 +206,24 @@ function convert_arr_key($arr, $key_name)
 function objectToArray($object) {
     return json_decode(json_encode($object), true);
 }
+
+function withdrawsStatus($status)
+{
+    switch ($status){
+        case "0" :
+            return '未处理';
+            break;
+        case "1" :
+            return '处理中';
+            break;
+        case "2" :
+            return '已结算';
+            break;
+        case "3" :
+            return '结算异常';
+            break;
+        case "4" :
+            return '取消结算';
+            break;
+    }
+}
