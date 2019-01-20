@@ -5,12 +5,10 @@
  * Date: 2018/11/1
  * Time: 17:08
  */
-
 namespace App\Repositories;
 
 use App\Models\Quota_log;
-use App\Models\Statistical;
-use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class QuotaLogsRepository
 {
