@@ -55,6 +55,7 @@ class WithdrawsController extends Controller
         $info   = $search['info'];
         $query  = $request->input();
         $statistical = $this->statisticalService->findUserId($uid);
+        dd($statistical);
         return view('User.Withdraws.withdraws', compact('list', 'info', 'query','statistical'));
     }
 
