@@ -152,7 +152,7 @@
                         <tr>
                             <td>{{ $v['id'] }}</td>
                             <td>{{ $v['merchant'] }}</td>
-                            <td>{{ $v->user->username }}</td>
+                            <td>{{ $v['account'] }}</td>
                             <td>{{ $v['orderNo'] }}</td>
                             <td>{{ $v['underOrderNo'] }}</td>
                             <td>{{ $v['created_at'] }}</td>
