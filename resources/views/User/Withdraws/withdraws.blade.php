@@ -23,6 +23,9 @@
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" value="{{ $statistical->handlingFeeBalance }}"
                                        disabled="disabled">
+                                <span class="help-block" style="font-size: 12px;">
+                                <i class="fa fa-info-circle"></i>最低提现金额{{ Cache::get('systems')['withdraw_downline']->value }}元
+                            </span>
                             </div>
                         </div>
                         {{ csrf_field() }}
