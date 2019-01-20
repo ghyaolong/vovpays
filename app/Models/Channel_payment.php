@@ -46,7 +46,7 @@ class Channel_payment extends Model
      */
     public function Channel()
     {
-        return $this->belongsTo('App\models\Channel');
+        return $this->belongsTo('App\Models\Channel');
     }
 
     /**
