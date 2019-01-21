@@ -55,9 +55,9 @@ class AccountListController extends Controller
         $accountType    = $request->accountType;
 
         if($accountType == '银行卡'){
-            $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
-        }else{
             $result = $this->accountBankCardsService->update($request->id, auth()->user()->id, $data);
+        }else{
+            $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
         }
 
         if ($result) {
