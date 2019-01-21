@@ -19,6 +19,7 @@
             <li><a href="{{route('user.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
             <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a></li>
             <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a>
+            <li><a href="{{ route('user.api') }}"><i class="fa fa-circle-o text-aqua"></i> <span>API管理</span></a></li>
             </li>
             @if(env('ADD_ACCOUNT_TYPE') == 1)
                 <li class="treeview">
@@ -45,8 +46,6 @@
             </li>
             <li><a href="{{route('user.validator')}}"><i class="fa fa-circle-o text-yellow"></i>
                     <span>安全设置</span></a></li>
-
-                    <li><a href="{{ route('user.api') }}"><i class="fa fa-circle-o text-aqua"></i><span>API管理</span></a></li>
         </ul>
     </section>
     <!-- /.sidebar -->
