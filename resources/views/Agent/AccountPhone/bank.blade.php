@@ -100,7 +100,7 @@
                             <div class="col-xs-9">
                                 <select class="form-control" id="channelId" name="bank_name">
                                     <option value="">选择银行</option>
-                                    <option value="中国银行,BOC">中国银行</option>
+                                    <option value="中国银行,BOC" selected>中国银行</option>
                                     <option value="中国工商银行,ICBC">中国工商银行</option>
                                     <option value="中国建设银行,CCB">中国建设银行</option>
                                     <option value="中国农业银行,ABC">中国农业银行</option>

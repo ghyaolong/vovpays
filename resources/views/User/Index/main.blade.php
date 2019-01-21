@@ -57,8 +57,8 @@
                                 <td>3.</td>
                                 <td>pay_code</td>
                                 <td>支付渠道</td>
-                                <td>int</td>
-                                <td>填写相应的支付方式编码 1：支付宝；2：微信支付</td>
+                                <td>String</td>
+                                <td>填写相应的支付方式编码 alipay：支付宝；wechat：微信支付</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
