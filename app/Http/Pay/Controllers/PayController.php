@@ -84,7 +84,7 @@ class PayController extends Controller
         }
 
         // 验证单笔限额
-        if($this->channelPayment->minAmount > $this->content['amount'] || $this->channelPayment->maxAmount < $this->content['amount'])
+        if(  ($this->channelPayment->minAmount && $this->channelPayment->minAmount > $this->content['amount']) || ( $this->channelPayment->maxAmount && $this->channelPayment->maxAmount < $this->content['amount'] ) )
         {
             return json_encode(RespCode::PARAMETER_ERROR_PRICE);
         }
