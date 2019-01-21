@@ -35,4 +35,13 @@ class QuotalogService
         return $this->quotaLogsRepository->searchPage($data,$page);
     }
 
+    /**
+     * @param array $data
+     * @param int $quota_type
+     * @return mixed
+     */
+    public function searchNum(array $data, int $quota_type)
+    {
+        return $this->quotaLogsRepository->searchNum($data, $quota_type);
+    }
 }

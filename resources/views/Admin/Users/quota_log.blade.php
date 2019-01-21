@@ -8,6 +8,7 @@
             <div class="box">
                 <div class="box-header">
                     <button onclick="javascript:history.back(-1);" class="btn btn-primary"><i class="fa fa-undo"></i>返回上一页</button>
+                    <a href="{{ route('users.quotaLog',array('id'=>$uid)) }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box box-primary">
@@ -22,6 +23,10 @@
                                 <button type="submit" class="btn btn-primary" id="btnSearch">查询</button>
                             </div>
                         </form>
+                    </div>
+                    <div class="box-body">
+                        增加分数：<span style="color: #FF0000;">{{ $data['add_num'] }}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        减少分数：<span style="color: #FF0000;">{{ $data['reduce_num'] }}</span>
                     </div>
                     <!-- /.box-body -->
                 </div>

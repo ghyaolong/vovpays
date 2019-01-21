@@ -302,9 +302,11 @@ class UsersController extends Controller
         $query = $request->query();
         $title = '商户分数记录';
         $uid   = $request->id;
-        $query['user_id'] = $request->id;
+        $query['user_id']    = $request->id;
         $list = $this->quotalogService->searchPage($query,10);
-        return view('Admin.Users.quota_log',compact('list','title','uid','query'));
+        $data['add_num']     = $this->quotalogService->searchNum($query,0);
+        $data['reduce_num']  = $this->quotalogService->searchNum($query,1);
+        return view('Admin.Users.quota_log',compact('list','title','uid','query','data'));
     }
 
 }
