@@ -117,12 +117,14 @@
                         <label for="" class="col-xs-3 control-label">单笔最小金额</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" name="minAmount" value="0" placeholder="单笔最小金额">
+                            <i class="fa fa-info-circle"></i>0不限制
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="" class="col-xs-3 control-label">单笔最大金额</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" name="maxAmount" value="0"  placeholder="单笔最大金额">
+                            <i class="fa fa-info-circle"></i>0不限制
                         </div>
                     </div>
                     <div class="form-group">
