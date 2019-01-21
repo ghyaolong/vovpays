@@ -165,7 +165,17 @@
                                 <td>{{ $v['updated_at'] }}</td>
                                 <td>{{ $v['comment'] }}</td>
                                 <td>
-                                    <b style="color: #0b93d5">{{ $v['status'] }}</b>
+                                    @if($v['status'] == '已取消')
+                                        <span style="color:#dd4b39;font-weight: bold">{{$v['status']}}</span>
+                                    @elseif($v['status'] == '未处理')
+                                        <span style="color:orange;font-weight: bold">{{$v['status']}}</span>
+                                    @elseif($v['status'] == '已结算')
+                                        <span style="color:#008d4c;font-weight: bold">{{$v['status']}}</span>
+                                    @elseif($v['status'] == '处理中')
+                                        <span style="color:#0b93d5;font-weight: bold">{{$v['status']}}</span>
+                                    @else
+                                        <span style="color:#000080;font-weight: bold">{{$v['status']}}</span>
+                                    @endif
                                 </td>
                                 <td>
                                     @if($v['status']=='未处理')
@@ -220,7 +230,7 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">结算操作</label>
                             <div class="col-xs-9">
-                                <select class="form-control" name="status" >
+                                <select class="form-control" name="status">
                                     <option value='2'>已经结算</option>
                                     {{--<option value='3'>结算异常</option>--}}
                                     <option value='4'>取消结算</option>
@@ -272,7 +282,7 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">结算操作</label>
                             <div class="col-xs-9">
-                                <select class="form-control" name="status" >
+                                <select class="form-control" name="status">
                                     <option value='1'>同意代付</option>
                                     <option value='4'>取消结算</option>
                                 </select>
@@ -420,7 +430,7 @@
             $.ajax({
                 type: 'get',
                 url: '/admin/withdraws/' + id + '/manage',
-                data:'type=1',
+                data: 'type=1',
                 // dataType:'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -459,7 +469,7 @@
             $.ajax({
                 type: 'get',
                 url: '/admin/withdraws/' + id + '/manage',
-                data:'type=2',
+                data: 'type=2',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
