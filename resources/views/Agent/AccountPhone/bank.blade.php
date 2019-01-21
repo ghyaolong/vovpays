@@ -173,7 +173,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '{{ route('court.accountBankStatus') }}',
+                        url: "{{ route('agent.accountBankStatus') }}",
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {

@@ -175,7 +175,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/court/accountBank/saveStatus',
+                        url: "{{route('court.accountBankStatus')}}",
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
