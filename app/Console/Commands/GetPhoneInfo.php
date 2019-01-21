@@ -62,6 +62,14 @@ class GetPhoneInfo extends Command
         $key  = $data['phoneid'].$data['type'];
         if(Redis::exists($key))
         {
+            $params = Redis::hGetAll($key);
+
+            if( date('Y-m-d', strtotime($params['update'])) != date('Y-m-d', time()) )
+            {
+                Redis::hset($key, 'amount', 0);
+                Redis::hset($key, 'bankamount', 0);
+            }
+
             Redis::hset($key, 'status', $data['status']);
             Redis::hset($key, 'update', date('Y-m-d H:i:s', time()));
             Redis::hset($key, 'account',$data['account']);

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use App\Jobs\SendOrderAsyncNotify;
-use Illuminate\Support\Facades\Cache;
 
 class getOrderCallback extends Command
 {
@@ -115,6 +114,12 @@ class getOrderCallback extends Command
         $result = $ordersService->update($order->id,$params);
         if(!$result) return 6;
 
+        // 更新redis订单状态,前端查询
+        if(Redis::exists($order->orderNo)){
+            Redis::hmset($order->orderNo,['status'=>1]);
+            Redis::expire($order->orderNo,180);
+        }
+
         $statisticalService = app(StatisticalService::class);
         // 商户收益增加
         if( $add_account_type != 1 )
@@ -126,11 +131,6 @@ class getOrderCallback extends Command
         if($order->agentAmount > 0)
         {
             $statisticalService->updateUseridHandlingFeeBalanceIncrement($order->agent_id,$order->agentAmount);
-        }
-        // 更新redis订单状态,前端查询
-        if(Redis::exists($order->orderNo)){
-            Redis::hmset($order->orderNo,['status'=>1]);
-            Redis::expire($order->orderNo,180);
         }
 
         // 更新redis账号交易额
