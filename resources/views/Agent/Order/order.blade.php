@@ -60,6 +60,7 @@
                     </div>
                 </div>
                 <div class="box-body">
+                    <a href="{{ route('agent.order') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
                     <form action="{{ route('agent.order') }}" method="get">
                         <div class="form-inline">
                             <div class="form-group">
