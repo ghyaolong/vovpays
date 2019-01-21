@@ -145,10 +145,10 @@
                                     <td>{{ $v['merchant'] }}</td>
                                     <td>{{ $v['orderNo'] }}</td>
                                     <td>{{ $v['underOrderNo'] }}</td>
-                                    <td>{{ $v['amount'] }}</td>
+                                    <td><span style="color: #e56c69">{{ $v['amount'] }}</span></td>
                                     <td>{{ $v['created_at'] }}</td>
                                     <td>{{ $v['updated_at'] }}</td>
-                                    <td>{{ $v['agentAmount'] }}</td>
+                                    <td><span style="color: green">{{ $v['agentAmount'] }}</span></td>
                                     <td>
                                         @if($v['status'] == 2)
                                             <span style="color:#dd4b39;font-weight: bold">异常</span>

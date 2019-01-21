@@ -139,7 +139,9 @@
                                     <td>{{ $v['merchant'] }}</td>
                                     <td>{{ $v['orderNo'] }}</td>
                                     <td>{{ $v['underOrderNo'] }}</td>
-                                    <td>{{ $v['amount'] }}</td>
+                                    <td>
+                                        <span style="color: #e56c69">{{ $v['amount'] }}</span>
+                                    </td>
                                     <td>{{ $v['agentAmount'] }}</td>
                                     <td>
                                         @if($v['status'] == 2)

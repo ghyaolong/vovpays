@@ -34,7 +34,9 @@
                             <td>{{ $v['paymentName'] }}</td>
                             <td>{{ $v['paymentCode'] }}</td>
                             <td>{{ @$v->Channel()->pluck('channelName')[0] }}</td>
-                            <td>{{ $v->runRate }}</td>
+                            <td>
+                                <span style="color: #0f74a8">{{ $v->runRate }}</span>
+                            </td>
                             <td>{{ $v->minAmount }}-{{ $v->maxAmount }}元</td>
                             <td><img width="148" height="38" src="{{ asset($v['ico']) }}" alt=""></td>
                             <td><input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif ></td>
