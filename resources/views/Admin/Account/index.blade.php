@@ -114,10 +114,11 @@
                 size: "small",
                 onSwitchChange: function (event, state) {
                     var id = $(event.currentTarget).data('id');
+                    var accountType = $(event.currentTarget).data('type');
                     $.ajax({
                         type: 'POST',
                         url: "{{ route('account.saveAllStatus') }}",
-                        data: {'status': state, 'id': id},
+                        data: {'status': state, 'id': id, 'accountType':accountType},
                         dataType: 'json',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
