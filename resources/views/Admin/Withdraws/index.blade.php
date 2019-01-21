@@ -133,7 +133,7 @@
                             <th>系统订单号</th>
                             {{--<th>商户订单号</th>--}}
                             <th>结算金额</th>
-                            <th>手续费</th>
+                            <th>手续费 </th>
                             <th>实际结算</th>
                             {{--<th>结算通道</th>--}}
                             <th>结算银行</th>
@@ -153,9 +153,9 @@
                                 <td>{{ $v->user->username }}</td>
                                 <td>{{ $v['orderId'] }}</td>
                                 {{--<td>{{ $v['outOrderId'] }}</td>--}}
-                                <td>{{ $v['withdrawAmount'] }}</td>
-                                <td>{{ $v['withdrawRate'] }}</td>
-                                <td>{{ $v['toAmount'] }}</td>
+                                <td><span style="color: #e56c69">{{ $v['withdrawAmount'] }}</span></td>
+                                <td><span style="color: #f2aa25">{{ $v['withdrawRate'] }}</span></td>
+                                <td><span style="color: green">{{ $v['toAmount'] }}</span></td>
                                 {{--<td>{{ $v['channelCode'] }}</td>--}}
                                 <td>{{ $v['bankName'] }}</td>
                                 <td>{{ $v['accountName'] }}</td>
