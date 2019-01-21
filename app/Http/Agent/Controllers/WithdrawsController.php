@@ -127,7 +127,6 @@ class WithdrawsController extends Controller
 
 
         $data = $request->input();
-//        dd($data);
         $result=false;
         if ($data['type'] == 1) {
             //普通结算
@@ -169,7 +168,6 @@ class WithdrawsController extends Controller
 
         return view('Agent.Withdraws.clearing', compact('list','banks', 'clearings','WithdrawRule'));
     }
-
     /**
      * 申请结算
      * @param Request $request

@@ -164,7 +164,9 @@
                                 <td>{{ $v['created_at'] }}</td>
                                 <td>{{ $v['updated_at'] }}</td>
                                 <td>{{ $v['comment'] }}</td>
-                                <td>{{ $v['status'] }}</td>
+                                <td>
+                                    <b style="color: #0b93d5">{{ $v['status'] }}</b>
+                                </td>
                                 <td>
                                     @if($v['status']=='未处理')
 
