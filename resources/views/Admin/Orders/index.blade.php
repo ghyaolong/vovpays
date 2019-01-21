@@ -391,26 +391,35 @@
         }
 
         function orderSave(id) {
-            $.ajax({
-                type: 'post',
-                url: '{{ route('orders.saveStatus') }}',
-                dataType: 'json',
-                data: {'id': id},
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (result) {
-                    if (result.status == 1) {
-                        toastr.success(result.msg);
-                        window.location.reload();
-                    } else {
-                        toastr.error(result.msg);
+            swal({
+                title: "您确定要删除吗？",
+                text: "删除后不能恢复！",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            }, function(){
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('orders.saveStatus') }}',
+                    dataType: 'json',
+                    data: {'id': id},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (result) {
+                        if (result.status == 1) {
+                            toastr.success(result.msg);
+                            window.location.reload();
+                        } else {
+                            toastr.error(result.msg);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus) {
+                        toastr.error('通信失败');
                     }
-                },
-                error: function (XMLHttpRequest, textStatus) {
-                    toastr.error('通信失败');
-                }
-            })
+                })
+            });
         }
 
         function send(id) {
