@@ -87,7 +87,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.accountBankAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route('agent.accountBankAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
