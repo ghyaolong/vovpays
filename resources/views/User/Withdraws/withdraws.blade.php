@@ -112,16 +112,16 @@
                             <th>提现时间</th>
                             <th>处理时间</th>
                         </tr>
-                        @foreach($clearings as $vv)
+                        @foreach($clearings as $v)
                             <tr>
-                                <th>{{$vv->bankName}}</th>
-                                <th>{{$vv->bankCardNo}}</th>
-                                <th>{{$vv->withdrawAmount}}</th>
-                                <th>{{$vv->withdrawRate}}</th>
-                                <th>{{$vv->toAmount}}</th>
-                                <th>{{$vv->status}}</th>
-                                <th>{{$vv->created_at}}</th>
-                                <th>{{$vv->updated_at!=$vv->created_at?$vv->updated_at:'---'}}</th>
+                                <th>{{$v->bankName}}</th>
+                                <th>{{$v->bankCardNo}}</th>
+                                <th>{{$v->withdrawAmount}}</th>
+                                <th>{{$v->withdrawRate}}</th>
+                                <th>{{$v->toAmount}}</th>
+                                <th>{{$v->status}}</th>
+                                <th>{{$v->created_at}}</th>
+                                <th>{{$v->updated_at!=$v->created_at?$v->updated_at:'---'}}</th>
                             </tr>
                         @endforeach
                     </table>

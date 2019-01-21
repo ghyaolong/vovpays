@@ -30,7 +30,7 @@
                             <td>{{ $v['channelName'] }}</td>
                             <td>{{ $v['channelCode'] }}</td>
                             <td><input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox" @if($v['status'] == 1) checked @endif ></td>
-                            <td>{{ $v['channelQuota'] }}</td>
+                            <td><span style="color: #999999;font-weight: bold">{{ $v['channelQuota'] }}</span></td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-sm" onclick="edit('通道编辑',{{ $v['id'] }})">编辑</button>
                                 <button type="button" class="btn btn-danger btn-sm" onclick="del($(this),{{ $v['id'] }})">删除</button>

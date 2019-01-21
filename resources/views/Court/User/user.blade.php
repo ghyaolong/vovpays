@@ -73,7 +73,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="box box-primary box-solid">
+                                {{--<div class="box box-primary">--}}
                                     <div class="info-box bg-aqua">
                                         <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
                                         <div class="info-box-content">
@@ -84,7 +84,7 @@
                                             <span class="info-box-number">{{$orderInfoSum[0]['amountSum'] ?: 0}} 元</span>
                                         </div>
                                     </div>
-                                </div>
+                                {{--</div>--}}
                             </div>
 
                             <div class="col-md-8">

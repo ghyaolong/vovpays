@@ -167,11 +167,11 @@
                                 <td>{{ $v['underOrderNo'] }}</td>
                                 <td>{{ $v['created_at'] }}</td>
                                 <td>{{ $v['updated_at'] }}</td>
-                                <td>{{ $v['amount'] }}</td>
-                                <td>{{ $v['orderRate'] }}</td>
-                                <td>{{ $v['sysAmount'] }}</td>
-                                <td>{{ $v['agentAmount'] }}</td>
-                                <td>{{ $v['userAmount'] }}</td>
+                                <td><span style="color: #e56c69">{{ $v['amount'] }}</span></td>
+                                <td><span style="color: #f2aa25">{{ $v['orderRate'] }}</span></td>
+                                <td><span style="color: #ccd232">{{ $v['sysAmount'] }}</span></td>
+                                <td><span style="color: green">{{ $v['agentAmount'] }}</span></td>
+                                <td><span style="color: #0BA194">{{ $v['userAmount'] }}</span></td>
                                 <td>{{ $v['paymentName'] }}</td>
                                 <td>
                                     @if($v['status'] == 2)
