@@ -82,7 +82,12 @@ class AccountBankCardsRepository
      */
     public function update(int $id, int $uid, array $data)
     {
-        return $this->account_bank_cards->whereId($id)->whereUserId($uid)->update($data);
+        if ($uid == 1) {
+            return $this->account_bank_cards->whereId($id)->update($data);
+        }else{
+            return $this->account_bank_cards->whereId($id)->whereUserId($uid)->update($data);
+        }
+
     }
 
 
