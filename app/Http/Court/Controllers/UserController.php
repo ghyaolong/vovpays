@@ -8,7 +8,6 @@
 
 namespace App\Http\Court\Controllers;
 
-
 use App\Services\AgentService;
 use App\Services\CheckUniqueService;
 use App\Services\UserService;
@@ -18,14 +17,14 @@ use App\Services\QuotalogService;
 
 class UserController extends Controller
 {
-
     protected $userService;
     protected $checkUniqueService;
     protected $quotalogService;
-
     /**
      * UserController constructor.
      * @param UserService $userService
+     * @param CheckUniqueService $checkUniqueService
+     * @param QuotalogService $quotalogService
      */
     public function __construct(UserService $userService, CheckUniqueService $checkUniqueService, QuotalogService $quotalogService)
     {
@@ -40,14 +39,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $courtId = Auth::user()->id;
+        $uid   = Auth::user()->id;
+        $query = $request->input();
+        $query['user_id'] = $uid;
 
-        $court = $this->userService->findId($courtId);
-        $list = $this->quotalogService->searchPage(['user_id'=>$courtId],10);
-
-        return view('Court.User.user', compact('court','list'));
-
-
+        $court = $this->userService->findId($uid);
+        $list = $this->quotalogService->searchPage($query,10);
+        $data['add_num']     = $this->quotalogService->searchNum($query,0);
+        $data['reduce_num']  = $this->quotalogService->searchNum($query,1);
+        return view('Court.User.user', compact('court','list', 'data'));
     }
 
     /**

@@ -12,20 +12,11 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> 欢迎登录</a>
             </div>
         </div>
-
-
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">主导航</li>
-
             <li class="active treeview">
-
-            <li><a href="{{route('court.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>主页</span></a></li>
-            </li>
-
-            {{--<li><a href="{{route('court.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>--}}
-            <li><a href="{{route('user.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>我的账户</span></a></li>
-
-
+            <li><a href="{{route('court.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>主页</span></a></li></li>
+            <li><a href="{{route('court.user')}}"><i class="fa fa-circle-o text-aqua"></i> <span>我的账户</span></a></li>
             @if(env('ADD_ACCOUNT_TYPE')==4)
                 <li class="treeview">
                     <a href="#">

@@ -19,8 +19,7 @@ Route::group([], function ($router) {
         Route::get('rate', 'IndexController@rate')->name('court.rate');
         Route::get('order', 'OrderController@index')->name('court.order');
         Route::get('order/{id}/show', 'OrderController@show')->name('court.show');
-
-        Route::get('user','UserController@index')->name('user.index');
+        Route::get('user','UserController@index')->name('court.user');
         //账号管理
         Route::get('account/{type}', 'AccountPhoneController@index')->name('court.account');
         Route::post('account', 'AccountPhoneController@store')->name('court.accountAdd');
