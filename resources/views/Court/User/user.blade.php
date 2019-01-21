@@ -73,6 +73,18 @@
                                         </form>
                                     </div>
                                 </div>
+                                <div class="box box-primary box-solid">
+                                    <div class="info-box bg-aqua">
+                                        <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="progress-description" style="padding-top: 10px;">订单金额 （今日统计）</span>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 100%"></div>
+                                            </div>
+                                            <span class="info-box-number">{{$orderInfoSum[0]['amountSum'] ?: 0}} 元</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-md-8">
@@ -160,7 +172,7 @@
     <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
         $(function(){
-            $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+            // $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
 
             $('#daterange-btn').daterangepicker(
                 {

@@ -434,7 +434,7 @@ BEGIN
     END LOOP;
     CLOSE cur_oder;
 
-		SELECT dsys_order_count,dsys_amount,dsys_income,dsys_order_suc_count;
+		#SELECT dsys_order_count,dsys_amount,dsys_income,dsys_order_suc_count;
 
 		-- 开始第二个游标时先将 done 置为 FALSE
 	  SET done = FALSE;

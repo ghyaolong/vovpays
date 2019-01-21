@@ -10,6 +10,7 @@ namespace App\Repositories;
 
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class OrdersRepository
 {
@@ -100,6 +101,11 @@ class OrdersRepository
             $where['user_id'] = $data['user_id'];
         }
 
+        if (isset($data['phone_uid']) && $data['phone_uid']) {
+            $sql .= ' and phone_uid = ?';
+            $where['phone_uid'] = $data['phone_uid'];
+        }
+
         if (isset($data['channel_payment_id']) && $data['channel_payment_id'] != '-1') {
             $sql .= ' and channel_payment_id = ?';
             $where['channel_payment_id'] = $data['channel_payment_id'];
@@ -107,24 +113,15 @@ class OrdersRepository
 
         if (isset($data['orderTime']) && $data['orderTime']) {
             $time = explode(" - ", $data['orderTime']);
-            $sql .= ' and created_at >= ?';
-            $where['created_at'] = $time[0];
-        }
-
-        if (isset($data['orderTime']) && $data['orderTime']) {
-            $time = explode(" - ", $data['orderTime']);
             $sql .= ' and updated_at <= ?';
             $where['updated_at'] = $time[1];
-        }
-
-        if (isset($data['today']) && $data['today']) {
-            $sql .= ' and created_at >= ?';
-            $where['created_at'] = $data['today'];
-        }
-
-        if (isset($data['day']) && $data['day']) {
+        }else{
+            $today = Carbon:: today()->toDateTimeString();
+            $sql .= ' and updated_at >= ?';
+            $where['updated_at1'] = $today;
+            $now = Carbon::now()->toDateTimeString();
             $sql .= ' and updated_at <= ?';
-            $where['updated_at'] = $data['day'];
+            $where['updated_at2'] = $now;
         }
 
         return $this->order->whereRaw($sql, $where)

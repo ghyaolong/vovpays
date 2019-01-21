@@ -10,6 +10,7 @@ namespace App\Http\Court\Controllers;
 
 use App\Services\AgentService;
 use App\Services\CheckUniqueService;
+use App\Services\OrdersService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,17 +21,22 @@ class UserController extends Controller
     protected $userService;
     protected $checkUniqueService;
     protected $quotalogService;
+    protected $ordersService;
+
     /**
      * UserController constructor.
      * @param UserService $userService
      * @param CheckUniqueService $checkUniqueService
+     * @param OrdersService $ordersService
      * @param QuotalogService $quotalogService
      */
-    public function __construct(UserService $userService, CheckUniqueService $checkUniqueService, QuotalogService $quotalogService)
+    public function __construct(UserService $userService, CheckUniqueService $checkUniqueService,
+        OrdersService $ordersService,QuotalogService $quotalogService)
     {
         $this->userService = $userService;
         $this->checkUniqueService = $checkUniqueService;
         $this->quotalogService    = $quotalogService;
+        $this->ordersService      = $ordersService;
     }
 
     /**
@@ -47,7 +53,12 @@ class UserController extends Controller
         $list = $this->quotalogService->searchPage($query,10);
         $data['add_num']     = $this->quotalogService->searchNum($query,0);
         $data['reduce_num']  = $this->quotalogService->searchNum($query,1);
-        return view('Court.User.user', compact('court','list', 'data'));
+
+        $where['phone_uid'] = $uid;
+        $where['orderTime'] = $request->input('searchTime');
+        $orderInfoSum     = $this->ordersService->orderInfoSum($where);
+
+        return view('Court.User.user', compact('court','list', 'data','orderInfoSum','query'));
     }
 
     /**
