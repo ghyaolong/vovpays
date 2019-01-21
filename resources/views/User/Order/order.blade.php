@@ -74,6 +74,7 @@
                 <div class="box-body">
                     <!-- ./col -->
                     <div class="box-body">
+                        <a href="{{ route('user.order') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
                         <form action="{{ route('user.order') }}" method="get">
                             <div class="form-inline">
                                 <div class="form-group">
