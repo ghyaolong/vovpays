@@ -100,5 +100,6 @@ Route::group([], function () {
         Route::post('system','SystemController@store')->name('system.store');
         //账号状态（不是总后台挂号时，显示账号状态）
         Route::get('accountall','AccountListController@index')->name('account.all');
+        Route::post('accountall/saveAllStatus','AccountListController@saveAllStatus')->name('account.saveAllStatus');
     });
 });

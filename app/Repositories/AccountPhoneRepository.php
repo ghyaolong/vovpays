@@ -31,7 +31,7 @@ class AccountPhoneRepository
      * @param int $page
      * @return mixed
      */
-    public function searchPage(string $sql,array $where, int $page)
+    public function searchPage(string $sql, array $where, int $page)
     {
         $sql .= ' and  (DATE(pay_account_day_counts.updated_at) = ? or pay_account_day_counts.updated_at is  null)';
         $where['updated_at'] = date('Y-m-d');
@@ -41,18 +41,18 @@ class AccountPhoneRepository
             ->selectRaw('pay_account_phones.*,account_amount,account_order_count,account_order_suc_count,cast(account_order_suc_count/account_order_count as decimal(10,2))*100 as success_rate')
             ->paginate($page);
     }
+
     /**
      * @param array $data
      * @param int $page
      * @return mixed
      */
-    public function searchPhone(string $sql,array $where, int $page)
+    public function searchPhone(string $sql, array $where, int $page)
     {
         return $this->account_phone->whereRaw($sql, $where)->paginate($page);
 
 
     }
-
 
 
     /**
@@ -81,7 +81,12 @@ class AccountPhoneRepository
      */
     public function update(int $id, int $uid, array $data)
     {
-        return $this->account_phone->whereId($id)->whereUserId($uid)->update($data);
+        if ($uid == 1) {
+            return $this->account_phone->whereId($id)->update($data);
+        } else {
+            return $this->account_phone->whereId($id)->whereUserId($uid)->update($data);
+        }
+
     }
 
     /**

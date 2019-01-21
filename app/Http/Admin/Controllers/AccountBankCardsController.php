@@ -11,6 +11,7 @@ namespace App\Http\Admin\Controllers;
 
 use App\Services\AccountBankCardsService;
 use App\Services\AccountPhoneService;
+use App\Services\BanksService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,13 +21,15 @@ class AccountBankCardsController extends Controller
     protected $accountBankCardsService;
     protected $accountPhoneService;
     protected $checkUniqueService;
+    protected $banksService;
     protected $uid = 100000;
 
-    public function __construct(AccountBankCardsService $accountBankCardsService, CheckUniqueService $checkUniqueService,AccountPhoneService $accountPhoneService)
+    public function __construct(BanksService $banksService, AccountBankCardsService $accountBankCardsService, CheckUniqueService $checkUniqueService, AccountPhoneService $accountPhoneService)
     {
-        $this->accountBankCardsService=$accountBankCardsService;
+        $this->accountBankCardsService = $accountBankCardsService;
         $this->accountPhoneService = $accountPhoneService;
         $this->checkUniqueService = $checkUniqueService;
+        $this->banksService = $banksService;
     }
 
     /**
@@ -37,16 +40,16 @@ class AccountBankCardsController extends Controller
     {
 
 
-
         $data = $request->input();
         $data['user_id'] = 100000;
 
         $list = $this->accountBankCardsService->getAllPage($data, 10);
         $data['accountType'] = 'alipay';
         $title = '银行卡号';
-        $alist= $this->accountPhoneService->searchPhone($data, 1000);
+        $alist = $this->accountPhoneService->searchPhone($data, 1000);
+        $bankList=$this->banksService->findAll();
 
-        return view("Admin.AccountPhone.bank", compact('list','alist','title'));
+        return view("Admin.AccountPhone.bank", compact('list', 'alist', 'title','bankList'));
     }
 
     /**
@@ -58,9 +61,9 @@ class AccountBankCardsController extends Controller
     {
         $id = $request->id ?? '';
         $this->validate($request, [
-            'cardNo'        => 'required|unique:account_bank_cards,cardNo,'.$id,
-        ],[
-            'cardNo.unique'           => '卡号已存在',
+            'cardNo' => 'required|unique:account_bank_cards,cardNo,' . $id,
+        ], [
+            'cardNo.unique' => '卡号已存在',
         ]);
 
         if (!empty($id)) {
