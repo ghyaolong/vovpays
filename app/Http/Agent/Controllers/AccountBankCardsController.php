@@ -11,6 +11,7 @@ namespace App\Http\Agent\Controllers;
 
 use App\Services\AccountBankCardsService;
 use App\Services\AccountPhoneService;
+use App\Services\BanksService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,12 +21,14 @@ class AccountBankCardsController extends Controller
     protected $accountBankCardsService;
     protected $accountPhoneService;
     protected $checkUniqueService;
+    protected $banksService;
 
-    public function __construct(AccountBankCardsService $accountBankCardsService, CheckUniqueService $checkUniqueService,AccountPhoneService $accountPhoneService)
+    public function __construct(BanksService $banksService, AccountBankCardsService $accountBankCardsService, CheckUniqueService $checkUniqueService,AccountPhoneService $accountPhoneService)
     {
         $this->accountBankCardsService=$accountBankCardsService;
         $this->accountPhoneService = $accountPhoneService;
         $this->checkUniqueService = $checkUniqueService;
+        $this->banksService=$banksService;
     }
 
     /**
@@ -40,8 +43,9 @@ class AccountBankCardsController extends Controller
         $list = $this->accountBankCardsService->getAllPage($data, 10);
         $data['accountType'] = 'alipay';
         $alist= $this->accountPhoneService->searchPhone($data, 1000);
+        $bankList=$this->banksService->findAll();
 
-        return view("Agent.AccountPhone.bank", compact('list','alist'));
+        return view("Agent.AccountPhone.bank", compact('list','alist','bankList'));
 
 
     }

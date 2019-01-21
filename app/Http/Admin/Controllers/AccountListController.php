@@ -44,5 +44,21 @@ class AccountListController extends Controller
         return view("Admin.Account.index", compact('account_list','title','query'));
     }
 
+    /**
+     * 编辑状态
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveAllStatus(Request $request)
+    {
+        $data['status'] = $request->status == 'true' ? '1' : '0';
+        $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
+        if ($result) {
+            return ajaxSuccess('修改成功！');
+        } else {
+            return ajaxError('修改失败！');
+        }
+    }
+
 
 }

@@ -164,11 +164,11 @@
                                         <td>{{ $v['userAmount'] }}</td>
                                         <td>
                                             @if($v['status'] == 2)
-                                                <span style="color:#dd4b39">异常</span>
+                                                <span style="color:#dd4b39;font-weight: bold">异常</span>
                                             @elseif($v['status'] == 0)
-                                                <span>未支付</span>
+                                                <span style="color:orange;font-weight: bold">未支付</span>
                                             @elseif($v['status'] == 1)
-                                                <span style="color:#008d4c">已支付</span>
+                                                <span style="color:#008d4c;font-weight: bold">已支付</span>
                                             @endif
                                         </td>
                                         <td>

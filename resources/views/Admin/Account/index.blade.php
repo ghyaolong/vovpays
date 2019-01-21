@@ -12,9 +12,18 @@
                         <div class="form-group">
                             <select class="form-control" id="paymentId" name="accountType">
                                 <option value="-1">支付方式</option>
-                                    <option value="alipay" @if(isset($query['accountType']) && $query['accountType'] == 'alipay') selected @endif>支付宝</option>
-                                    <option value="wechat" @if(isset($query['accountType']) && $query['accountType'] == 'wechat') selected @endif>微信</option>
-                                    <option value="alipay_bank" @if(isset($query['accountType']) && $query['accountType'] == 'alipay_bank') selected @endif>银行卡</option>
+                                <option value="alipay"
+                                        @if(isset($query['accountType']) && $query['accountType'] == 'alipay') selected @endif>
+                                    支付宝
+                                </option>
+                                <option value="wechat"
+                                        @if(isset($query['accountType']) && $query['accountType'] == 'wechat') selected @endif>
+                                    微信
+                                </option>
+                                <option value="alipay_bank"
+                                        @if(isset($query['accountType']) && $query['accountType'] == 'alipay_bank') selected @endif>
+                                    银行卡
+                                </option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-info">搜索</button>
@@ -65,7 +74,9 @@
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
-                                        <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
+                                        <td>
+                                            <span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span>
+                                        </td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -82,17 +93,42 @@
     </div>
 @endsection
 @section("scripts")
-<script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
-<script>
-$(function () {
-    // 状态修改
-    $('.switch-state').bootstrapSwitch({
-        onText: '启用',
-        offText: '禁用',
-        onColor: "primary",
-        offColor: "danger",
-        size: "small",
-    })
-})
-</script>
+    <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
+    <script>
+
+        $(function () {
+            // 状态修改
+            $('.switch-state').bootstrapSwitch({
+                onText: '启用',
+                offText: '禁用',
+                onColor: "primary",
+                offColor: "danger",
+                size: "small",
+                onSwitchChange: function (event, state) {
+                    var id = $(event.currentTarget).data('id');
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('account.saveAllStatus') }}",
+                        data: {'status': state, 'id': id},
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (result) {
+                            if (result.status) {
+                                toastr.success(result.msg);
+                            } else {
+                                $('#addModel').modal('hide');
+                                toastr.error(result.msg);
+                                // window.location.href = window.location.href;
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus) {
+                            toastr.error('通信失败');
+                        }
+                    })
+                }
+            })
+        })
+    </script>
 @endsection

@@ -17,6 +17,7 @@ class CreateWithdrawsTable extends Migration
         Schema::create('withdraws', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->comment('商户id');
+            $table->unsignedInteger('agent_id')->comment('商户所属代理id');
             $table->string('bankName',40)->comment('银行名称');
             $table->decimal('withdrawAmount',11,2)->default(0)->comment('提现金额');
             $table->decimal('withdrawRate',6,2)->default(0)->comment('提现手续费');

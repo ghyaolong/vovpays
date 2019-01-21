@@ -84,18 +84,10 @@ class WithdrawsController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
-        try {
             $result = $this->withdrawsService->add($request->input());
             if ($result) {
                 return ajaxSuccess('结算申请中，请留意您的账单变化！');
             }
-
-        } catch (CustomServiceException $customexception) {
-            $msg = $customexception->getMessage();
-            return ajaxError($msg);
-        } catch (\Exception $exception) {
-            $msg = $exception->getMessage();
-            return ajaxError($msg);
-        }
     }
+
 }

@@ -12,6 +12,7 @@ namespace App\Http\Agent\Controllers;
 use App\Services\BankCardService;
 use App\Services\BanksService;
 use App\Services\WithdrawsService;
+use App\Services\ChannelService;
 use App\Http\Requests\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,16 +23,18 @@ class WithdrawsController extends Controller
     protected $withdrawsService;
     protected $bankCardService;
     protected $banksService;
+    protected $channelService;
 
     /**
      * WithdrawsController constructor.
      * @param WithdrawsService $withdrawsService
      */
-    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService, BanksService $banksService)
+    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService, BanksService $banksService,ChannelService $channelService)
     {
         $this->withdrawsService = $withdrawsService;
         $this->bankCardService = $bankCardService;
         $this->banksService = $banksService;
+        $this->channelService = $channelService;
 
     }
 
@@ -43,9 +46,7 @@ class WithdrawsController extends Controller
     public function index(Request $request)
     {
 
-
         $uid = Auth::user()->id;
-
         $data = $request->input();
         $data['user_id'] = $uid;
 
@@ -55,6 +56,91 @@ class WithdrawsController extends Controller
         $query = $request->input();
 
         return view('Agent.Withdraws.withdraws', compact('list', 'info', 'query'));
+    }
+
+    /**商户结算管理列表
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public  function manage(Request $request){
+
+        $title = '结算管理';
+        $data = $request->input();
+
+        $search = $this->withdrawsService->searchPage($data, 10);
+
+        $list = $search['list'];
+        $withdrawInfoSum = $search['info'];
+        $chanel_list = $this->channelService->getAll();
+
+        $query = $request->query();
+        return view("Agent.Withdraws.manage", compact('title', 'list', 'query', 'withdrawInfoSum', 'chanel_list'));
+    }
+
+    /**商户结算订单管理
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public  function doManage(Request $request){
+
+        if ($request->type == 1) {
+            //普通结算
+            $chanel_list = $this->channelService->getAll();
+        } elseif ($request->type == 2) {
+            //代付计结算
+            $chanel_list = $this->channelService->getAll();
+        }
+
+        if ($chanel_list) {
+            return ajaxSuccess('SUCCESS', $chanel_list->toArray());
+        } else {
+            return ajaxError('获取通道失败！');
+        }
+    }
+
+    /**结算状态变更
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request)
+    {
+
+        env('ADD_ACCOUNT_TYPE') !=3?? ajaxError('结算操作失败');
+//        $this->validate($request, [
+//            'id'=>'required|alpha_num',
+//            'type' => 'required|in:1,2',
+//            'status' => 'required|in:1,2,3,4',
+//            'comment'  => 'required_if:type,1|max:191',
+//            'channelCode'=> 'required_if:type,2|alpha_num',
+//        ],[
+//            'id.required'=>'非法操作',
+//            'id.alpha_num'=>'非法操作',
+//            'type.required' => '非法操作',
+//            'type.in' => '非法操作',
+//            'status.required' => '非法操作',
+//            'status.in' => '非法操作',
+//            'comment.required_if'  => '备注不能为空',
+//            'comment.max'  => '备注过长',
+//            'channelCode.required_if'  => '必须选择代付通道',
+//            'channelCode.alpha_num'  => '非法操作',
+//        ]);
+
+
+        $data = $request->input();
+        $result=false;
+        if ($data['type'] == 1) {
+            //普通结算
+            $result=$this->withdrawsService->commonWithdraw($data);
+        } elseif ($data['type'] == 2) {
+            //代付计结算
+            $result=$this->withdrawsService->paidWithdraw($data);
+        }
+
+        if ($result) {
+            return ajaxSuccess('结算操作成功');
+        }else{
+            return ajaxError('结算操作失败');
+        }
     }
 
 
@@ -80,11 +166,8 @@ class WithdrawsController extends Controller
 
         $WithdrawRule=$this->withdrawsService->getWithdrawRule();
 
-
-
         return view('Agent.Withdraws.clearing', compact('list','banks', 'clearings','WithdrawRule'));
     }
-
     /**
      * 申请结算
      * @param Request $request
@@ -92,19 +175,10 @@ class WithdrawsController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
-        try {
             $result = $this->withdrawsService->add($request->input());
 
             if ($result) {
                 return ajaxSuccess('结算申请中，请留意您的账单变化！');
             }
-
-        } catch (CustomServiceException $customexception) {
-            $msg = $customexception->getMessage();
-            return ajaxError($msg);
-        } catch (\Exception $exception) {
-            $msg = $exception->getMessage();
-            return ajaxError($msg);
-        }
     }
 }

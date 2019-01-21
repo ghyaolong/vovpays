@@ -50,7 +50,9 @@
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
-                                        <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
+                                        <td>
+                                            <span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span>
+                                        </td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -100,29 +102,9 @@
                             <div class="col-xs-9">
                                 <select class="form-control" id="channelId" name="bank_name">
                                     <option value="">选择银行</option>
-                                    <option value="中国银行,BOC">中国银行</option>
-                                    <option value="中国工商银行,ICBC">中国工商银行</option>
-                                    <option value="中国建设银行,CCB">中国建设银行</option>
-                                    <option value="中国农业银行,ABC">中国农业银行</option>
-                                    <option value="中国光大银行,CEB">中国光大银行</option>
-                                    <option value="招商银行,CMBC">招商银行</option>
-                                    <option value="广发银行,GDB">广发银行</option>
-                                    <option value="华夏银行,HXB">华夏银行</option>
-                                    <option value="交通银行,BCM">交通银行</option>
-                                    <option value="中国民生银行,CMSB">中国民生银行</option>
-                                    <option value="北京银行,BOB">北京银行</option>
-                                    <option value="东亚银行,BEA">东亚银行</option>
-                                    <option value="南京银行,NJCB">南京银行</option>
-                                    <option value="宁波银行,NBCB">宁波银行</option>
-                                    <option value="平安银行,PAB">平安银行</option>
-                                    <option value="上海银行,BOS">上海银行</option>
-                                    <option value="上海浦东发展银行,SPDB">上海浦东发展银行</option>
-                                    <option value="兴业银行,CIB">兴业银行</option>
-                                    <option value="中国邮政储蓄银行,PSBC">中国邮政储蓄银行</option>
-                                    <option value="网商银行,ANTBANK">网商银行</option>
-                                    <option value="中信银行,CNCB">中信银行</option>
-                                    <option value="支付宝,ALIPAY">支付宝</option>
-                                    <option value="微信,WECHAT">微信</option>
+                                    @foreach($bankList as $bank)
+                                        <option value="{{$bank->bankName}},{{$bank->code}}">{{$bank->bankName}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -294,22 +276,22 @@
                                 message: '请输入银行卡号!'
                             },
                             {{--regexp: {--}}
-                                {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
-                                {{--message: '请输入正确的银行卡号！'--}}
+                            {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
+                            {{--message: '请输入正确的银行卡号！'--}}
                             {{--},--}}
                             {{--remote: {--}}
-                                {{--url: "{{route('agent.checkBank')}}",--}}
-                                {{--message: "该卡号已存在!",--}}
-                                {{--type: "post",--}}
-                                {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
-                                    {{--return {--}}
-                                        {{--"value": $("input[name='cardNo']").val().trim(),--}}
-                                        {{--"type": 'cardNo',--}}
-                                        {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
-                                        {{--"id": $('#id').val(),--}}
-                                    {{--};--}}
-                                {{--},--}}
-                                {{--delay: 500,--}}
+                            {{--url: "{{route('agent.checkBank')}}",--}}
+                            {{--message: "该卡号已存在!",--}}
+                            {{--type: "post",--}}
+                            {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
+                            {{--return {--}}
+                            {{--"value": $("input[name='cardNo']").val().trim(),--}}
+                            {{--"type": 'cardNo',--}}
+                            {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
+                            {{--"id": $('#id').val(),--}}
+                            {{--};--}}
+                            {{--},--}}
+                            {{--delay: 500,--}}
                             {{--},--}}
                         },
                     },

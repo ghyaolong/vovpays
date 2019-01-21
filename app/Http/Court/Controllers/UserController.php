@@ -50,7 +50,7 @@ class UserController extends Controller
         $query['user_id'] = $uid;
 
         $court = $this->userService->findId($uid);
-        $list = $this->quotalogService->searchPage($query,10);
+        $list = $this->quotalogService->searchPage($query,6);
         $data['add_num']     = $this->quotalogService->searchNum($query,0);
         $data['reduce_num']  = $this->quotalogService->searchNum($query,1);
 

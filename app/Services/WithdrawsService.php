@@ -37,7 +37,11 @@ class WithdrawsService
      */
     public function add(array $data)
     {
-        $data['user_id'] = Auth::user()->id;
+        $user= Auth::user();
+        $data['user_id'] = $user->id;
+        $data['agent_id']=$user->group_type==1?$user->parentId:'0';
+
+
         //权限验证
         UserPermissionServer::checkPermission($data['auth_code']);
         //获取提款规则信息

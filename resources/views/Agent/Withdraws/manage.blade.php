@@ -1,4 +1,4 @@
-@extends('Admin.Layouts.layout')
+@extends('Agent.Commons.layout')
 
 @section("css")
     <link rel="stylesheet"
@@ -65,9 +65,9 @@
 
         <div class="col-xs-12">
             <div class="box">
-                <a href="{{ route('withdraws.index') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
+                <a href="{{ route('agent.manageWithdraws') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
                 <div class="box-body">
-                    <form action="{{ route('withdraws.index') }}" method="get">
+                    <form action="{{ route('agent.manageWithdraws') }}" method="get">
                         <div class="form-inline">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="系统订单号" name="orderId"
@@ -164,9 +164,7 @@
                                 <td>{{ $v['created_at'] }}</td>
                                 <td>{{ $v['updated_at'] }}</td>
                                 <td>{{ $v['comment'] }}</td>
-                                <td>
-                                    <b style="color: #0b93d5">{{ $v['status'] }}</b>
-                                </td>
+                                <td>{{ $v['status'] }}</td>
                                 <td>
                                     @if($v['status']=='未处理')
 
@@ -182,7 +180,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    @include('Admin.Commons._page')
+                    @include('Agent.Commons._page')
                 </div>
                 <!-- /.box-body -->
             </div>
