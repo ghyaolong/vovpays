@@ -206,3 +206,16 @@ function convert_arr_key($arr, $key_name)
 function objectToArray($object) {
     return json_decode(json_encode($object), true);
 }
+
+/**
+ * 根据收款人id，获取订单拥有着
+ * @param int $uid
+ * @return string
+ */
+function getOrderAccountInfo(int $uid)
+{
+    $userService = app( \App\Services\UserService::class);
+    $user = $userService->findId($uid);
+    if(!$user) return '-';
+    return $user->username;
+}

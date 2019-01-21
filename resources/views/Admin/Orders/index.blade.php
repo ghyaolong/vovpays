@@ -135,7 +135,10 @@
                         <tr>
                             <th>#</th>
                             <th>商户号</th>
-                            <th>收款人</th>
+                            @if(env('ADD_ACCOUNT_TYPE') == 4)
+                                <th>收款人</th>
+                                <th>收款号</th>
+                            @endif
                             <th>系统订单</th>
                             <th>商户订单</th>
                             <th>创建时间</th>
@@ -155,7 +158,11 @@
                             <tr>
                                 <td>{{ $v['id'] }}</td>
                                 <td>{{ $v['merchant'] }}</td>
-                                <td>{{ $v['account'] }}</td>
+                                @if(env('ADD_ACCOUNT_TYPE') == 4)
+                                    <td>{{ getOrderAccountInfo($v['phone_uid']) }}</td>
+                                    <td>{{ $v['account'] }}</td>
+                                @endif
+
                                 <td>{{ $v['orderNo'] }}</td>
                                 <td>{{ $v['underOrderNo'] }}</td>
                                 <td>{{ $v['created_at'] }}</td>
