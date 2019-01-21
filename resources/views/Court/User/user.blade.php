@@ -81,6 +81,7 @@
                                         <h3 class="box-title">上分记录</h3>
 
                                         <div class="box-tools pull-right">
+                                            <a href="{{ route('court.user') }}" class="btn"><i class="fa fa-undo"></i>刷新</a>
                                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                                 <i class="fa fa-minus"></i>
                                             </button>
