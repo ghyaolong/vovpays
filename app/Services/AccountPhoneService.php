@@ -45,6 +45,10 @@ class AccountPhoneService
         return $this->accountPhoneRepository->searchPhone($params['sql'],$params['where'], $page);
     }
 
+    /**构建设备查询条件
+     * @param array $data
+     * @return array
+     */
     private function buildSearchSql(array $data){
         $sql = ' 1=1 ';
         $where = [];

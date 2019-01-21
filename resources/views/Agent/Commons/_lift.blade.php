@@ -12,18 +12,24 @@
             </div>
         </div>
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="active treeview">
+
             <li><a href="{{route('agent.index')}}"><i class="fa fa-circle-o text-aqua"></i><span>主页</span></a></li>
             <li><a href="{{route('agent.show')}}"><i class="fa fa-circle-o text-aqua"></i><span>账户信息</span></a></li>
             <li><a href="{{route('agent.user')}}"><i class="fa fa-circle-o text-aqua"></i><span>商户管理</span></a></li>
             <li><a href="{{route('agent.order')}}"><i class="fa fa-circle-o text-aqua"></i><span>交易管理</span></a></li>
-            <li><a href="{{route('agent.clearing')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>结算管理</span></a></li>
+            <li><a href="{{route('agent.clearing')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>结算申请</span></a></li>
 
-            <li class="active treeview">
+
             <li>
                 <a href="{{route('agent.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡信息</span></a>
             </li>
             @if(env('ADD_ACCOUNT_TYPE') ==3)
+                <li>
+                    <a href="{{ route('agent.manageWithdraws') }}">
+                        <i class="fa fa-reorder"></i>
+                        <span>结算管理</span>
+                    </a>
+                </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>
