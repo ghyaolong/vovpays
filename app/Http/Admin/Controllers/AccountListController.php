@@ -52,7 +52,14 @@ class AccountListController extends Controller
     public function saveAllStatus(Request $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
-        $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
+        $accountType    = $request->accountType;
+
+        if($accountType == '银行卡'){
+            $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
+        }else{
+            $result = $this->accountBankCardsService->update($request->id, auth()->user()->id, $data);
+        }
+
         if ($result) {
             return ajaxSuccess('修改成功！');
         } else {
