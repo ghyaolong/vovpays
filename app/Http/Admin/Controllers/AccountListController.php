@@ -34,7 +34,7 @@ class AccountListController extends Controller
         $query = $request->query();
         $title = '所有账号';
 
-        if(count($query) && $query['accountType'] == 'alipay_bank')
+        if(count($query) && (isset($query['accountType']) &&  $query['accountType'] == 'alipay_bank'))
         {
             $account_list = $this->accountBankCardsService->getAllPage($query,20);
         }else{
