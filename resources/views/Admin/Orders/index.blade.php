@@ -392,8 +392,8 @@
 
         function orderSave(id) {
             swal({
-                title: "您确定要删除吗？",
-                text: "删除后不能恢复！",
+                title: "您确定要改为成功吗？",
+                text: "修改后不能恢复！",
                 type: "warning",
                 showCancelButton: true,
                 closeOnConfirm: false,
