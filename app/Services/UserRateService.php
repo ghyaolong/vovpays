@@ -211,6 +211,8 @@ class UserRateService
             }
             $channelPayments = $this->channelPaymentsService->channelpay($id)->toArray();
             return $channelPayments;
+        } else {
+            return array();
         }
     }
 }

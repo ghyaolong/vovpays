@@ -19,7 +19,6 @@
                     <th>通道状态</th>
                 </tr>
                 @foreach ($list as $value)
-                    
                     <tr>
                         <td>{{ $value['paymentCode'] }}</td>
                         <td>{{ $value['paymentName'] }}</td>
