@@ -84,7 +84,7 @@
                                             <span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span>
                                         </td>
                                         <td>
-                                            <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
+                                            <input class="switch-state" data-type="{{ $v->accountType }}" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
                                         </td>
                                     </tr>
