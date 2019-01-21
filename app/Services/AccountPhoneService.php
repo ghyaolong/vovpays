@@ -31,7 +31,7 @@ class AccountPhoneService
     public function searchPhoneStastic(array $data, int $page)
     {
         $params = $this->buildSearchSql($data);
-        return $this->accountPhoneRepository->searchPage($params['sql'],$params['where'], $page);
+        return $this->accountPhoneRepository->searchPage($params['sql'],$params['where'],$params['time'], $page);
     }
     /**
      * 获取所有监听设备
@@ -74,9 +74,11 @@ class AccountPhoneService
             $sql .= ' and third = ?';
             $where['third'] = $data['third'];
         }
+
         $params = [
-            'sql' => $sql,
+            'sql'   => $sql,
             'where' => $where,
+            'time'  => isset($data['searchTime']) ?: ''
         ];
         return $params;
 

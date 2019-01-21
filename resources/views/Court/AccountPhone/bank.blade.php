@@ -2,6 +2,7 @@
 @section('title','银行卡号')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endsection
 @section('content')
     <div class="row" style="margin-top: 20px">
@@ -20,6 +21,11 @@
                     <form class="navbar-form navbar-left" action="{{route('user.accountBank')}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="bank_account" placeholder="账号">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" autocomplete="off" class="form-control" style="min-width:300px;" id="daterange-btn"
+                                   placeholder="统计时间" name="searchTime"
+                                   @if(isset($query['searchTime'])) value="{{ $query['searchTime'] }}" @endif />
                         </div>
                         <button type="submit" class="btn btn-info">搜索</button>
                         <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>
@@ -152,6 +158,8 @@
 
 @section("scripts")
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
+    <script src="{{ asset('AdminLTE/bower_components/moment/moment.js') }}"></script>
+    <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
 
         $(function () {
@@ -196,6 +204,25 @@
                 $('#addForm').get(0).reset();
                 $('#id').val('');
                 formValidator();
+            });
+
+            $('#daterange-btn').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale : {
+                    applyLabel : '确定',
+                    cancelLabel : '取消',
+                    fromLabel : '起始时间',
+                    toLabel : '结束时间',
+                    customRangeLabel : '自定义',
+                    daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                    monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月' ],
+                    firstDay : 1,
+                    endDate : moment(),
+                    format : 'YYYY-MM-DD',
+                },
+            },function(start) {
+                $('#daterange-btn').val(start.format('YYYY-MM-DD'))
             });
 
         })

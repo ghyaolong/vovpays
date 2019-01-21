@@ -45,11 +45,12 @@ class AccountBankCardsRepository
             $where['third'] = $data['third'];
         }
 
-        $sql .= ' and (DATE(pay_account_day_counts.created_at) = ? or pay_account_day_counts.created_at is  null)';
-        $where['created_at'] = date('Y-m-d');
-
+        $time = isset($data['searchTime']) ? $data['searchTime'] : date('Y-m-d',time());
         return $this->account_bank_cards->whereRaw($sql, $where)
-            ->leftjoin('account_day_counts', 'account_day_counts.account', '=', 'account_bank_cards.cardNo')
+            ->leftjoin('account_day_counts',function ($join) use($time){
+                $join->on('account_day_counts.account', '=', 'account_bank_cards.cardNo')
+                    ->whereDate('account_day_counts.updated_at',"=", $time);
+            })
             ->selectRaw('pay_account_bank_cards.*,account_amount,account_order_count,account_order_suc_count,cast(account_order_suc_count/account_order_count as decimal(10,2))*100 as success_rate')
             ->paginate($page);
 
