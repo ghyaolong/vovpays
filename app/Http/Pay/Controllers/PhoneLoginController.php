@@ -41,6 +41,7 @@ class PhoneLoginController extends Controller
     {
         $type = '';//商户
         $fans = $this->userService->findUsernameAndStatus($request->input('username'),1);
+        $add_account_type = env('ADD_ACCOUNT_TYPE');
         if(!$fans)
         {
             $fans = $this->adminsService->findUsernameAndStatus($request->input('username'),1);
@@ -55,6 +56,18 @@ class PhoneLoginController extends Controller
         if(!$fans)
         {
             return json_encode(array('msg'=>'用户名或密码错误'));
+        }
+
+        switch ($add_account_type){
+            case '1':
+                if($fans->group_type != 1) return json_encode(array('msg'=>'无权使用'));
+                break;
+            case '3' ;
+                if($fans->group_type != 2) return json_encode(array('msg'=>'无权使用'));
+                break;
+            case '4' ;
+                if($fans->group_type != 3) return json_encode(array('msg'=>'无权使用'));
+                break;
         }
 
         if (!password_verify($request->input('password'), $fans->password)) {

@@ -65,7 +65,7 @@ class OrdersService
             'sysAmount'     => $order_amount_array['sysAmount'],
             'agentAmount'   => $order_amount_array['agentAmount'],
             'userAmount'    => $order_amount_array['userAmount'],
-            'notifyUrl'     => $request->notify_rul,
+            'notifyUrl'     => $request->notify_url,
             'successUrl'    => $request->return_url,
             'extend'        => json_encode($extend),
             'status'        => 0

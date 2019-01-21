@@ -275,7 +275,7 @@ class PayController extends Controller
             'amount'          => 'required|numeric',
             'pay_code'        => 'required',
             'order_no'        => 'required|max:50',
-            'notify_rul'      => 'required',
+            'notify_url'      => 'required',
             'return_url'      => 'required',
             'order_time'      => 'date_format:Y-m-d H:i:s',
         ],[
@@ -285,7 +285,7 @@ class PayController extends Controller
             'pay_code.required' => '支付方式错误！',
             'order_no.required' => '订单号错误！',
             'order_no.max'      => '订单号最大50位！',
-            'notify_rul.required' => '回调地址错误！',
+            'notify_url.required' => '回调地址错误！',
             'return_url.required' => '同步地址错误！',
             'order_time.date_format' => '订单时间格式错误',
         ]);
@@ -330,7 +330,7 @@ class PayController extends Controller
             "amount"        => $amount,
             "pay_code"      => $pay_code,
             "order_no"      => date('YmdHis').rand(0000,9999),
-            "notify_rul"    => $pay_notifyurl,
+            "notify_url"    => $pay_notifyurl,
             "return_url"    => $pay_callbackurl,
         );
 
