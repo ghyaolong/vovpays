@@ -47,4 +47,10 @@ class UserRateRepository
     {
         return $this->user_rates->create($data);
     }
+    /**
+     * 获取商户通道
+     */
+    public function channelAll(String $userid,int $status){
+        return $this->user_rates->whereUserId($userid)->whereStatus($status)->get();
+    }
 }

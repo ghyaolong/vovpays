@@ -9,6 +9,7 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
+use App\Services\UserRateService;
 
 class IndexController extends Controller
 {
@@ -17,19 +18,21 @@ class IndexController extends Controller
     protected $orderDayCountService;
     protected $ordersService;
     protected $statisticalService;
+    protected $userRateService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(StatisticalService $statisticalService, UserService $userService, BankCardService $bankCardService, OrdersService $ordersService, OrderDayCountService $orderDayCountService)
+    public function __construct(StatisticalService $statisticalService, UserService $userService, BankCardService $bankCardService, OrdersService $ordersService, OrderDayCountService $orderDayCountService, UserRateService $userRateService)
     {
         $this->userService = $userService;
         $this->bankCardService = $bankCardService;
         $this->ordersService = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
         $this->statisticalService = $statisticalService;
+        $this->userRateService  = $userRateService;
     }
 
     /**
@@ -103,6 +106,11 @@ class IndexController extends Controller
     //API
     public function api()
     {
-        return view('User.Api.api');
+        $uid = Auth::user()->id;
+        
+        $list = $this->userRateService->channelAll($uid);
+       
+        return view('User.Api.api',compact('list'));
     }
+
 }

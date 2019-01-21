@@ -46,6 +46,7 @@
             <li><a href="{{route('user.validator')}}"><i class="fa fa-circle-o text-yellow"></i>
                     <span>安全设置</span></a></li>
 
+                    <li><a href="{{ route('user.api') }}"><i class="fa fa-circle-o text-aqua"></i><span>API管理</span></a></li>
         </ul>
     </section>
     <!-- /.sidebar -->

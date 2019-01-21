@@ -112,4 +112,12 @@ class ChannelPaymentsService
     {
         return $this->channelPaymentsRepository->del($id);
     }
+
+    /**
+     * 根据ID获取通道
+     */
+    public function channelpay(array $id)
+    {
+       return $this->channelPaymentsRepository->channelpay($id);
+    }
 }

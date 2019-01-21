@@ -198,4 +198,19 @@ class UserRateService
         }
         return $result;
     }
+
+    /**
+     * 获取商户通道
+     */
+    public function channelAll(String $userid,$status = 1){
+        $channel = $this->userRateRepository->channelAll($userid,$status);
+        if($channel){
+            $id = array();
+            foreach($channel as $key=>$value){
+                $id[] = $value['channel_payment_id'];
+            }
+            $channelPayments = $this->channelPaymentsService->channelpay($id)->toArray();
+            return $channelPayments;
+        }
+    }
 }

@@ -101,4 +101,12 @@ class ChannelPaymentsRepository
     {
         return $this->channel_payment->find($id);
     }
+
+    /**
+     * 根据ID查询 多个
+     */
+    public function channelpay(array $id)
+    {
+        return $this->channel_payment->whereIn('id',$id)->get();
+    }
 }
