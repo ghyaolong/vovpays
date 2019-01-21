@@ -69,7 +69,7 @@
                                 <td>{{ $v['merchant'] }}</td>
                                 <td><span style="color: #4682B4;font-weight: bold">{{ $v['username'] }}</span></td>
                                 <td><span style="color: #5F9EA0;font-weight: bold">{{ $v->Statistical->handlingFeeBalance }}</span></td>
-                                <td>{{ $v['agentName'] }}</td>
+                                <td><span style="color: #008080;font-weight: bold">{{ $v['agentName'] }}</span></td>
                                 <td>{{ $v['email'] }}</td>
                                 <td>{{ $v['phone'] }}</td>
                                 <td>

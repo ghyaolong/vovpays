@@ -128,7 +128,6 @@
                            class="table table-striped table-condensed table-bordered table-hover dataTable">
                         <thead>
                         <tr>
-                            {{--<th>#</th>--}}
                             <th>商户名</th>
                             <th>系统订单号</th>
                             {{--<th>商户订单号</th>--}}
@@ -149,7 +148,6 @@
                         <tbody>
                         @foreach($list as $v)
                             <tr>
-                                {{--<td>{{ $v['id'] }}</td>--}}
                                 <td>{{ $v->user->username }}</td>
                                 <td>{{ $v['orderId'] }}</td>
                                 {{--<td>{{ $v['outOrderId'] }}</td>--}}
@@ -160,7 +158,6 @@
                                 <td>{{ $v['bankName'] }}</td>
                                 <td>{{ $v['accountName'] }}</td>
                                 <td>{{ $v['bankCardNo'] }}</td>
-
                                 <td>{{ $v['created_at'] }}</td>
                                 <td>{{ $v['updated_at'] }}</td>
                                 <td>{{ $v['comment'] }}</td>

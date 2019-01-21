@@ -113,7 +113,6 @@ class OrdersController extends Controller
             ];
             $quotalogService->add($quota_array);
         }
-
         SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
         return ajaxSuccess('修改成功！');
 
