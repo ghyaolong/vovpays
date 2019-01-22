@@ -27,7 +27,7 @@ class ExemptService implements PayInterface
         $account_array        = $ChooseAccountService->getAccount($user,$request->pay_code, $request->amount);
         if( isset($account_array['respCode']) )
         {
-            return json_encode($account_array);
+            return json_encode($account_array,JSON_UNESCAPED_UNICODE);
         }
         $account_array['amount'] = $request->amount;
         // 订单添加
@@ -36,7 +36,7 @@ class ExemptService implements PayInterface
 
         if(!$result)
         {
-            return json_encode(RespCode::FAILED);
+            return json_encode(RespCode::FAILED,JSON_UNESCAPED_UNICODE);
         }
 
         Redis::select(1);
@@ -55,7 +55,7 @@ class ExemptService implements PayInterface
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
                 'payurl'  => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$account_array['userId'].'","a": "'.$result->amount.'","m": "'.$result->orderNo.'"}',
-                'qrurl'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+                'h5url'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
             ];
 
         }else if($request->pay_code == 'alipay_bank'){
@@ -77,13 +77,21 @@ class ExemptService implements PayInterface
                 'type'    => $request->pay_code,
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
-                'qrurl'   => '12',
+                'h5url'   => '',
                 'payurl'  => "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$account_array['account']}&bankAccount={$account_array['bank_account_name']}&money={$result->amount}&amount={$result->amount}&bankMark={$account_array['bank_code']}&bankName={$account_array['bank_name']}&cardIndex={$account_array['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from",
             ];
         }
 
         Redis::hmset($result->orderNo, $order_date);
         Redis::expire($result->orderNo,600);
+
+        if( isset($request->json) && $request->json == 'json'){
+            return json_encode(
+                ['amount' => $data['money'], 'QRCodeLink' => $data['payurl'],
+            ]);
+            exit();
+        }
+
         return view("Pay.{$request->pay_code}",compact('data'));
     }
 

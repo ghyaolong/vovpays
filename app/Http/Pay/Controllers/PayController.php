@@ -52,24 +52,23 @@ class PayController extends Controller
      */
     public function index(Request $request)
     {
-        if( isset($request->json) && $request->json == 'json'){
-            $this->return_type = true;
-        }else{
-            $this->return_type = false;
-        }
         $this->content = $request->input();
 
         $this->paramVerify($request);
+
+        if($this->ordersService->findUnderOrderNo($this->content['order_no'])){
+            return json_encode(RespCode::ORDER_REPEAT,JSON_UNESCAPED_UNICODE);
+        }
 
         // 获取用户
         $this->user = $this->userService->findMerchant($this->content['merchant']);
         if(!$this->user)
         {
-            return json_encode(RespCode::MERCHANT_NOT_EXIST);
+            return json_encode(RespCode::MERCHANT_NOT_EXIST,JSON_UNESCAPED_UNICODE);
         }
 
         if($this->user && ($this->user->status == 0 || $this->user->group_type != 1 )){
-            return json_encode(RespCode::MERCHANT_NOT_EXIST);
+            return json_encode(RespCode::MERCHANT_NOT_EXIST,JSON_UNESCAPED_UNICODE);
         }
 
         // 数据验签
@@ -77,20 +76,20 @@ class PayController extends Controller
 
         if($sign != $this->content['sign'])
         {
-            return json_encode(RespCode::CHECK_SIGN_FAILED);
+            return json_encode(RespCode::CHECK_SIGN_FAILED,JSON_UNESCAPED_UNICODE);
         }
 
         // 获取支付方式
         $this->channelPayment = $this->channelPaymentsService->findPaymentCode($this->content['pay_code']);
         if(!$this->channelPayment)
         {
-            return json_encode(RespCode::TRADE_BIZ_NOT_OPEN);
+            return json_encode(RespCode::TRADE_BIZ_NOT_OPEN,JSON_UNESCAPED_UNICODE);
         }
 
         // 验证单笔限额
         if(  ($this->channelPayment->minAmount && $this->channelPayment->minAmount > $this->content['amount']) || ( $this->channelPayment->maxAmount && $this->channelPayment->maxAmount < $this->content['amount'] ) )
         {
-            return json_encode(RespCode::PARAMETER_ERROR_PRICE);
+            return json_encode(RespCode::PARAMETER_ERROR_PRICE,JSON_UNESCAPED_UNICODE);
         }
 
         //获取通道
@@ -98,13 +97,13 @@ class PayController extends Controller
 
         if(!$this->channel)
         {
-            return json_encode(RespCode::CHANNEL_NOT_EXIST);
+            return json_encode(RespCode::CHANNEL_NOT_EXIST,JSON_UNESCAPED_UNICODE);
         }
         //获取商户支付方式
         $this->userPayment = $this->userRateService->getFindUidPayIdStatus($this->user->id, $this->channelPayment->id);
         if(!$this->userPayment)
         {
-            return json_encode(RespCode::MCH_BIZ_NOT_OPEN);
+            return json_encode(RespCode::MCH_BIZ_NOT_OPEN,JSON_UNESCAPED_UNICODE);
         }
 
         try{
@@ -116,7 +115,7 @@ class PayController extends Controller
 
         }catch ( \Exception $e){
 
-            return json_encode(RespCode::RESOURCE_NOT_FOUND);
+            return json_encode(RespCode::RESOURCE_NOT_FOUND,JSON_UNESCAPED_UNICODE);
         }
     }
 
@@ -311,21 +310,21 @@ class PayController extends Controller
         $amount   = sprintf('%0.2f',$request->amount);
         $pay_code = $request->pay_code;
         if(!$merchant){
-            return ajaxError('5');
+            return ajaxError('商户号错误');
         }
 
         if(!$amount){
-            return ajaxError('4');
+            return ajaxError('金额错误');
         }
 
         if(!$pay_code){
-            return ajaxError('3');
+            return ajaxError('支付编码错误');
         }
 
         $user = $this->userService->findMerchant($request->merchant);
         if(!$user)
         {
-            return ajaxError('12');
+            return ajaxError('商户不存在');
         }
         $pay_notifyurl   = $_SERVER['HTTP_HOST'];   //服务端返回地址
         $pay_callbackurl = $_SERVER['HTTP_HOST'];  //页面跳转返回地址
@@ -333,7 +332,7 @@ class PayController extends Controller
             "merchant"      => $merchant,
             "amount"        => $amount,
             "pay_code"      => $pay_code,
-            "order_no"      => date('YmdHis').rand(0000,9999),
+            "order_no"      => date('YmdHis',time()).mt_rand(0000,9999),
             "notify_url"    => $pay_notifyurl,
             "return_url"    => $pay_callbackurl,
         );
