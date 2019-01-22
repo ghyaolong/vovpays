@@ -90,14 +90,14 @@
                                         </td>
                                         <td>{{$v->created_at}}</td>
                                         <td>
-                                            <div class="btn-group">
-                                                <button class="btn btn-primary btn-sm" onclick="rate('编辑费率')">费率
-                                                </button>
-                                                <button class="btn btn-primary btn-sm"
-                                                        onclick="show('查看下级流水',{{$v->id}})">
-                                                    查看
-                                                </button>
-                                            </div>
+                                            {{--<div class="btn-group">--}}
+                                                {{--<button class="btn btn-primary btn-sm" onclick="rate('编辑费率')">费率--}}
+                                                {{--</button>--}}
+                                                {{--<button class="btn btn-primary btn-sm"--}}
+                                                        {{--onclick="show('查看下级流水',{{$v->id}})">--}}
+                                                    {{--查看--}}
+                                                {{--</button>--}}
+                                            {{--</div>--}}
                                         </td>
                                     </tr>
                                 @endforeach
