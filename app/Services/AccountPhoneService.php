@@ -78,7 +78,7 @@ class AccountPhoneService
         $params = [
             'sql'   => $sql,
             'where' => $where,
-            'time'  => isset($data['searchTime']) ?: ''
+            'time'  => isset($data['searchTime']) ? $data['searchTime'] : ''
         ];
         return $params;
 
@@ -171,5 +171,16 @@ class AccountPhoneService
     public function getPhoneidAndStatusAndUserid(string $phoneid, int $status, int $uid )
     {
         return $this->accountPhoneRepository->getPhoneidAndStatusAndUserid($phoneid, $status, $uid);
+    }
+
+    /**收款设备操作鉴权
+     * @param $user_id
+     * @param $device_id
+     */
+    public function ownerAuthorize($user_id,$device_id){
+        $deviceInfo=$this->accountPhoneRepository->findIdAndUserId($device_id,$user_id);
+        if(!$deviceInfo){
+            throw new CustomServiceException('非法操作!');
+        }
     }
 }

@@ -195,9 +195,9 @@
                             if (result.status) {
                                 toastr.success(result.msg);
                             } else {
-                                $('#addModel').modal('hide');
+                                // $('#addModel').modal('hide');
                                 toastr.error(result.msg);
-                                window.location.href = window.location.href;
+                                // window.location.href = window.location.href;
                             }
                         },
                         error: function (XMLHttpRequest, textStatus) {

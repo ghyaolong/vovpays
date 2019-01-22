@@ -9,6 +9,7 @@
 namespace App\Http\Agent\Controllers;
 
 
+use App\Http\Requests\ManageWithdrawRequest;
 use App\Services\BankCardService;
 use App\Services\BanksService;
 use App\Services\WithdrawsService;
@@ -16,7 +17,7 @@ use App\Services\ChannelService;
 use App\Http\Requests\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Exceptions\CustomServiceException;
+
 
 class WithdrawsController extends Controller
 {
@@ -29,7 +30,7 @@ class WithdrawsController extends Controller
      * WithdrawsController constructor.
      * @param WithdrawsService $withdrawsService
      */
-    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService, BanksService $banksService,ChannelService $channelService)
+    public function __construct(WithdrawsService $withdrawsService, BankCardService $bankCardService, BanksService $banksService, ChannelService $channelService)
     {
         $this->withdrawsService = $withdrawsService;
         $this->bankCardService = $bankCardService;
@@ -45,6 +46,7 @@ class WithdrawsController extends Controller
      */
     public function index(Request $request)
     {
+        $title='我的结算';
 
         $uid = Auth::user()->id;
         $data = $request->input();
@@ -55,7 +57,7 @@ class WithdrawsController extends Controller
         $info = $search['info'];
         $query = $request->input();
 
-        return view('Agent.Withdraws.withdraws', compact('list', 'info', 'query'));
+        return view('Agent.Withdraws.withdraws', compact('title','list', 'info', 'query'));
     }
 
     /**商户结算管理列表
@@ -66,6 +68,10 @@ class WithdrawsController extends Controller
 
         $title = '结算管理';
         $data = $request->input();
+
+        if (env('ADD_ACCOUNT_TYPE') != 3) {
+            throw new CustomServiceException('非法操作!');
+        }
 
         $search = $this->withdrawsService->searchPage($data, 10);
 
@@ -82,6 +88,10 @@ class WithdrawsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public  function doManage(Request $request){
+
+        if (env('ADD_ACCOUNT_TYPE') != 3) {
+            throw new CustomServiceException('非法操作!');
+        }
 
         if ($request->type == 1) {
             //普通结算
@@ -102,43 +112,23 @@ class WithdrawsController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(ManageWithdrawRequest $request)
     {
-
-        env('ADD_ACCOUNT_TYPE') !=3?? ajaxError('结算操作失败');
-//        $this->validate($request, [
-//            'id'=>'required|alpha_num',
-//            'type' => 'required|in:1,2',
-//            'status' => 'required|in:1,2,3,4',
-//            'comment'  => 'required_if:type,1|max:191',
-//            'channelCode'=> 'required_if:type,2|alpha_num',
-//        ],[
-//            'id.required'=>'非法操作',
-//            'id.alpha_num'=>'非法操作',
-//            'type.required' => '非法操作',
-//            'type.in' => '非法操作',
-//            'status.required' => '非法操作',
-//            'status.in' => '非法操作',
-//            'comment.required_if'  => '备注不能为空',
-//            'comment.max'  => '备注过长',
-//            'channelCode.required_if'  => '必须选择代付通道',
-//            'channelCode.alpha_num'  => '非法操作',
-//        ]);
-
-
         $data = $request->input();
-        $result=false;
+
+        //结算处理
+        $result = false;
         if ($data['type'] == 1) {
             //普通结算
-            $result=$this->withdrawsService->commonWithdraw($data);
+            $result = $this->withdrawsService->commonWithdraw($data);
         } elseif ($data['type'] == 2) {
             //代付计结算
-            $result=$this->withdrawsService->paidWithdraw($data);
+            $result = $this->withdrawsService->paidWithdraw($data);
         }
 
         if ($result) {
             return ajaxSuccess('结算操作成功');
-        }else{
+        } else {
             return ajaxError('结算操作失败');
         }
     }
@@ -150,6 +140,7 @@ class WithdrawsController extends Controller
      */
     public function clearing(Request $request)
     {
+        $title='账户结算';
         $uid = Auth::user()->id;
         $list = $this->bankCardService->getUserIdAll($uid);
 
@@ -166,8 +157,9 @@ class WithdrawsController extends Controller
 
         $WithdrawRule=$this->withdrawsService->getWithdrawRule();
 
-        return view('Agent.Withdraws.clearing', compact('list','banks', 'clearings','WithdrawRule'));
+        return view('Agent.Withdraws.clearing', compact('title','list', 'banks', 'clearings', 'WithdrawRule'));
     }
+
     /**
      * 申请结算
      * @param Request $request

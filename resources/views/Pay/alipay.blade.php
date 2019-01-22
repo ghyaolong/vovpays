@@ -36,7 +36,7 @@
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
                 <div style="position: relative;display: inline-block;">
-                    <img id="show_qrcode" src="http://mobile.qq.com/qrcode?url={{ urlencode($data['payurl']) }}" width="200">
+                    <img id="show_qrcode" src="" width="200">
                 </div>
             </div>
         </div>
@@ -50,6 +50,8 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('js/jquery.qrcode.min.js') }}"></script>
 <script type="text/javascript">
 var myTimer;
 function timer(intDiff) {
@@ -130,7 +132,32 @@ $().ready(function(){
     {
         $('.paybtn').show();
     }
+
+    var strcode = toUtf8('{!! $data['payurl'] !!}');
+    var qrcode = $('#show_qrcode').qrcode({ text: strcode });
+    var canvas = qrcode.find('canvas').get(0);
+    $('#show_qrcode').attr('src', canvas.toDataURL('image/jpg'));
+    canvas.remove();
 })
+function toUtf8(str) {
+    var out, i, len, c;
+    out = "";
+    len = str.length;
+    for(i = 0; i < len; i++) {
+        c = str.charCodeAt(i);
+        if ((c >= 0x0001) && (c <= 0x007F)){
+            out += str.charAt(i);
+        } else if (c > 0x07FF) {
+            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+            out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+        } else{
+            out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+        }
+    }
+    return out;
+}
 </script>
 </body>
 </html>

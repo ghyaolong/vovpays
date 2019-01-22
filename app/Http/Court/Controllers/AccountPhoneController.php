@@ -13,6 +13,7 @@ use App\Services\AccountPhoneService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AccountPhoneStatusRequest;
 
 class AccountPhoneController extends Controller
 {
@@ -99,7 +100,7 @@ class AccountPhoneController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveStatus(Request $request)
+    public function saveStatus(AccountPhoneStatusRequest $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
         $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);

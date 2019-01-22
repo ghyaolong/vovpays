@@ -35,11 +35,12 @@ class BankCardController extends Controller
      */
     public function index()
     {
+        $title='银行卡管理';
         $uid=Auth::user()->id;
         $lists = $this->bankCardService->getUserIdAll($uid);
         $banks= $this->banksService->findAll();
 
-        return view('Agent.BankCard.bankCard', compact('lists','banks'));
+        return view('Agent.BankCard.bankCard', compact('title','lists','banks'));
     }
 
 

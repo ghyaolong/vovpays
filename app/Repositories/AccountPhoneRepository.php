@@ -36,7 +36,6 @@ class AccountPhoneRepository
         {
             $time = date('Y-m-d');
         }
-
         return $this->account_phone->whereRaw($sql, $where)
             ->leftjoin('account_day_counts',function ($join) use($time){
                 $join->on('account_day_counts.account', '=', 'account_phones.account')

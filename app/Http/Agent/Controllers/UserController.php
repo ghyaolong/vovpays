@@ -13,6 +13,7 @@ use App\Services\AgentService;
 use App\Services\CheckUniqueService;
 use App\Services\StatisticalService;
 use App\Services\UserService;
+use App\Services\UserRateService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,16 +23,18 @@ class UserController extends Controller
     protected $userService;
     protected $checkUniqueService;
     protected $statisticalService;
+    protected $userRateService;
 
     /**
      * UserController constructor.
      * @param UserService $userService
      */
-    public function __construct(StatisticalService $statisticalService, UserService $userService,CheckUniqueService $checkUniqueService)
+    public function __construct(StatisticalService $statisticalService, UserService $userService,CheckUniqueService $checkUniqueService,UserRateService $userRateService)
     {
         $this->userService = $userService;
         $this->checkUniqueService=$checkUniqueService;
         $this->statisticalService=$statisticalService;
+        $this->userRateService=$userRateService;
     }
 
     /**
@@ -41,8 +44,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $title  = '商户管理';
         $query = $request->input();
-        $pid = Auth::user()->id;
+        $pid   = Auth::user()->id;
 
         if(count($query))
         {
@@ -52,9 +56,7 @@ class UserController extends Controller
             $list = $this->userService->getParentIdPage($pid,10);
         }
 
-
-        return view('Agent.User.user',compact( 'list', 'query'));
-
+        return view('Agent.User.user',compact( 'title','list', 'query'));
 
     }
 
@@ -64,10 +66,12 @@ class UserController extends Controller
      */
     public function show()
     {
+        $title       = '账户信息';
         $uid         = Auth::user()->id;
         $user        = $this->userService->findId($uid);
         $statistical = $this->statisticalService->findUserId($uid);
-        return view('Agent.User.index', compact('user','statistical'));
+
+        return view('Agent.User.index', compact('title','user','statistical'));
     }
 
 
@@ -121,6 +125,10 @@ class UserController extends Controller
         }else{
             return  response()->json(array("valid"=>"false"));
         }
+    }
+
+    public  function editUserRate(){
+
     }
 
 

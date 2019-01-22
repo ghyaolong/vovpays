@@ -35,10 +35,10 @@
     <div class="content-wrapper">
         <!-- 内容导航 -->
         <section class="content-header">
-            <h1>@yield("title",'后台主页')</h1>
+            <h1>{{ $title }} <small>@if (isset($description) && $description) {{ $description }} @endif</small></h1>
             <ol class="breadcrumb">
-                <li><a href="{{ route('agent.index') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
-                <li class="active">@yield("title",'后台主页')</li>
+                <li><a href="{{ route('admin') }}"><i class="fa fa-dashboard"></i> 主页</a></li>
+                <li class="active">{{ $title }}</li>
             </ol>
         </section>
         <!-- 内容导航结束 -->

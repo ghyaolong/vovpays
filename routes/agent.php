@@ -25,6 +25,7 @@ Route::group([], function ($router) {
         Route::post('user', 'UserController@add')->name('agent.add');
         Route::post('user/check', 'UserController@checkUnique')->name('agent.check');
         Route::post('user/saveStatus', 'UserController@saveStatus')->name('agent.saveStatus');
+        Route::post('user/editUserRate', 'UserController@editUserRate')->name('agent.add');
 
         Route::get('info', 'AgentController@index')->name('agent.info');
 

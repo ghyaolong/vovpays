@@ -37,9 +37,9 @@ class WithdrawsService
      */
     public function add(array $data)
     {
-        $user= Auth::user();
+        $user = Auth::user();
         $data['user_id'] = $user->id;
-        $data['agent_id']=$user->group_type==1?$user->parentId:'0';
+        $data['agent_id'] = $user->group_type == 1 ? $user->parentId : '0';
 
 
         //权限验证
@@ -58,11 +58,11 @@ class WithdrawsService
 
         DB::connection('mysql')->transaction(function () use ($data) {
             //账户余额更新
-            $status=$this->statisticalRepository->updateUseridBalanceDecrement($data['user_id'], $data['withdrawAmount']);
+            $status = $this->statisticalRepository->updateUseridBalanceDecrement($data['user_id'], $data['withdrawAmount']);
             //添加结算信息
-            $status&&($status=$this->withdrawsRepository->add($data));
+            $status && ($status = $this->withdrawsRepository->add($data));
 
-            if(!$status){
+            if (!$status) {
                 throw  new CustomServiceException('系统错误,结算申请失败');
             }
         }, 2);
@@ -97,8 +97,7 @@ class WithdrawsService
             throw   new CustomServiceException('提现金额超过账户可提现金额');
         }
         // 提现金额不能小于手续费
-        if($data['withdrawRate'] >=  $data['withdrawAmount'])
-        {
+        if ($data['withdrawRate'] >= $data['withdrawAmount']) {
             throw   new CustomServiceException('提现金额过低');
         }
     }
@@ -212,64 +211,79 @@ class WithdrawsService
     {
         $id = $info['id'];
         $info = array_except($info, ['_token', 'id']);
+
         if ($info['status'] == 2) {
-            $info['channelCode']=$info['channelCode']==0?'':$info['channelCode'];
-            $status=$this->withdrawsRepository->update($id, $info);
+            $info['channelCode'] = $info['channelCode'] == 0 ? '' : $info['channelCode'];
+            $status = $this->withdrawsRepository->update($id, $info);
         } elseif ($info['status'] == 4) {
             //取消结算
-            $this->cancelWithdraw($id,$info);
-            $status=true;
+            $this->cancelWithdraw($id, $info);
+            $status = true;
         }
         return $status;
     }
 
-    /**普通结算处理
+    /**代付结算处理
      * @param $info
      */
     public function paidWithdraw($info)
     {
         $id = $info['id'];
         $info = array_except($info, ['_token', 'id']);
+
         if ($info['status'] == 1) {
             //修改状态
-            $status=$this->withdrawsRepository->update($id, $info);
+            $status = $this->withdrawsRepository->update($id, $info);
             //调用代付接口
-
-
         } elseif ($info['status'] == 4) {
             //取消结算
-            $this->cancelWithdraw($id,$info);
-            $status=true;
+            $this->cancelWithdraw($id, $info);
+            $status = true;
         }
-        return $status;
+        return isset($status)?$status:false;
     }
 
-    private function  cancelWithdraw($id,$info){
+    /**取消结算
+     * @param $id
+     * @param $info
+     */
+    private function cancelWithdraw($id, $info)
+    {
 
-        DB::connection('mysql')->transaction(function () use ($id,$info) {
+        DB::connection('mysql')->transaction(function () use ($id, $info) {
 
             //获取结算详情
-            $withdrawInfo=$this->withdrawsRepository->findById($id);
+            $withdrawInfo = $this->withdrawsRepository->findById($id);
             //账户余额更新
-            $status=$this->statisticalRepository->updateUseridBalanceIncrement($withdrawInfo->user_id, $withdrawInfo->withdrawAmount);
+            $status = $this->statisticalRepository->updateUseridBalanceIncrement($withdrawInfo->user_id, $withdrawInfo->withdrawAmount);
             //资金变动记录
 //          $this->addMoneyDetail($data);
             //修改结算记录
-            $withdrawInfo->status=$info['status'];
-            $withdrawInfo->comment=$info['comment'];;
-            $status&&$status=$withdrawInfo->save();
+            $withdrawInfo->status = $info['status'];
+            $withdrawInfo->comment = $info['comment'];;
+            $status && $status = $withdrawInfo->save();
 
-            if(!$status){
+            if (!$status) {
                 throw new CustomServiceException('取消结算操作失败');
             }
         }, 2);
-
-
-
-
     }
 
+    /**代理处理结算鉴权
+     * @param $agentId
+     * @param $wOrderId
+     */
+    public function agentAuthorize($agent_id, $withdraw_id)
+    {
+        if (env('ADD_ACCOUNT_TYPE') != 3) {
+            throw new CustomServiceException('非法操作!');
+        }
+        $withdrawInfo=$this->withdrawsRepository->findById($withdraw_id);
+        if($withdrawInfo->agent_id!=$agent_id){
 
+            throw new CustomServiceException('非法操作!');
+        }
+    }
 
 
     /**生成提款订单号

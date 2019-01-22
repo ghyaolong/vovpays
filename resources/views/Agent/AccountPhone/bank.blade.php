@@ -1,5 +1,5 @@
 @extends("Agent.Commons.layout")
-@section('title','银行卡号')
+
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection

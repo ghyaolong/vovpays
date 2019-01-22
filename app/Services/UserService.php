@@ -183,6 +183,8 @@ class UserService
      */
     public function updateStatus(int $id, array $data)
     {
+        //鉴权
+        
         return $this->usersRepository->update($id, $data);
     }
 

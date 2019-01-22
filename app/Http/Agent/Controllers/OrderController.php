@@ -28,6 +28,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        $title='交易管理';
         $uid = Auth::user()->id;
         $query = $request->input();
         $query['agent_id'] = $uid;
@@ -43,7 +44,7 @@ class OrderController extends Controller
         unset($query['_token']);
         unset($query['agent_id']);
 
-        return view('Agent.Order.order', compact('list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
+        return view('Agent.Order.order', compact('title','list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
 
     }
 

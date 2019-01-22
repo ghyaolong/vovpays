@@ -1,5 +1,5 @@
 @extends('Agent.Commons.layout')
-
+@section('title','结算管理')
 @section("css")
     <link rel="stylesheet"
           href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
@@ -203,7 +203,6 @@
                         <input type="hidden" name="id" id="orderId1">
                         <input type="hidden" name="type" value="1">
                         {{ csrf_field() }}
-
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">结算通道</label>
                             <div class="col-xs-9">
