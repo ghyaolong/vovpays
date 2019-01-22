@@ -2,12 +2,11 @@
 
 namespace App\Http\Admin\Controllers;
 
-
+use App\Http\Requests\ManageWithdrawRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Services\WithdrawsService;
 use App\Services\ChannelService;
-use Illuminate\Support\Facades\Auth;
 
 class WithdrawsController extends Controller
 {
@@ -74,25 +73,8 @@ class WithdrawsController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(ManageWithdrawRequest $request)
     {
-
-        $this->validate($request, [
-            'type' => 'required|in:1,2',
-            'status' => 'required|in:1,2,3,4',
-            'comment'  => 'required_if:type,1|max:191',
-            'channelCode'=> 'required_if:type,2|alpha_num',
-        ],[
-            'type.required' => '非法操作',
-            'type.in' => '非法操作',
-            'status.required' => '非法操作',
-            'status.in' => '非法操作',
-            'comment.required_if'  => '备注不能为空',
-            'comment.max'  => '备注过长',
-            'channelCode.required_if'  => '必须选择代付通道',
-            'channelCode.alpha_num'  => '非法操作',
-
-        ]);
 
             $data = $request->input();
 

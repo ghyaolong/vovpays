@@ -42,12 +42,13 @@ class IndexController extends Controller
      */
     public function show(Request $request)
     {
+        $title='主页';
         $query = $request->input();
         $query['user_id'] = Auth::user()->id;
 
         $user_day_count   = $this->orderDayCountService->findDayAndUserCount($query['user_id']);
         $order_day_count = json_encode(convert_arr_key($this->orderDayCountService->getOrderUserSevenDaysCount($query), 'tm'));
-        return view('Agent.Index.index', compact('user_day_count', 'order_day_count'));
+        return view('Agent.Index.index', compact('title','user_day_count', 'order_day_count'));
     }
 
 

@@ -37,6 +37,7 @@ class AccountBankCardsController extends Controller
      */
     public function index(Request $request)
     {
+        $title='银行卡号';
         $data = $request->input();
         $data['user_id'] = Auth::user()->id;
 
@@ -45,7 +46,7 @@ class AccountBankCardsController extends Controller
         $alist= $this->accountPhoneService->searchPhone($data, 1000);
         $bankList=$this->banksService->findAll();
 
-        return view("Agent.AccountPhone.bank", compact('list','alist','bankList'));
+        return view("Agent.AccountPhone.bank", compact('title','list','alist','bankList'));
 
 
     }

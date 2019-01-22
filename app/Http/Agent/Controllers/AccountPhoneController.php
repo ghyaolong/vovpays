@@ -13,6 +13,7 @@ use App\Services\AccountPhoneService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AccountPhoneStatusRequest;
 
 class AccountPhoneController extends Controller
 {
@@ -31,17 +32,22 @@ class AccountPhoneController extends Controller
      */
     public function index(Request $request)
     {
+
+
         $data = $request->input();
         $data['user_id'] = Auth::user()->id;
+
         if ($request->type == '0') {
             $data['accountType'] = 'wechat';
+            $title='微信收款';
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
+            $title='支付宝收款';
         }
         $list = $this->accountPhoneService->searchPhoneStastic($data, 6);
 
 
-        return view("Agent.AccountPhone.{$data['accountType']}", compact('list'));
+        return view("Agent.AccountPhone.{$data['accountType']}", compact('title','list'));
 
 
     }
@@ -68,7 +74,9 @@ class AccountPhoneController extends Controller
                 return ajaxError('编辑失败！');
             }
         } else {
+
             $request->merge(['user_id' => auth()->user()->id]);
+
             $result = $this->accountPhoneService->add($request->input());
             if ($result) {
                 return ajaxSuccess('账号添加成功！');
@@ -99,9 +107,11 @@ class AccountPhoneController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveStatus(Request $request)
+    public function saveStatus(AccountPhoneStatusRequest $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
+
+
         $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
         if ($result) {
             return ajaxSuccess('修改成功！');
@@ -117,7 +127,11 @@ class AccountPhoneController extends Controller
      */
     public function edit(Request $request)
     {
-        $result = $this->accountPhoneService->findIdAndUserId($request->id, auth()->user()->id);
+        $user_id=Auth::user()->id;
+        $device_id=$request->id;
+        $this->accountPhoneService->ownerAuthorize($user_id,$device_id);
+
+        $result = $this->accountPhoneService->findIdAndUserId($device_id, $user_id);
         if ($result) {
             return ajaxSuccess('获取成功！', $result->toArray());
         } else {

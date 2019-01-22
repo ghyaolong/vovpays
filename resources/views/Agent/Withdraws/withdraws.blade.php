@@ -1,5 +1,5 @@
 @extends("Agent.Commons.layout")
-@section('title','提现记录')
+@section('title','结算管理')
 @section("css")
     <link rel="stylesheet"
           href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
