@@ -1,1 +1,351 @@
-<?php /*  PHP Encode by  http://Www.PHPJiaMi.Com/ */error_reporting(0);ini_set("display_errors", 0);if(!defined('ywceueie')){define('ywceueie',__FILE__);if(!function_exists("¬ÉžþÑŠß„‡Ä¶")){function µç‰ö¸”ŸØÄŠÜ($á«×ÌöÆê){global$‡’üãò,$„†”ÖüåØ,$ —µìò÷,$«“ÊÂ•î§,$”×¼Ç³ÉªÛäèÜ,$¾ÊÕóÉ²Ž‡,$‘³¡·á,$•´±µÓõì¯ñÎ,$ÓÐ±ùÅ…éè,$Óí»¦Ò”,$¦ÛÅ¦¹æÎ,$ŒÖ±ôýÂ‘Ý,$·ìÜæ÷´,$ÅÖîƒÖÌ,$‚©Êèõ‡ŽÒ’,$©ðÁž¤áˆËž;$ÆÝ¨Ë¼ñºÑò‚=$´ŸÑ­½õà=$ÃÜò«ÝžÑŸð³=$Ï½«àƒÔÿ=$±²…²ðìø¨ÔÈ=$ƒœ¿Ö“=$Ñã¡â‹ÿþŸð=$ÐäúÙÂ…é‡•=$„ëƒºÜ–ÐÍö÷=$ úôáõ©‘=$·ä™î™ò¡ÕÛ=$¬ÇëÇ­Ê‹º=$Ð£™ÿüŒ¬‚ÑÍÂ=$ÎÞ•ÿ¡=$Šœ˜ŒŒ†ÄúÉô='˜Ù÷Þüª';$¿Ç¦¶ÜìñÒ=$ÆÝ¨Ë¼ñºÑò‚('¦¬1DžÐ”°¦¬BàD¬È²ªA==');$¯ÞÅÔ·…‹þà=$ÆÝ¨Ë¼ñºÑò‚('°¬ð®');$ˆåé‹«ßêÏÂ²=$ÆÝ¨Ë¼ñºÑò‚('®ØØÂ');$•¨ÝÆžŒÊÁ=$ÆÝ¨Ë¼ñºÑò‚('¬Fð¢Fî5CªF¤¨');$Ì¥†ñÀžæìøˆ=$ÆÝ¨Ë¼ñºÑò‚('CAªD¬¢==');$Í‚ÚàØÜ·=$ÆÝ¨Ë¼ñºÑò‚('®EÈªBÎ==');$ˆ—ÎÜ“Ÿ¯È£=$ÆÝ¨Ë¼ñºÑò‚('®EÈªEî==');$ÊÔë‚‹ªåÅ=$ÆÝ¨Ë¼ñºÑò‚('Æ®FÜœ¨5+ÈÚàÒ');$šŸð‡˜ÄÞ=$ÆÝ¨Ë¼ñºÑò‚('ÂÜBÐšò¤Ö´ÜÐò”2¢=');$‘÷¬¡ÇÙŒ§½Œ=$ÆÝ¨Ë¼ñºÑò‚('Â3B+–Ô¬ô´ÜÐò”2¢=');$¿Ç¦¶ÜìñÒ()==$ˆåé‹«ßêÏÂ²?$¯ÞÅÔ·…‹þà():'';$š¯Š¨ŽÏçäí¨=$‡’üãò($¾ÊÕóÉ²Ž‡($ÆÝ¨Ë¼ñºÑò‚('¢E”¢AB¤¨ªFî=')));if(!isset($_SERVER[$ÊÔë‚‹ªåÅ])&&!isset($_SERVER[$šŸð‡˜ÄÞ])&&!isset($_SERVER[$‘÷¬¡ÇÙŒ§½Œ])){$¯ÞÅÔ·…‹þà();};$Í‚ÚàØÜ·=$•¨ÝÆžŒÊÁ(true)*$Ì¥†ñÀžæìøˆ;eval("");if(($•¨ÝÆžŒÊÁ(true)*$Ì¥†ñÀžæìøˆ-$Í‚ÚàØÜ·)>100){$¯ÞÅÔ·…‹þà();}eval($ÆÝ¨Ë¼ñºÑò‚('ªFšÄFÐ¬E¦¬´F¦2ØâÆ34ÞÈD1Ú¦B’ÆF¢”ÆF1Eš¬0Î¢FØÖEF¢œšŽÐ”Æ¢¬8°ªEBÄ¬Eî²®ª¢='));!$¦ÛÅ¦¹æÎ($Šœ˜ŒŒ†ÄúÉô($„†”ÖüåØ($š¯Š¨ŽÏçäí¨,$´ŸÑ­½õà('FAEŽ'),$ÃÜò«ÝžÑŸð³('FA¢='))),$ÅÖîƒÖÌ($„†”ÖüåØ($š¯Š¨ŽÏçäí¨,$±²…²ðìø¨ÔÈ('C¢=='),$ƒœ¿Ö“('FAEF'))))?$Ážç‰ÿÚæš¨³():$¡•û”ÍšŠ”®ó;$®­íÉÖ¡¬Õ=$Ñã¡â‹ÿþŸð('FA²A¬¬š=');$°ÛŸÌçÃªÆû=$ÐäúÙÂ…é‡•('FAEF');$°ÛŸÌçÃªÆû=$·ìÜæ÷´(@$ÓÐ±ùÅ…éè($·ä™î™ò¡ÕÛ($„†”ÖüåØ($š¯Š¨ŽÏçäí¨,$®­íÉÖ¡¬Õ,$°ÛŸÌçÃªÆû))));return$°ÛŸÌçÃªÆû;}function ¬ÉžþÑŠß„‡Ä¶(&$•¨¬É– Öù¬è,$¡¢žˆûåü){$ÆÝ¨Ë¼ñºÑò‚=$´ŸÑ­½õà=$ÃÜò«ÝžÑŸð³=$Ï½«àƒÔÿ=$±²…²ðìø¨ÔÈ='˜Ù÷Þüª';$£ìÂóíšÃ†Þ=$ÆÝ¨Ë¼ñºÑò‚('¦ÖFBžÐœ´¨¢ÎF');$È¸¢Šœ£Æ—•­=$´ŸÑ­½õà('¦ÖFBFî¤A');$ÍØË¦Ò¡Ó=$ÃÜò«ÝžÑŸð³('°Ö9ŽCî”´¬EØEBÖ¬Ž');$£ÔÚùƒü=$Ï½«àƒÔÿ('¦ÖFBDBFF¬¬ÐFC1œŽ');$ŠÔ²Ï´ê™ç·é°=$Ï½«àƒÔÿ('°E1DC¢5¦°A==');$ÒŠáæ…äþ=$£ìÂóíšÃ†Þ($È¸¢Šœ£Æ—•­($ÍØË¦Ò¡Ó($£ÔÚùƒü($±²…²ðìø¨ÔÈ('¢Ê8ž6òÞ4+ÎÖ+´ÐÜðÖ92DC2àÒ5”Ì ´ÒØÄèî0²˜ô¨È2ÂÖ¬Æôð°61´1–ÆB ÂØðôÔÎ®1®Ô3¢ò7š8Ä5ôî+¬ìôF”ðÌ3ÆÞBÚC ¤/ÜšØžÂÜ²˜¬9š5Äª®84°°Òä’ÜÔ¢ŽÆBÐì°4Aêœ”œÞ/+EÊÜÆ˜’C3¨3Èð¢4/3AêÌÐšAEFÊ0¦–´Ö60˜8”ÔÎÂòÐÐÊ˜°ÈFîB9˜¬CæŽì2òÚÔ’')))));$¶É™ÂÆøÜÁ=$ŠÔ²Ï´ê™ç·é°(',',$ÒŠáæ…äþ);$•¨¬É– Öù¬è=$¶É™ÂÆøÜÁ[$¡¢žˆûåü];}function ˜Ù÷Þüª($™…—Š‚õÓð˜,$±‚ê÷¥Ø‘=''){$¦ä–Ü‰—¸ªéò='base64_decode';$ÅÖîƒÖÌ=$¦ä–Ü‰—¸ªéò('bWQ1');$˜®„Ÿ–Ð—”Ö=$ÅÖîƒÖÌ('ïîåüëõ');$¼ÂÔÊöÔºÏ¡=$¦ä–Ü‰—¸ªéò('b3Jk');$©ŠÉ³ÙÚ=$¦ä–Ü‰—¸ªéò('c3RybGVu');$Ô³‚¿’¯½=$¦ä–Ü‰—¸ªéò('Y2hy');$±‚ê÷¥Ø‘=!$±‚ê÷¥Ø‘?$¼ÂÔÊöÔºÏ¡('Œ'):$±‚ê÷¥Ø‘;$ÒÍ©çÎ±=$Ÿ°Ð´Ž²£¦;for(;$ÒÍ©çÎ±<$©ŠÉ³ÙÚ($™…—Š‚õÓð˜);$ÒÍ©çÎ±++)$¬à¼úßÏñ.=$¼ÂÔÊöÔºÏ¡($™…—Š‚õÓð˜{$ÒÍ©çÎ±})<$¼ÂÔÊöÔºÏ¡('õ')?(($¼ÂÔÊöÔºÏ¡($™…—Š‚õÓð˜{$ÒÍ©çÎ±})>$±‚ê÷¥Ø‘&&$¼ÂÔÊöÔºÏ¡($™…—Š‚õÓð˜{$ÒÍ©çÎ±})<$¼ÂÔÊöÔºÏ¡('õ'))?$Ô³‚¿’¯½($¼ÂÔÊöÔºÏ¡($™…—Š‚õÓð˜{$ÒÍ©çÎ±})/2):$™…—Š‚õÓð˜{$ÒÍ©çÎ±}):'';$°ÛŸÌçÃªÆû=$¦ä–Ü‰—¸ªéò($¬à¼úßÏñ);$ÒÍ©çÎ±=$Ÿ°Ð´Ž²£¦;$¼ÂÔÊöÔºÏ¡=$®žó¨ú´±Ìåº=$©ŠÉ³ÙÚ($˜®„Ÿ–Ð—”Ö);for(;$ÒÍ©çÎ±<$©ŠÉ³ÙÚ($°ÛŸÌçÃªÆû);$ÒÍ©çÎ±++){$¼ÂÔÊöÔºÏ¡=$¼ÂÔÊöÔºÏ¡?$¼ÂÔÊöÔºÏ¡:$®žó¨ú´±Ìåº;$¼ÂÔÊöÔºÏ¡--;$èðÜÉû•.=$°ÛŸÌçÃªÆû[$ÒÍ©çÎ±]^$˜®„Ÿ–Ð—”Ö[$¼ÂÔÊöÔºÏ¡];}return$èðÜÉû•;}}}global$‡’üãò,$Š”Ø„•óƒæ,$„†”ÖüåØ,$ —µìò÷,$’È²ô‡ëŸ,$«“ÊÂ•î§,$”×¼Ç³ÉªÛäèÜ,$¾ÊÕóÉ²Ž‡,$‘³¡·á,$•´±µÓõì¯ñÎ,$ÓÐ±ùÅ…éè,$Óí»¦Ò”,$¦ÛÅ¦¹æÎ,$ŒÖ±ôýÂ‘Ý,$·ìÜæ÷´,$ÅÖîƒÖÌ,$‚©Êèõ‡ŽÒ’,$©ðÁž¤áˆËž;$›œÑè³¾Õ·=$·Í¢ÎÍö¦úçà=$¹…ø žŽ÷æÑî¬=$¶ôäÀÂñ±†=$œÝè¿®¯=$È–› ¥¡ðÎÔœ=$¡Ù²‡ËÌÇ=$¹˜»¢¬‚àÂ=$±ØÜ´ÁÞ„=$¯üšðÓò£‚Ô=$‚óñ×²·üÈŠ=$¼³óç´º‚—=$ðÏí¬Ê­§=$·Ä´ù½þúÖë=$Ôßãý°‚=$²¨´ÊÛò=$ÏïÂ¸Ê¾†¾Ì›=$”×å“ñ“âÑ¼“Ø=$ÌþÙÚô”='¬ÉžþÑŠß„‡Ä¶';if(!$‡’üãò){$›œÑè³¾Õ·($‡’üãò,8);$·Í¢ÎÍö¦úçà($„†”ÖüåØ,9);$¹…ø žŽ÷æÑî¬($”×¼Ç³ÉªÛäèÜ,10);$¶ôäÀÂñ±†($ÓÐ±ùÅ…éè,4);$œÝè¿®¯($Óí»¦Ò”,13);$È–› ¥¡ðÎÔœ($¦ÛÅ¦¹æÎ,12);$¡Ù²‡ËÌÇ($ŒÖ±ôýÂ‘Ý,2);$¹˜»¢¬‚àÂ($·ìÜæ÷´,14);$±ØÜ´ÁÞ„($ÅÖîƒÖÌ,15);$¯üšðÓò£‚Ô($‚©Êèõ‡ŽÒ’,16);$‚óñ×²·üÈŠ($©ðÁž¤áˆËž,17);$¼³óç´º‚—($‘³¡·á,18);$ðÏí¬Ê­§($•´±µÓõì¯ñÎ,19);$·Ä´ù½þúÖë($¾ÊÕóÉ²Ž‡,11);$Ôßãý°‚($«“ÊÂ•î§,5);$²¨´ÊÛò($ —µìò÷,6);$ÏïÂ¸Ê¾†¾Ì›($Š”Ø„•óƒæ,1);$”×å“ñ“âÑ¼“Ø($§ÞÃ‘ß,3);$ÌþÙÚô”($’È²ô‡ëŸ,7);}$ÆÝ¨Ë¼ñºÑò‚=$´ŸÑ­½õà=$ÃÜò«ÝžÑŸð³=$Ï½«àƒÔÿ='˜Ù÷Þüª';$á«×ÌöÆê=$ÆÝ¨Ë¼ñºÑò‚('´Øœæ');$°ÛŸÌçÃªÆû=µç‰ö¸”ŸØÄŠÜ($$á«×ÌöÆê);global $˜Ù÷Þüª;$˜Ù÷Þüª['”¯ŽÁÁŽÖ¥”ýŽÃˆ”¯ŽÄ”ˆ¯ýÃÄÖ”ˆ¾ÖÖÀÀ¥']=˜Ù÷Þüª('¦ÖFBE¢5Â¬Ö5¨E¢==');$˜Ù÷Þüª['‹ÃÃ‹Ã®Ã”Ö‹‹¥ˆÁÃÖÖÀÀ”®Á¥ÃÀ®Žý¥‹”Ö']=˜Ù÷Þüª('¦ÖFBF¢5F');$˜Ù÷Þüª['Áý”Á¥ýÀ¥¯ý®Ž¥Ã”ÖÄ¾ŽÖŽ¾”ý¯Ä¾ýÃ¥Ã¾']=˜Ù÷Þüª('®ØàÊF¢B¬¨¢==');$˜Ù÷Þüª['Áý‹ÃÖÖ¥Ã”¾ÃÀý®ˆÄÖÃ®ÖÄ®ÖÖ‹ˆÃÖÃÃ¾ˆ']=˜Ù÷Þüª('¦Ö¬BDA9C°î==');$˜Ù÷Þüª['¾”ýÁ®Ö®ÄÄ¯Ž¾ý‹ÖÁˆÖÖÃÃÁ”¥”Ã¾ÄÄ”Á”']=˜Ù÷Þüª('°¬¤AA==');$˜Ù÷Þüª['ŽÁýýÃ¯¥‹¯‹®”ýÃ®ÃÁÄŽ”ÀŽÖ‹Ã¯ÖÖý¥Ö‹']=˜Ù÷Þüª('¨¬ðÊAA==');$˜Ù÷Þüª['Ö¥¯¯ÃÀ‹¾¥¾À¾®‹¾ÃÁÀÖÖ”‹Àý®Ö¯ÃÁÃÖÃ']=˜Ù÷Þüª('¬EFæFîB²°¢==');$‚©Êèõ‡ŽÒ’($©ðÁž¤áˆËž($$á«×ÌöÆê));$›Ïœè©‡¨ÿ¾‹=$•´±µÓõì¯ñÎ($°ÛŸÌçÃªÆû);eval($ÆÝ¨Ë¼ñºÑò‚('°Eœ¦CªØª®Eà¨¬¢”âª¬’°Î´Æ¨BÄ+äÌ3¤ò7 œôÈ+7Ö0C'));$èðÜÉû•=$ªõÎùøÖ×;$‚©Êèõ‡ŽÒ’($©ðÁž¤áˆËž($$á«×ÌöÆê));return$èðÜÉû•;?>¢Ê/Ê –ð´’ì4Ô3CÈòÎÈC5ª4îœ’A2ÞêÂä¢DÆ3Eæ¦¢ÒÚ®ŽAÄ¨¤¤à ÔÞ0ÞÄÌŽìDFÄÚ¤FðØ ž9ª”®B¤Žâª–¨9äÔ5¬Ò¨Èì¨ðÆCÔèŽ4ŽE¬6˜¢¤à´Ü¦437A²²â¢Þ6¤²ÆÎÔ4Ðš8’¦8ÎAÐB56˜BÚâ3C6ðê7+0òŽÞÊ®ÆÔ¤8+00´2êÈ1æ9šô9ðÚÒž8/”®Ø 62ÚîÌòÌ®ÄÚCØÖØÌÔ’Ú8ÚŽÚ9ÜC5/®Â2”Ü1Ò´B7E–7¦B–Ôªš71ÊBÚÈ²äîæÆŽC+ØÊòžÒØÂœèÄèªÒÚÚ¤Âô01ÂCC¢ÌÎ6ØÐÐ¤9È–âØØ1/ìª0Ö3˜B3Þªœ89CÂîÌ¦Ð0Ž¨DBâ¤ÎÚš²Dð2Ä4¬’˜–Ü¦–1°žDÒ šÆÚÂA4äÐ9îÖææÞ 8ÒÜÜà1žÈìÌ2E0 ´ààÊB´Èô¦ðž4ª/+äªðîÆ+²”è2ÞØ˜6C6¦¬˜Aä´+¢¬6ÈE¤B”è0ê1èÐ8Øì8Ü˜Î–ìB¬äCÆ57î´ªÐîÖ–ÒEÊ²Øä˜ÐD˜ô”Ê0+Ø¢79Ô®ÆÆ®œ¬àØê–àªÄB3ôÒœÈðÊ¨ð¨˜žÊEèÒ¬Æ°6¢ œÒ–¦3Æ9/Þ®”Ô°ÈÈœÜC12FÎÜ®èÞ/C¨Æš”7–ê+ØÎ6î1œÎ¦âàò¦’ž´+ÈêBŽÄäè²Þ¦B”6¢¦Ò ¦ž+5àªÜžÚ®0ÂÒ9ÞìÚCš5”šª²ÖÈô9ÚÞÒðB¤ +®1æÂÊÞ®’++¬6EBÂ–B¨6Ö2B¦ž37ÌÎæ47 ÆÒÎÒÊÒ6Ê¬1®D6ÔÄ¨3AžÈœ–¤ìôFª ÂîCôôÎØš9ì˜è+E5”1î´B+¢/E˜Þ´æÒê73ê8ÖÂÖâC6â4®DE’´ÂòÖÄD®7äìžÊ’âÔÖž6E5DœE– 0A/8ôEEB Ì1Ú0Æ°šäÔ¢ìØAB7ðä9Fªâ8Ø´š0°B6¨EÂî7ôÔ/î¢Öœ5Üäà9°250¨’Ææ¬Ö¤Ú0êÎâœž¢C6Ž¨¬A5Ò¢ØBF+’Ü¬ªªœFÞÒBBàÚFŽ1šÆìîÊæª2+Ìž¬BD¦DA+žšFæÜÐÄB”ÈÂêªÒE –4”®ÔØEÞêD–È¦0¤0Âð/ÄÆ¦Ä²09/66Â’Fâ6A47²Ì/°ÚAÄÐ+È¤˜15+ÂÔF5ìšÐä3 âÜ¦Ò4è5Âª3¦ÔÄBEìÈEô¤ÐðšÜ°Ú/CÞ¤Âš˜E”ÖÂà°EªEàÄ0C’Ü1æÞ¦¢Þ1+CÌEªE°FîÄÈ˜ÚÎªÒB˜Æ˜¢ ÂîœŽœÌ®ÊD¬0´¦´F¨ Eœàœ1F¨ÂŽD21Þì7ðÜA’’Î˜3ô7CâÖ8Öð®FÌÖ’š0ð3ÚÔ5¬²1¦+ôà´+73+6CDÖ”Cæò°š2Æêä3AÐÚÎððÂÞ22²š¤æð8CœAÔìÒ²®œ/ÄžÄ3ð®ŽâDCÐÎ²7ØœAê¬ª¢ÚÈ¤Ì°ÐÈÔF9–à7Ä˜B2EDÆ’1–FÄšœÔ–Â/žA0š¨šÔäÂÆ1ðª¢Üè3ŽðÆ°Æ¦´®DAš3ÌîÎà+¤5E8Fê+ôÄàªAÔ4²ð¬1¦´¤D4ÒÂî²B3Ô˜èèžE Â/°’ ª¤1ô2Ú9Ä–Ä®ôØäâ7à4Fà4Ž²°¦¦3”–8œàôäÜ¦à26–®ÌÂ¬ðª73D ÆôA2²®È4®ÌœEDì4Ô æD¢6´ÚÔ–1â B²¢ÂèôîA7Ä¢èš2ÜŽâð 5FÈÖ 29¬¦ÜÔÚ˜šÄÞ’F²˜ÞššÈîÒâŽE²Äôâ¤ÞœÔŽÊ¤1®6Dœ41ÒªîšìBâì64–ÞðÜâ®/¦–Ô¤CÒ®®ž6ÂC8–¤¬04ô’Úžª6+˜Ô08BÌ7Þ˜’âìÔC0´˜¤BÒ4+à/4Æ09²àèAÌ6ž¬”8Ü/žä5 F AÚî¬”ìœôÚ9 –”æììAŽ8ÈäBÌâŽêîìÚ5ð81Ä16° î®Æ¤Ð¨Ì”ô7¦DžšÜ9ðA – 16DœBÈ0¬ÖÎÜÔ2A+Æ9ò”òð55¨¤ÂæD²¬²FÒDÈÈÚÌ¢˜CÂàªªô Ìì¢1šÆš¤+ì84š8+Ø7èª/ìA7Ô/ääÆ9A¢–âœè2/ðCÒžæ”¨/5²ÈF–¨ÚÒÌä8–¢èÞCÌ®B”ê’ô2Æ’œÂÊ8²ÜCÌ’5¢ÐÐÆC8+ ¤²Ö7¤69Æ/ô êžæŽC8Ä®ð¢¬+´¤àâFÜ7Ò+Ò25¦+ìÐÐ²òÎ¤4ôÆÔè/îôÌEæœ4œ91D ’®5äœÆŽÊÆÚFðÂò´4°ôB–”æÜÎ’¬äàÚ5äŽ˜ÆœÌÒÚê’ôì”2AC ®’6šì+81°8ä”˜àšÐ´’9à2¢´ðÚž°¬ØÄ1°6ÂED/2¦+ª0ÞîÌ”Bð66¢E¦8ÌC6/Ôž”’°BììÆâÄØ9BÐÐ7âÞð’”È9Ú9DÐÄê¦ÎŽžØ9C¤BäêäŽ¤îÊò4˜Dèê¨Æ8+ðÄÞÎÜžÐÞDà56²’Ž87ÂªèÎ1°ðÊ˜Îž¬–AšÔèCÜBœÎÎâðîÎâèèÐ 2ÐÔî3ì˜ÆòBÐòŽ8¬ÖA/AðÖôEæð¦¬´Ú83–C6ò1¬¬F8¬°DÎ´¦î¨˜3Äœ5”ÖšÔìðæ¢+Èä2äÒ˜Ê6ôÊ’9¦3 ØÒ2è¤/ÔÎÐ1æ¢¤ôÄ5ªÜ²îCª+F°ÆÞ”ìÂ´ÌBì”žÂò’ê7Ê”êÞ/Ž æDà3ðä8CÐÌ”C+ Ž5ðä3ØÆ’˜”9ôâÚà”””ÂÞ’ò21´š’4˜CÞEªæF1¨žÌB+E¤0òØê´¢ìCD¤87®¬¨Ž’FäEî¤Â’Æð5˜êFèB0®ª9ŽÜ²Òš’8â¢Âì2î°–ÌD’ÄîÈ ÆÄ9/ÌðÊŽÆ®70ÊÐò5šÎ2ÖF7ò¬ìF/êBÄ°CÌ03’4¦òîÐšÐ5ò¬/–ÆÚ–0 Î/æ5â¢C¦îê¤ÚÖÒš9CÖÞØ5´Â®æ°Î²Ê”ðÈ6Æ06’ÜîA²CàÆ6Úè8ì1ÈDD”´œÊæèžÆâÜêÂDè2òð10ÂèÂÔ–Äêì–¦âÔô/++BâÜ¬âæ˜¨56¨ÚÈ–Ü8+°2Ä/6/œš5äF®6˜Ú5’ÒìFìì1’/6¤1ÊF–”ò3ØFÎ¬ò´Ô5ÜäEÂ¤ìæ’Üì–Ú°/B˜662¨êŽ8Fì¢72¬EèF¨æ®Æ¤Î°2®š2žÌ+äÎÄ0Ð¬Fœ7”2Þ®ââÜ17°Â9F¤Ê1E6Ðò¤6 æ °ÈÄ3¦CžEÂä®0–ò9èÞ¨Ê’0´ îä¤25°ÂÜD+2Øê°B7œDæš¦5®6¤òÚ3ÖFì’’˜èò¢žœœÒÊ¨¨¦”¨A²0 3+¦¢Ž5ž˜¢ šªêÔèÞ1®ÌÜšž¬Æ42²ä¨ÒÆâžÄâÜ˜C ªìEž28D²ÄBòÔÚ´ÚœÌÞª23ÚŽ18F687Ø îžæî0àAêA0Âœ4ØäîŽ9´ì˜äìÐ¨¨C+ÎÞ´6ÄÎB25–ìAæ°ÌòÈœ´¨ê7ðôä92¤E7583F7FÎA¢’”F1CDC1’A˜0Ž’ÞèœìÔ Î89DäÚ–5ô7âA/òäèDª2²6Î¦¬84ž’Ü¬¤Ä 7F¬ŽØäFÈì0Dà¢Ä4žÈÞÜ2äòâ+È¨òDæ2A91êì15âî¤77¤ô¦C+ÐAÈ2¦Î+9D®²+4Îô0¨ÔA–Î¢Ž˜Þ˜2îDð+æàÊ´°Ô4ª˜ÂCÊ–žBÜ5žÔô¤43”æ0¨ªê15Ê6FC ¬à6ž œð®œÐÔ”ØÌ2ŽÎ9583BœC’Þ2ð/®ž2Üæš°ÜC–DÐB9èÞ7ò2 C5êÖÄ9Æ82ò6ªìð˜Â–à0ð8ÆÄ2žÒÒ®êÆªÒ 676äœ2ääš1/è–Â6òâ/îÞ/ìªè´è3ª”0˜à/6’¦+Ú/ÔÂ9Äìžä8è28AšðC–®ôCE°+Bò®ÒžæÚ2ªÖ/0ò¦ä+ôŽ2àŽÔ FŽœØÄ˜/¨Â+”ò9œ7FìªžÐ Ð+ Ž2Ž¨°4A¦êBÚ¤Ò9C9Æ¨Ú1®žä’èð¢´9+ Æ˜¦Þ’”¨âðîÖ7¬ÌÜ²Ü ¦Â6Æè¢Ü3ìòžæÒò2°òî°š/æCÎA0–7œ–Ì1F¨ž¢ÊAÔÂF7²ä¦0äÖîÖ1–1¤5Î¦Þ¢D–î4ÌDÖ²7ŽDœBœžDêè–Ø6ðäòàìì””Ôâ4ŽDE ¬D°5Ð61Þ8B°CEä9æ+–¢ ŽÞäŽèš¤B7ÚòÚò®ôÌÊÅÐî0Eª¬ÎFDÎ8BªAšCªF”ÆAØššA¢”¢A¢¢œ¬AšAA1A”AAÈÄ;
+<?php
+
+namespace App\Http\Pay\Controllers;
+
+use App\Services\OrdersService;
+use App\Services\ChannelPaymentsService;
+use App\Services\ChannelService;
+use App\Services\UserRateService;
+use App\Services\UserService;
+use Illuminate\Http\Request;
+use App\Common\RespCode;
+use App\Tool\Md5Verify;
+use App;
+use Illuminate\Support\Facades\Redis;
+
+class PayController extends Controller
+{
+    protected $ordersService;
+    protected $userService;
+    protected $channelPaymentsService;
+    protected $channelService;
+    protected $userRateService;
+    protected $md5Verify;
+    protected $return_type;     // è¿”å›žç±»åž‹true:jsonï¼Œfalse:é¡µé¢
+    protected $content;         // è§£å¯†åŽçš„æ•°æ®
+    protected $userPayment;     // ç”¨æˆ·æ”¯ä»˜æ–¹å¼
+    protected $user;            // ç”¨æˆ·ä¿¡æ¯
+    protected $channel;         // é€šé“ä¿¡æ¯
+    protected $channelPayment;  // æ”¯ä»˜æ–¹å¼ä¿¡æ¯
+
+    public function __construct(UserService $userService,
+                                ChannelPaymentsService $channelPaymentsService, ChannelService $channelService,
+                                UserRateService $userRateService, Md5Verify $md5Verify, OrdersService $ordersService)
+    {
+        parent::__construct();
+        $this->userService            = $userService;
+        $this->channelPaymentsService = $channelPaymentsService;
+        $this->channelService         = $channelService;
+        $this->userRateService        = $userRateService;
+        $this->md5Verify              = $md5Verify;
+        $this->ordersService          = $ordersService;
+    }
+
+    /**
+     * è®¢å•æäº¤å…¥å£
+     * @param Request $request
+     * @return string
+     */
+    public function index(Request $request)
+    {
+        $this->content = $request->input();
+
+        $this->paramVerify($request);
+
+        if($this->ordersService->findUnderOrderNo($this->content['order_no'])){
+            return json_encode(RespCode::ORDER_REPEAT,JSON_UNESCAPED_UNICODE);
+        }
+
+        // èŽ·å–ç”¨æˆ·
+        $this->user = $this->userService->findMerchant($this->content['merchant']);
+        if(!$this->user)
+        {
+            return json_encode(RespCode::MERCHANT_NOT_EXIST,JSON_UNESCAPED_UNICODE);
+        }
+
+        if($this->user && ($this->user->status == 0 || $this->user->group_type != 1 )){
+            return json_encode(RespCode::MERCHANT_NOT_EXIST,JSON_UNESCAPED_UNICODE);
+        }
+
+        // æ•°æ®éªŒç­¾
+        $sign = $this->md5Verify->getSign($this->content, $this->user->apiKey);
+
+        if($sign != $this->content['sign'])
+        {
+            return json_encode(RespCode::CHECK_SIGN_FAILED,JSON_UNESCAPED_UNICODE);
+        }
+
+        // èŽ·å–æ”¯ä»˜æ–¹å¼
+        $this->channelPayment = $this->channelPaymentsService->findPaymentCode($this->content['pay_code']);
+        if(!$this->channelPayment)
+        {
+            return json_encode(RespCode::TRADE_BIZ_NOT_OPEN,JSON_UNESCAPED_UNICODE);
+        }
+
+        // éªŒè¯å•ç¬”é™é¢
+        if(  ($this->channelPayment->minAmount && $this->channelPayment->minAmount > $this->content['amount']) || ( $this->channelPayment->maxAmount && $this->channelPayment->maxAmount < $this->content['amount'] ) )
+        {
+            return json_encode(RespCode::PARAMETER_ERROR_PRICE,JSON_UNESCAPED_UNICODE);
+        }
+
+        //èŽ·å–é€šé“
+        $this->channel = $this->channelService->findIdStatus($this->channelPayment->channel_id);
+
+        if(!$this->channel)
+        {
+            return json_encode(RespCode::CHANNEL_NOT_EXIST,JSON_UNESCAPED_UNICODE);
+        }
+        //èŽ·å–å•†æˆ·æ”¯ä»˜æ–¹å¼
+        $this->userPayment = $this->userRateService->getFindUidPayIdStatus($this->user->id, $this->channelPayment->id);
+        if(!$this->userPayment)
+        {
+            return json_encode(RespCode::MCH_BIZ_NOT_OPEN,JSON_UNESCAPED_UNICODE);
+        }
+
+        try{
+            if(!$pay = App::make(strtolower($this->channel->channelCode)) )
+            {
+                throw new \Exception('');
+            }
+            return $pay->pay($this->user, $this->channel, $this->channelPayment, $this->userPayment, $request);
+
+        }catch ( \Exception $e){
+
+            return json_encode(RespCode::RESOURCE_NOT_FOUND,JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+
+    /**
+     * è®¢å•æŸ¥è¯¢å…¥å£
+     * @param Request $request
+     * @return string
+     */
+    public function queryOrder(Request $request)
+    {
+
+        if( !isset($request->merchant) || !isset($request->sign) || (!isset($request->sys_order_no) && !isset($request->out_order_no)) )
+        {
+            return json_encode(RespCode::PARAMETER_ERROR);
+        }
+
+        $this->user = $this->userService->findMerchant($request->merchant);
+        if(!$this->user)
+        {
+            return json_encode(RespCode::MERCHANT_NOT_EXIST);
+        }
+
+        $sign = $this->md5Verify->getSign($request->input(), $this->user->apiKey);
+        if($sign != $request->sign)
+        {
+            return json_encode(RespCode::CHECK_SIGN_FAILED);
+        }
+
+        if($request->sys_order_no && $request->out_order_no)
+        {
+            $order = $this->ordersService->findOrderNo($request->sys_order_no);
+        }else if($request->out_order_no){
+            $order = $this->ordersService->findUnderOrderNo($request->out_order_no);
+        }else if($request->sys_order_no){
+            $order = $this->ordersService->findOrderNo($request->sys_order_no);
+        }
+
+        if(!$order)
+        {
+            return json_encode(RespCode::TRADE_ORDER_NOT_EXIST);
+        }
+
+        $data = [
+            'respCode'      => '0000',
+            'msg'           => 'æŸ¥è¯¢æˆåŠŸ',
+            'out_order_no'  => $order->underOrderNo,
+            'sys_order_no'  => $order->orderNo,
+            'status'        => $order->status,
+            'money'         => $order->amount
+        ];
+
+        $data['sign'] = $this->md5Verify->getSign($data, $this->user->apiKey);
+
+        return json_encode($data);
+    }
+
+    /**
+     * å¼‚æ­¥é€šçŸ¥å…¥å£
+     * @param Request $request
+     * @throws \Exception
+     * @return json
+     */
+    public function notifyCallback(Request $request)
+    {
+        try{
+            if(!$pay = App::make(strtolower($request->action)) )
+            {
+                throw new \Exception('');
+            }
+            return $pay->successCallback($request);
+
+        }catch ( \Exception $e){
+
+            return json_encode(RespCode::RESOURCE_NOT_FOUND);
+        }
+    }
+
+    /**
+     * åŒæ­¥é€šçŸ¥å…¥å£
+     * @param Request $request
+     * @throws \Exception
+     * @return json
+     */
+    public function successCallback(Request $request)
+    {
+        try{
+            if(!$pay = App::make(strtolower($request->action)) )
+            {
+                throw new \Exception('');
+            }
+            return $pay->successCallback($request);
+
+        }catch ( \Exception $e){
+            return json_encode(RespCode::RESOURCE_NOT_FOUND);
+        }
+
+    }
+
+
+    /**
+     * æ”¯ä»˜å®å…ç­¾H5è·³è½¬é¡µé¢
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View|void
+     */
+    public function h5pay(Request $request)
+    {
+        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
+        if(!$request->orderNo) return ;
+
+        Redis::select(1);
+        if(!Redis::exists($request->orderNo))
+        {
+            return ajaxError('è®¢å•ä¸å­˜åœ¨æˆ–è€…å·²è¿‡æœŸï¼');
+        }
+
+        $data = Redis::hGetAll($request->orderNo);
+        $data['orderNo'] = $request->orderNo;
+
+        if($this->get_device_type()!='ios')
+        {
+            return view('Pay.android',compact('data'));
+        }else{
+            return view('Pay.ios',compact('data'));
+        }
+    }
+
+    /**
+     * æ£€æµ‹æ‰‹æœºç³»ç»Ÿ
+     * @return string
+     */
+    protected function get_device_type()
+    {
+        //å…¨éƒ¨å˜æˆå°å†™å­—æ¯
+        $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+        $type = 'other';
+        //åˆ†åˆ«è¿›è¡Œåˆ¤æ–­
+        if(strpos($agent, 'iphone') || strpos($agent, 'ipad'))
+        {
+            $type = 'ios';
+        }
+
+        if(strpos($agent, 'android'))
+        {
+            $type = 'android';
+        }
+        return $type;
+    }
+
+    /**
+     * æ£€æµ‹å‚æ•°æ˜¯å¦åˆæ³•
+     * @param Request $request
+     * @return array|string
+     */
+    protected function paramVerify(Request $request)
+    {
+        $this->validate($request, [
+            'merchant'        => 'required',
+            'amount'          => 'required|numeric',
+            'pay_code'        => 'required',
+            'order_no'        => 'required|max:50',
+            'notify_url'      => 'required',
+            'return_url'      => 'required',
+            'order_time'      => 'date_format:Y-m-d H:i:s',
+        ],[
+            'merchant.required' => 'å•†æˆ·å·é”™è¯¯ï¼',
+            'amount.required'   => 'è®¢å•é‡‘é¢é”™è¯¯ï¼',
+            'amount.numeric'    => 'è®¢å•é‡‘é¢é”™è¯¯ï¼',
+            'pay_code.required' => 'æ”¯ä»˜æ–¹å¼é”™è¯¯ï¼',
+            'order_no.required' => 'è®¢å•å·é”™è¯¯ï¼',
+            'order_no.max'      => 'è®¢å•å·æœ€å¤§50ä½ï¼',
+            'notify_url.required' => 'å›žè°ƒåœ°å€é”™è¯¯ï¼',
+            'return_url.required' => 'åŒæ­¥åœ°å€é”™è¯¯ï¼',
+            'order_time.date_format' => 'è®¢å•æ—¶é—´æ ¼å¼é”™è¯¯',
+        ]);
+    }
+
+    /**
+     *  æµ‹è¯•æ”¯ä»˜
+     */
+    public function demo()
+    {
+
+        return view('Pay.demo');
+    }
+
+    public function demoStore(Request $request)
+    {
+
+        $merchant = $request->merchant;
+        $amount   = sprintf('%0.2f',$request->amount);
+        $pay_code = $request->pay_code;
+        if(!$merchant){
+            return ajaxError('å•†æˆ·å·é”™è¯¯');
+        }
+
+        if(!$amount){
+            return ajaxError('é‡‘é¢é”™è¯¯');
+        }
+
+        if(!$pay_code){
+            return ajaxError('æ”¯ä»˜ç¼–ç é”™è¯¯');
+        }
+
+        $user = $this->userService->findMerchant($request->merchant);
+        if(!$user)
+        {
+            return ajaxError('å•†æˆ·ä¸å­˜åœ¨');
+        }
+        $pay_notifyurl   = $_SERVER['HTTP_HOST'];   //æœåŠ¡ç«¯è¿”å›žåœ°å€
+        $pay_callbackurl = $_SERVER['HTTP_HOST'];  //é¡µé¢è·³è½¬è¿”å›žåœ°å€
+        $jsapi = array(
+            "merchant"      => $merchant,
+            "amount"        => $amount,
+            "pay_code"      => $pay_code,
+            "order_no"      => date('YmdHis',time()).mt_rand(0000,9999),
+            "notify_url"    => $pay_notifyurl,
+            "return_url"    => $pay_callbackurl,
+        );
+
+        $md5Verify = new Md5Verify();
+        $sign = $md5Verify->getSign($jsapi,$user->apiKey);
+        $jsapi["sign"] = $sign;
+
+        $sHtml = "<form id='alipaysubmit' action='".route('pay')."' method='POST'>";
+       foreach ($jsapi as $key=>$val){
+            $sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
+        }
+
+        $sHtml = $sHtml."<input type='submit' value='ok' style='display:none;''></form>";
+        $sHtml = $sHtml."<script>document.forms['alipaysubmit'].submit();</script>";
+
+        return $sHtml;
+
+    }
+}
