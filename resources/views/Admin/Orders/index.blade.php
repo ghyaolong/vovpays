@@ -82,6 +82,10 @@
                                        @if(isset($query['userNo'])) value="{{ $query['userNo'] }}" @endif />
                             </div>
                             <div class="form-group">
+                                <input type="text" class="form-control" placeholder="收款账号" name="account"
+                                       @if(isset($query['account'])) value="{{ $query['account'] }}" @endif />
+                            </div>
+                            <div class="form-group">
                                 <input type="text" autocomplete="off" class="form-control" style="min-width:300px;"
                                        id="daterange-btn"
                                        placeholder="订单时间" name="orderTime"
@@ -139,8 +143,7 @@
                                 <th>收款人</th>
                                 <th>收款号</th>
                             @endif
-                            <th>系统订单</th>
-                            <th>商户订单</th>
+                            <th>系统订单/商户订单</th>
                             <th>创建时间</th>
                             <th>更新时间</th>
                             <th>订单金额</th>
@@ -163,8 +166,11 @@
                                     <td>{{ $v['account'] }}</td>
                                 @endif
 
-                                <td>{{ $v['orderNo'] }}</td>
-                                <td>{{ $v['underOrderNo'] }}</td>
+                                <td>
+                                    <span style="color:#008d4c;font-weight: bold">{{ $v['orderNo'] }}</span>
+                                    <br>
+                                    <span style="color:#008d4c;font-weight: bold">{{ $v['underOrderNo'] }}</span>
+                                </td>
                                 <td>{{ $v['created_at'] }}</td>
                                 <td>{{ $v['updated_at'] }}</td>
                                 <td><span style="color: #e56c69">{{ $v['amount'] }}</span></td>
