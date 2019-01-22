@@ -39,10 +39,6 @@ class PayController extends Controller
         $this->userRateService        = $userRateService;
         $this->md5Verify              = $md5Verify;
         $this->ordersService          = $ordersService;
-
-        if($_SERVER['HTTP_HOST']!='www.mx3r.com'&&$_SERVER['HTTP_HOST']!='mx3r.com'){
-           exit('NO AUTHORITY!');
-        }
     }
 
     /**
