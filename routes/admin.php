@@ -76,10 +76,10 @@ Route::group([], function () {
         Route::post('orders/reissue','OrdersController@reissue')->name('orders.reissue');
         //结算管理
         Route::get('withdraws','WithdrawsController@index')->name('withdraws.index');
-        Route::get('withdraws/{id}/manage', 'WithdrawsController@manage')->name('withdraws.manage');
-        Route::delete('withdraws','WithdrawsController@destroy')->name('withdraws.destroy');
-        Route::post('withdraws/saveStatus','WithdrawsController@saveStatus')->name('withdraws.saveStatus');
-        Route::post('withdraws/update','WithdrawsController@update')->name('withdraws.update');
+        Route::get('withdraws/{id}/manage', 'WithdrawsController@manage')->name('withdraw.manage');
+        Route::delete('withdraws','WithdrawsController@destroy')->name('withdraw.destroy');
+        Route::post('withdraws/saveStatus','WithdrawsController@saveStatus')->name('withdraw.saveStatus');
+        Route::post('withdraws/update','WithdrawsController@update')->name('withdraw.update');
         //账号管理
         Route::get('account/{type}','AccountPhoneController@index')->name('account.index');
         Route::post('account','AccountPhoneController@store')->name('account.store');

@@ -208,7 +208,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="withdrawForm" action="{{route('withdraws.update')}}" class="form-horizontal" role="form">
+                    <form id="withdrawForm" action="{{route('withdraw.update')}}" class="form-horizontal" role="form">
                         <input type="hidden" name="id" id="orderId1">
                         <input type="hidden" name="type" value="1">
                         {{ csrf_field() }}
@@ -260,7 +260,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="paidForm" action="{{route('withdraws.update')}}" class="form-horizontal" role="form">
+                    <form id="paidForm" action="{{route('withdraw.update')}}" class="form-horizontal" role="form">
                         <input type="hidden" name="id" id="orderId2">
                         <input type="hidden" name="type" value="2">
                         {{ csrf_field() }}
