@@ -78,7 +78,7 @@ class AccountPhoneService
         $params = [
             'sql'   => $sql,
             'where' => $where,
-            'time'  => isset($data['searchTime']) ?: ''
+            'time'  => isset($data['searchTime']) ? $data['searchTime'] : ''
         ];
         return $params;
 
