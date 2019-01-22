@@ -54,8 +54,8 @@ class ExemptService implements PayInterface
                 'username'=> $account_array['username'],
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
-                'h5url'  => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$account_array['userId'].'","a": "'.$result->amount.'","m": "'.$result->orderNo.'"}',
-                'qrurl'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+                'payurl'  => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$account_array['userId'].'","a": "'.$result->amount.'","m": "'.$result->orderNo.'"}',
+                'h5url'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
             ];
 
         }else if($request->pay_code == 'alipay_bank'){
