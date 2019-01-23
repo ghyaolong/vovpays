@@ -5,22 +5,31 @@
 @endsection
 @section('content')
 
-    <section class="content">
-        <div class="row" style="margin-top: 20px">
-            <p style="margin-left: 16px;margin-bottom: 20px">
-                <button type="submit" class="btn btn-primary" onclick="showModel('添加商户')">添加商户</button>
-            </p>
-            <div class="col-xs-12">
-                <div class="box box-primary box-solid">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">下属用户列表</h3>
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
+    <div class="row" style="margin: 20px 0px">
+        <div class="col-xs-12 col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <button type="button" class="btn btn-primary" onclick="showModel('添加银行卡')">添加银行卡</button>
+                    <a href="{{ route('agent.bankCard') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
+                </div>
+
+    {{--<section class="content">--}}
+        {{--<div class="row" style="margin-top: 20px">--}}
+            {{--<p style="margin-left: 16px;margin-bottom: 20px">--}}
+                {{--<button type="submit" class="btn btn-primary" onclick="showModel('添加商户')">添加商户</button>--}}
+            {{--</p>--}}
+            {{--<div class="col-xs-12">--}}
+                {{--<div class="box box-primary box-solid">--}}
+                    {{--<div class="box-header with-border">--}}
+                        {{--<h3 class="box-title">下属用户列表</h3>--}}
+
+                        {{--<div class="box-tools pull-right">--}}
+                            {{--<button type="button" class="btn btn-box-tool" data-widget="collapse">--}}
+                                {{--<i class="fa fa-minus"></i>--}}
+                            {{--</button>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                     <div class="box-body">
 
@@ -80,7 +89,7 @@
                             @if(isset($list[0]))
                                 @foreach($list as $v)
                                     <tr>
-                                        <td><a href="" target="_blank">{{$v->merchant}}</a></td>
+                                        <td>{{$v->merchant}}</td>
                                         <td>{{$v->username}}</td>
                                         <td>普通商户</td>
                                         <td>
@@ -93,8 +102,8 @@
                                             <div class="btn-group">
                                                 <a href="{{ route('agent.userChannel', array('id'=>$v['id'])) }}"
                                                    class="btn btn-success btn-sm">通道设置</a>
-                                                <a href="{{ route('agent.userOrder', array('id'=>$v['id'])) }}"
-                                                   class="btn btn-success btn-sm">商户流水</a>
+                                                {{--<a href="{{ route('agent.userOrder', array('id'=>$v['id'])) }}"--}}
+                                                   {{--class="btn btn-success btn-sm">商户流水</a>--}}
 
                                             </div>
                                         </td>
@@ -109,10 +118,14 @@
                         </table>
                         {{$list->appends($query)->links()}}
                     </div>
-                </div>
             </div>
         </div>
-    </section>
+    </div>
+
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</section>--}}
 
 
     {{--添加商户--}}
