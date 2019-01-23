@@ -10,26 +10,11 @@
         <div class="col-xs-12 col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" onclick="showModel('添加银行卡')">添加银行卡</button>
-                    <a href="{{ route('agent.bankCard') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
+                    <button type="button" class="btn btn-primary" onclick="showModel('添加商户')">添加商户</button>
+                    <a href="javascript:;" onclick="location.replace(location.href);" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
                 </div>
 
-    {{--<section class="content">--}}
-        {{--<div class="row" style="margin-top: 20px">--}}
-            {{--<p style="margin-left: 16px;margin-bottom: 20px">--}}
-                {{--<button type="submit" class="btn btn-primary" onclick="showModel('添加商户')">添加商户</button>--}}
-            {{--</p>--}}
-            {{--<div class="col-xs-12">--}}
-                {{--<div class="box box-primary box-solid">--}}
-                    {{--<div class="box-header with-border">--}}
-                        {{--<h3 class="box-title">下属用户列表</h3>--}}
 
-                        {{--<div class="box-tools pull-right">--}}
-                            {{--<button type="button" class="btn btn-box-tool" data-widget="collapse">--}}
-                                {{--<i class="fa fa-minus"></i>--}}
-                            {{--</button>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
 
                     <div class="box-body">
 
@@ -122,10 +107,6 @@
         </div>
     </div>
 
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
 
 
     {{--添加商户--}}
@@ -185,43 +166,7 @@
         </div>
     </div>
 
-    {{--费率--}}
-    {{--<section>--}}
-        {{--<div class="modal fade" id="rateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"--}}
-             {{--aria-hidden="true" data-backdrop="static">--}}
-            {{--<div class="modal-dialog" style="margin-top: 123px">--}}
-                {{--<div class="modal-content">--}}
-                    {{--<div class="modal-header">--}}
-                        {{--<h4 class="modal-title"></h4>--}}
-                    {{--</div>--}}
-                    {{--<div class="modal-body" style="overflow: auto;">--}}
-                        {{--<form id="ruleForm" action="" class="form-horizontal" role="form">--}}
-                            {{--<input type="hidden" name="userid">--}}
-                            {{--{{ csrf_field() }}--}}
-                            {{--<table class="table table-hover table-bordered">--}}
-                                {{--<tr style="background: #eeeeee">--}}
-                                    {{--<th>支付产品</th>--}}
-                                    {{--<th>交易费率</th>--}}
-                                {{--</tr>--}}
-                                {{--<tr class="ratelist">--}}
-                                    {{--<td>{{$val->payment->paymentName}}</td>--}}
-                                    {{--<td><input type="text"   class="form-control" placeholder="0.00"--}}
-                                               {{--style="width: 90px" name="info[{{$val->channel_payment_id}}][rate]" value="{{$val->rate}}">--}}
-                                    {{--</td>--}}
-                                {{--</tr>--}}
 
-                            {{--</table>--}}
-                            {{--<div class="modal-footer">--}}
-                                {{--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--}}
-                                {{--<button type="button" class="btn btn-primary" onclick="save($(this))">提交--}}
-                                {{--</button>--}}
-                            {{--</div>--}}
-                        {{--</form>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
 
     {{--查看--}}
     <section>

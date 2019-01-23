@@ -83,7 +83,9 @@ class UserController extends Controller
      */
     public function add(Request $request)
     {
-        $result = $this->userService->add($request->input());
+        $data=$request->input();
+        $data['parentId']=Auth::user()->id;
+        $result = $this->userService->add($data);
 
         if ($result) {
             return ajaxSuccess('商户添加成功!');
@@ -150,7 +152,9 @@ class UserController extends Controller
         $uid    = $request->id;
         $payId  = $request->payId;
         $channelId = $request->channelId;
+
         $result = $this->userRateService->getFindUidPayId($uid, $payId);
+
         if($result)
         {
             return ajaxSuccess('',$result->toArray());

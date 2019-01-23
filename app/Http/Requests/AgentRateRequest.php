@@ -38,7 +38,27 @@ class AgentRateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'nullable|numeric',
+//            'type' => 'required|in:1,2',
+//            'status' => 'required|in:1,2,3,4',
+//            'comment' => 'required_if:type,1|max:191',
+//            'channelCode' => 'required_if:type,2|alpha_num',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id.numeric' => '非法操作!',
+//            'id.alpha_num' => '非法操作',
+//            'type.required' => '非法操作',
+//            'type.in' => '非法操作',
+//            'status.required' => '非法操作',
+//            'status.in' => '非法操作',
+//            'comment.required_if' => '备注不能为空',
+//            'comment.max' => '备注过长',
+//            'channelCode.required_if' => '必须选择代付通道',
+//            'channelCode.alpha_num' => '非法操作',
         ];
     }
 }
