@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="row">
-     
+
         {{--同步跳转--}}
         <div class="col-md-12">
             <div class="box box-primary box-solid">
@@ -41,6 +41,8 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 
 @endsection

@@ -39,7 +39,7 @@
 
                 <div class="info-box-content">
 
-                    <span class="progress-description" style="padding-top: 10px;">成功笔数</span>
+                    <span class="progress-description" style="padding-top: 10px;">交易笔数</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
