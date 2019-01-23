@@ -103,4 +103,25 @@ class AdminsService
         $this->adminsRepository->syncUpdateAdminsRole($id,[]);
         return $this->adminsRepository->del($id);
     }
+
+    /**
+     * 更新密码
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function updatePassword(int $id, array $data)
+    {
+        $data = array_except($data, ['id', '_token', 'rpassword']);
+        //检测ID 密码是否存在
+        $exists = $this->adminsRepository->contrastPassword($id, $data['password']);
+        if ($exists) {
+            $data['password'] = bcrypt($data['newPassword']);
+            unset($data['newPassword']);
+            return $this->adminsRepository->update($id, $data);
+        } else {
+            return false;
+        }
+
+    }
 }
