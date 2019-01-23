@@ -115,8 +115,10 @@ class ChannelPaymentsService
 
     /**
      * 根据ID获取通道
+     * @param int $id
+     * @return mixed
      */
-    public function channelpay(array $id)
+    public function channelpay(int $id)
     {
        return $this->channelPaymentsRepository->channelpay($id);
     }

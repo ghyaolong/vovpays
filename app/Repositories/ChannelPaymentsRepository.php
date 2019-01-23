@@ -103,10 +103,12 @@ class ChannelPaymentsRepository
     }
 
     /**
-     * 根据ID查询 多个
+     *  根据id查询开启的支付方式
+     * @param int $id
+     * @return mixed
      */
-    public function channelpay(array $id)
+    public function channelpay(int $id)
     {
-        return $this->channel_payment->whereIn('id',$id)->get();
+        return $this->channel_payment->whereId($id)->whereStatus(1)->first();
     }
 }

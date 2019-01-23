@@ -18,11 +18,8 @@
             <li><a href="{{route('agent.user')}}"><i class="fa fa-circle-o text-aqua"></i><span>商户管理</span></a></li>
             <li><a href="{{route('agent.order')}}"><i class="fa fa-circle-o text-aqua"></i><span>交易管理</span></a></li>
             <li><a href="{{route('agent.clearing')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>结算申请</span></a></li>
-
-
-            <li>
-                <a href="{{route('agent.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡信息</span></a>
-            </li>
+            <li><a href="{{route('agent.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡信息</span></a></li>
+            <li><a href="{{ route('agent.api') }}"><i class="fa fa-circle-o text-aqua"></i> <span>API管理</span></a></li>
             @if(env('ADD_ACCOUNT_TYPE') ==3)
                 <li>
                     <a href="{{ route('agent.manageWithdraws') }}">

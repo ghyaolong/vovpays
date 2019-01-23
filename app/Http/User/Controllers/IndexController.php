@@ -109,7 +109,6 @@ class IndexController extends Controller
         $uid = Auth::user()->id;
         
         $list = $this->userRateService->channelAll($uid);
-       
         return view('User.Api.api',compact('list'));
     }
 

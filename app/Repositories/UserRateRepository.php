@@ -39,6 +39,7 @@ class UserRateRepository
     public function findUseridAndPaymentid(int $uid, int $paymentid){
         return $this->user_rates->whereUserId($uid)
             ->whereChannelPaymentId($paymentid)
+            ->whereStatus(1)
             ->select('id','channel_payment_id', 'rate', 'status', 'channel_id')
             ->first();
     }

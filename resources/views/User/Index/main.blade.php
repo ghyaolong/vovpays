@@ -613,9 +613,14 @@
                             <td><a class="glyphicon glyphicon-download-alt btn btn-primary"
                                    href="/demo/接口文档.doc" download="接口文档.doc">下载</a></td>
                         </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>PHP-demo</td>
+                            <td><a class="glyphicon glyphicon-download-alt btn btn-primary"
+                                   href="/demo/pay-php.rar" download="pay-php.rar">下载</a></td>
+                        </tr>
                     </table>
                 </div>
-
             </div>
         </div>
 

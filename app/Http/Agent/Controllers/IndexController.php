@@ -10,6 +10,7 @@ namespace App\Http\Agent\Controllers;
 
 
 use App\Services\OrdersService;
+use App\Services\UserRateService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,17 +23,21 @@ class IndexController extends Controller
     protected $userService;
     protected $orderDayCountService;
     protected $statisticalService;
+    protected $userRateService;
 
     /**
      * IndexController constructor.
+     * @param UserRateService $userRateService
      * @param OrdersService $ordersService
      * @param OrderDayCountService $orderDayCountService
+     * @param StatisticalService $statisticalService
      */
-    public function __construct(OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
+    public function __construct(UserRateService $userRateService ,OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
     {
         $this->ordersService = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
         $this->statisticalService = $statisticalService;
+        $this->userRateService    = $userRateService;
     }
 
 
@@ -59,6 +64,16 @@ class IndexController extends Controller
     public function rate()
     {
         return view('Agent.Index.memberRate');
+    }
+
+    /**
+     * api管理
+     */
+    public function api()
+    {
+        $uid = Auth::user()->id;
+        $list = $this->userRateService->channelAll($uid);
+        return view('Agent.Index.api',compact('list'));
     }
 
 }

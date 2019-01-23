@@ -201,16 +201,57 @@ class UserRateService
 
     /**
      * 获取商户通道
+     * @param int $userid
+     * @param int $status
+     * @return array
      */
-    public function channelAll(String $userid,$status = 1){
+    public function channelAll(int $userid, $status = 1){
+        // 获取所有商户费率
         $channel = $this->userRateRepository->channelAll($userid,$status);
         if($channel){
-            $id = array();
+            $channel = $channel->toArray();
+        }else{
+            $channel = [];
+        }
+
+        if($channel){
             foreach($channel as $key=>$value){
-                $id[] = $value['channel_payment_id'];
+                $channelPayments = $this->channelPaymentsService->channelpay( $value['channel_payment_id'] );
+                if($channelPayments){
+                    $channelPayments = $channelPayments->toArray();
+                }else{
+                    $channelPayments = [];
+                }
+
+                if(count($channelPayments))
+                {
+                    if($value['rate'] == 0)
+                    {
+                        $channel[$key]['rate'] = $channelPayments['runRate'];
+                    }
+                    $channel[$key]['paymentName'] = $channelPayments['paymentName'];
+                    $channel[$key]['paymentCode'] = $channelPayments['paymentCode'];
+                }else{
+                    unset($channel[$key]);
+                }
             }
-            $channelPayments = $this->channelPaymentsService->channelpay($id)->toArray();
-            return $channelPayments;
+
+            // 当是商户时，需要查询代理是否开通对应的支付
+            if(auth()->user()->group_type == 1)
+            {
+                if($channel)
+                {
+                    foreach ($channel as $k=>$v)
+                    {
+                        $agent_Payments = $this->getFindUidPayIdStatus(auth()->user()->parentId, $v['channel_payment_id']);
+                        if($agent_Payments) {
+                            unset($channel[$k]);
+                        }
+                    }
+                }
+            }
+
+            return $channel;
         } else {
             return array();
         }

@@ -43,14 +43,13 @@ Route::group([], function ($router) {
         Route::any('withdraws','WithdrawsController@index')->name('agent.withdraws');
         Route::get('withdraws/clearing','WithdrawsController@clearing')->name('agent.clearing');
         Route::post('withdraws/apply','WithdrawsController@store')->name('agent.apply');
-
-
+        //API管理
+        Route::get('api','IndexController@api')->name('agent.api');
         //结算管理
         Route::get('withdraws/manage','WithdrawsController@manage')->name('agent.manageWithdraws');
         Route::get('withdraws/{id}/manage', 'WithdrawsController@doManage')->name('withdraws.manage');
         Route::delete('withdraws','WithdrawsController@destroy')->name('withdraws.destroy');
         Route::post('withdraws/update','WithdrawsController@update')->name('withdraws.update');
-
         //账号管理
         Route::get('account/{type}','AccountPhoneController@index')->name('agent.account');
         Route::post('account','AccountPhoneController@store')->name('agent.accountAdd');
