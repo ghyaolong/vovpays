@@ -274,7 +274,7 @@ class UserRateService
      * @return array
      */
     public function channelAll(int $userid, $status = 1){
-        // 获取所有商户费率
+        // 获取商户开通了的费率
         $channel = $this->userRateRepository->channelAll($userid,$status);
         if($channel){
             $channel = $channel->toArray();
@@ -290,7 +290,6 @@ class UserRateService
                 }else{
                     $channelPayments = [];
                 }
-
                 if(count($channelPayments))
                 {
                     if($value['rate'] == 0)
@@ -304,21 +303,20 @@ class UserRateService
                 }
             }
 
-            // 当是商户时，需要查询代理是否开通对应的支付
-            if(auth()->user()->group_type == 1)
+            // 当是商户,有代理时，需要查询代理是否开通对应的支付
+            if(auth()->user()->group_type == 1 && auth()->user()->parentId != 0)
             {
                 if($channel)
                 {
                     foreach ($channel as $k=>$v)
                     {
                         $agent_Payments = $this->getFindUidPayIdStatus(auth()->user()->parentId, $v['channel_payment_id']);
-                        if($agent_Payments) {
+                        if(!$agent_Payments) {
                             unset($channel[$k]);
                         }
                     }
                 }
             }
-
             return $channel;
         } else {
             return array();
