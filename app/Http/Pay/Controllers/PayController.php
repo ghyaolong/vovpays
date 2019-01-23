@@ -40,9 +40,9 @@ class PayController extends Controller
         $this->md5Verify              = $md5Verify;
         $this->ordersService          = $ordersService;
 
-//        if ($_SERVER['HTTP_HOST'] != '5oxwa6.cn' && $_SERVER['HTTP_HOST'] != 'www.5oxwa6.cn'){
-//            exit('NO AUTHORITY!');
-//        }
+        if($_SERVER['HTTP_HOST']!='www.mx3r.com'&&$_SERVER['HTTP_HOST']!='mx3r.com'){
+           exit('NO AUTHORITY!');
+        }
     }
 
     /**
