@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="商户号" name="userNo"
-                                       @if(isset($query['userNo'])) value="{{ $query['userNo'] }}" @endif />
+                                       @if(isset($query['merchant'])) value="{{ $query['merchant'] }}" @endif />
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="收款账号" name="account"
