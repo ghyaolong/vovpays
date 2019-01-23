@@ -86,10 +86,6 @@
                                            @if(isset($query['underOrderNo'])) value="{{ $query['underOrderNo'] }}" @endif />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="商户号" name="userNo"
-                                           @if(isset($query['underOrderNo'])) value="{{ $query['underOrderNo'] }}" @endif />
-                                </div>
-                                <div class="form-group">
                                     <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
                                            placeholder="订单时间" name="orderTime"
                                            @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
