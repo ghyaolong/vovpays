@@ -112,4 +112,18 @@ class IndexController extends Controller
         return view('User.Api.api',compact('list'));
     }
 
+    /**
+     * 修改支付密码
+     * 
+     */
+    public function editpaypwd(Request $request){
+        $data = $request->input();
+        $id = Auth::user()->id;
+        $result = $this->userService->editPayPassword($id, $data);
+        if($result){
+            return ajaxSuccess('修改成功');
+        } else {
+            return ajaxError('原始支付密码错误,修改失败');
+        }
+    }
 }

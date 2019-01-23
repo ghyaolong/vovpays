@@ -237,4 +237,24 @@ class UserService
     {
         return $this->usersRepository->getAllQuotaLargeAmount($status, $amount);
     }
+
+    /**
+     * 修改支付密码
+     * @param int $uid
+     * @param array $data
+     * @return bool
+     */
+    public function editPayPassword(int $id,array $data){
+        $data = array_except($data, ['id', '_token', 'rpassword']);
+        //检测ID 密码是否存在
+        $exists = $this->usersRepository->contrastPaypassword($id, $data['password']);
+
+        if ($exists) {
+            $data['payPassword'] = bcrypt($data['newPassword']);
+            unset($data['newPassword']);
+            return $this->usersRepository->update($id, $data);
+        } else {
+            return false;
+        }
+    }
 }
