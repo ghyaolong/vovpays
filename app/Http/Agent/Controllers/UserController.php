@@ -117,7 +117,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function checkUnique(editUserRateRequest $request)
+    public function checkUnique(Request $request)
     {
         $result = $this->checkUniqueService->check('users', $request->type, $request->value, $request->id);
 

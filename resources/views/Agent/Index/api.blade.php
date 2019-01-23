@@ -1,5 +1,4 @@
-@extends("User.Commons.layout")
-@section('title','API管理')
+@extends("Agent.Commons.layout")
 @section('css')
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection

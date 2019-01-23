@@ -71,9 +71,10 @@ class IndexController extends Controller
      */
     public function api()
     {
+        $title='API管理';
         $uid = Auth::user()->id;
         $list = $this->userRateService->channelAll($uid);
-        return view('Agent.Index.api',compact('list'));
+        return view('Agent.Index.api',compact('title','list'));
     }
 
 }
