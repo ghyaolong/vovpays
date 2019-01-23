@@ -63,9 +63,8 @@ class UserRateService
             foreach ($channelPayment_array as $key=>$value)
             {
                 $channelPayment_array[$key]['status'] = $user_rate_array[$key]['status'] ?? 0 ;
-                $channelPayment_array[$key]['rate'] = floatval($user_rate_array[$key]['rate'] ?? 0) ;
+                $channelPayment_array[$key]['rate'] = floatval($user_rate_array[$key]['rate']) ? floatval($user_rate_array[$key]['rate']) : $channelPayment_array[$key]['runRate'] ;
             }
-
             // 获取代理开启的支付产品
             $agent_rate_list = $this->userRateRepository->findUserId($user->parentId);
             // 以支付方式id为key 转为数组
@@ -79,10 +78,6 @@ class UserRateService
                 {
                     unset($channelPayment_array[$key]);
                 }
-//                else{
-//                    $channelPayment_array[$key]['status'] = @$agent_rate_array[$key]['status'] ?: 0 ;
-//                    $channelPayment_array[$key]['rate'] = @floatval($agent_rate_array[$key]['rate']) ?: 0 ;
-//                }
             }
 
         }
