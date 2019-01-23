@@ -4,6 +4,7 @@ namespace App\Http\Admin\Controllers;
 
 use App\Services\CheckUniqueService;
 use App\Services\QuotalogService;
+use App\Services\StatisticalService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Services\UserRateService;
@@ -14,13 +15,15 @@ class UsersController extends Controller
     protected $checkUniqueService;
     protected $userRateService;
     protected $quotalogService;
+    protected $statisticalService;
 
-    public function __construct( UserService $userService, CheckUniqueService $checkUniqueService, UserRateService $userRateService, QuotalogService $quotalogService)
+    public function __construct(StatisticalService $statisticalService, UserService $userService, CheckUniqueService $checkUniqueService, UserRateService $userRateService, QuotalogService $quotalogService)
     {
         $this->userService        = $userService;
         $this->checkUniqueService = $checkUniqueService;
         $this->userRateService    = $userRateService;
         $this->quotalogService    = $quotalogService;
+        $this->statisticalService = $statisticalService;
     }
 
     /**
@@ -296,7 +299,11 @@ class UsersController extends Controller
         return ajaxSuccess('添加成功！');
     }
 
-
+    /**
+     * 场外商户上分记录
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function quotaLog(Request $request)
     {
         $query = $request->query();
@@ -309,4 +316,34 @@ class UsersController extends Controller
         return view('Admin.Users.quota_log',compact('list','title','uid','query','data'));
     }
 
+    /**
+     * 用户余额加减
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function balance(Request $request)
+    {
+        $data = $request->input();
+        $user = $this->userService->findId($data['uid']);
+        if(!$user)
+        {
+            return ajaxError('商户不存在！');
+        }
+        // 增加
+        if($data['balance_type'] == 0)
+        {
+            $request = $this->statisticalService->updateUseridHandlingFeeBalanceIncrement($data['uid'],$data['amount']);
+        }
+
+        // 减少
+        if($data['balance_type'] == 1)
+        {
+            $request = $this->statisticalService->updateUseridHandlingFeeBalanceDecrement($data['uid'],$data['amount']);
+        }
+        if($request){
+            return ajaxSuccess('修改成功');
+        }else{
+            return ajaxSuccess('修改失败');
+        }
+    }
 }
