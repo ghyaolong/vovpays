@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderDayCountService;
 use App\Services\StatisticalService;
+use App\Services\UserService;
 
 class IndexController extends Controller
 {
@@ -32,12 +33,13 @@ class IndexController extends Controller
      * @param OrderDayCountService $orderDayCountService
      * @param StatisticalService $statisticalService
      */
-    public function __construct(UserRateService $userRateService ,OrdersService $ordersService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
+    public function __construct(UserRateService $userRateService ,OrdersService $ordersService, UserService $userService, OrderDayCountService $orderDayCountService, StatisticalService $statisticalService)
     {
         $this->ordersService = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
         $this->statisticalService = $statisticalService;
         $this->userRateService    = $userRateService;
+        $this->userService = $userService;
     }
 
 
@@ -77,4 +79,19 @@ class IndexController extends Controller
         return view('Agent.Index.api',compact('title','list'));
     }
 
+     /**
+     * 修改支付密码
+     * @param string $password    原始密码
+     * @param string $newpassword 新密码
+     */
+    public function editpaypwd(Request $request){
+        $data = $request->input();
+        $id = Auth::user()->id;
+        $result = $this->userService->editPayPassword($id, $data);
+        if($result){
+            return ajaxSuccess('修改成功');
+        } else {
+            return ajaxError('原始支付密码错误,修改失败');
+        }
+    }
 }

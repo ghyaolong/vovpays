@@ -250,9 +250,9 @@ class UserService
         $exists = $this->usersRepository->contrastPaypassword($id, $data['password']);
 
         if ($exists) {
-            $data['payPassword'] = bcrypt($data['newPassword']);
-            unset($data['newPassword']);
-            return $this->usersRepository->update($id, $data);
+            $up = array();
+            $up['payPassword'] = bcrypt($data['newPassword']);
+            return $this->usersRepository->update($id, $up);
         } else {
             return false;
         }

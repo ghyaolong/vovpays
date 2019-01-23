@@ -73,6 +73,8 @@ Route::group([], function ($router) {
         Route::get('user/{id}/rate','UserController@getUserRate')->name('agent.userRate');
         Route::post('user/{id}/userRateStore', 'UserController@userRateStore')->name('agent.userRateStore');
 
+        //修改支付密码
+        Route::post('editPaypwd','IndexController@editpaypwd')->name('agent.editPaypwd');
     });
 
 });
