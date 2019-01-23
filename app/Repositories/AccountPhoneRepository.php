@@ -32,14 +32,13 @@ class AccountPhoneRepository
      */
     public function searchPage(string $sql, array $where, string $time, int $page)
     {
-        if(!$time)
-        {
+        if (!$time) {
             $time = date('Y-m-d');
         }
         return $this->account_phone->whereRaw($sql, $where)
-            ->leftjoin('account_day_counts',function ($join) use($time){
+            ->leftjoin('account_day_counts', function ($join) use ($time) {
                 $join->on('account_day_counts.account', '=', 'account_phones.account')
-                    ->whereDate('account_day_counts.updated_at',"=", $time);
+                    ->whereDate('account_day_counts.updated_at', "=", $time);
             })
             ->selectRaw('pay_account_phones.*,account_amount,account_order_count,account_order_suc_count,cast(account_order_suc_count/account_order_count as decimal(10,2))*100 as success_rate')
             ->paginate($page);
@@ -95,47 +94,38 @@ class AccountPhoneRepository
      * @param string $value
      * @return mixed
      */
-    public function searchCheck(int $id = null, string $value)
+    public function searchCheck(int $id = null, string $value, $name = null)
     {
         if ($id) {
-
-            $sql = "id <> $id and phone_id = ?";
-            $where['phone_id'] = $value;
-
-        } else {
-
-            $sql = " phone_id = ?";
-            $where['phone_id'] = $value;
-
-        }
-        $data = $this->account_phone->whereRaw($sql, $where)->get();
-        if (count($data) <= 1) {
-            return false;
-        } else {
-            $account = [];
-            foreach ($data as $v) {
-                $account[] = $v['accountType'];
+            $sql = ' 1=1 ';
+            $where = [];
+            if (isset($value) && $value != null) {
+                $sql .= "and id <> $id and phone_id = ?";
+                $where['phone_id'] = $value;
             }
-            return $account;
-        }
 
-//        return $this->account_phone->whereRaw($sql, $where)->first();
+            if (isset($name) && $name != null) {
+                $sql .= " and accountType = ?";
+                $where['accountType'] = $name;
+            }
+
+        } else {
+            $sql = ' 1=1 ';
+            $where = [];
+
+            if (isset($value) && $value != null) {
+                $sql .= "and phone_id = ?";
+                $where['phone_id'] = $value;
+            }
+
+            if (isset($name) && $name != null) {
+                $sql .= " and accountType = ?";
+                $where['accountType'] = $name;
+            }
+
+        }
+        return $this->account_phone->whereRaw($sql, $where)->first();
     }
-//    public function searchOne(int $id, string $value)
-//    {
-//        if ($id) {
-//
-//            $sql = "id <> $id and account = ?";
-//            $where['account'] = $value;
-//
-//        } else {
-//
-//            $sql = " account = ?";
-//            $where['account'] = $value;
-//
-//        }
-//        return $this->account_phone->whereRaw($sql, $where)->first();
-//    }
 
     /**
      * @param int $id
