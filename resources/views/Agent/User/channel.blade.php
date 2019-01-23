@@ -189,7 +189,7 @@
                     $('#addModel').modal('hide');
                     setInterval(function(){
                         window.location.reload();
-                    },1000);
+                    },2000);
 
                     toastr.success(result.msg);
                 }else{
