@@ -130,7 +130,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="box-body" style="margin-top: 45px">
+                    <div class="box-body">
                         <table id="example2" class="table table-condensed table-bordered table-hover">
                             <tr style="color: #999999">
                                 <th>#</th>
