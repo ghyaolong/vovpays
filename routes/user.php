@@ -54,6 +54,9 @@ Route::group([], function ($router) {
         Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('user.accountBankStatus');
         Route::delete('accountBank','AccountBankCardsController@destroy')->name('user.accountBankDel');
         Route::post('accountBank/checkBank','AccountBankCardsController@checkUnique')->name('user.checkBank');
+
+        //修改支付密码
+        Route::post('editPaypwd','IndexController@editpaypwd')->name('user.editPaypwd');
     });
 
 });

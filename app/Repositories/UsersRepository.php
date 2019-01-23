@@ -237,10 +237,29 @@ class UsersRepository
         return $this->user->whereId($id)->wherePassword($password)->exists();
     }
 
+    /**
+     * 验证登录密码是否正确
+     * @param int $id
+     * @param int $password
+     * @return bool 
+     */
     public function contrastPassword(int $id, string $password)
     {
         $result = $this->user->whereId($id)->first();
         $oldPassword = $result->password;
+        return Hash::check($password, $oldPassword);
+    }
+
+    /**
+     * 验证支付密码是否正确
+     * @param int $id
+     * @param int $password
+     * @return bool 
+     */
+    public function contrastPaypassword(int $id,String $password)
+    {
+        $result = $this->user->whereId($id)->first();
+        $oldPassword = $result->payPassword;
         return Hash::check($password, $oldPassword);
     }
 
