@@ -82,6 +82,9 @@
                                     <button type="button" class="btn btn-primary btn-sm"
                                             onclick="edit('会员编辑',{{ $v['id'] }})">编辑
                                     </button>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                            onclick="editBlance('余额加减',{{ $v['id'] }})">余额加减
+                                    </button>
                                     {{--<button type="button" class="btn btn-danger btn-sm"--}}
                                             {{--onclick="del($(this),{{ $v['id'] }})">删除--}}
                                     {{--</button>--}}
@@ -175,6 +178,42 @@
         </div>
     </div>
 
+    {{--余额--}}
+    <div class="modal fade" id="balanceModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title quota_modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;">
+                    <form id="balanceForm" action="{{ route('users.balance') }}" class="form-horizontal" role="form">
+                        <input type="hidden" name="uid">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">金额</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="amount" name="amount" placeholder="金额">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">修改类型</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" name="balance_type">
+                                    <option value="0">增加</option>
+                                    <option value="1">减少</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="balancsave($(this))">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection('content')
 @section("scripts")
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
@@ -223,7 +262,54 @@
                 formValidator();
             });
 
+            // 模态关闭
+            $('#balanceModel').on('hidden.bs.modal', function () {
+                $('#balanceForm').get(0).reset();
+                $("input[name='uid']").val('');
+            });
+
         })
+
+        /**
+         * 余额加减
+         */
+        function editBlance(title,id) {
+            $("input[name='uid']").val(id);
+            $('.quota_modal-title').html(title);
+            $('#balanceModel').modal('show');
+        }
+
+        /**
+         * 余额修改提交
+         */
+        function balancsave(_this) {
+
+            swal({
+                title: "您确定要改为成功吗？",
+                text: "修改后不能恢复！",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            }, function(){
+                var $form = $('#balanceForm');
+                _this.removeAttr('onclick');
+                $.post($form.attr('action'), $form.serialize(), function (result) {
+                    if (result.status) {
+                        $('#balanceModel').modal('hide');
+                        setInterval(function () {
+                            window.location.reload();
+                        }, 1000);
+
+                        toastr.success(result.msg);
+                    } else {
+                        $('#balanceModel').modal('hide');
+                        _this.attr("onclick", "balancsave($(this))");
+                        toastr.error(result.msg);
+                    }
+                }, 'json');
+            });
+        }
 
         /**
          * 提交

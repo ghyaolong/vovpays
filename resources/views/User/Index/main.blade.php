@@ -116,7 +116,7 @@
                                 <td>请求时间</td>
                                 <td> string(50)</td>
                                 <td>格式YYYY-MM-DD hh:ii:ss，回调时原样返回</td>
-                                <td>有值时加入</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
@@ -221,7 +221,7 @@
                                 <td>订单请求时间</td>
                                 <td>datetime</td>
                                 <td>order_time 原样返回</td>
-                                <td>有值时加入</td>
+                                <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
                                 <td>6.</td>
