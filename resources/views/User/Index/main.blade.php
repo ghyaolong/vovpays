@@ -185,14 +185,6 @@
                             </tr>
                             <tr>
                                 <td>2.</td>
-                                <td>orderno</td>
-                                <td>平台生成的订单号</td>
-                                <td>string(50)</td>
-                                <td>一定存在。是此订单在本服务器上的唯一编号</td>
-                                <td><span class="glyphicon glyphicon-ok"></span></td>
-                            </tr>
-                            <tr>
-                                <td>2.</td>
                                 <td>amount</td>
                                 <td>订单金额</td>
                                 <td>float</td>
