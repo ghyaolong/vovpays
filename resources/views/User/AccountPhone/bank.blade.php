@@ -27,6 +27,7 @@
                     <div class="box-body" style="margin-top: 45px">
                         <table id="example2" class="table table-bordered table-hover">
                             <tr style="color: #666666;background: #f5f6f9">
+                                <th>#</th>
                                 <th>手机标识</th>
                                 <th>银行实名</th>
                                 <th>银行卡号</th>
@@ -44,6 +45,7 @@
                             @else
                                 @foreach($list as $v)
                                     <tr>
+                                        <td>{{ $v->id }}</td>
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->bank_account }}</td>
                                         <td style="color: #00c0ef">{{ $v->cardNo }}</td>

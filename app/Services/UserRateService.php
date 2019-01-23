@@ -70,7 +70,6 @@ class UserRateService
             // 以支付方式id为key 转为数组
             $agent_rate_array = $agent_rate_list->keyBy('channel_payment_id')->toArray();
 
-
             // unset 代理不存在的支付方式
             foreach ($channelPayment_array as $key=>$item)
             {

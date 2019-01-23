@@ -63,8 +63,8 @@ class LoginController extends Controller
         ]);
         // 添加验证用户登录标识
         $request->merge(['group_type' => '2']);
-
-        $check_data = $request->only('username','password','group_type');
+        $request->merge(['status' => '1']);
+        $check_data = $request->only('username','password','group_type','status');
         $result = $this->loginLogoutService->Login('agent',$check_data);
         if($result)
         {
