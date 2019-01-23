@@ -19,7 +19,7 @@
 
 4. 运行根目录count_event.sql里面的sql语句
 
-5. 去掉数据库sql_model中的ONLY_FULL_GROUP_BY
+#5. 去掉数据库sql_model中的ONLY_FULL_GROUP_BY
 
 6. 查看数据库事件是否开启
 
