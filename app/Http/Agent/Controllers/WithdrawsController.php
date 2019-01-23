@@ -94,10 +94,10 @@ class WithdrawsController extends Controller
         }
 
         if ($request->type == 1) {
-            //普通结算
+            //普通通道
             $chanel_list = $this->channelService->getAll();
         } elseif ($request->type == 2) {
-            //代付计结算
+            //代付通道
             $chanel_list = $this->channelService->getAll();
         }
 

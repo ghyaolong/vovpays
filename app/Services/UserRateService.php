@@ -58,17 +58,6 @@ class UserRateService
             $channelPayment_list = $this->channelPaymentsService->getStatusAll(1);
             $channelPayment_array = $channelPayment_list->keyBy('id')->toArray();
 
-            // unset 代理不存在的支付方式
-            foreach ($channelPayment_array as $key=>$item)
-            {
-                if( !isset($agent_rate_array[$key]))
-                {
-                    unset($channelPayment_array[$key]);
-                }else{
-                    $channelPayment_array[$key]['status'] = @$agent_rate_array[$key]['status'] ?: 0 ;
-                    $channelPayment_array[$key]['rate'] = @floatval($agent_rate_array[$key]['rate']) ?: 0 ;
-                }
-            }
 
             // 获取用户自身存在的支付方式
             $user_rate_list = $this->userRateRepository->findUserId($user_id);
@@ -80,6 +69,18 @@ class UserRateService
             {
                 $channelPayment_array[$key]['status'] = @$user_rate_array[$key]['status'] ?: 0 ;
                 $channelPayment_array[$key]['rate'] = @floatval($user_rate_array[$key]['rate']) ?: 0 ;
+            }
+
+            // unset 代理不存在的支付方式
+            foreach ($channelPayment_array as $key=>$item)
+            {
+                if( !isset($agent_rate_array[$key])||!$agent_rate_array[$key]['status'])
+                {
+                    unset($channelPayment_array[$key]);
+                }else{
+                    $channelPayment_array[$key]['status'] = @$agent_rate_array[$key]['status'] ?: 0 ;
+                    $channelPayment_array[$key]['rate'] = @floatval($agent_rate_array[$key]['rate']) ?: 0 ;
+                }
             }
         }
         return $channelPayment_array;
@@ -256,4 +257,16 @@ class UserRateService
             return array();
         }
     }
+
+    /**根据用户id获取费率信息
+     * @param $uid
+     * @return mixed
+     */
+    public  function findUserrateByUid($uid){
+
+       return $this->userRateRepository->findUserId($uid);
+
+    }
+
+
 }

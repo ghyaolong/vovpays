@@ -25,12 +25,14 @@ Route::group([], function ($router) {
         Route::post('user', 'UserController@add')->name('agent.add');
         Route::post('user/check', 'UserController@checkUnique')->name('agent.check');
         Route::post('user/saveStatus', 'UserController@saveStatus')->name('agent.saveStatus');
-        Route::post('user/editUserRate', 'UserController@editUserRate')->name('agent.userrate');
+
 
         Route::get('info', 'AgentController@index')->name('agent.info');
 
         Route::get('order', 'OrderController@index')->name('agent.order');
+        Route::get('user/order/{id}', 'OrderController@userOrder')->name('agent.userOrder');
         Route::get('order/{id}/show', 'OrderController@show')->name('order.show');
+
 
         Route::get('bankCard', 'BankCardController@index')->name('agent.bankCard');
         Route::post('bankCard','BankCardController@store')->name('agent.store');
@@ -64,6 +66,12 @@ Route::group([], function ($router) {
         Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('agent.accountBankStatus');
         Route::delete('accountBank','AccountBankCardsController@destroy')->name('agent.accountBankDel');
         Route::post('accountBank/checkBank','AccountBankCardsController@checkUnique')->name('agent.checkBank');
+
+        //会员通道设置
+        Route::get('user/{id}/channel', 'UserController@channel')->name('agent.userChannel');
+        Route::post('user/{id}/saveUserRate', 'UserController@saveUserRateStatus')->name('agent.saveUserRate');
+        Route::get('user/{id}/rate','UserController@getUserRate')->name('agent.userRate');
+        Route::post('user/{id}/userRateStore', 'UserController@userRateStore')->name('agent.userRateStore');
 
     });
 

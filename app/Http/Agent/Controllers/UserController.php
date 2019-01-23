@@ -16,6 +16,7 @@ use App\Services\UserService;
 use App\Services\UserRateService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AgentRateRequest;
 
 class UserController extends Controller
 {
@@ -116,7 +117,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function checkUnique(Request $request)
+    public function checkUnique(editUserRateRequest $request)
     {
         $result = $this->checkUniqueService->check('users', $request->type, $request->value, $request->id);
 
@@ -127,8 +128,83 @@ class UserController extends Controller
         }
     }
 
-    public  function editUserRate(){
+    /**用户通道设置
+     * @param $uid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public  function channel(AgentRateRequest $request,$id){
 
+        $title = '用户通道设置';
+        $uid=$id;
+        $list  = $this->userRateService->getFindUidRate($uid);
+        return view('Agent.User.channel',compact('title','list', 'uid'));
+    }
+
+    /**
+     * 获取用户单条费率，不存在初始化
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUserRate(AgentRateRequest $request)
+    {
+        $uid    = $request->id;
+        $payId  = $request->payId;
+        $channelId = $request->channelId;
+        $result = $this->userRateService->getFindUidPayId($uid, $payId);
+        if($result)
+        {
+            return ajaxSuccess('',$result->toArray());
+        }else{
+            $data['channel_id'] = $channelId;
+            $data['channel_payment_id'] = $payId;
+            $data['status'] = 0;
+            $data['rate']   = 0;
+            return ajaxSuccess('',$data);
+        }
+    }
+
+
+    /**
+     * 用户费率状态修改
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveUserRateStatus(AgentRateRequest $request)
+    {
+        $uid    = $request->id;
+        $payId  = $request->payId;
+        $status = $request->status;
+        $channelId = $request->channelId;
+
+
+        $result = $this->userRateService->saveStatus($uid, $payId, $status, $channelId);
+        if($result)
+        {
+            return ajaxSuccess('修改成功！');
+        }else{
+            return ajaxError('修改失败！');
+        }
+    }
+
+    /**
+     * 用户费率更新添加
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userRateStore(AgentRateRequest $request)
+    {
+        $uid    = $request->id;
+        $payId  = $request->payId;
+        $channelId = $request->channelId;
+        $rate   = $request->rate;
+        $status = $request->status;
+        $result = $this->userRateService->userRateStore($uid, $channelId, $rate, $payId, $status);
+        if($result)
+        {
+            return ajaxSuccess('修改成功！');
+        }else{
+            return ajaxError('修改失败！');
+        }
     }
 
 

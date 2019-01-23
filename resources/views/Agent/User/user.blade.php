@@ -90,14 +90,13 @@
                                         </td>
                                         <td>{{$v->created_at}}</td>
                                         <td>
-                                            {{--<div class="btn-group">--}}
-                                                {{--<button class="btn btn-primary btn-sm" onclick="rate('编辑费率')">费率--}}
-                                                {{--</button>--}}
-                                                {{--<button class="btn btn-primary btn-sm"--}}
-                                                        {{--onclick="show('查看下级流水',{{$v->id}})">--}}
-                                                    {{--查看--}}
-                                                {{--</button>--}}
-                                            {{--</div>--}}
+                                            <div class="btn-group">
+                                                <a href="{{ route('agent.userChannel', array('id'=>$v['id'])) }}"
+                                                   class="btn btn-success btn-sm">通道设置</a>
+                                                <a href="{{ route('agent.userOrder', array('id'=>$v['id'])) }}"
+                                                   class="btn btn-success btn-sm">商户流水</a>
+
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -174,48 +173,42 @@
     </div>
 
     {{--费率--}}
-    <section>
-        <div class="modal fade" id="rateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" style="margin-top: 123px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body" style="overflow: auto;">
-                        <form id="ruleForm" action="" class="form-horizontal" role="form">
-                            <input type="hidden" name="id">
-                            {{ csrf_field() }}
-                            <table class="table table-hover table-bordered">
-                                <tr style="background: #eeeeee">
-                                    <th>支付产品</th>
-                                    <th>交易费率</th>
-                                </tr>
-                                <tr>
-                                    <td>支付宝H5</td>
-                                    <td><input type="text" class="form-control" placeholder="0.00"
-                                               style="width: 90px">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>微信</td>
-                                    .
-                                    <td><input type="text" class="form-control" placeholder="0.00"
-                                               style="width: 90px">
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary" onclick="save($(this))">提交
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {{--<section>--}}
+        {{--<div class="modal fade" id="rateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"--}}
+             {{--aria-hidden="true" data-backdrop="static">--}}
+            {{--<div class="modal-dialog" style="margin-top: 123px">--}}
+                {{--<div class="modal-content">--}}
+                    {{--<div class="modal-header">--}}
+                        {{--<h4 class="modal-title"></h4>--}}
+                    {{--</div>--}}
+                    {{--<div class="modal-body" style="overflow: auto;">--}}
+                        {{--<form id="ruleForm" action="" class="form-horizontal" role="form">--}}
+                            {{--<input type="hidden" name="userid">--}}
+                            {{--{{ csrf_field() }}--}}
+                            {{--<table class="table table-hover table-bordered">--}}
+                                {{--<tr style="background: #eeeeee">--}}
+                                    {{--<th>支付产品</th>--}}
+                                    {{--<th>交易费率</th>--}}
+                                {{--</tr>--}}
+                                {{--<tr class="ratelist">--}}
+                                    {{--<td>{{$val->payment->paymentName}}</td>--}}
+                                    {{--<td><input type="text"   class="form-control" placeholder="0.00"--}}
+                                               {{--style="width: 90px" name="info[{{$val->channel_payment_id}}][rate]" value="{{$val->rate}}">--}}
+                                    {{--</td>--}}
+                                {{--</tr>--}}
+
+                            {{--</table>--}}
+                            {{--<div class="modal-footer">--}}
+                                {{--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--}}
+                                {{--<button type="button" class="btn btn-primary" onclick="save($(this))">提交--}}
+                                {{--</button>--}}
+                            {{--</div>--}}
+                        {{--</form>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</section>--}}
 
     {{--查看--}}
     <section>
@@ -305,6 +298,7 @@
         })
 
 
+
         function showModel(title) {
             $('.modal-title').html(title);
             $('#addModel').modal('show');
@@ -348,6 +342,8 @@
             }, 'json');
 
         }
+
+
 
         /**
          * 表单验证
