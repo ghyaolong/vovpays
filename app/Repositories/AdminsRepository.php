@@ -8,6 +8,7 @@
 
 namespace App\Repositories;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 class AdminsRepository
 {
@@ -134,6 +135,16 @@ class AdminsRepository
      */
     public function findUsernameAndStatus(string $username, int $status){
         return $this->admin->whereUsername($username)->whereStatus($status)->first();
+    }
+
+    /**
+     * 验证密码是否正确
+     */
+    public function contrastPassword(int $id, string $password)
+    {
+        $result = $this->admin->whereId($id)->first();
+        $oldPassword = $result->password;
+        return Hash::check($password, $oldPassword);
     }
 
 }

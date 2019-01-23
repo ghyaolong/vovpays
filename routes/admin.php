@@ -103,5 +103,7 @@ Route::group([], function () {
         //账号状态（不是总后台挂号时，显示账号状态）
         Route::get('accountall','AccountListController@index')->name('account.all');
         Route::post('accountall/saveAllStatus','AccountListController@saveAllStatus')->name('account.saveAllStatus');
+        //修改密码
+        Route::post('editpwd','IndexController@editpwd')->name('admin.editpwd');
     });
 });

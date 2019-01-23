@@ -32,7 +32,7 @@
                         <!-- 用户退出登录-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                                <a href="#" onclick="editPwd('编辑密码')">修改密码</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ route('admin.dropout') }}" class="btn btn-default btn-flat">退出</a>
@@ -45,3 +45,129 @@
     </nav>
 </header>
 <!-- 顶部结束-->
+<script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
+<section>
+    <div class="modal fade" id="editPwdModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;">
+                    <form id="ruleForm1" action="{{route('admin.editpwd')}}" class="form-horizontal" role="form" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">原密码:</label>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-inline" name="password" placeholder="请输入原密码"
+                                       style="width: 150px;height: 35px;margin-right: 10px">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">新密码:</label>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-inline" name="newPassword" placeholder="输入新密码"
+                                       style="width: 150px;height: 35px;margin-right: 10px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">再次输入:</label>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-inline" name="rpassword" placeholder="再次输入新密码"
+                                       style="width: 150px;height: 35px;margin-right: 10px">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="save1($(this))">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $().ready(function () {
+        $('#ruleForm1').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                newPassword: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空!'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: '密码长度必须大于6位，小于30位<br>'
+                        },
+                        identical: {
+                            field: 'rpassword',
+                            message: '两次输入的密码不相符<br>'
+                        },
+                    }
+                },
+                rpassword: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空!'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: '密码长度必须大于6位，小于30位<br>'
+                        },
+                        identical: {
+                            field: 'newPassword',
+                            message: '两次输入的密码不相符<br>'
+                        },
+                    }
+                },
+            }
+        })
+    });
+
+    function editPwd(title) {
+        $('.modal-title').html(title);
+        $('#editPwdModel').modal('show');
+    }
+
+    /**
+     * 提交
+     */
+    function save1(_this) {
+        // formValidator();
+        $('#ruleForm1').data('bootstrapValidator').validate();
+        if (!$('#ruleForm1').data('bootstrapValidator').isValid()) {
+            return;
+        }
+        _this.removeAttr('onclick');
+
+        var $form = $('#ruleForm1');
+        $.post($form.attr('action'), $form.serialize(), function (result) {
+            if (result.status) {
+                $('#editPwdModel').modal('hide');
+                setInterval(function () {
+                    window.location.reload();
+                }, 1000);
+
+                toastr.success(result.msg);
+            } else {
+                $('#editPwdModel').modal('hide');
+                _this.attr("onclick", "save($(this))");
+                toastr.error(result.msg);
+            }
+        }, 'json');
+
+    }
+
+</script>
