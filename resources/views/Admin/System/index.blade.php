@@ -127,6 +127,7 @@
      * @param title
      */
     function edit(title, id) {
+
         $.ajax({
             type: 'get',
             url: '/admin/system/' + id + '/edit',
@@ -153,6 +154,7 @@
 
     // 模态关闭
     $('#addModel').on('hidden.bs.modal', function () {
+        $("input[name='name']").attr('Disabled',false);
         $('#systemForm').get(0).reset();
         $("input[name='id']").val('');
     });
