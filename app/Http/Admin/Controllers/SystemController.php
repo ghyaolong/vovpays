@@ -30,8 +30,9 @@ class SystemController extends Controller
     public function store(Request $request)
     {
         $id = $request->id ? $request->id : '';
+
         $this->validate($request, [
-            'name' => 'required_without:id| regex:/^[A-Za-z]+$/ |unique:systems,name,' . $id,
+            'name' => 'required_without:id|regex:/^[A-Za-z]+$/ |unique:systems,name,' . $id,
             'value' => 'required',
             'remark' => 'required',
         ], [
