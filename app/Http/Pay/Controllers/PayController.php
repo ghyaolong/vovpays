@@ -184,7 +184,7 @@ class PayController extends Controller
             {
                 throw new \Exception('');
             }
-            return $pay->successCallback($request);
+            return $pay->notifyCallback($request);
 
         }catch ( \Exception $e){
 
