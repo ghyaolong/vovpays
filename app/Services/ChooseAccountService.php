@@ -134,6 +134,12 @@ class ChooseAccountService{
                 ];
             }
         }
+
+        if(!count($valid_account_list))
+        {
+            return [];
+        }
+
         $rank_key = array_rand($valid_account_list);
         return $valid_account_list[$rank_key];
     }
