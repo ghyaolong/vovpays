@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\User_rates;
 use App\Services\ChooseAccountService;
 use App\Services\OrdersService;
+use App\Services\RabbitMqService;
 use Illuminate\Http\Request;
 use App\Jobs\SendOrderAsyncNotify;
 use App\Common\RespCode;
@@ -58,6 +59,9 @@ class ExemptService implements PayInterface
                 'h5url'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
             ];
 
+            Redis::hmset($result->orderNo, $order_date);
+            Redis::expire($result->orderNo,600);
+
         }else if($request->pay_code == 'alipay_bank'){
             // 存储订单号,以便回调
             $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);
@@ -80,10 +84,48 @@ class ExemptService implements PayInterface
                 'h5url'   => '',
                 'payurl'  => "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$account_array['account']}&bankAccount={$account_array['bank_account_name']}&money={$result->amount}&amount={$result->amount}&bankMark={$account_array['bank_code']}&bankName={$account_array['bank_name']}&cardIndex={$account_array['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from",
             ];
+
+            Redis::hmset($result->orderNo, $order_date);
+            Redis::expire($result->orderNo,600);
+
+        }else if($request->pay_code == 'wechat'){
+            try{
+                $msg = json_encode([
+                    'amount' => $result->amount,
+                    'mark'   => $result->orderNo,
+                    'type'   => 'wechat_qr',
+                    'sendtime' => TimeMicroTime(),
+                ]);
+                $rabbitMqService = app(RabbitMqService::class);
+                $rabbitMqService->send('qr_'.$account_array['phone_id'].'test',$msg);
+                for ($i=0;$i<10;$i++){
+                    $qrcode = Redis::get($result->orderNo);
+                    if($qrcode)
+                    {
+                        break;
+                    }
+                    sleep(1);
+                }
+                if(!$qrcode) json_encode(RespCode::QRCODE_ERROR,JSON_UNESCAPED_UNICODE);
+                Redis::del($result->orderNo);
+                $oRcode = json_decode($qrcode, true);
+
+                $data = [
+                    'type'    => $request->pay_code,
+                    'money'   => sprintf('%0.2f',$result->amount),
+                    'orderNo' => $result->orderNo,
+                    'payurl'  => $oRcode['payurl'],
+                    'status'  => 0,
+                ];
+
+                Redis::hmset($result->orderNo, $data);
+                Redis::expire($result->orderNo,180);
+
+            }catch ( \Exception $e){
+                return json_encode(RespCode::SYS_ERROR,JSON_UNESCAPED_UNICODE);
+            }
         }
 
-        Redis::hmset($result->orderNo, $order_date);
-        Redis::expire($result->orderNo,600);
 
         if( isset($request->json) && $request->json == 'json'){
             return json_encode(

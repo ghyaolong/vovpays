@@ -258,7 +258,7 @@
                                 message: '请输入手机标识!'
                             },
                             regexp: {
-                                regexp: /^[1-9]\d*$/,
+                                regexp: /^\d*$/,
                                 message: '请输入正确的手机标识!'
                             },
                             remote: {

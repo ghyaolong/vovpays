@@ -91,51 +91,28 @@ class AccountPhoneRepository
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @param string $value
-     * @return mixed
+     * @param string $type
+     * @return array|bool
      */
-    public function searchCheck(int $id = null, string $value)
+    public function searchCheck(int $id = null, string $value, string $type)
     {
         if ($id) {
-
-            $sql = "id <> $id and phone_id = ?";
+            $sql = "id <> $id and phone_id = ? and accountType=?";
             $where['phone_id'] = $value;
+            $where['accountType'] = $type;
 
         } else {
 
-            $sql = " phone_id = ?";
+            $sql = " phone_id = ? and accountType=?";
             $where['phone_id'] = $value;
+            $where['accountType'] = $type;
 
         }
-        $data = $this->account_phone->whereRaw($sql, $where)->get();
-        if (count($data) <= 1) {
-            return false;
-        } else {
-            $account = [];
-            foreach ($data as $v) {
-                $account[] = $v['accountType'];
-            }
-            return $account;
-        }
+        return $this->account_phone->whereRaw($sql, $where)->first();
 
-//        return $this->account_phone->whereRaw($sql, $where)->first();
     }
-//    public function searchOne(int $id, string $value)
-//    {
-//        if ($id) {
-//
-//            $sql = "id <> $id and account = ?";
-//            $where['account'] = $value;
-//
-//        } else {
-//
-//            $sql = " account = ?";
-//            $where['account'] = $value;
-//
-//        }
-//        return $this->account_phone->whereRaw($sql, $where)->first();
-//    }
 
     /**
      * @param int $id

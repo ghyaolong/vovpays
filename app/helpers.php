@@ -219,3 +219,13 @@ function getOrderAccountInfo(int $uid)
     if(!$user) return '-';
     return $user->username;
 }
+
+/**
+ * 毫秒时间戳
+ * @return float
+ */
+function TimeMicroTime()
+{
+    list($msec, $sec) = explode(' ', microtime());
+    return (float)sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
+}

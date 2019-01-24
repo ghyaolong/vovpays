@@ -276,24 +276,6 @@
                             notEmpty: {
                                 message: '请输入银行卡号!'
                             },
-                            {{--regexp: {--}}
-                            {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
-                            {{--message: '请输入正确的银行卡号！'--}}
-                            {{--},--}}
-                            {{--remote: {--}}
-                            {{--url: "{{route('checkBank.check')}}",--}}
-                            {{--message: "该卡号已存在!",--}}
-                            {{--type: "post",--}}
-                            {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
-                            {{--return {--}}
-                            {{--"value": $("input[name='cardNo']").val().trim(),--}}
-                            {{--"type": 'cardNo',--}}
-                            {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
-                            {{--"id": $('#id').val(),--}}
-                            {{--};--}}
-                            {{--},--}}
-                            {{--delay: 500,--}}
-                            {{--},--}}
                         },
                     },
                     phone_id: {

@@ -114,7 +114,7 @@ class ChooseAccountService{
             {
                 $get_account = Redis::hGetAll($account->phone_id.'alipay');
                 // 验证手机和支付宝id是否一致
-                if($get_account['userid'] != $account->alipayuserid || (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ))
+                if($get_account['userid'] != $account->alipayuserid || time() > (strtotime($get_account['update'])+35) || $get_account['status'] == 1 )
                 {
                     continue;
                 }
@@ -130,7 +130,6 @@ class ChooseAccountService{
                     'type'      => $this->pay_code,
                     'userId'    => $account->alipayuserid,
                     'username'  => $account->alipayusername,
-                    'phone_id'  => $account->phone_id,
                     'phone_uid' => $account->user_id
                 ];
             }
@@ -140,11 +139,40 @@ class ChooseAccountService{
     }
 
     /**
-     * 选择微信
+     * 选择实时微信
      */
-    protected function getValidWechatAccount()
+    protected function getValidWechatAccount(Collection $account_list)
     {
-        return;
+        Redis::select(1);
+        $valid_account_list = [];
+        foreach ($account_list as $k=>$account)
+        {
+            if( Redis::exists($account->phone_id.'wechat') )
+            {
+                $get_account = Redis::hGetAll($account->phone_id.'wechat');
+                // 验证账号是否一致
+                if( $get_account['account'] != $account->account || (time() > (strtotime($get_account['update'])+35) || $get_account['status'] != 1 ))
+                {
+                    continue;
+                }
+                // 验证账号是否限额
+                if( $account->dayQuota && bcadd($this->price,$get_account['amount'],2) > $account->dayQuota )
+                {
+                    continue;
+                }
+
+                $valid_account_list[$k] = [
+                    'type'              => $this->pay_code,
+                    'account'           => $account->account,
+                    'phone_id'          => $account->phone_id,
+                    'phone_uid'         => $account->user_id
+                ];
+            }
+        }
+        if(!count($valid_account_list))return [];
+
+        $rank_key = array_rand($valid_account_list);
+        return $valid_account_list[$rank_key];
     }
 
     /**
@@ -162,7 +190,7 @@ class ChooseAccountService{
             {
                 $get_account = Redis::hGetAll($account->phone_id.'alipay');
                 // 验证手机和支付宝id是否一致
-                if( (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ))
+                if( (time() > (strtotime($get_account['update'])+35) || $get_account['status'] == 1 ))
                 {
                     continue;
                 }
@@ -180,7 +208,6 @@ class ChooseAccountService{
                     'bank_name'         => $account->bank_name,
                     'bank_code'         => $account->bank_mark,
                     'chard_index'       => $account->chard_index,
-                    'phone_id'          => $account->phone_id,
                     'phone_uid'         => $account->user_id
                 ];
             }

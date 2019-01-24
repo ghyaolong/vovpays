@@ -258,10 +258,6 @@
                             notEmpty: {
                                 message: '请输入手机标识!'
                             },
-                            regexp: {
-                                regexp: /^[1-9]\d*$/,
-                                message: '请输入正确的手机标识!'
-                            },
                             remote: {
                                 url: "{{route('user.check')}}",
                                 message: "该手机已添加过微信账号!",
