@@ -106,7 +106,7 @@ class ExemptService implements PayInterface
                     }
                     sleep(1);
                 }
-                if(!count($qrcode)) json_encode(RespCode::QRCODE_ERROR,JSON_UNESCAPED_UNICODE);
+                if(!$qrcode) return json_encode(RespCode::QRCODE_ERROR,JSON_UNESCAPED_UNICODE);
                 Redis::del($result->orderNo);
                 $oRcode = json_decode($qrcode, true);
 
