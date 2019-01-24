@@ -44,7 +44,7 @@ class AccountPhoneController extends Controller
             $data['accountType'] = 'alipay';
             $title='支付宝收款';
         }
-        $list = $this->accountPhoneService->searchPhoneStastic($data, 6);
+        $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
 
 
         return view("Agent.AccountPhone.{$data['accountType']}", compact('title','list'));

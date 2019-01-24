@@ -50,7 +50,7 @@ class CheckUniqueService
                 break;
 
             case 'account_phones':
-                $result = $this->accountPhoneRepository->searchCheck($id, $value, $name);
+                $result = $this->accountPhoneRepository->searchCheck($id, $value,$name);
                 break;
 
             case 'account_bank_cards':

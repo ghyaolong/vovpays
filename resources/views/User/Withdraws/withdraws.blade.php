@@ -153,7 +153,7 @@
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
-                        @if(isset($list[0]))
+                        @if(count($list))
                             @foreach($list as $v)
                                 <tr>
                                     <td>
