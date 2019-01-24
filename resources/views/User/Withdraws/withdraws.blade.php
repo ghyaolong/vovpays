@@ -136,7 +136,7 @@
     {{--银行卡表单模态框--}}
     <div class="modal fade" id="bankModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" style="margin-top: 123px;width: 700px;">
+        <div class="modal-dialog" style="margin-top: 123px;width: 80%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title"></h4>
