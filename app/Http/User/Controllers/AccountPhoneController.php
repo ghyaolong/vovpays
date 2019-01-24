@@ -39,7 +39,7 @@ class AccountPhoneController extends Controller
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
         }
-        $list = $this->accountPhoneService->searchPhoneStastic($data, 6);
+        $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
 
 
         return view("User.AccountPhone.{$data['accountType']}", compact('list'));

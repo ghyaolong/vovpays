@@ -50,18 +50,7 @@ class CheckUniqueService
                 break;
 
             case 'account_phones':
-                $result = $this->accountPhoneRepository->searchCheck($id, $value, $name);
-                if ($result) {
-                    for ($i = 0; $i < count($result); $i++) {
-                        if ($result[$i] == $name) {
-                            return $result = 0;
-                        }
-                    }
-
-                } else {
-
-                    return $result = 1;
-                }
+                $result = $this->accountPhoneRepository->searchCheck($id, $value,$name);
                 break;
 
             case 'account_bank_cards':
