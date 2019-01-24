@@ -25,14 +25,14 @@
         <span class="ico_log ico-w"></span>
     </h1>
     <div class="mod-ct">
-        <h1 style="padding-top:15px;color: #FF0000">1.一码一单，多次付款无法到账</h1>
+        <h1 style="padding-top:15px;color: #FF0000">1.重复扫码不到帐，请只支付一次</h1>
         <h1 style="padding-top:15px;color: #FF0000">2.需要多次付款，请重新发起订单</h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
                 <div style="position: relative;display: inline-block;">
-                    <img id="show_qrcode" src="http://mobile.qq.com/qrcode?url={{ urlencode($data['payurl']) }}" width="200">
+                    <img id="show_qrcode" src="" width="200">
                 </div>
             </div>
         </div>
@@ -45,6 +45,7 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('js/jquery.qrcode.min.js') }}"></script>
 <script type="text/javascript">
 var myTimer;
 function timer(intDiff) {
@@ -121,7 +122,35 @@ function checkdata(){
 
 $().ready(function(){
     timer(180);
+
+
+    var strcode = toUtf8('{!! $data['payurl'] !!}');
+    var qrcode = $('#show_qrcode').qrcode({ text: strcode });
+    var canvas = qrcode.find('canvas').get(0);
+    $('#show_qrcode').attr('src', canvas.toDataURL('image/jpg'));
+    canvas.remove();
+
 })
+
+function toUtf8(str) {
+    var out, i, len, c;
+    out = "";
+    len = str.length;
+    for(i = 0; i < len; i++) {
+        c = str.charCodeAt(i);
+        if ((c >= 0x0001) && (c <= 0x007F)){
+            out += str.charAt(i);
+        } else if (c > 0x07FF) {
+            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+            out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+        } else{
+            out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+            out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+        }
+    }
+    return out;
+}
 </script>
 </body>
 </html>

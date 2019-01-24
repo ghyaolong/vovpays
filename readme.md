@@ -67,7 +67,9 @@
 1. ``nohup php artisan queue:work --queue=orderNotify &`` 运行异步下游通知队列
 2. ``nohup php artisan phone:get &`` 运行手机监听
 3. ``nohup php artisan order:callback &`` 运行免签订单回调监听
-4. ``php artisan queue:restart`` 队列重启命令
+4. ``nohup php artisan wechatQrcode:get & ``运行微信二维码生成监听
+
+#### ``php artisan queue:restart`` 队列重启命令
 
  
 ##日志

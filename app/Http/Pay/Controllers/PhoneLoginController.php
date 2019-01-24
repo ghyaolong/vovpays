@@ -101,6 +101,7 @@ class PhoneLoginController extends Controller
         $data = array(
             'alipayAccount' => isset($alipay_account) ? $alipay_account : '',
             'wechatAccount' => isset($wx_account) ? $wx_account : '',
+            'cloudpayAccount'=> '',//云闪付
             'key'           => $fans->apiKey,
             'host'          => env('MQ_HOST'),
             'Port'          => env('MQ_PORT'),

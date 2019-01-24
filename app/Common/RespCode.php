@@ -20,6 +20,7 @@ class RespCode
     const SYS_ERROR          = ['respCode'=>'20005','msg'=>'系统错误' ];
     const PARAMETER_ERROR_STOP = ['respCode'=>'10008','msg'=>'交易已被终止'];
     const ORDER_REPEAT       = ['respCode'=>'10009','msg'=>'订单已重复'];
+    const QRCODE_ERROR       = ['respCode'=>'10010','msg'=>'二维码获取失败'];
 
 
     const SUCCESS = ['respCode'=>'200', 'msg'=>'请求成功'];
