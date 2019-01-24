@@ -48,10 +48,82 @@
 
 ``composer install --ignore-platform-reqs``
 
+10. 安装supervisor
+
+``yum install python-setuptools``
+
+``easy_install supervisor``
+
+``echo_supervisord_conf > /etc/supervisord.conf``
+
+``vim /etc/supervisord.conf`` 拉到最底下开启
+#####[include]
+#####files = /etc/supervisord.d/*.conf
+
+``cd /etc/supervisord.d``创建文件 laravel-worker.conf 复制如下内容
+````
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/vovpays/artisan phone:get
+autostart=true
+autorestart=true
+user=nginx
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/home/phone.log
+
+
+[program:laravel-worker1]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/vovpays/artisan queue:work --queue=orderNotify
+autostart=true
+autorestart=true
+user=nginx
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/home/orderNotify.log
+
+
+[program:laravel-worker2]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/vovpays/artisan order:callback
+autostart=true
+autorestart=true
+user=nginx
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/home/callback.log
+
+
+[program:laravel-worker3]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/vovpays/artisan wechatQrcode:get
+autostart=true
+autorestart=true
+user=nginx
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/home/wechatQrcode.log
+````
+
+然后依次运行
+
+``sudo supervisorctl reread`` 重新启动配置中的所有程序
+
+``sudo supervisorctl update`` 更新新的配置
+
+``sudo supervisorctl start laravel-worker:*`` 启动进程
+
+####这里值得注意的是，如果 Laravel 处理队列的代码更改了，需要重启 Supervisor 的队列管理才能生效。
+
+
+
+
+
+
 ##使用扩展包：
 1. 验证码 [mews/captcha](https://github.com/mewebstudio/captcha)
 2. php-amqplib": "^2.8"
-
 
 
 ##使用前端资源：
