@@ -114,7 +114,7 @@ class ChooseAccountService{
             {
                 $get_account = Redis::hGetAll($account->phone_id.'alipay');
                 // 验证手机和支付宝id是否一致
-                if($get_account['userid'] != $account->alipayuserid || time() > (strtotime($get_account['update'])+35) || $get_account['status'] != 1 )
+                if($get_account['userid'] != $account->alipayuserid || (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ) )
                 {
                     continue;
                 }
@@ -151,7 +151,7 @@ class ChooseAccountService{
             {
                 $get_account = Redis::hGetAll($account->phone_id.'wechat');
                 // 验证账号是否一致
-                if( $get_account['account'] != $account->account || time() > (strtotime($get_account['update'])+35) || $get_account['status'] != 1  )
+                if( $get_account['account'] != $account->account || (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ) )
                 {
                     continue;
                 }
@@ -190,7 +190,7 @@ class ChooseAccountService{
             {
                 $get_account = Redis::hGetAll($account->phone_id.'alipay');
                 // 验证手机和支付宝id是否一致
-                if( time() > (strtotime($get_account['update'])+35) || $get_account['status'] != 1 )
+                if( (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ) )
                 {
                     continue;
                 }
