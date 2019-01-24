@@ -110,12 +110,12 @@ class WithdrawsService
     {
         switch ($withdrawRule['withdraw_fee_type']) {
             case 'RATE':
-                $data['withdrawRate'] = bcmul($data['withdrawAmount'], bcdiv($withdrawRule['withdraw_rate'], 100, 4), 3);
-                $data['toAmount'] = bcsub($data['withdrawAmount'], $data['withdrawRate'], 3);
+                $data['withdrawRate'] = bcmul($data['withdrawAmount'], bcdiv($withdrawRule['withdraw_rate'], 100, 4), 2);
+                $data['toAmount'] = bcsub($data['withdrawAmount'], $data['withdrawRate'], 2);
                 break;
             case 'FIX':
                 $data['withdrawRate'] = $withdrawRule['withdraw_rate'];
-                $data['toAmount'] = bcsub($data['withdrawAmount'], $data['withdrawRate'], 3);
+                $data['toAmount'] = bcsub($data['withdrawAmount'], $data['withdrawRate'], 2);
                 break;
             default :
                 throw new  CustomServiceException('不存在的提款收费类型:' . $withdrawRule['withdraw_fee_type'] . ',请联系平台管理员!');
