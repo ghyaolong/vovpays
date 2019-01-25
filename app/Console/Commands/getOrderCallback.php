@@ -169,6 +169,10 @@ class getOrderCallback extends Command
                 $pahone_info['amount'] = bcadd($pahone_info['amount'], $order->amount ,2);
                 Redis::hmset($data['phoneid'].'bankmsg',$pahone_info);
             }
+            if(isset($key))
+            {
+                Redis::del($key);
+            }
         }else{
             if( Redis::exists($data['phoneid'].$data['type']) )
             {
