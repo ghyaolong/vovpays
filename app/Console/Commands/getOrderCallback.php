@@ -104,7 +104,10 @@ class getOrderCallback extends Command
         {
             $signkey = env('SIGNKEY');
         }
-        if(!$this->checkSign($data,$signkey)) Log::info('orderCallback_sign_error:',[$json_str]);
+        if(!$this->checkSign($data,$signkey)){
+            Log::info('orderCallback_sign_error:',[$json_str]);
+            return ;
+        }
 
         $params = array(
             'status'    => 1,
