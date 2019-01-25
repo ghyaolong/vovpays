@@ -297,9 +297,6 @@ class PayController extends Controller
      */
     public function demo()
     {
-        $aa = new App\Services\RabbitMqService();
-        $msg = '{"phoneid": "868777041414032","type": "bankmsg","no": "95533","money": "","mark": "您尾号0793的储蓄卡账户1月25日17时20分支付机构提现收入人民币0.99元,活期余额15818.94元。[建设银行]","dt": "2019-01-25 17:20:58","sign": "90f8e6b5655d1a943054fe029cfb7129"}';
-        $aa->send('orderback', $msg);
         return view('Pay.demo');
     }
 
