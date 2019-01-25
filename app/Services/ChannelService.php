@@ -95,4 +95,11 @@ class ChannelService
     {
         return $this->channelsRepository->del($id);
     }
+
+    /**
+     * 根据通道编码获取
+     */
+    public function findChannelCode(String $code){
+        return $this->channelsRepository->findChannelCode($code);
+    }
 }
