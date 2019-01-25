@@ -90,4 +90,11 @@ class ChannelsRepository
     {
         return $this->channel->whereId($id)->first();
     }
+
+    /**
+     * 根据编码查询通道
+     */
+    public function findChannelCode(String $code){
+        return $this->channel->whereChannelcode($code)->first();
+    }
 }
