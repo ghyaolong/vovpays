@@ -14,7 +14,8 @@ class RespCode
     const TRADE_BIZ_NOT_OPEN = ['respCode'=>'20001', 'msg'=>'支付方式不存在或未开通'];
     const CHANNEL_NOT_EXIST  = ['respCode'=>'20002', 'msg'=>'交易通道不存在或未开通'];
     const RESOURCE_NOT_FOUND = ['respCode'=>'404',   'msg'=>'资源未找到'];
-    const APP_ERROR          = ['respCode'=>'20003', 'msg'=>'APP或账号未配置'];
+    const ACCOUNT_NOT_START  = ['respCode'=>'20002', 'msg'=>'账号未配置'];
+    const APP_ERROR          = ['respCode'=>'20003', 'msg'=>'APP或账号已限额'];
     const FAILED             = ['respCode'=>'500', 'msg'=>'处理失败'];
     const TRADE_ORDER_NOT_EXIST = ['respCode'=>'20004', 'msg'=>'交易订单不存在'];
     const SYS_ERROR          = ['respCode'=>'20005','msg'=>'系统错误' ];

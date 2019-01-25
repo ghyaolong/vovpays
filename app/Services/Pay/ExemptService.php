@@ -124,6 +124,34 @@ class ExemptService implements PayInterface
             }catch ( \Exception $e){
                 return json_encode(RespCode::SYS_ERROR,JSON_UNESCAPED_UNICODE);
             }
+        }else if($request->pay_code == 'alipay_bank2'){
+            // 存储订单号,以便回调
+            // 截取银行卡号后四位
+            $card = substr($result['account'],-4);
+            $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.$card.'_'.sprintf('%0.2f',$result['amount']);
+            Redis::set($key,$result->orderNo);
+            Redis::expire($key,600);
+
+            $order_date = array(
+                'amount'  => $result->amount,
+                'account' => $account_array['account'],
+                'bank_account_name' => $account_array['bank_account_name'],
+                'bank_name'  => $account_array['bank_name'],
+                'bank_code'  => $account_array['bank_code'],
+                'status'  => 0,
+            );
+            $data = [
+                'type'    => $request->pay_code,
+                'money'   => sprintf('%0.2f',$result->amount),
+                'orderNo' => $result->orderNo,
+                'h5url'   => '',
+                'payurl'  => "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$account_array['account']}&bankAccount={$account_array['bank_account_name']}&money={$result->amount}&amount={$result->amount}&bankMark={$account_array['bank_code']}&bankName={$account_array['bank_name']}&cardIndex={$account_array['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from",
+            ];
+
+            Redis::hmset($result->orderNo, $order_date);
+            Redis::expire($result->orderNo,600);
+
+            $request->pay_code = 'alipay_bank';
         }
 
 

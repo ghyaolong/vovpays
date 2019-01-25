@@ -102,6 +102,16 @@ class AccountBankCardsRepository
     }
 
     /**
+     * @param string $id
+     * @param int $uid
+     * @return mixed
+     */
+    public function findPhoneIdAndUserId(string $id, int $uid)
+    {
+        return $this->account_bank_cards->wherePhoneId($id)->whereUserId($uid)->get();
+    }
+
+    /**
      * @param int $id
      * @param int $uid
      * @return mixed
@@ -114,21 +124,45 @@ class AccountBankCardsRepository
     /**
      * @param int $uid
      * @param int $status
+     * @param string $bank_mark
      * @return mixed
      */
-    public function getStatusAndUserId(int $uid, int $status)
+    public function getStatusAndUserIdAndBanKMark(int $uid, int $status,string $bank_mark)
     {
-        return $this->account_bank_cards->whereStatus($status)->whereUserId($uid)->get();
+        return $this->account_bank_cards->whereStatus($status)->whereUserId($uid)->whereBankMark($bank_mark)->get();
+    }
+
+    /**
+     * @param int $uid
+     * @param int $status
+     * @param string $bank_mark
+     * @return mixed
+     */
+    public function getStatusAndUserIdAndNotBanKMark(int $uid, int $status,string $bank_mark)
+    {
+        return $this->account_bank_cards->whereStatus($status)->whereUserId($uid)->where('bank_mark','<>',$bank_mark)->get();
     }
 
     /**
      * @param int $status
      * @param array $uid_arr
+     * @param string $bank_mark
      * @return mixed
      */
-    public function getStatusAndUidarr(int $status, array $uid_arr )
+    public function getStatusAndUidarrAndBanKMark(int $status, array $uid_arr ,string $bank_mark)
     {
-        return $this->account_bank_cards->whereStatus($status)->whereIn('user_id',$uid_arr)->get();
+        return $this->account_bank_cards->whereStatus($status)->whereIn('user_id',$uid_arr)->whereBankMark($bank_mark)->get();
+    }
+
+    /**
+     * @param int $status
+     * @param array $uid_arr
+     * @param string $bank_mark
+     * @return mixed
+     */
+    public function getStatusAndUidarrAndNotBanKMark(int $status, array $uid_arr ,string $bank_mark)
+    {
+        return $this->account_bank_cards->whereStatus($status)->whereIn('user_id',$uid_arr)->where('bank_mark','<>',$bank_mark)->get();
     }
 
     /**

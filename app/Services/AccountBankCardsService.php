@@ -68,22 +68,47 @@ class AccountBankCardsService
     /**
      * @param int $uid
      * @param int $status
+     * @param string $bank_mark
      * @return mixed
      */
-    public function getStatusAndUserId(int $uid, int $status)
+    public function getStatusAndUserIdAndBanKMark(int $uid, int $status, string $bank_mark)
     {
-        return $this->accountBankCardsRepository->getStatusAndUserId($uid, $status);
+        return $this->accountBankCardsRepository->getStatusAndUserIdAndBanKMark($uid, $status, $bank_mark);
     }
 
     /**
-     * 跟据状态和是否三方挂号
+     * @param int $uid
      * @param int $status
-     * @param array $uid_arr
+     * @param string $bank_mark
      * @return mixed
      */
-    public function getStatusAndUidarr(int $status, array $uid_arr)
+    public function getStatusAndUserIdAndNotBanKMark(int $uid, int $status, string $bank_mark)
     {
-        return $this->accountBankCardsRepository->getStatusAndUidarr($status, $uid_arr);
+        return $this->accountBankCardsRepository->getStatusAndUserIdAndNotBanKMark($uid, $status, $bank_mark);
+    }
+
+    /**
+     * 跟据状态获取所有三方挂号
+     * @param int $status
+     * @param array $uid_arr
+     * @param string $bank_mark
+     * @return mixed
+     */
+    public function getStatusAndUidarrAndBanKMark(int $status, array $uid_arr, string $bank_mark)
+    {
+        return $this->accountBankCardsRepository->getStatusAndUidarrAndBanKMark($status, $uid_arr,$bank_mark);
+    }
+
+    /**
+     * 跟据状态获取所有三方挂号
+     * @param int $status
+     * @param array $uid_arr
+     * @param string $bank_mark
+     * @return mixed
+     */
+    public function getStatusAndUidarrAndNotBanKMark(int $status, array $uid_arr, string $bank_mark)
+    {
+        return $this->accountBankCardsRepository->getStatusAndUidarrAndNotBanKMark($status, $uid_arr,$bank_mark);
     }
 
     /**
@@ -94,6 +119,17 @@ class AccountBankCardsService
     public function findIdAndUserId(int $id, int $uid)
     {
         return $this->accountBankCardsRepository->findIdAndUserId($id, $uid);
+    }
+
+    /**
+     * 根据手机标识和用户id获取卡号
+     * @param string $phone_id
+     * @param int $uid
+     * @return mixed
+     */
+    public function findPhoneIdAndUserId(string $phone_id, int $uid)
+    {
+        return $this->accountBankCardsRepository->findPhoneIdAndUserId($phone_id, $uid);
     }
 
     /**

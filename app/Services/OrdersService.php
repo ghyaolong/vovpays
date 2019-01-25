@@ -35,6 +35,8 @@ class OrdersService
         if( $request->pay_code == "alipay_bank" )
         {
             $amount = $account_array['realPrice'];
+        }else if($request->pay_code == "alipay_bank2"){
+            $amount = $account_array['realPrice'];
         }else{
             $amount = $request->amount;
         }

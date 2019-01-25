@@ -6,6 +6,7 @@ use App\Services\OrdersService;
 use App\Services\QuotalogService;
 use App\Services\StatisticalService;
 use App\Services\UserService;
+use App\Tool\RegularGetBankInfo;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
@@ -75,9 +76,20 @@ class getOrderCallback extends Command
         $data = json_decode($json_str, true);
         if(!$data) return;
         // 获取订单号
-        if($data['type'] == 'alipay_bank')
+        if($data['type'] == 'alipay_bank')// 转网商银行
         {
             $key = $data['phoneid']."_".$data['type'].'_'.$data['money'];
+            if(Redis::exists($key))
+            {
+                $order_id = Redis::get($key);
+            }else{
+                return 1;
+            }
+        }else if($data['type'] == 'bankmsg'){ // 转银行卡
+            $RegularGetBankInfo = app(RegularGetBankInfo::class);
+            $data['money'] = $RegularGetBankInfo->getAmount($data['no'], $data['mark']);
+            $cardNo = $RegularGetBankInfo->getCardNo($data['no'],$data['mark']);
+            $key = $data['phoneid'].'_'.'alipay_bank2_'.$cardNo.'_'.$data['money'];
             if(Redis::exists($key))
             {
                 $order_id = Redis::get($key);
@@ -104,9 +116,13 @@ class getOrderCallback extends Command
         {
             $signkey = env('SIGNKEY');
         }
-        if(!$this->checkSign($data,$signkey)){
-            Log::info('orderCallback_sign_error:',[$json_str]);
-            return ;
+
+        // 转银行卡短信，监听不需要验签
+        if($data['type'] != 'bankmsg'){
+            if(!$this->checkSign($data,$signkey)){
+                Log::info('orderCallback_sign_error:',[$json_str]);
+                return 5;
+            }
         }
 
         $params = array(
@@ -147,6 +163,13 @@ class getOrderCallback extends Command
             if(isset($key))
             {
                 Redis::del($key);
+            }
+        }else if($data['type'] == 'bankmsg'){
+            if(Redis::exists($data['phoneid'].'bankmsg'))
+            {
+                $pahone_info = Redis::hGetAll($data['phoneid'].'bankmsg');
+                $pahone_info['amount'] = bcadd($pahone_info['amount'], $order->amount ,2);
+                Redis::hmset($data['phoneid'].'bankmsg',$pahone_info);
             }
         }else{
             if( Redis::exists($data['phoneid'].$data['type']) )

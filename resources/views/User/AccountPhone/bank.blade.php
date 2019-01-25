@@ -31,6 +31,7 @@
                                 <th>手机标识</th>
                                 <th>银行实名</th>
                                 <th>银行卡号</th>
+                                <th>银行名称</th>
                                 <th>单日交易额</th>
                                 <th>今日订单量</th>
                                 <th>今日成功订单量</th>
@@ -49,6 +50,7 @@
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->bank_account }}</td>
                                         <td style="color: #00c0ef">{{ $v->cardNo }}</td>
+                                        <td>{{ $v->bank_name }}</td>
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
@@ -118,13 +120,8 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <select class="form-control" id="phone_id" name="phone_id">
-                                    <option value="">选择手机标识</option>
-                                    @foreach($alist as $v)
-                                        <option value="{{$v->phone_id}}">{{$v->phone_id}}</option>
-                                    @endforeach
-                                </select>
-                                <p style="margin-bottom: -8px;color: red">必须先配置支付宝账号</p>
+                                <input type="text" class="form-control" name="phone_id"
+                                       placeholder="手机标识">
                             </div>
                         </div>
                         <div class="form-group">
@@ -350,7 +347,7 @@
                         $("input[name='accountType']").val(result.data['accountType']);
                         $("input[name='bank_name']").val(result.data['bank_name']);
                         $("input[name='cardNo']").val(result.data['cardNo']);
-                        $("select[name='phone_id']").val(result.data['phone_id']);
+                        $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
                         $("input[name='chard_index']").val(result.data['chard_index']);
                         $("input[name='id']").val(result.data['id']);
