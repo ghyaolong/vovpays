@@ -52,8 +52,6 @@ class getOrderCallback extends Command
         $channel = $connection->channel();
         $channel->queue_declare($queue, false, false, false, false);
         $callback = function ($msg) {
-
-            echo $msg->body."\n";
             echo $this->orderCallback($msg->body)."\n";
         };
         $channel->basic_consume($queue, '', false, true, false, false, $callback);
