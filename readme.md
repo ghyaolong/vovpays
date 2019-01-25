@@ -62,49 +62,6 @@
 
 ``cd /etc/supervisord.d``创建文件 laravel-worker.conf 复制如下内容
 ````
-[program:laravel-worker]
-process_name=%(program_name)s_%(process_num)02d
-command=php /home/vovpays/artisan phone:get
-autostart=true
-autorestart=true
-user=nginx
-numprocs=1
-redirect_stderr=true
-stdout_logfile=/home/phone.log
-
-
-[program:laravel-worker1]
-process_name=%(program_name)s_%(process_num)02d
-command=php /home/vovpays/artisan queue:work --queue=orderNotify
-autostart=true
-autorestart=true
-user=nginx
-numprocs=1
-redirect_stderr=true
-stdout_logfile=/home/orderNotify.log
-
-
-[program:laravel-worker2]
-process_name=%(program_name)s_%(process_num)02d
-command=php /home/vovpays/artisan order:callback
-autostart=true
-autorestart=true
-user=nginx
-numprocs=1
-redirect_stderr=true
-stdout_logfile=/home/callback.log
-
-
-[program:laravel-worker3]
-process_name=%(program_name)s_%(process_num)02d
-command=php /home/vovpays/artisan wechatQrcode:get
-autostart=true
-autorestart=true
-user=nginx
-numprocs=1
-redirect_stderr=true
-stdout_logfile=/home/wechatQrcode.log
-````
 
 然后依次运行
 
@@ -114,7 +71,8 @@ stdout_logfile=/home/wechatQrcode.log
 
 ``sudo supervisorctl start laravel-worker:*`` 启动进程
 
-####这里值得注意的是，如果 Laravel 处理队列的代码更改了，需要重启 Supervisor 的队列管理才能生效。
+## supervisorctl shutdown 停止命令，运行重启命令报错：运行 supervisord
+##这里值得注意的是，如果 Laravel 处理队列的代码更改了，需要重启 Supervisor 的队列管理才能生效。
 
 
 
@@ -141,7 +99,7 @@ stdout_logfile=/home/wechatQrcode.log
 3. ``nohup php artisan order:callback &`` 运行免签订单回调监听
 4. ``nohup php artisan wechatQrcode:get & ``运行微信二维码生成监听
 
-#### ``php artisan queue:restart`` 队列重启命令
+## ``php artisan queue:restart`` 队列重启命令
 
  
 ##日志
