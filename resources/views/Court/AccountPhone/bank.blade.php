@@ -18,7 +18,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.accountBank')}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route('court.accountBank')}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="bank_account" placeholder="账号">
                         </div>
