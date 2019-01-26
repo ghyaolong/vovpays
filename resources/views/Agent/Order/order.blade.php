@@ -159,13 +159,27 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-success btn-sm" onclick="info('订单详情',{{ $v['id'] }})">详情</button>
+                                        <button type="button" class="btn btn-success btn-sm"
+                                                onclick="info('订单详情',{{ $v['id'] }})">详情
+                                        </button>
+                                        @if(env('ADD_ACCOUNT_TYPE') ==3)
+                                            @if($v['status'] == 1)
+                                                <button type="button" class="btn btn-sm"
+                                                        onclick="send({{ $v['id'] }},{{$v['agent_id']}})">
+                                                    补发通知
+                                                </button>
+                                            @elseif($v['status'] == 0)
+                                                <button type="button" class="btn btn-warning btn-sm"
+                                                        onclick="orderSave({{ $v['id'] }},{{$v['agent_id']}})">改为成功
+                                                </button>
+                                            @endif
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="10"  style="text-align: center">没有找到匹配数据</td>
+                                <td colspan="10" style="text-align: center">没有找到匹配数据</td>
                             </tr>
                         @endif
                     </table>
@@ -179,7 +193,8 @@
     </div>
     <!-- /.row -->
 
-    <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         data-backdrop="static">
         <div class="modal-dialog" style="margin-top: 123px">
             <div class="modal-content">
                 <div class="modal-header">
@@ -192,7 +207,8 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">商户订单号</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="underOrderNo" name="underOrderNo" readonly="readonly">
+                                <input type="text" class="form-control" id="underOrderNo" name="underOrderNo"
+                                       readonly="readonly">
                             </div>
                         </div>
                         <div class="form-group">
@@ -304,18 +320,16 @@
          * @param id
          * @param title
          */
-        function info(title, id)
-        {
+        function info(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/agent/order/'+id+'/show',
-                dataType:'json',
+                url: '/agent/order/' + id + '/show',
+                dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success:function(result){
-                    if(result.status == 1)
-                    {
+                success: function (result) {
+                    if (result.status == 1) {
                         $("#underOrderNo").val(result.data['underOrderNo']);
                         $("input[name='orderNo']").val(result.data['orderNo']);
                         $("input[name='amount']").val(result.data['amount']);
@@ -331,7 +345,62 @@
                         $('#addModel').modal('show');
                     }
                 },
-                error:function(XMLHttpRequest,textStatus){
+                error: function (XMLHttpRequest, textStatus) {
+                    toastr.error('通信失败');
+                }
+            })
+        }
+
+
+        function orderSave(id, agent_id) {
+            swal({
+                title: "您确定要改为成功吗？",
+                text: "修改后不能恢复！",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            }, function () {
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('order.saveStatus') }}',
+                    dataType: 'json',
+                    data: {'id': id, 'agent_id': agent_id},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (result) {
+                        if (result.status == 1) {
+                            toastr.success(result.msg);
+                            window.location.reload();
+                        } else {
+                            toastr.error(result.msg);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus) {
+                        toastr.error('通信失败');
+                    }
+                })
+            });
+        }
+
+        function send(id, agent_id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ route('order.reissue') }}',
+                dataType: 'json',
+                data: {'id': id, 'agent_id': agent_id},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (result) {
+                    if (result.status == 1) {
+                        toastr.success(result.msg);
+                    } else {
+                        toastr.error(result.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus) {
                     toastr.error('通信失败');
                 }
             })
