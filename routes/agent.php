@@ -32,6 +32,8 @@ Route::group([], function ($router) {
         Route::get('order', 'OrderController@index')->name('agent.order');
         Route::get('user/order/{id}', 'OrderController@userOrder')->name('agent.userOrder');
         Route::get('order/{id}/show', 'OrderController@show')->name('order.show');
+        Route::post('order/saveStatus','OrderController@saveStatus')->name('order.saveStatus');
+        Route::post('order/reissue','OrderController@reissue')->name('order.reissue');
 
 
         Route::get('bankCard', 'BankCardController@index')->name('agent.bankCard');

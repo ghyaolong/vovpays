@@ -40,7 +40,6 @@ class PayController extends Controller
         $this->md5Verify              = $md5Verify;
         $this->ordersService          = $ordersService;
 
-
     }
 
     /**
