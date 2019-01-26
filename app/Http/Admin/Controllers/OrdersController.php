@@ -46,13 +46,14 @@ class OrdersController extends Controller
         $search = $this->ordersService->searchPage($query, 10);
         $list = $search['list'];
         $orderInfoSum = $search['info'];
+        $successrate  = $search['successrate'];
 
         $chanel_list = $this->channelService->getAll();
         $payments_list = $this->channelPaymentsService->getAll();
 
         unset($query['_token']);
 
-        return view('Admin.Orders.index', compact('title','list', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
+        return view('Admin.Orders.index', compact('title','list', 'successrate', 'query', 'chanel_list', 'payments_list', 'orderInfoSum'));
     }
 
 

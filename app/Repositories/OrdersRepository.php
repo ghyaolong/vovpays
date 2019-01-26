@@ -210,11 +210,20 @@ class OrdersRepository
      */
     public function searchOrderInfoSum($sql, $where, $page)
     {
-
         return $this->order->whereRaw($sql, $where)
             ->select(DB::raw('sum(amount) as amountSum ,count(id) as orderCount,sum(orderRate) as orderRateSum, sum(agentAmount) as agentSum,sum(userAmount) as userSum'))
             ->get()->toArray();
 
+    }
+
+    /**
+     * 获取订单成功率
+     * @param $sql
+     * @param $where
+     */
+    public function orderSuccessRate($sql, $where){
+        return $this->order->whereRaw($sql,$where)->groupBy('status')
+            ->select(DB::raw('status, count(id) as `count`'))->get()->toArray();
     }
 
 }

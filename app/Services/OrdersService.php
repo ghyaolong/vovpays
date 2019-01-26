@@ -177,6 +177,18 @@ class OrdersService
         }
         $serach['list'] = $this->ordersRepository->searchPage($sql,$where, $page);
         $serach['info'] = $this->ordersRepository->searchOrderInfoSum($sql, $where, $page);
+        //根据条件计算成功率
+        $successrates = $this->ordersRepository->orderSuccessRate($sql,$where);
+        $temp = 0;
+        if(count($successrates) > 1){
+            $count = array_sum(array_pluck($successrates,'count'));
+            $temp  = last($successrates)['count'] / $count * 100;
+        }
+        if(count($successrates) == 1){
+            $status = array_pluck($successrates,'status');
+            $temp = $status == 1 ? 100 : 0;
+        }
+        $serach['successrate'] = sprintf('%.0f',$temp).'%';
         return $serach;
 
     }

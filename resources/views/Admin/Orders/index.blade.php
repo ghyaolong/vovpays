@@ -43,7 +43,7 @@
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
-                    <span class="info-box-number">{{$orderInfoSum[0]['orderCount'] ?: 0}} 笔</span>
+                    <span class="info-box-number">{{$orderInfoSum[0]['orderCount'] ?: 0}} 笔 {{$successrate??''}}</span>
                 </div>
             </div>
         </div>
