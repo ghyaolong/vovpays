@@ -141,8 +141,8 @@
                             <th>商户号</th>
                             @if(env('ADD_ACCOUNT_TYPE') == 4)
                                 <th>收款人</th>
-                                <th>收款号</th>
                             @endif
+                            <th>收款号</th>
                             <th>系统订单/商户订单</th>
                             <th>创建时间</th>
                             <th>更新时间</th>
@@ -160,11 +160,13 @@
                         @foreach($list as $v)
                             <tr>
                                 <td>{{ $v['id'] }}</td>
-                                <td>{{ $v['merchant'] }}</td>
+                                <td>
+                                    <span>{{ $v['merchant'] }}</span>
+                                </td>
                                 @if(env('ADD_ACCOUNT_TYPE') == 4)
                                     <td>{{ getOrderAccountInfo($v['phone_uid']) }}</td>
-                                    <td>{{ $v['account'] }}</td>
                                 @endif
+                                <td>{{ $v['account'] }}</td>
 
                                 <td>
                                     <span style="color:#008d4c;font-weight: bold">{{ $v['orderNo'] }}</span>
