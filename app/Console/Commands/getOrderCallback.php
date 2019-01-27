@@ -113,13 +113,17 @@ class getOrderCallback extends Command
         if( $add_account_type == 2  )
         {
             $signkey = env('SIGNKEY');
+        }else if($add_account_type == 4){//场外挂号时，获取场外商户key
+            $court = $userService->findId($order->phone_uid);
+            if(!$court) return 6;
+            $signkey = $court->apiKey;
         }
 
         // 转银行卡短信，监听不需要验签
         if($data['type'] != 'bankmsg'){
             if(!$this->checkSign($data,$signkey)){
                 Log::info('orderCallback_sign_error:',[$json_str]);
-                return 5;
+                return 7;
             }
         }
 
