@@ -191,6 +191,10 @@ class WithdrawsService
             $sql .= ' and user_id = ?';
             $where['user_id'] = $data['user_id'];
         }
+        if (isset($data['agent_id']) && $data['agent_id']) {
+            $sql .= ' and agent_id = ?';
+            $where['agent_id'] = $data['agent_id'];
+        }
         if (isset($data['outOrderId']) && $data['outOrderId']) {
             $sql .= ' and outOrderId = ?';
             $where['outOrderId'] = $data['outOrderId'];
