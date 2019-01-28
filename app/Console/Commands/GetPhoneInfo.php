@@ -70,7 +70,9 @@ class GetPhoneInfo extends Command
 
             Redis::hset($key, 'status', $data['status']);
             Redis::hset($key, 'update', date('Y-m-d H:i:s', time()));
-            Redis::hset($key, 'account',$data['account']);
+            if($data['account']){
+                Redis::hset($key, 'account',$data['account']);
+            }
             Redis::hset($key, 'userid',$data['alipayuserid']);
             Redis::hset($key, 'comment',$data['comment']);
         }else{

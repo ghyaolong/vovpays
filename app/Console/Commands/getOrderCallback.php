@@ -52,6 +52,7 @@ class getOrderCallback extends Command
         $channel = $connection->channel();
         $channel->queue_declare($queue, false, false, false, false);
         $callback = function ($msg) {
+            echo $msg->body."\n";
             echo $this->orderCallback($msg->body)."\n";
         };
         $channel->basic_consume($queue, '', false, true, false, false, $callback);
@@ -113,7 +114,7 @@ class getOrderCallback extends Command
         if( $add_account_type == 2  )
         {
             $signkey = env('SIGNKEY');
-        }else if($add_account_type == 4){//场外挂号时，获取场外商户key
+        }else if($add_account_type == 4 || $add_account_type == 3){//场外挂号和代理挂号时，获取账号拥有着key
             $court = $userService->findId($order->phone_uid);
             if(!$court) return 6;
             $signkey = $court->apiKey;
