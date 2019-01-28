@@ -57,7 +57,7 @@ class WithdrawsController extends Controller
             $chanel_list = $this->channelService->getAll();
         } elseif ($request->type == 2) {
             //代付计结算
-            $chanel_list = $this->channelService->getAll();
+            $chanel_list = collect([]);
         }
 
         if ($chanel_list) {
