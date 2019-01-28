@@ -17,31 +17,23 @@
             <li><a href="{{route('agent.show')}}"><i class="fa fa-circle-o text-aqua"></i><span>账户信息</span></a></li>
             <li><a href="{{route('agent.user')}}"><i class="fa fa-circle-o text-aqua"></i><span>商户管理</span></a></li>
             <li><a href="{{route('agent.order')}}"><i class="fa fa-circle-o text-aqua"></i><span>交易管理</span></a></li>
-            <li><a href="{{route('agent.clearing')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>结算申请</span></a></li>
-            <li><a href="{{route('agent.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡信息</span></a></li>
-            <li><a href="{{ route('agent.api') }}"><i class="fa fa-circle-o text-aqua"></i> <span>API管理</span></a></li>
+            <li><a href="{{route('agent.clearing')}}"><i class="fa fa-circle-o  text-aqua"></i><span>结算申请</span></a></li>
+            <li><a href="{{route('agent.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i><span>银行卡信息</span></a></li>
+            <li><a href="{{ route('agent.api') }}"><i class="fa fa-circle-o text-aqua"></i><span>API管理</span></a></li>
             @if(env('ADD_ACCOUNT_TYPE') ==3)
                 <li>
-                    <a href="{{ route('agent.manageWithdraws') }}">
-                        <i class="fa fa-circle-o text-aqua"></i>
-                        <span>结算管理</span>
-                    </a>
+                    <a href="{{ route('agent.manageWithdraws') }}"><i class="fa fa-circle-o text-aqua"></i><span>结算管理</span></a>
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-circle-o  text-aqua"></i>
-                        <span>账号管理</span>
-                        <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                        <i class="fa fa-circle-o  text-aqua"></i><span>账号管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{route('agent.account',[0])}}"><i class="fa fa-circle-o"></i>
-                                <span>微信账号</span></a></li>
-                        <li><a href="{{route('agent.account',[1])}}"><i class="fa fa-circle-o"></i>
-                                <span>支付宝账号</span></a></li>
-                        <li><a href="{{ route('agent.accountBank') }}"><i class="fa fa-circle-o"></i> <span>银行卡号</span></a>
-                        </li>
+                        <li><a href="{{route('agent.account',[0])}}"><i class="fa fa-circle-o"></i><span>微信账号</span></a></li>
+                        <li><a href="{{route('agent.account',[1])}}"><i class="fa fa-circle-o"></i><span>支付宝账号</span></a></li>
+                        <li><a href="{{ route('agent.accountBank') }}"><i class="fa fa-circle-o"></i><span>银行卡号</span></a></li>
+                        <li><a href="{{ route('agent.account',[2]) }}"><i class="fa fa-circle-o"></i><span>云闪付</span></a></li>
                     </ul>
                 </li>
             @endif

@@ -37,6 +37,8 @@
                                 <span>支付宝账号</span></a></li>
                         <li><a href="{{ route('user.accountBank') }}"><i class="fa fa-circle-o"></i>
                                 <span>银行卡号</span></a></li>
+                        <li><a href="{{ route('user.account',[2]) }}"><i class="fa fa-circle-o"></i>
+                                <span>云闪付</span></a></li>
                     </ul>
                 </li>
             @else

@@ -25,6 +25,10 @@
                                         @if(isset($query['accountType']) && $query['accountType'] == 'alipay_bank') selected @endif>
                                     银行卡
                                 </option>
+                                <option value="cloudpay"
+                                        @if(isset($query['accountType']) && $query['accountType'] == 'cloudpay') selected @endif>
+                                    云闪付
+                                </option>
                             </select>
                         </div>
                         <div class="form-group">

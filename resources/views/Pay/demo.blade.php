@@ -80,7 +80,7 @@
     </label>
     <label>
         <span>支付编码 :</span>
-        <input type="text" name="pay_code" value="alipay_bank">
+        <input type="text" name="pay_code" value="cloudpay">
     </label>
     <label>
         <span> </span>

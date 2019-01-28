@@ -38,7 +38,7 @@ class ChooseAccountService{
         // 根据挂号方式获取所有开启的账号:1商户后台挂号,2总后台挂号,3代理后台挂号,4三方挂号
         if( $add_account_type == 1 )
         {
-            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat')
+            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
             {
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,$user->id,1);
             }else if($this->pay_code == 'alipay_bank'){
@@ -48,7 +48,7 @@ class ChooseAccountService{
             }
         }else if( $add_account_type == 2 ){
 
-            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat')
+            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
             {
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,100000,1);
             }else if($this->pay_code == 'alipay_bank'){
@@ -58,7 +58,7 @@ class ChooseAccountService{
             }
         }else if( $add_account_type == 3 ){
 
-            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' ) {
+            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay' ) {
 
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type, $user->parentId, 1);
             }else if($this->pay_code == 'alipay_bank'){
@@ -75,7 +75,7 @@ class ChooseAccountService{
                 return RespCode::PARAMETER_ERROR_STOP;
             }
 
-            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat')
+            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
             {
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndUidarr($type,1,$user_id_array);
             }else if($this->pay_code == 'alipay_bank'){
@@ -100,6 +100,8 @@ class ChooseAccountService{
             $valid_account = $this->getValidBankcardAccount($account_list);
         }else if($this->pay_code == "alipay_bank2"){
             $valid_account = $this->getValidBankcard($account_list);
+        }else if($this->pay_code == "cloudpay"){
+            $valid_account = $this->getValidCloudpay($account_list);
         }
 
         if(!count($valid_account))
@@ -124,7 +126,7 @@ class ChooseAccountService{
             {
                 $get_account = Redis::hGetAll($account->phone_id.'alipay');
                 // 验证手机和支付宝id是否一致
-                if($get_account['userid'] != $account->alipayuserid || (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ) )
+                if($get_account['userid'] != $account->alipayuserid || (time() > (strtotime($get_account['update'])+50) && $get_account['status'] == 1 ) )
                 {
                     continue;
                 }
@@ -155,7 +157,52 @@ class ChooseAccountService{
     }
 
     /**
+     * 获取云闪付账号
+     * @param Collection $account_list
+     * @return array
+     */
+    protected function getValidCloudpay(Collection $account_list)
+    {
+        Redis::select(1);
+        $valid_account_list = [];
+        foreach ($account_list as $k=>$account)
+        {
+            if( Redis::exists($account->phone_id.'cloudpay') )
+            {
+                $get_account = Redis::hGetAll($account->phone_id.'cloudpay');
+                // 验证手机和支付宝id是否一致
+                if($get_account['account'] != $account->account || (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ) )
+                {
+                    continue;
+                }
+                // 验证账号是否限额
+                if( $account->dayQuota && bcadd($this->price,$get_account['amount'],2) > $account->dayQuota )
+                {var_dump(2222);
+                    continue;
+                }
+
+                $valid_account_list[$k] = [
+                    'account'   => $account->account,
+                    'phone_id'  => $account->phone_id,
+                    'type'      => $this->pay_code,
+                    'phone_uid' => $account->user_id
+                ];
+            }
+        }
+
+        if(!count($valid_account_list))
+        {
+            return [];
+        }
+        $rank_key = array_rand($valid_account_list);
+        return $valid_account_list[$rank_key];
+
+    }
+
+    /**
      * 选择实时微信
+     * @param Collection $account_list
+     * @return array
      */
     protected function getValidWechatAccount(Collection $account_list)
     {

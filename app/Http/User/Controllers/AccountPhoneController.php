@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AccountPhoneStatusRequest;
 
+
 class AccountPhoneController extends Controller
 {
     protected $accountPhoneService;
@@ -38,6 +39,8 @@ class AccountPhoneController extends Controller
             $data['accountType'] = 'wechat';
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
+        }else if($request->type == '2'){
+            $data['accountType'] = 'cloudpay';
         }
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
 
@@ -56,9 +59,8 @@ class AccountPhoneController extends Controller
         $this->validate($request, [
             'account'        => 'required|unique:account_phones,account,'.$id,
         ],[
-            'account.unique'           => '用户名已存在',
+            'account.unique' => '账号已存在',
         ]);
-
         if (!empty($id)) {
             $result = $this->accountPhoneService->update($id, auth()->user()->id, $request->input());
             if ($result) {
@@ -86,6 +88,7 @@ class AccountPhoneController extends Controller
     public function checkUnique(Request $request)
     {
         $result = $this->checkUniqueService->check('account_phones', $request->type, $request->value, $request->id, $request->name);
+
         if ($result) {
             return response()->json(array("valid" => "true"));
         } else {

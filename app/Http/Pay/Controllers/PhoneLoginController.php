@@ -90,6 +90,7 @@ class PhoneLoginController extends Controller
 
         }else{
             $account_list = $this->accountPhoneService->getPhoneidAndStatusAndUserid($request->input('phoneid'),1,$fans->id);
+
             if(!count($account_list))
             {
                 $account_list = $this->accountBankCardsService->findPhoneIdAndUserId($request->input('phoneid'),$fans->id);
@@ -110,13 +111,16 @@ class PhoneLoginController extends Controller
                 case "支付宝":
                     $alipay_account = $v->account;
                     break;
+                case "云闪付":
+                    $cloudpay_account = $v->account;
+                    break;
             }
         }
 
         $data = array(
             'alipayAccount' => isset($alipay_account) ? $alipay_account : '',
             'wechatAccount' => isset($wx_account) ? $wx_account : '',
-            'cloudpayAccount'=> '',//云闪付
+            'cloudpayAccount'=> isset($cloudpay_account) ? $cloudpay_account : '',//云闪付
             'key'           => $fans->apiKey,
             'host'          => env('MQ_HOST'),
             'Port'          => env('MQ_PORT'),

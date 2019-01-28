@@ -66,6 +66,8 @@ class AccountPhoneService
                 $data['accountType'] = '支付宝';
             } elseif ($data['accountType'] == 'wechat') {
                 $data['accountType'] = '微信';
+            } elseif ($data['accountType'] == 'cloudpay') {
+                $data['accountType'] = '云闪付';
             }
             $sql .= ' and accountType = ?';
             $where['accountType'] = $data['accountType'];
@@ -94,12 +96,13 @@ class AccountPhoneService
     public function add(array $data)
     {
         $data = array_except($data, ['_token']);
-        if (isset($data['accountType'])){
-
+        if (isset($data['accountType']) && $data['accountType'] == 'cloudpay'){
+            $data['accountType'] = "云闪付";
+            $data['channel_payment_id'] = 5;
         } elseif (isset($data['alipayusername']) && isset($data['alipayuserid'])) {
             $data['accountType'] = "支付宝";
             $data['channel_payment_id'] = 1;
-        } else {
+        } else{
             $data['accountType'] = "微信";
             $data['channel_payment_id'] = 2;
         }
@@ -117,6 +120,10 @@ class AccountPhoneService
     public function update(int $id, int $uid, array $data)
     {
         $data = array_except($data, ['_token']);
+        if( isset($data['accountType']) && $data['accountType'] == 'cloudpay' )
+        {
+            $data['accountType'] = "云闪付";
+        }
         return $this->accountPhoneRepository->update($id, $uid, $data);
     }
 

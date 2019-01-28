@@ -40,8 +40,9 @@ class AccountPhoneController extends Controller
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
         } elseif ($request->type == '2') {
-            $data['accountType'] = 'bank';
+            $data['accountType'] = 'cloudpay';
         }
+
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
         return view("Court.AccountPhone.{$data['accountType']}", compact('list'));
     }
@@ -57,7 +58,7 @@ class AccountPhoneController extends Controller
         $this->validate($request, [
             'account'        => 'required|unique:account_phones,account,'.$id,
         ],[
-            'account.unique'           => '用户名已存在',
+            'account.unique' => '账号已存在',
         ]);
 
         if (!empty($id)) {

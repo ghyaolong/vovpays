@@ -152,6 +152,43 @@ class ExemptService implements PayInterface
             Redis::expire($result->orderNo,600);
 
             $request->pay_code = 'alipay_bank';
+
+        }else if($request->pay_code == 'cloudpay'){
+            try{
+                $msg = json_encode([
+                    'amount' => $result->amount,
+                    'mark'   => $result->orderNo,
+                    'type'   => 'cloudpay_qr',
+                    'sendtime' => TimeMicroTime(),
+                ]);
+                $rabbitMqService = app(RabbitMqService::class);
+                $rabbitMqService->send('qr_'.$account_array['phone_id'].'test',$msg);
+                for ($i=0;$i<10;$i++){
+                    $qrcode = Redis::get($result->orderNo);
+                    if($qrcode)
+                    {
+                        break;
+                    }
+                    sleep(1);
+                }
+                if(!$qrcode) return json_encode(RespCode::QRCODE_ERROR,JSON_UNESCAPED_UNICODE);
+                Redis::del($result->orderNo);
+                $oRcode = json_decode($qrcode, true);
+
+                $data = [
+                    'type'    => $request->pay_code,
+                    'money'   => sprintf('%0.2f',$result->amount),
+                    'orderNo' => $result->orderNo,
+                    'payurl'  => $oRcode['payurl'],
+                    'status'  => 0,
+                ];
+
+                Redis::hmset($result->orderNo, $data);
+                Redis::expire($result->orderNo,180);
+
+            }catch ( \Exception $e){
+                return json_encode(RespCode::SYS_ERROR,JSON_UNESCAPED_UNICODE);
+            }
         }
 
 
