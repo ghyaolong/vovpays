@@ -23,7 +23,7 @@
             @if(env('ADD_ACCOUNT_TYPE') ==3)
                 <li>
                     <a href="{{ route('agent.manageWithdraws') }}">
-                        <i class="fa fa-reorder"></i>
+                        <i class="fa fa-circle-o text-aqua"></i>
                         <span>结算管理</span>
                     </a>
                 </li>

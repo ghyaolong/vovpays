@@ -68,6 +68,8 @@ class WithdrawsController extends Controller
 
         $title = '结算管理';
         $data = $request->input();
+        $data['agent_id']=Auth::user()->id;
+//        dd($data['agent_id']);
 
         if (env('ADD_ACCOUNT_TYPE') != 3) {
             throw new CustomServiceException('非法操作!');
