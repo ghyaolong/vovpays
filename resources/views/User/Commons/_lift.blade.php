@@ -18,11 +18,10 @@
             {{--<li><a href="{{route('user.recharge')}}"><i class="fa fa-circle-o text-aqua"></i> <span>账户充值</span></a></li>--}}
             <li><a href="{{route('user.order')}}"><i class="fa fa-circle-o text-aqua"></i> <span>交易管理</span></a></li>
             <li><a href="{{route('user.clearing')}}"><i class="fa fa-circle-o text-aqua"></i> <span>结算管理</span></a></li>
-            <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a>
+            <li><a href="{{route('user.bankCard')}}"><i class="fa fa-circle-o  text-aqua"></i> <span>银行卡管理</span></a></li>
             <li><a href="{{ route('user.api') }}"><i class="fa fa-circle-o text-aqua"></i> <span>API管理</span></a></li>
-            </li>
             @if(env('ADD_ACCOUNT_TYPE') == 1)
-                <li class="treeview">
+                <li class="treeview @if(stripos( url()->full(),'account' )) active menu-open @endif ">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i>
                         <span>账号管理</span>

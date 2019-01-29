@@ -24,7 +24,7 @@
                 <li>
                     <a href="{{ route('agent.manageWithdraws') }}"><i class="fa fa-circle-o text-aqua"></i><span>结算管理</span></a>
                 </li>
-                <li class="treeview">
+                <li class="treeview @if(stripos( url()->full(),'account' )) active  menu-open @endif ">
                     <a href="#">
                         <i class="fa fa-circle-o  text-aqua"></i><span>账号管理</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>

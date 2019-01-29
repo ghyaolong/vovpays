@@ -81,7 +81,7 @@
                 </a>
             </li>
             @if(env('ADD_ACCOUNT_TYPE') == 2)
-            <li class="treeview">
+            <li class="treeview @if(stripos( url()->full(),'account' )) active  menu-open @endif ">
                 <a href="#">
                     <i class="fa fa-user"></i>
                     <span>账号管理</span>
