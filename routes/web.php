@@ -10,6 +10,3 @@
 Route::get('/', function () {
     return view('Home/welcome');
 });
-Route::get('home2', function () {
-    return view('Home/welcome2');
-});
