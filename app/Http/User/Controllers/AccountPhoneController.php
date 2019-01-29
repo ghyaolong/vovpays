@@ -14,7 +14,7 @@ use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AccountPhoneStatusRequest;
-
+use App\Services\DelPhoneRedisService;
 
 class AccountPhoneController extends Controller
 {
@@ -134,8 +134,14 @@ class AccountPhoneController extends Controller
      */
     public function destroy(Request $request)
     {
+        $accountPhone = $this->accountPhoneService->findIdAndUserId($request->id, auth()->user()->id);
         $result = $this->accountPhoneService->del($request->id, auth()->user()->id);
         if ($result) {
+            if($accountPhone)
+            {
+                $delPhoneRedisService = app(DelPhoneRedisService::class);
+                $delPhoneRedisService->del($accountPhone->phone_id,$accountPhone->accountType);
+            }
             return ajaxSuccess('账号已删除！');
         } else {
             return ajaxError('删除失败！');

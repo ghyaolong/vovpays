@@ -8,13 +8,13 @@
 
 namespace App\Http\Agent\Controllers;
 
-
 use App\Services\AccountBankCardsService;
 use App\Services\AccountPhoneService;
 use App\Services\BanksService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\DelPhoneRedisService;
 
 class AccountBankCardsController extends Controller
 {
@@ -123,8 +123,14 @@ class AccountBankCardsController extends Controller
      */
     public function destroy(Request $request)
     {
+        $accountBankCards = $this->accountBankCardsService->findIdAndUserId($request->id, auth()->user()->id);
         $result = $this->accountBankCardsService->del($request->id, auth()->user()->id);
         if ($result) {
+            if($accountBankCards)
+            {
+                $delPhoneRedisService = app(DelPhoneRedisService::class);
+                $delPhoneRedisService->del($accountBankCards->phone_id,$accountBankCards->accountType);
+            }
             return ajaxSuccess('账号已删除！');
         } else {
             return ajaxError('删除失败！');
