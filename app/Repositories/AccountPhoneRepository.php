@@ -177,6 +177,8 @@ class AccountPhoneRepository
             $type = '支付宝';
         } elseif ($type == 'wechat') {
             $type = '微信';
+        } else if($type == 'cloudpay'){
+            $type = '云闪付';
         }
         return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->get();
     }
