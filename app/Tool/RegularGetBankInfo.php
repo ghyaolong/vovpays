@@ -24,11 +24,10 @@ class RegularGetBankInfo
             case "95588"://中国工商银行
                 preg_match('/\)(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
                 if(count($matches) == 2){
-                    $amount = $matches[1];
+                    $amount =  sprintf("%.2f", $matches[1]);
                 }else if(count($matches) == 3){
                     $amount = $matches[1].$matches[2];
                 }
-
                 break;
             case "95533"://中国建设银行
                 preg_match('/人民币(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
@@ -79,7 +78,7 @@ class RegularGetBankInfo
         switch ($number){
             case "95588"://中国工商银行
                 preg_match('/尾号([\d]{4})卡/',$content,$matches);
-                $cardNo =  sprintf("%.2f", $matches[1]);
+                $cardNo = $matches[1];
                 break;
             case "95533"://中国建设银行
                 preg_match('/尾号([\d]{4})的/',$content,$matches);
