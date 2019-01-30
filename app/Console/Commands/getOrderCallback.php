@@ -93,6 +93,7 @@ class getOrderCallback extends Command
             {
                 $order_id = Redis::get($key);
             }else{
+                Log::debug('orderCallback_getOrderno_fail:',[$key]);
                 return 1;
             }
         }else{
