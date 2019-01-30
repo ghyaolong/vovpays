@@ -177,7 +177,7 @@ class ChooseAccountService{
                 }
                 // 验证账号是否限额
                 if( $account->dayQuota && bcadd($this->price,$get_account['amount'],2) > $account->dayQuota )
-                {var_dump(2222);
+                {
                     continue;
                 }
 
