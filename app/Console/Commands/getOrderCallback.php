@@ -66,13 +66,15 @@ class getOrderCallback extends Command
      * @param $json_str
      * @return int
      */
-    protected function orderCallback($json_str)
+    public function orderCallback($json_str)
     {
         $add_account_type = env('ADD_ACCOUNT_TYPE');
 
         Redis::select(1);
         Log::info('orderCallback:',[$json_str]);
         $data = json_decode($json_str, true);
+
+
         if(!$data) return;
         // 获取订单号
         if($data['type'] == 'alipay_bank')// 转网商银行
@@ -90,13 +92,15 @@ class getOrderCallback extends Command
             $cardNo = $RegularGetBankInfo->getCardNo($data['no'],$data['mark']);
             $key = $data['phoneid'].'_'.'alipay_bank2_'.$cardNo.'_'.$data['money'];
             Log::info('orderCallback_getOrderno_fail:',[$key]);
+            return $key;
             if(Redis::exists($key))
             {
                 $order_id = Redis::get($key);
             }else{
                 Log::info('orderCallback_getOrderno_fail:',[$key]);
-                return 1;
+
             }
+
         }else{
             $order_id = $data['mark'];
         }

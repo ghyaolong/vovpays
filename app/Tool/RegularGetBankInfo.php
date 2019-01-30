@@ -16,6 +16,7 @@ class RegularGetBankInfo
      * @param string $content
      * @return string
      */
+
     public function getAmount(string $number, string $content){
         $content = str_replace(',','',$content);
         $content = str_replace('，','',$content);
