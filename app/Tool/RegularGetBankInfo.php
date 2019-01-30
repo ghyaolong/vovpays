@@ -24,48 +24,43 @@ class RegularGetBankInfo
         switch ($number){
             case "95588"://中国工商银行
                 preg_match('/\)(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
-                if(count($matches) == 2){
-                    $amount =  sprintf("%.2f", $matches[1]);
-                }else if(count($matches) == 3){
-                    $amount = $matches[1].$matches[2];
-                }
                 break;
             case "95533"://中国建设银行
                 preg_match('/人民币(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
-                if(count($matches) == 2){
-                    $amount = $matches[1];
-                }else if(count($matches) == 3){
-                    $amount = $matches[1].$matches[2];
-                }
                 break;
             case "95599"://中国农业银行
                 preg_match('/人民币(\d+|,\d{3})+(\.\d{0,4})?/',$content,$matches);
-                if(count($matches) == 2){
-                    $amount = $matches[1];
-                }else if(count($matches) == 3){
-                    $amount = $matches[1].$matches[2];
-                }
                 break;
             case "95555"://招商银行
                 preg_match('/人民币(\d+|,\d{3})+(\.\d{0,4})?/',$content,$matches);
-                if(count($matches) == 2){
-                    $amount = $matches[1];
-                }else if(count($matches) == 3){
-                    $amount = $matches[1].$matches[2];
-                }
                 break;
             case "95561"://兴业银行
                 preg_match('/收入(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
-                if(count($matches) == 2){
-                    $amount = $matches[1];
-                }else if(count($matches) == 3){
-                    $amount = $matches[1].$matches[2];
-                }
+                break;
+            case "95566":// 中国银行
+                preg_match('/人民币(\d+|,\d{3})+(\.\d{0,4})?/',$content,$matches);
+                break;
+            case "95568":// 民生银行
+                preg_match('/存入￥(\d+)+(\.\d{0,4})?元/',$content,$matches);
+                break;
+            case "95508":// 广发银行
+                preg_match('/人民币(\d+)+(\.\d{0,4})?元/',$content,$matches);
+                break;
+            case "95511":// 平安银行
+                preg_match('/人民币(\d+)+(\.\d{0,4})?元/',$content,$matches);
+                break;
+            case "95558":// 中信银行
+                preg_match('/人民币(\d+)+(\.\d{0,4})?元/',$content,$matches);
                 break;
             default:
                 return $amount;
         }
-        return $amount;
+        if(count($matches) == 2){
+            $amount = $matches[1];
+        }else if(count($matches) == 3){
+            $amount = $matches[1].$matches[2];
+        }
+        return sprintf("%.2f", $amount);
     }
 
     /**
@@ -95,6 +90,26 @@ class RegularGetBankInfo
                 break;
             case "95561"://兴业银行
                 preg_match('/账户\*([\d]{4})\*/',$content,$matches);
+                $cardNo = $matches[1];
+                break;
+            case "95566"://中国银行
+                preg_match('/账户([\d]{4})/',$content,$matches);
+                $cardNo = $matches[1];
+                break;
+            case "95568"://民生银行
+                preg_match('/账户\*([\d]{4})于/',$content,$matches);
+                $cardNo = $matches[1];
+                break;
+            case "95508"://广发银行
+                preg_match('/尾号([\d]{4})卡/',$content,$matches);
+                $cardNo = $matches[1];
+                break;
+            case "95511"://平安银行
+                preg_match('/尾号([\d]{4})的/',$content,$matches);
+                $cardNo = $matches[1];
+                break;
+            case "95558"://中信银行
+                preg_match('/尾号([\d]{4})的/',$content,$matches);
                 $cardNo = $matches[1];
                 break;
             default:

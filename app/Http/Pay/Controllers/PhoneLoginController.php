@@ -134,6 +134,11 @@ class PhoneLoginController extends Controller
                 ['phone' => '95599', 'name' => '中国农业银行'],
                 ['phone' => '95555', 'name' => '招商银行'],
                 ['phone' => '95561', 'name' => '兴业银行'],
+                ['phone' => '95566', 'name' => '中国银行'],
+                ['phone' => '95568', 'name' => '民生银行'],
+                ['phone' => '95508', 'name' => '广发银行'],
+                ['phone' => '95511', 'name' => '平安银行'],
+                ['phone' => '95558', 'name' => '中信银行'],
             ],
         );
         return json_encode($data);
