@@ -193,6 +193,9 @@ class ExemptService implements PayInterface
 
 
         if( isset($request->json) && $request->json == 'json'){
+
+            $data['payurl']=urlencode($data['payurl']);//防止json_encode后中文乱码
+
             return json_encode(
                 ['amount' => $data['money'], 'QRCodeLink' => $data['payurl'],
             ]);
