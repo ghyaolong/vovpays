@@ -416,7 +416,7 @@
             $("#channelCode1").empty();
             $.ajax({
                 type: 'get',
-                url: '/admin/withdraws/' + id + '/manage',
+                url: '/agent/withdraws/' + id + '/manage',
                 data:'type=1',
                 // dataType:'json',
                 headers: {
@@ -455,7 +455,7 @@
             $("#channelCode2").empty();
             $.ajax({
                 type: 'get',
-                url: '/admin/withdraws/' + id + '/manage',
+                url: '/agent/withdraws/' + id + '/manage',
                 data:'type=2',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
