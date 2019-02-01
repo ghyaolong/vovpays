@@ -19,6 +19,7 @@ Route::group([], function ($router) {
         Route::get('/', 'IndexController@show')->name('agent.index');
         Route::get('extension', 'IndexController@extension')->name('agent.extension');
         Route::get('rate', 'IndexController@rate')->name('agent.rate');
+        Route::post('editPassword', 'IndexController@editPassword')->name('agent.editPassword');
 
         Route::get('user', 'UserController@index')->name('agent.user');
         Route::get('user/show', 'UserController@show')->name('agent.show');

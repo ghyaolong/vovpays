@@ -19,7 +19,21 @@
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/sweetalert/sweetalert.css') }}">
     @yield('css')
+    <style>
+        .toast-top-right {
+            margin-top: 110px;
+        }
 
+        body {
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+        .wrapper {
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+    </style>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -42,7 +56,7 @@
             </ol>
         </section>
         <!-- 内容导航结束 -->
-        <section class="content">
+        <section class="content" style="display:none">
             @yield("content")
         </section>
     </div>

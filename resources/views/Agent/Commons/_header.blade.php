@@ -60,7 +60,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="ruleForm" action="{{route('user.editPassword')}}" class="form-horizontal" role="form" method="post">
+                    <form id="ruleForm" action="{{route('agent.editPassword')}}" class="form-horizontal" role="form" method="post">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">原密码:</label>

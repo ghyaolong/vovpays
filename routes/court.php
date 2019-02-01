@@ -17,8 +17,11 @@ Route::group([], function ($router) {
     Route::group(['middleware' => 'auth:court'], function () {
         Route::get('/', 'IndexController@show')->name('court.index');
         Route::get('rate', 'IndexController@rate')->name('court.rate');
+        Route::post('editPassword', 'IndexController@editPassword')->name('court.editPassword');
+
         Route::get('order', 'OrderController@index')->name('court.order');
         Route::get('order/{id}/show', 'OrderController@show')->name('court.show');
+
         Route::get('user','UserController@index')->name('court.user');
         //账号管理
         Route::get('account/{type}', 'AccountPhoneController@index')->name('court.account');

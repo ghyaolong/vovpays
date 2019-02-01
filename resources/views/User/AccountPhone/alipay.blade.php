@@ -123,6 +123,17 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">收款链接:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="qrcode" placeholder="请输入任意金额收款链接">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-7" style="margin-top:-10px;">
+                                <a href="{{env('QRCOURSE')}}"  target="_blank"  style="margin-left: 150px">二维码链接生成方法</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">限额:</label>
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
@@ -306,6 +317,18 @@
                             }
                         },
                     },
+                    qrcode: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入任意金额收款链接!'
+                            },
+                            regexp: {
+                                regexp: /(https:)\/\/[\w\-_]+(\.[\w\-_]+)+([\S\-\.,@?^=%&:/~\+#]+)?/i,
+                                message: '请输入格式正确的收款链接'
+                            }
+
+                        },
+                    },
                     dayQuota: {
                         validators: {
                             notEmpty: {
@@ -355,6 +378,7 @@
                         $("input[name='alipayusername']").val(result.data['alipayusername']);
                         $("input[name='alipayuserid']").val(result.data['alipayuserid']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
+                        $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);

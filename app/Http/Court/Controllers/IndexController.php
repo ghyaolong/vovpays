@@ -56,4 +56,19 @@ class IndexController extends Controller
         return view('Court.Index.memberRate');
     }
 
+    //修改密码
+    public function editPassword(Request $request)
+    {
+        $data = $request->input();
+        $id = Auth::user()->id;
+        $result = $this->userService->updatePassword($id, $data);
+
+        if ($result) {
+            return ajaxSuccess('密码修改成功！');
+        } else {
+            return ajaxError('原密码错误，修改失败！');
+        }
+    }
+
+
 }
