@@ -10,13 +10,16 @@ namespace App\Http\Court\Controllers;
 
 use App\Services\OrdersService;
 use App\Services\OrderDayCountService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 class IndexController extends Controller
 {
     protected $ordersService;
     protected $userService;
+
     protected $orderDayCountService;
 
     /**
@@ -24,10 +27,11 @@ class IndexController extends Controller
      * @param OrdersService $ordersService
      * @param OrderDayCountService $orderDayCountService
      */
-    public function __construct( OrdersService $ordersService,OrderDayCountService $orderDayCountService)
+    public function __construct( OrdersService $ordersService,OrderDayCountService $orderDayCountService,UserService $userService)
     {
         $this->ordersService  = $ordersService;
         $this->orderDayCountService = $orderDayCountService;
+        $this->userService      =$userService;
     }
 
 

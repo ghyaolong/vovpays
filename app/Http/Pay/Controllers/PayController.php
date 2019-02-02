@@ -112,7 +112,7 @@ class PayController extends Controller
 
         }catch ( \Exception $e){
 
-            return json_encode(RespCode::RESOURCE_NOT_FOUND,JSON_UNESCAPED_UNICODE);
+            return json_encode($e->getMessage().$e->getFile().$e->getLine(),JSON_UNESCAPED_UNICODE);
         }
     }
 

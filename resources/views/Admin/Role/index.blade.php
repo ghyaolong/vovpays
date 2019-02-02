@@ -1,4 +1,4 @@
-@extends('Admin.Layouts.layout')
+@extends("Admin.Commons.layout")    @section('title',$title)
 @section('content')
 <div class="row">
     <div class="col-xs-12">

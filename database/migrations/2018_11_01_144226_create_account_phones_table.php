@@ -25,6 +25,7 @@ class CreateAccountPhonesTable extends Migration
             $table->string('alipayuserid')->nullable()->comment('支付宝userid');
             $table->string('alipayusername')->nullable()->comment('支付宝实名');
             $table->string('account')->comment('收款账号');
+            $table->string('qrcode')->default('0')->comment('收款任意金额码');
             $table->decimal('tradeAmount')->default(0)->comment('交易成功金额');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态：0禁用。1启用');
             $table->string('signKey')->comment('密钥与手机通讯时使用');

@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('payPassword')->comment('支付密码');
             $table->string('merchant',10)->unique()->comment('商户号');
             $table->string('apiKey')->unique()->comment('密钥');
+            $table->string('google_key')->default(0)->comment('谷歌密钥');
             $table->decimal('quota',11,2)->default(0)->comment('场外商户额度');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态：0禁用，1启用，2删除');
             $table->rememberToken();

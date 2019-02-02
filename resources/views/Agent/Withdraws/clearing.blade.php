@@ -1,4 +1,4 @@
-@extends("Agent.Commons.layout")
+@extends("Agent.Commons.layout")    @section('title',$title)
 @section('content')
     <div class="row" style="margin-top: 20px">
 
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-3 control-label">提款密码</label>
+                            <label class="col-xs-3 control-label">提款认证码</label>
                             <div class="col-xs-9">
                                 <input type="password" class="form-control" id="authCode" name="auth_code">
                             </div>
@@ -325,7 +325,7 @@
                     payPassword: {
                         validators: {
                             notEmpty: {
-                                message: '提款密码不能为空！'
+                                message: '提款认证码不能为空！'
                             }
                         }
                     }

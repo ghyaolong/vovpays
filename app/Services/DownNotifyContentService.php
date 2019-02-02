@@ -25,6 +25,7 @@ class DownNotifyContentService{
         $paraBuild['sign'] = $md5Verify->getSign($paraBuild, $user->apiKey);
 
         $result = sendCurl($orders->notifyUrl,$paraBuild);
+
         if(strtolower($result) == 'success'){
             return true;
         }else{

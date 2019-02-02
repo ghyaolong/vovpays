@@ -33,8 +33,9 @@
                         <li><a href="{{ route('court.account',[2]) }}"><i class="fa fa-circle-o"></i><span>云闪付</span></a></li>
                     </ul>
                 </li>
-            @else
-
+            @endif
+            @if(isset(Cache()->get('systems')['withdraw_permission_type']->value) && Cache()->get('systems')['withdraw_permission_type']->value == 'GOOGLE' )
+                <li><a href="{{route('court.validator')}}"><i class="fa fa-circle-o text-yellow"></i><span>安全设置</span></a></li>
             @endif
 
         </ul>

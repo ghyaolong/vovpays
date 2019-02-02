@@ -86,7 +86,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" onclick="save($(this))">提交</button>
+                            <button type="button" class="btn btn-primary" onclick="savePasswd($(this))">提交</button>
                         </div>
                     </form>
                 </div>
@@ -151,7 +151,7 @@
     /**
      * 提交
      */
-    function save(_this) {
+    function savePasswd(_this) {
         // formValidator();
         $('#ruleForm').data('bootstrapValidator').validate();
         if (!$('#ruleForm').data('bootstrapValidator').isValid()) {
@@ -170,7 +170,7 @@
                 toastr.success(result.msg);
             } else {
                 $('#editPwdModel').modal('hide');
-                _this.attr("onclick", "save($(this))");
+                _this.attr("onclick", "savePasswd($(this))");
                 toastr.error(result.msg);
             }
         }, 'json');

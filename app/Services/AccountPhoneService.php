@@ -96,6 +96,7 @@ class AccountPhoneService
     public function add(array $data)
     {
         $data = array_except($data, ['_token']);
+        $data['qrcode']= $data['qrcode']?:'0';
         if (isset($data['accountType']) && $data['accountType'] == 'cloudpay'){
             $data['accountType'] = "云闪付";
             $data['channel_payment_id'] = 5;
@@ -119,7 +120,9 @@ class AccountPhoneService
      */
     public function update(int $id, int $uid, array $data)
     {
+
         $data = array_except($data, ['_token']);
+        $data['qrcode']= $data['qrcode']??'0';
         if( isset($data['accountType']) && $data['accountType'] == 'cloudpay' )
         {
             $data['accountType'] = "云闪付";
@@ -157,6 +160,17 @@ class AccountPhoneService
         return $this->accountPhoneRepository->getStatusAndAccountType($type, $uid, $status);
     }
 
+
+    /**
+     * @param string $type
+     * @param int $uid
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAndAccountTypeAndSolidcode( string $type,int $uid, int $status){
+        return $this->accountPhoneRepository->getStatusAndAccountTypeAndSolidcode($type, $uid, $status);
+    }
+
     /**
      * 根据状态、类型、用户id获取账号
      * @param string $type
@@ -167,6 +181,18 @@ class AccountPhoneService
     public function getStatusAndAccountTypeAndUidarr(string $type, int $status,array $uid_arr)
     {
         return $this->accountPhoneRepository->getStatusAndAccountTypeAndUidarr($type,$status,$uid_arr);
+    }
+
+    /**
+     * 根据状态、类型、用户id获取账号
+     * @param string $type
+     * @param int $status
+     * @param array $uid_arr
+     * @return mixed
+     */
+    public function getStatusAndAccountTypeAndSolidcodeAndUidarr(string $type, int $status,array $uid_arr)
+    {
+        return $this->accountPhoneRepository->getStatusAndAccountTypeAndSolidcodeAndUidarr($type,$status,$uid_arr);
     }
 
     /**

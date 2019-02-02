@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Repositories\SystemsRepository;
+use App;
+use  App\Exceptions\CustomServiceException;
 
 class WithdrawRequest extends FormRequest
 {
@@ -14,6 +15,10 @@ class WithdrawRequest extends FormRequest
      */
     public function authorize()
     {
+
+         if(!app('permission')->checkPermission($this->auth_code)){
+             throw new CustomServiceException('认证失败!');
+         }
         return true;
     }
 

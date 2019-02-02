@@ -11,11 +11,12 @@ namespace App\Http\User\Controllers;
 use App\Services\BankCardService;
 use App\Services\WithdrawsService;
 use App\Services\BanksService;
+use App\Services\UserPermissionServer;
 use App\Http\Requests\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\StatisticalService;
-use App\Exceptions\CustomServiceException;
+
 
 class WithdrawsController extends Controller
 {
@@ -38,6 +39,7 @@ class WithdrawsController extends Controller
         $this->bankCardService = $bankCardService;
         $this->banksService = $banksService;
         $this->statisticalService = $statisticalService;
+
     }
 
     /**
@@ -84,6 +86,8 @@ class WithdrawsController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
+
+
             $result = $this->withdrawsService->add($request->input());
             if ($result) {
                 return ajaxSuccess('结算申请中，请留意您的账单变化！');

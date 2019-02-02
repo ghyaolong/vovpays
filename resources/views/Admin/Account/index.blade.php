@@ -1,4 +1,5 @@
-@extends("Admin.Layouts.layout")
+@extends('Admin.Commons.layout')    @section('title',$title)
+@section('title','安全设置')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
     <link rel="stylesheet" href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">

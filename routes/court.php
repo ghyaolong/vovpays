@@ -37,6 +37,10 @@ Route::group([], function ($router) {
         Route::post('accountBank/saveStatus', 'AccountBankCardsController@saveStatus')->name('court.accountBankStatus');
         Route::delete('accountBank', 'AccountBankCardsController@destroy')->name('court.accountBankDel');
         Route::post('accountBank/checkBank', 'AccountBankCardsController@checkUnique')->name('court.checkBank');
+
+        //安全设置
+        Route::get('validator','ValidatorController@index')->name('court.validator');
+        Route::post('validator','ValidatorController@store')->name('court.validator');
     });
 
 });

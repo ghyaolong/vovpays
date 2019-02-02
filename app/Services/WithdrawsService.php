@@ -29,6 +29,7 @@ class WithdrawsService
         $this->bankCardRepository = $bankCardRepository;
         $this->statisticalRepository = $statisticalRepository;
 
+
     }
 
     /**账户结算(提款)处理
@@ -41,9 +42,6 @@ class WithdrawsService
         $data['user_id'] = $user->id;
         $data['agent_id'] = $user->group_type == 1 ? $user->parentId : '0';
 
-
-        //权限验证
-        UserPermissionServer::checkPermission($data['auth_code']);
         //获取提款规则信息
         $withdrawRule = $this->getWithdrawRule($data);
         //手续费计算

@@ -134,7 +134,9 @@ class AccountPhoneRepository
      */
     public function findIdAndUserId(int $id, int $uid)
     {
-        return $this->account_phone->whereId($id)->whereUserId($uid)->first();
+        $data=$this->account_phone->whereId($id)->whereUserId($uid)->first();
+        $data->qrcode=$data->qrcode=='0'?'':$data->qrcode;
+        return $data;
     }
 
     /**
@@ -164,6 +166,23 @@ class AccountPhoneRepository
         }
         return $this->account_phone->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->get();
     }
+    /**
+     * @param string $type
+     * @param int $uid
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAndAccountTypeAndSolidcode(string $type, int $uid, int $status)
+    {
+        if ($type == 'alipay_solidcode') {
+            $type = '支付宝';
+        } elseif ($type == 'wechat_solidcode') {
+            $type = '微信';
+        } else if($type == 'cloudpay_solidcode'){
+            $type = '云闪付';
+        }
+        return $this->account_phone->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->where('qrcode','<>','0')->get();
+    }
 
     /**
      * 查询账户指定用户名下的所有账户
@@ -178,6 +197,23 @@ class AccountPhoneRepository
         } elseif ($type == 'wechat') {
             $type = '微信';
         } else if($type == 'cloudpay'){
+            $type = '云闪付';
+        }
+        return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->get();
+    }
+    /**
+     * 查询账户指定用户名下的所有账户
+     * @param string $type
+     * @param int $status
+     * @return mixed
+     */
+    public function getStatusAndAccountTypeAndSolidcodeAndUidarr(string $type, int $status, array $uid_arr)
+    {
+        if ($type == 'alipay_solidcode') {
+            $type = '支付宝';
+        } elseif ($type == 'wechat_solidcode') {
+            $type = '微信';
+        } else if($type == 'cloudpay_solidcode'){
             $type = '云闪付';
         }
         return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->get();

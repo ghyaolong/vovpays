@@ -31,6 +31,7 @@ class ExemptService implements PayInterface
             return json_encode($account_array,JSON_UNESCAPED_UNICODE);
         }
         $account_array['amount'] = $request->amount;
+
         // 订单添加
         $ordersService  = app(OrdersService::class);
         $result         = $ordersService->add($user, $channel, $Channel_payment, $request, $user_rates, $account_array);
@@ -58,7 +59,6 @@ class ExemptService implements PayInterface
                 'payurl'  => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$account_array['userId'].'","a": "'.$result->amount.'","m": "'.$result->orderNo.'"}',
                 'h5url'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
             ];
-
             Redis::hmset($result->orderNo, $order_date);
             Redis::expire($result->orderNo,600);
 
@@ -76,7 +76,6 @@ class ExemptService implements PayInterface
                 'bank_code'  => $account_array['bank_code'],
                 'status'  => 0,
             );
-
             $data = [
                 'type'    => $request->pay_code,
                 'money'   => sprintf('%0.2f',$result->amount),
@@ -189,6 +188,29 @@ class ExemptService implements PayInterface
             }catch ( \Exception $e){
                 return json_encode(RespCode::SYS_ERROR,JSON_UNESCAPED_UNICODE);
             }
+        }else if($request->pay_code == 'alipay_solidcode'||$request->pay_code == 'wechat_solidcode'||$request->pay_code == 'cloudpay_solidcode'){
+            // 存储订单号,以便回调
+            // 截取银行卡号后四位
+            $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);
+            Redis::set($key,$result->orderNo);
+            Redis::expire($key,600);
+
+            $order_date = array(
+                'amount'  => $result->amount,
+                'account' => $account_array['account'],
+                'status'  => 0,
+                'meme'    => $result->orderNo,
+            );
+            $data = [
+                'type'    => $request->pay_code,
+                'money'   => sprintf('%0.2f',$result->amount),
+                'orderNo' => $result->orderNo,
+                'h5url'   => '',
+                'payurl'  => $account_array['qrcode'],
+            ];
+
+            Redis::hmset($result->orderNo, $order_date);
+            Redis::expire($result->orderNo,600);
         }
 
 

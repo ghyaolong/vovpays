@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-3 control-label">提款密码</label>
+                            <label class="col-xs-3 control-label">提款认证码</label>
                             <div class="col-xs-9">
                                 <input type="password" class="form-control" id="applyPws" name="payPassword">
                             </div>
@@ -363,7 +363,7 @@
                     payPassword: {
                         validators: {
                             notEmpty: {
-                                message: '提款密码不能为空！'
+                                message: '提款认证码不能为空！'
                             }
                         }
                     }

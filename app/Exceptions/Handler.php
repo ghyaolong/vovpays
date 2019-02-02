@@ -89,6 +89,8 @@ class Handler extends ExceptionHandler
             }
         }else if($exception instanceof MethodNotAllowedHttpException){
             return ajaxError('非法操作');
+        }else if($exception instanceof AccessDeniedHttpException){
+            return ajaxError('没有操作权限');
         }
         return parent::render($request, $exception);
     }

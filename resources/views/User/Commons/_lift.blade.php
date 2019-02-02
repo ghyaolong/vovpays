@@ -45,8 +45,9 @@
             @endif
             <li><a href="{{route('user.main')}}"><i class="fa fa-circle-o text-red"></i> <span>开发者</span></a>
             </li>
-            <li><a href="{{route('user.validator')}}"><i class="fa fa-circle-o text-yellow"></i>
-                    <span>安全设置</span></a></li>
+            @if(isset(Cache()->get('systems')['withdraw_permission_type']->value) && Cache()->get('systems')['withdraw_permission_type']->value == 'GOOGLE' )
+                <li><a href="{{route('user.validator')}}"><i class="fa fa-circle-o text-yellow"></i><span>安全设置</span></a></li>
+            @endif
         </ul>
     </section>
     <!-- /.sidebar -->

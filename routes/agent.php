@@ -78,6 +78,9 @@ Route::group([], function ($router) {
 
         //修改支付密码
         Route::post('editPaypwd','IndexController@editpaypwd')->name('agent.editPaypwd');
+        //安全设置
+        Route::get('validator','ValidatorController@index')->name('agent.validator');
+        Route::post('validator','ValidatorController@store')->name('agent.validator');
     });
 
 });

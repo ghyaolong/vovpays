@@ -105,5 +105,8 @@ Route::group([], function () {
         Route::post('accountall/saveAllStatus','AccountListController@saveAllStatus')->name('account.saveAllStatus');
         //修改密码
         Route::post('editpwd','IndexController@editpwd')->name('admin.editpwd');
+        //安全设置
+        Route::get('validator','ValidatorController@index')->name('admin.validator');
+        Route::post('validator','ValidatorController@store')->name('admin.validator');
     });
 });

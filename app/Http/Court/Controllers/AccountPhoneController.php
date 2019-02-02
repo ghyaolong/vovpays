@@ -49,17 +49,12 @@ class AccountPhoneController extends Controller
 
     /**
      * 添加
-     * @param Request $request
+     * @param AccountPhoneRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(AccountPhoneRequest $request)
     {
-        $id = $request->id ?? '';
-        $this->validate($request, [
-            'account'        => 'required|unique:account_phones,account,'.$id,
-        ],[
-            'account.unique' => '账号已存在',
-        ]);
+        $id = $request->id ?: '';
 
         if (!empty($id)) {
             $result = $this->accountPhoneService->update($id, auth()->user()->id, $request->input());

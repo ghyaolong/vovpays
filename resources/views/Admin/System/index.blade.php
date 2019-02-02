@@ -1,4 +1,4 @@
-@extends('Admin.Layouts.layout')
+@extends("Admin.Commons.layout")    @section('title',$title)
 
 @section("css")
 

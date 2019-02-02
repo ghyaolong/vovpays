@@ -292,11 +292,9 @@
                     },
                     qrcode: {
                         validators: {
-                            notEmpty: {
-                                message: '请输入任意金额收款链接!'
-                            },
+                       //     notEmpty: {                   //             message: '请输入任意金额收款链接!'                 //           },,
                             regexp: {
-                                regexp: /(https:)\/\/[\w\-_]+(\.[\w\-_]+)+([\S\-\.,@?^=%&:/~\+#]+)?/i,
+                                regexp: /(https:|wxp:)\/\/([\S]+)?/i,
                                 message: '请输入格式正确的收款链接'
                             }
 
@@ -335,6 +333,7 @@
                     if (result.status == 1) {
                         $("input[name='account']").val(result.data['account']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
+                        $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
                         $("input[name='status']").val(result.data['status']);
                         $("input[name='id']").val(result.data['id']);

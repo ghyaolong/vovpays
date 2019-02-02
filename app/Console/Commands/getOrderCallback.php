@@ -48,12 +48,12 @@ class getOrderCallback extends Command
         $connection = AMQPStreamConnection::create_connection([
             ['host' => env('MQ_Local_HOST'), 'port' => env('MQ_PORT'), 'user' => env('MQ_USER'), 'password' => env('MQ_PWD'), 'vhost' => env('MQ_VHOST')],
         ],
-            ['read_write_timeout'=>60,'heartbeat'=>30]);
+            ['read_write_timeout' => 60, 'heartbeat' => 30]);
         $channel = $connection->channel();
         $channel->queue_declare($queue, false, false, false, false);
         $callback = function ($msg) {
-            echo $msg->body."\n";
-            echo $this->orderCallback($msg->body)."\n";
+            echo $msg->body . "\n";
+            echo $this->orderCallback($msg->body) . "\n";
         };
         $channel->basic_consume($queue, '', false, true, false, false, $callback);
         while ($channel->callbacks) {
@@ -71,138 +71,141 @@ class getOrderCallback extends Command
         $add_account_type = env('ADD_ACCOUNT_TYPE');
 
         Redis::select(1);
-        Log::info('orderCallback:',[$json_str]);
+        Log::info('orderCallback:', [$json_str]);
         $data = json_decode($json_str, true);
 
 
-        if(!$data) return;
+        if (!$data) return 0;
         // 获取订单号
-        if($data['type'] == 'alipay_bank')// 转网商银行
+        if ($data['type'] == 'alipay_bank')// 转网商银行
         {
-            $key = $data['phoneid']."_".$data['type'].'_'.$data['money'];
-            if(Redis::exists($key))
-            {
+            $key = $data['phoneid'] . "_" . $data['type'] . '_' . $data['money'];
+            if (Redis::exists($key)) {
                 $order_id = Redis::get($key);
-            }else{
+            } else {
                 return 1;
             }
-        }else if($data['type'] == 'bankmsg'){ // 转银行卡
+        } else if ($data['type'] == 'bankmsg') { // 转银行卡
             $RegularGetBankInfo = app(RegularGetBankInfo::class);
             $data['money'] = $RegularGetBankInfo->getAmount($data['no'], $data['mark']);
-            $cardNo = $RegularGetBankInfo->getCardNo($data['no'],$data['mark']);
-            $key = $data['phoneid'].'_'.'alipay_bank2_'.$cardNo.'_'.$data['money'];
+            $cardNo = $RegularGetBankInfo->getCardNo($data['no'], $data['mark']);
+            $key = $data['phoneid'] . '_' . 'alipay_bank2_' . $cardNo . '_' . $data['money'];
 
 
-            if(Redis::exists($key))
-            {
+            if (Redis::exists($key)) {
                 $order_id = Redis::get($key);
-            }else{
-                Log::info('orderCallback_getOrderno_fail:',[$key]);
+            } else {
+                Log::info('orderCallback_getOrderno_fail:', [$key]);
                 return 1;
             }
 
-        }else{
+        } else if (!is_numeric($data['mark'])) { // 支付宝固码
+
+            $key = $data['phoneid'] . '_' . $data['type'].'_solidcode_' . $data['money'];
+
+            if (Redis::exists($key)) {
+                $order_id = Redis::get($key);
+            } else {
+                Log::info('orderCallback_getOrderno_fail:', [$key]);
+                return 1;
+            }
+
+        } else {
             $order_id = $data['mark'];
         }
 
         $ordersService = app(OrdersService::class);
         $order = $ordersService->findOrderNo($order_id);
-        if(!$order) return 2;
-        if($order->status != 0 ) return 3;
-        if(floatval($order->amount) != floatval($data['money'])) return 4;
+        if (!$order){
+
+            return 2;
+        }
+        if ($order->status != 0) return 3;
+        if (floatval($order->amount) != floatval($data['money'])) return 4;
 
         $userService = app(UserService::class);
         $user = $userService->findId($order->user_id);
-        if(!$user) return 5;
+        if (!$user) return 5;
 
         $signkey = $user->apiKey;
         //总后台挂号时，验签key
-        if( $add_account_type == 2  )
-        {
+        if ($add_account_type == 2) {
             $signkey = env('SIGNKEY');
-        }else if($add_account_type == 4 || $add_account_type == 3){//场外挂号和代理挂号时，获取账号拥有着key
+        } else if ($add_account_type == 4 || $add_account_type == 3) {//场外挂号和代理挂号时，获取账号拥有着key
             $court = $userService->findId($order->phone_uid);
-            if(!$court) return 6;
+            if (!$court) return 6;
             $signkey = $court->apiKey;
         }
 
         // 转银行卡短信，监听不需要验签
-        if($data['type'] != 'bankmsg'){
-            if(!$this->checkSign($data,$signkey)){
-                Log::info('orderCallback_sign_error:',[$json_str]);
+        if ($data['type'] != 'bankmsg') {
+            if (!$this->checkSign($data, $signkey)) {
+                Log::info('orderCallback_sign_error:', [$json_str]);
                 return 7;
             }
         }
 
         $params = array(
-            'status'    => 1,
+            'status' => 1,
             'onOrderNo' => $data['no']
         );
         // 更新订单状态
-        $result = $ordersService->update($order->id,$params);
-        if(!$result) return 6;
+        $result = $ordersService->update($order->id, $params);
+        if (!$result) return 6;
 
         // 更新redis订单状态,前端查询
-        if(Redis::exists($order->orderNo)){
-            Redis::hmset($order->orderNo,['status'=>1]);
-            Redis::expire($order->orderNo,180);
+        if (Redis::exists($order->orderNo)) {
+            Redis::hmset($order->orderNo, ['status' => 1]);
+            Redis::expire($order->orderNo, 180);
         }
 
         $statisticalService = app(StatisticalService::class);
         // 商户收益增加
-        if( $add_account_type != 1 )
-        {
-            $statisticalService->updateUseridHandlingFeeBalanceIncrement($user->id,$order->userAmount);
+        if ($add_account_type != 1) {
+            $statisticalService->updateUseridHandlingFeeBalanceIncrement($user->id, $order->userAmount);
         }
 
         // 代理收益增加
-        if($order->agentAmount > 0)
-        {
-            $statisticalService->updateUseridHandlingFeeBalanceIncrement($order->agent_id,$order->agentAmount);
+        if ($order->agentAmount > 0) {
+            $statisticalService->updateUseridHandlingFeeBalanceIncrement($order->agent_id, $order->agentAmount);
         }
 
         // 更新redis账号交易额
-        if($data['type'] == 'alipay_bank'){
-            if(Redis::exists($data['phoneid'].'alipay'))
-            {
-                $pahone_info = Redis::hGetAll($data['phoneid'].'alipay');
-                $pahone_info['bankamount'] = bcadd($pahone_info['bankamount'], $order->amount ,2);
-                Redis::hmset($data['phoneid'].'alipay',$pahone_info);
+        if ($data['type'] == 'alipay_bank') {
+            if (Redis::exists($data['phoneid'] . 'alipay')) {
+                $pahone_info = Redis::hGetAll($data['phoneid'] . 'alipay');
+                $pahone_info['bankamount'] = bcadd($pahone_info['bankamount'], $order->amount, 2);
+                Redis::hmset($data['phoneid'] . 'alipay', $pahone_info);
             }
-            if(isset($key))
-            {
+            if (isset($key)) {
                 Redis::del($key);
             }
-        }else if($data['type'] == 'bankmsg'){
-            if(Redis::exists($data['phoneid'].'bankmsg'))
-            {
-                $pahone_info = Redis::hGetAll($data['phoneid'].'bankmsg');
-                $pahone_info['amount'] = bcadd($pahone_info['amount'], $order->amount ,2);
-                Redis::hmset($data['phoneid'].'bankmsg',$pahone_info);
+        } else if ($data['type'] == 'bankmsg') {
+            if (Redis::exists($data['phoneid'] . 'bankmsg')) {
+                $pahone_info = Redis::hGetAll($data['phoneid'] . 'bankmsg');
+                $pahone_info['amount'] = bcadd($pahone_info['amount'], $order->amount, 2);
+                Redis::hmset($data['phoneid'] . 'bankmsg', $pahone_info);
             }
-            if(isset($key))
-            {
+            if (isset($key)) {
                 Redis::del($key);
             }
-        }else{
-            if( Redis::exists($data['phoneid'].$data['type']) )
-            {
-                $pahone_info = Redis::hGetAll($data['phoneid'].$data['type']);
-                $pahone_info['amount'] = bcadd($pahone_info['amount'], $order->amount ,2);
-                Redis::hmset( $data['phoneid'].$data['type'], $pahone_info);
+        } else {
+            if (Redis::exists($data['phoneid'] . $data['type'])) {
+                $pahone_info = Redis::hGetAll($data['phoneid'] . $data['type']);
+                $pahone_info['amount'] = bcadd($pahone_info['amount'], $order->amount, 2);
+                Redis::hmset($data['phoneid'] . $data['type'], $pahone_info);
             }
         }
 
         // 场外挂号时
-        if( $add_account_type == 4 )
-        {
-            $userService->userAddOrReduceQuota($order->phone_uid,$order->amount,1);
+        if ($add_account_type == 4) {
+            $userService->userAddOrReduceQuota($order->phone_uid, $order->amount, 1);
             $quotalogService = app(QuotalogService::class);
             $quota_array = [
-                'user_id'       => $order->phone_uid,
-                'quota'         => $order->amount,
-                'quota_type'    => 1,
-                'action_type'   => 1,
+                'user_id' => $order->phone_uid,
+                'quota' => $order->amount,
+                'quota_type' => 1,
+                'action_type' => 1,
             ];
             $quotalogService->add($quota_array);
         }
@@ -214,13 +217,12 @@ class getOrderCallback extends Command
      * @param $key
      * @return bool
      */
-    protected function checkSign($data,$key)
+    protected function checkSign($data, $key)
     {
-        $sign = md5($data['dt'].$data['mark'].$data['money'].$data['no'].$data['type'].$key);
-        if($sign == $data['sign'])
-        {
+        $sign = md5($data['dt'] . $data['mark'] . $data['money'] . $data['no'] . $data['type'] . $key);
+        if ($sign == $data['sign']) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

@@ -46,6 +46,7 @@ class GetPhoneInfo extends Command
         $channel = $connection->channel();
         $channel->queue_declare($queue, false, false, false, false);
         $callback = function ($msg) {
+            echo $msg->body."\n";
             $this->phoneStatusCheck($msg->body);
         };
         $channel->basic_consume($queue, '', false, true, false, false, $callback);

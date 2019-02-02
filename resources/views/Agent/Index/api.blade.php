@@ -1,4 +1,5 @@
 @extends("Agent.Commons.layout")
+@section('title',$title)
 @section('css')
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
