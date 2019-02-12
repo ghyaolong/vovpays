@@ -99,7 +99,7 @@ $(function () {
         var secret  = $("input[name='secret']").val();
         $.ajax({
             type: 'post',
-            url: "{{ route($module.'.validator') }}",
+            url: "{{ route(strtolower($module).'.validator') }}",
             data: {'appCode': appCode, 'userPwd': userPwd,'secret':secret},
             dataType: 'json',
             headers: {

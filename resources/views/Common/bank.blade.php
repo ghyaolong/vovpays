@@ -17,7 +17,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route($module.'.accountBank')}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route(strtolower($module).'.accountBank')}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="bank_account" placeholder="账号">
                         </div>
@@ -89,7 +89,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route($module.'.accountBankAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route(strtolower($module).'.accountBankAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -170,7 +170,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '{{route($module.'.accountBankStatus')}}',
+                        url: '{{route(strtolower($module).'.accountBankStatus')}}',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -277,7 +277,7 @@
                             {{--message: '请输入正确的银行卡号！'--}}
                             {{--},--}}
                             {{--remote: {--}}
-                            {{--url: "{{route($module.'.checkBank')}}",--}}
+                            {{--url: "{{route(strtolower($module).'.checkBank')}}",--}}
                             {{--message: "该卡号已存在!",--}}
                             {{--type: "post",--}}
                             {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
@@ -336,7 +336,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/{{$module}}/accountBank/' + id + '/edit',
+                url: '/{{strtolower($module)}}/accountBank/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -379,7 +379,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '{{route($module.'.accountBankDel')}}',
+                    url: '{{route(strtolower($module).'.accountBankDel')}}',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

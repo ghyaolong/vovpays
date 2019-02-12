@@ -17,7 +17,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route($module.'.account',1)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route(strtolower($module).'.account',1)}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="account" placeholder="账号">
                         </div>
@@ -90,7 +90,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route($module.'.accountAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route(strtolower($module).'.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -192,7 +192,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '{{route($module.'.accountStatus')}}',
+                        url: '{{route(strtolower($module).'.accountStatus')}}',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -295,7 +295,7 @@
                                 message: '请输入手机标识!'
                             },
                             remote: {
-                                url: "{{route($module.'.check')}}",
+                                url: "{{route(strtolower($module).'.check')}}",
                                 message: "该手机已添加过支付宝账号!",
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
@@ -359,7 +359,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/{{$module}}/account/' + id + '/edit',
+                url: '/{{strtolower($module)}}/account/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -399,7 +399,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '{{route($module.'.accountDel')}}',
+                    url: '{{route(strtolower($module).'.accountDel')}}',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {
