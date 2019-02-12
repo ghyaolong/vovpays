@@ -19,7 +19,8 @@
                     <!-- ./col -->
                     <form class="navbar-form navbar-left" action="{{route(strtolower($module).'.accountBank')}}" method="get">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="bank_account" placeholder="账号">
+                            <input type="text" class="form-control" name="bank_account" placeholder="账号"
+                                   @if(isset($query['bank_account'])) value="{{ $query['bank_account'] }}" @endif>
                         </div>
                         <button type="submit" class="btn btn-info">搜索</button>
                         <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>

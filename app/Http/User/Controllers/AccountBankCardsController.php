@@ -45,7 +45,8 @@ class AccountBankCardsController extends Controller
         $bankList = $this->banksService->findAll();
 
         $module='User';
-        return view("Common.bank", compact('list','module','bankList'));
+        $query = $request->query();
+        return view("Common.bank", compact('list', 'bankList','module','query'));
 
 
     }

@@ -48,7 +48,8 @@ class AccountPhoneController extends Controller
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
 
         $module='Agent';
-        return view("Common.{$data['accountType']}", compact('list','module'));
+        $query = $request->query();
+        return view("Common.{$data['accountType']}", compact('list','module','query'));
     }
 
     /**
