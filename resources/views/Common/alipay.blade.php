@@ -366,7 +366,7 @@
                 },
                 success: function (result) {
                     if (result.status == 1) {
-                        $("input[name='account']").val(result.data['account']);
+                        $("#addForm input[name='account']").val(result.data['account']);
                         $("input[name='alipayusername']").val(result.data['alipayusername']);
                         $("input[name='alipayuserid']").val(result.data['alipayuserid']);
                         $("input[name='phone_id']").val(result.data['phone_id']);

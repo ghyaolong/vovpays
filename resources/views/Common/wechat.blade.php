@@ -327,7 +327,7 @@
                 },
                 success: function (result) {
                     if (result.status == 1) {
-                        $("input[name='account']").val(result.data['account']);
+                        $("#addForm input[name='account']").val(result.data['account']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
