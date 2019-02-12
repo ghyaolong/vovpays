@@ -1,5 +1,5 @@
-@extends("Agent.Commons.layout")
-
+@extends($module.".Commons.layout")
+@section('title','银行卡号')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
@@ -17,7 +17,7 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('agent.accountBank')}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route($module.'.accountBank')}}" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="bank_account" placeholder="账号">
                         </div>
@@ -54,9 +54,7 @@
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
-                                        <td>
-                                            <span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span>
-                                        </td>
+                                        <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -91,7 +89,7 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('agent.accountBankAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route($module.'.accountBankAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -107,7 +105,7 @@
                                 <select class="form-control" id="channelId" name="bank_name">
                                     <option value="">选择银行</option>
                                     @foreach($bankList as $bank)
-                                        <option value="{{$bank->bankName}},{{$bank->code}}">{{$bank->bankName}}</option>
+                                        <option value="{{$bank->bankName.','.$bank->code}}" >{{$bank->bankName}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -122,7 +120,8 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="phone_id" placeholder="手机标识">
+                                <input type="text" class="form-control" name="phone_id"
+                                       placeholder="手机标识">
                             </div>
                         </div>
                         <div class="form-group">
@@ -171,7 +170,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: "{{ route('agent.accountBankStatus') }}",
+                        url: '{{route($module.'.accountBankStatus')}}',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -278,7 +277,7 @@
                             {{--message: '请输入正确的银行卡号！'--}}
                             {{--},--}}
                             {{--remote: {--}}
-                            {{--url: "{{route('agent.checkBank')}}",--}}
+                            {{--url: "{{route($module.'.checkBank')}}",--}}
                             {{--message: "该卡号已存在!",--}}
                             {{--type: "post",--}}
                             {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
@@ -337,16 +336,18 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/agent/accountBank/' + id + '/edit',
+                url: '/{{$module}}/accountBank/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (result) {
                     if (result.status == 1) {
-                        $("input[name='bank_account']").val(result.data['bank_account']);
+                        $("#addForm input[name='bank_account']").val(result.data['bank_account']);
                         $("input[name='accountType']").val(result.data['accountType']);
-                        $("input[name='bank_name']").val(result.data['bank_name']);
+
+                        $("select[name='bank_name']").val(result.data['bank_name']+','+result.data['bank_mark']);
+
                         $("input[name='cardNo']").val(result.data['cardNo']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
@@ -378,7 +379,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/agent/accountBank',
+                    url: '{{route($module.'.accountBankDel')}}',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

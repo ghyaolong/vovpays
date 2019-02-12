@@ -44,7 +44,9 @@ class AccountBankCardsController extends Controller
         $list = $this->accountBankCardsService->getAllPage($data, 10);
         $data['accountType'] = 'alipay';
         $bankList =$this->banksService->findAll();
-        return view("Court.AccountPhone.bank", compact('list','bankList'));
+
+        $module='court';
+        return view("Common.bank", compact('list','module','bankList'));
     }
 
     /**

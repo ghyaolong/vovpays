@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Repositories\AccountPhoneRepository;
+use Illuminate\Support\Facades\Auth;
 
 class AccountPhoneService
 {
@@ -122,11 +123,13 @@ class AccountPhoneService
     {
 
         $data = array_except($data, ['_token']);
-        $data['qrcode']= $data['qrcode']??'0';
+
         if( isset($data['accountType']) && $data['accountType'] == 'cloudpay' )
         {
             $data['accountType'] = "云闪付";
         }
+
+
         return $this->accountPhoneRepository->update($id, $uid, $data);
     }
 

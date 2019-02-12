@@ -83,19 +83,21 @@ Route::group([], function () {
         Route::post('withdraws/saveStatus','WithdrawsController@saveStatus')->name('withdraw.saveStatus');
         Route::post('withdraws/update','WithdrawsController@update')->name('withdraw.update');
         //账号管理
-        Route::get('account/{type}','AccountPhoneController@index')->name('account.index');
-        Route::post('account','AccountPhoneController@store')->name('account.store');
-        Route::post('account/saveStatus','AccountPhoneController@saveStatus')->name('account.saveStatus');
-        Route::get('account/{id}/edit','AccountPhoneController@edit')->name('account.edit');
-        Route::delete('account','AccountPhoneController@destroy')->name('account.destroy');
-        Route::post('account/check','AccountPhoneController@checkUnique')->name('account.check');
+        Route::get('account/{type}','AccountPhoneController@index')->name('admin.account');
+        Route::post('account','AccountPhoneController@store')->name('admin.accountAdd');
+        Route::post('account/saveStatus','AccountPhoneController@saveStatus')->name('admin.accountStatus');
+        Route::get('account/{id}/edit','AccountPhoneController@edit')->name('admin.accountEdit');
+        Route::delete('account','AccountPhoneController@destroy')->name('admin.accountDel');
+        Route::post('account/check','AccountPhoneController@checkUnique')->name('admin.check');
         //银行卡账号
-        Route::get('accountBank','AccountBankCardsController@index')->name('accountBank.index');
-        Route::post('accountBank','AccountBankCardsController@store')->name('accountBank.store');
-        Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('accountBank.edit');
-        Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('accountBank.saveStatus');
-        Route::delete('accountBank','AccountBankCardsController@destroy')->name('accountBank.destroy');
-        Route::post('accountBank/checkBank','AccountBankCardsController@checkUnique')->name('checkBank.check');
+        Route::get('accountBank','AccountBankCardsController@index')->name('admin.accountBank');
+        Route::post('accountBank','AccountBankCardsController@store')->name('admin.accountBankAdd');
+        Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('admin.accountBankEdit');
+        Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('admin.accountBankStatus');
+        Route::delete('accountBank','AccountBankCardsController@destroy')->name('admin.accountBankDel');
+        Route::post('accountBank/checkBank','AccountBankCardsController@checkUnique')->name('admin.checkBank');
+
+
         //系统配置
         Route::get('system','SystemController@index')->name('system.index');
         Route::get('system/{id}/edit', 'SystemController@edit')->name('system.edit');

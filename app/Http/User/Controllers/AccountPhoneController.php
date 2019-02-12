@@ -13,7 +13,6 @@ use App\Services\AccountPhoneService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AccountPhoneStatusRequest;
 use App\Http\Requests\AccountPhoneRequest;
 use App\Services\DelPhoneRedisService;
 
@@ -45,8 +44,9 @@ class AccountPhoneController extends Controller
         }
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
 
+        $module='user';
+        return view("Common.{$data['accountType']}", compact('list','module'));
 
-        return view("User.AccountPhone.{$data['accountType']}", compact('list'));
     }
 
     /**
@@ -58,6 +58,7 @@ class AccountPhoneController extends Controller
     {
         $id = $request->id?:'';
         if (!empty($id)) {
+            $data['qrcode']= $data['qrcode']??'0';
             $result = $this->accountPhoneService->update($id, auth()->user()->id, $request->input());
             if ($result) {
                 return ajaxSuccess('编辑成功！');
@@ -97,9 +98,10 @@ class AccountPhoneController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveStatus(AccountPhoneStatusRequest $request)
+    public function saveStatus(AccountPhoneRequest $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
+
         $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
         if ($result) {
             return ajaxSuccess('修改成功！');

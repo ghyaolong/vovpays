@@ -44,10 +44,11 @@ class AccountBankCardsController extends Controller
 
         $list = $this->accountBankCardsService->getAllPage($data, 10);
         $data['accountType'] = 'alipay';
-        $title = '银行卡号';
+
         $bankList=$this->banksService->findAll();
 
-        return view("Admin.AccountPhone.bank", compact('list', 'title','bankList'));
+        $module='admin';
+        return view("Common.bank", compact('list', 'bankList','module'));
     }
 
     /**

@@ -36,16 +36,17 @@ class AccountPhoneController extends Controller
         $data['user_id'] = 100000;
         if ($request->type == '0') {
             $data['accountType'] = 'wechat';
-            $title = '微信账号';
+
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
-            $title = '支付宝账号';
+
         } elseif ($request->type == '2') {
             $data['accountType'] = 'cloudpay';
-            $title = '云闪付';
+
         }
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
-        return view("Admin.AccountPhone.{$data['accountType']}", compact('list','title'));
+        $module='admin';
+        return view("Common.{$data['accountType']}", compact('list','module'));
 
     }
 
@@ -98,7 +99,7 @@ class AccountPhoneController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveStatus(Request $request)
+    public function saveStatus(AccountPhoneRequest $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
         $result = $this->accountPhoneService->update($request->id, $this->uid, $data);

@@ -90,10 +90,10 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('account.index',[0]) }}"><i class="fa fa-circle-o"></i>微信账号</a></li>
-                    <li><a href="{{ route('account.index',[1]) }}"><i class="fa fa-circle-o"></i>支付宝账号</a></li>
-                    <li><a href="{{ route('accountBank.index') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
-                    <li><a href="{{ route('account.index',[2]) }}"><i class="fa fa-circle-o"></i>云闪付</a></li>
+                    <li><a href="{{ route('admin.account',[0]) }}"><i class="fa fa-circle-o"></i>微信账号</a></li>
+                    <li><a href="{{ route('admin.account',[1]) }}"><i class="fa fa-circle-o"></i>支付宝账号</a></li>
+                    <li><a href="{{ route('admin.accountBank') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
+                    <li><a href="{{ route('admin.account',[2]) }}"><i class="fa fa-circle-o"></i>云闪付</a></li>
                 </ul>
             </li>
             @else

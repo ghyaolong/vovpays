@@ -1,5 +1,5 @@
-@extends("User.Commons.layout")
-@section('title','银行卡号')
+@extends($module.".Commons.layout")
+@section('title','微信账号')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
@@ -9,29 +9,30 @@
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">账号列表</h3>
+
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
-                <div class="box-body" class="col-md-12">
+                <div class="box-body">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('user.accountBank')}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route($module.'.account',0)}}" method="get">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="bank_account" placeholder="账号">
+                            <input type="text" class="form-control" id="account1" name="account" placeholder="账号">
                         </div>
                         <button type="submit" class="btn btn-info">搜索</button>
-                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>
+                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>&nbsp;&nbsp;
                     </form>
                     <div class="box-body" style="margin-top: 45px">
                         <table id="example2" class="table table-bordered table-hover">
                             <tr style="color: #666666;background: #f5f6f9">
                                 <th>#</th>
                                 <th>手机标识</th>
-                                <th>银行实名</th>
-                                <th>银行卡号</th>
-                                <th>银行名称</th>
+                                <th>账号</th>
+                                <th>账号类型</th>
+                                {{--<th>备注</th>--}}
                                 <th>单日交易额</th>
                                 <th>今日订单量</th>
                                 <th>今日成功订单量</th>
@@ -48,9 +49,9 @@
                                     <tr>
                                         <td>{{ $v->id }}</td>
                                         <td>{{ $v->phone_id }}</td>
-                                        <td style="color: red">{{ $v->bank_account }}</td>
-                                        <td style="color: #00c0ef">{{ $v->cardNo }}</td>
-                                        <td>{{ $v->bank_name }}</td>
+                                        <td style="color: red">{{ $v->account }}</td>
+                                        <td style="color: #00c0ef">{{ $v->accountType }}</td>
+                                        {{--<td>备注</td>--}}
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
@@ -79,7 +80,6 @@
         </div>
     </div>
 
-
     {{--模态框--}}
     <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true" data-backdrop="static">
@@ -89,47 +89,31 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('user.accountBankAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route($module.'.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">卡号实名:</label>
+                            <label for="" class="col-xs-3 control-label">账号:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="bank_account" placeholder="请输入账号实名">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">银行名称:</label>
-                            <div class="col-xs-9">
-                                <select class="form-control" id="channelId" name="bank_name">
-                                    <option value="">选择银行</option>
-                                    @foreach($bankList as $bank)
-                                        <option value="{{$bank->bankName}},{{$bank->code}}">{{$bank->bankName}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">银行卡号:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="cardNo"
-                                       placeholder="请输入银行卡号">
+                                <input type="text" id="account" class="form-control" name="account" placeholder="请输入账号">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="phone_id"
-                                       placeholder="手机标识">
+                                <input type="text" class="form-control" id="phone_id" name="phone_id"
+                                       placeholder="请输入手机标识">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">索引:</label>
+                            <label for="" class="col-xs-3 control-label">收款链接:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" name="chard_index"
-                                       placeholder="请输入索引">
-                                <a href="https://www.showdoc.cc/258628029269764" target="_blank">索引获取说明</a> 密码：000000
+                                <input type="text" class="form-control" name="qrcode" placeholder="请输入任意金额收款链接">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-7" style="margin-top:-10px;">
+                                <a href="{{env('QRCOURSE')}}"  target="_blank"  style="margin-left: 150px">二维码链接生成方法</a>
                             </div>
                         </div>
                         <div class="form-group">
@@ -138,7 +122,12 @@
                                 <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
                             </div>
                         </div>
-
+                        {{--<div class="form-group">--}}
+                        {{--<label for="" class="col-xs-3 control-label">备注:</label>--}}
+                        {{--<div class="col-xs-9">--}}
+                        {{--<input type="text" class="form-control" name="" placeholder="请填写备注">--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -149,7 +138,6 @@
             </div>
         </div>
     </div>
-
 
 @endsection
 
@@ -170,7 +158,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/user/accountBank/saveStatus',
+                        url: '{{route($module.'.accountStatus')}}',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -197,12 +185,21 @@
                 $("#addForm").data('bootstrapValidator').destroy();
                 $('#addForm').data('bootstrapValidator', null);
                 $('#addForm').get(0).reset();
-                $('#id').val('');
+                $("#id").val('');
                 formValidator();
             });
 
         })
 
+
+        /**
+         * 显示模态框
+         * @param title
+         */
+        function showModel(title) {
+            $('#addModel .modal-title').html(title);
+            $('#addModel').modal('show');
+        }
 
         /**
          *提交
@@ -235,8 +232,8 @@
 
 
         /*
-         *表单验证
-         */
+      *表单验证
+      */
         function formValidator() {
             $('#addForm').bootstrapValidator({
                 message: 'This value is not valid',
@@ -246,50 +243,25 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    bank_account: {
+                    account: {
                         validators: {
                             notEmpty: {
                                 message: '请输入账号!'
                             },
                         }
                     },
-                    accountType: {
+                    alipayusername: {
                         validators: {
                             notEmpty: {
-                                message: '请输入账户类型!'
+                                message: '请输入账号实名!'
                             },
                         }
                     },
-                    bank_name: {
+                    alipayuserid: {
                         validators: {
                             notEmpty: {
-                                message: '请选择银行!'
+                                message: '请输入账号id!'
                             },
-                        },
-                    },
-                    cardNo: {
-                        validators: {
-                            notEmpty: {
-                                message: '请输入银行卡号!'
-                            },
-                            {{--regexp: {--}}
-                            {{--regexp: /^([1-9]{1})(\d{14}|\d{18})$/,--}}
-                            {{--message: '请输入正确的银行卡号！'--}}
-                            {{--},--}}
-                            {{--remote: {--}}
-                            {{--url: "{{route('user.checkBank')}}",--}}
-                            {{--message: "该卡号已存在!",--}}
-                            {{--type: "post",--}}
-                            {{--data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可--}}
-                            {{--return {--}}
-                            {{--"value": $("input[name='cardNo']").val().trim(),--}}
-                            {{--"type": 'cardNo',--}}
-                            {{--"_token": $('meta[name="csrf-token"]').attr('content'),--}}
-                            {{--"id": $('#id').val(),--}}
-                            {{--};--}}
-                            {{--},--}}
-                            {{--delay: 500,--}}
-                            {{--},--}}
                         },
                     },
                     phone_id: {
@@ -297,6 +269,31 @@
                             notEmpty: {
                                 message: '请输入手机标识!'
                             },
+                            remote: {
+                                url: "{{route($module.'.check')}}",
+                                message: "该手机已添加过微信账号!",
+                                type: "post",
+                                data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
+                                    return {
+                                        "value": $("#phone_id").val().trim(),
+                                        "type": 'phone_id',
+                                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                                        "id": $('#id').val(),
+                                        "name": '微信'
+                                    };
+                                },
+                                delay: 500,
+                            }
+                        },
+                    },
+                    qrcode: {
+                        validators: {
+                       //     notEmpty: {                   //             message: '请输入任意金额收款链接!'                 //           },,
+                            regexp: {
+                                regexp: /(https:|wxp:)\/\/([\S]+)?/i,
+                                message: '请输入格式正确的收款链接'
+                            }
+
                         },
                     },
                     dayQuota: {
@@ -306,7 +303,7 @@
                             },
                             regexp: {
                                 regexp: /^[1-9]\d*$/,
-                                message: '请输入正确的数字限额'
+                                message: '请输入正确的数字额度'
                             }
                         },
                     },
@@ -314,19 +311,6 @@
             })
         }
 
-        /**
-         * 显示模态框
-         * @param title
-         */
-        function showModel(title) {
-            $('#addModel .modal-title').html(title);
-            $('#addModel').modal('show');
-        }
-
-        function aliid(title) {
-            $('#aliidModel .modal-title').html(title);
-            $('#aliidModel').modal('show');
-        }
 
         /**
          * 编辑
@@ -336,20 +320,18 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/user/accountBank/' + id + '/edit',
+                url: '/{{$module}}/account/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (result) {
                     if (result.status == 1) {
-                        $("input[name='bank_account']").val(result.data['bank_account']);
-                        $("input[name='accountType']").val(result.data['accountType']);
-                        $("input[name='bank_name']").val(result.data['bank_name']);
-                        $("input[name='cardNo']").val(result.data['cardNo']);
+                        $("input[name='account']").val(result.data['account']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
+                        $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
-                        $("input[name='chard_index']").val(result.data['chard_index']);
+                        $("input[name='status']").val(result.data['status']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
@@ -377,7 +359,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/user/accountBank',
+                    url: '{{route($module.'.accountDel')}}',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

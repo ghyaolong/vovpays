@@ -1,38 +1,34 @@
-@extends("Court.Commons.layout")
-@section('title','支付宝账号')
+@extends($module.".Commons.layout")
+@section('title','云闪付')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endsection
 @section('content')
     <div class="row" style="margin-top: 20px">
-        <div class="col-xs-12 col-md-12">
+        <div class="col-md-12">
             <div class="box box-primary box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">账号列表</h3>
+
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
-                <div class="box-body" class="col-md-12">
+                <div class="box-body">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route('court.account',1)}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route($module.'.account',2)}}" method="get">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="account" placeholder="账号">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" autocomplete="off" class="form-control" style="min-width:300px;" id="daterange-btn"
-                                   placeholder="统计时间" name="searchTime"
-                                   @if(isset($query['searchTime'])) value="{{ $query['searchTime'] }}" @endif />
+                            <input type="text" class="form-control" id="account1" name="account" placeholder="账号">
                         </div>
                         <button type="submit" class="btn btn-info">搜索</button>
-                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>
+                        <a onclick="showModel('添加账号')" class="btn btn-info">添加账号</a>&nbsp;&nbsp;
                     </form>
                     <div class="box-body" style="margin-top: 45px">
-                        <table id="example2" class="table table-condensed table-bordered table-hover">
+                        <table id="example2" class="table table-bordered table-hover">
                             <tr style="color: #666666;background: #f5f6f9">
+                                <th>#</th>
                                 <th>手机标识</th>
                                 <th>账号</th>
                                 <th>账号类型</th>
@@ -51,6 +47,7 @@
                             @else
                                 @foreach($list as $v)
                                     <tr>
+                                        <td>{{ $v->id }}</td>
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
@@ -82,8 +79,6 @@
             </div>
         </div>
     </div>
-    {{--{{$orders->appends($data)->links()}}--}}
-
 
     {{--模态框--}}
     <div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -94,8 +89,9 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route('court.accountAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{route($module.'.accountAdd') }}" class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
+                        <input type="hidden" name="accountType" value="cloudpay">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">账号:</label>
@@ -104,28 +100,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">账号实名:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="alipayusername" placeholder="请输入账号实名">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">账号ID:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="alipayuserid" placeholder="请输入账号ID">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-7" style="margin-top:-10px;">
-                                <a onclick="aliid('二维码')" style="margin-left: 150px">点击扫码，获取账号ID</a>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control" id="phone_id" name="phone_id" placeholder="请输入手机标识">
+                                <input type="text" class="form-control" id="phone_id" name="phone_id"
+                                       placeholder="请输入手机标识">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">收款链接:</label>
                             <div class="col-xs-9">
@@ -160,35 +141,10 @@
         </div>
     </div>
 
-    {{--二维码模态框--}}
-    <div class="modal fade" id="aliidModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" style="margin-top: 123px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body" style="overflow: auto;text-align: center">
-                    <img src="{{ asset('/AdminLTE/dist/img/user/aliewm.png') }}" alt="二维码获取失败！">
-                    <br>
-                    <br>
-                    <br>
-                    <p style="color: red;font-size: 20px">打开支付宝扫一扫，获取账号ID</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 @endsection
 
 @section("scripts")
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
-    <script src="{{ asset('AdminLTE/bower_components/moment/moment.js') }}"></script>
-    <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
 
         $(function () {
@@ -204,7 +160,7 @@
                     var id = $(event.currentTarget).data('id');
                     $.ajax({
                         type: 'POST',
-                        url: '/court/account/saveStatus',
+                        url: '{{route($module.'.accountStatus')}}',
                         data: {'status': state, 'id': id},
                         dataType: 'json',
                         headers: {
@@ -231,32 +187,21 @@
                 $("#addForm").data('bootstrapValidator').destroy();
                 $('#addForm').data('bootstrapValidator', null);
                 $('#addForm').get(0).reset();
-                $('#id').val('');
+                $("#id").val('');
                 formValidator();
-            });
-
-
-            $('#daterange-btn').daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                locale : {
-                    applyLabel : '确定',
-                    cancelLabel : '取消',
-                    fromLabel : '起始时间',
-                    toLabel : '结束时间',
-                    customRangeLabel : '自定义',
-                    daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
-                    monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月' ],
-                    firstDay : 1,
-                    endDate : moment(),
-                    format : 'YYYY-MM-DD',
-                },
-            },function(start) {
-                $('#daterange-btn').val(start.format('YYYY-MM-DD'))
             });
 
         })
 
+
+        /**
+         * 显示模态框
+         * @param title
+         */
+        function showModel(title) {
+            $('#addModel .modal-title').html(title);
+            $('#addModel').modal('show');
+        }
 
         /**
          *提交
@@ -289,8 +234,8 @@
 
 
         /*
-         *表单验证
-         */
+      *表单验证
+      */
         function formValidator() {
             $('#addForm').bootstrapValidator({
                 message: 'This value is not valid',
@@ -307,28 +252,14 @@
                             },
                         }
                     },
-                    alipayusername: {
-                        validators: {
-                            notEmpty: {
-                                message: '请输入账号实名!'
-                            },
-                        }
-                    },
-                    alipayuserid: {
-                        validators: {
-                            notEmpty: {
-                                message: '请输入账号id!'
-                            },
-                        },
-                    },
                     phone_id: {
                         validators: {
                             notEmpty: {
                                 message: '请输入手机标识!'
                             },
                             remote: {
-                                url: "{{route('court.check')}}",
-                                message: "该手机已添加过支付宝账号!",
+                                url: "{{route($module.'.check')}}",
+                                message: "该手机已添加过云闪付账号!",
                                 type: "post",
                                 data: function () { // 额外的数据，默认为当前校验字段,不需要的话去掉即可
                                     return {
@@ -336,7 +267,7 @@
                                         "type": 'phone_id',
                                         "_token": $('meta[name="csrf-token"]').attr('content'),
                                         "id": $('#id').val(),
-                                        "name": '支付宝'
+                                        "name": '云闪付'
                                     };
                                 },
                                 delay: 500,
@@ -360,28 +291,14 @@
                             },
                             regexp: {
                                 regexp: /^[1-9]\d*$/,
-                                message: '请输入正确的数字限额'
+                                message: '请输入正确的数字额度'
                             }
-
                         },
                     },
                 }
             })
         }
 
-        /**
-         * 显示模态框
-         * @param title
-         */
-        function showModel(title) {
-            $('#addModel .modal-title').html(title);
-            $('#addModel').modal('show');
-        }
-
-        function aliid(title) {
-            $('#aliidModel .modal-title').html(title);
-            $('#aliidModel').modal('show');
-        }
 
         /**
          * 编辑
@@ -391,7 +308,7 @@
         function edit(title, id) {
             $.ajax({
                 type: 'get',
-                url: '/court/account/' + id + '/edit',
+                url: '/{{$module}}/account/' + id + '/edit',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -399,11 +316,10 @@
                 success: function (result) {
                     if (result.status == 1) {
                         $("input[name='account']").val(result.data['account']);
-                        $("input[name='alipayusername']").val(result.data['alipayusername']);
-                        $("input[name='alipayuserid']").val(result.data['alipayuserid']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
+                        $("input[name='status']").val(result.data['status']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');
@@ -431,7 +347,7 @@
             }, function () {
                 $.ajax({
                     type: 'delete',
-                    url: '/court/account',
+                    url: '{{route($module.'.accountDel')}}',
                     data: {'id': id},
                     dataType: 'json',
                     headers: {

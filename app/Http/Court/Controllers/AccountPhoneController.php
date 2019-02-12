@@ -13,7 +13,7 @@ use App\Services\AccountPhoneService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AccountPhoneStatusRequest;
+use App\Http\Requests\AccountPhoneRequest;
 
 class AccountPhoneController extends Controller
 {
@@ -44,7 +44,9 @@ class AccountPhoneController extends Controller
         }
 
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
-        return view("Court.AccountPhone.{$data['accountType']}", compact('list'));
+
+        $module='court';
+        return view("Common.{$data['accountType']}", compact('list','module'));
     }
 
     /**
@@ -96,7 +98,7 @@ class AccountPhoneController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveStatus(AccountPhoneStatusRequest $request)
+    public function saveStatus(AccountPhoneRequest $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
         $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);

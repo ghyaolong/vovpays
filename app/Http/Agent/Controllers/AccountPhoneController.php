@@ -13,7 +13,6 @@ use App\Services\AccountPhoneService;
 use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AccountPhoneStatusRequest;
 use App\Http\Requests\AccountPhoneRequest;
 
 class AccountPhoneController extends Controller
@@ -33,8 +32,6 @@ class AccountPhoneController extends Controller
      */
     public function index(Request $request)
     {
-
-
         $data = $request->input();
         $data['user_id'] = Auth::user()->id;
 
@@ -49,7 +46,9 @@ class AccountPhoneController extends Controller
             $title = '云闪付';
         }
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
-        return view("Agent.AccountPhone.{$data['accountType']}", compact('title','list'));
+
+        $module='agent';
+        return view("Common.{$data['accountType']}", compact('list','module'));
     }
 
     /**
@@ -102,7 +101,7 @@ class AccountPhoneController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveStatus(AccountPhoneStatusRequest $request)
+    public function saveStatus(AccountPhoneRequest $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
 

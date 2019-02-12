@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Exceptions\CustomServiceException;
 
 class AccountPhoneRequest extends FormRequest
 {
@@ -20,7 +21,7 @@ class AccountPhoneRequest extends FormRequest
          */
         if ($this->id){
             //更新操作
-            $user_id = Auth::user()->id;
+            $user_id = env('ADD_ACCOUNT_TYPE')!=2?Auth::user()->id:100000;
             $device_id = $this->id;
             $deviceInfo = DB::table('account_phones')->whereId($device_id)->whereUserId($user_id)->first();
             if(!$deviceInfo){
@@ -51,12 +52,14 @@ class AccountPhoneRequest extends FormRequest
         $id = $this->id ?? '';
 
         return [
-            'account'       => 'required|unique:account_phones,account,' . $id,
+            'account'       => 'required_without:status|unique:account_phones,account,' . $id,
             'qrcode'        => 'nullable|unique:account_phones,qrcode,' . $id,
-            'phone_id'      => 'required|alpha_num',
-            'dayQuota'      => 'required|numeric',
+            'phone_id'      => 'required_without:status|alpha_num',
+            'dayQuota'      => 'required_without:status|numeric',
             'alipayuserid'  => 'nullable|alpha_num|unique:account_phones,alipayuserid,' . $id,
             'alipayusername'=> 'nullable|',
+            'id'            => 'nullable|numeric',
+            'status'        => 'nullable|in:true,false',
             
         ];
     }
@@ -70,6 +73,8 @@ class AccountPhoneRequest extends FormRequest
             'phone_id.alpha_num' => '手机标识格式错误',
             'dayQuota.numeric' => '账号限额必须为整数',
             'alipayuserid.unique' => '支付宝账号ID已存在',
+            'id.numeric' => '非法操作',
+            'status.in' => '非法操作',
         ];
     }
 }

@@ -1,4 +1,4 @@
-@extends('Admin.Commons.layout')    @section('title',$title)
+@extends('Admin.Commons.layout')
 @section('title','安全设置')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
