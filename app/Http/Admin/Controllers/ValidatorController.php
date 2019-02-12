@@ -31,7 +31,7 @@ class ValidatorController extends Controller
         $secret     = $this->googleAuthenticator->createSecret();
         $name       = Auth::user()->username.'@'.$_SERVER['HTTP_HOST'];
         $qrCodeUrl  = $this->googleAuthenticator->getQRCodeGoogleUrl($name, $secret);
-        $module     = 'admin';
+        $module     = 'Admin';
 
         return view('Common.validator',compact('qrCodeUrl','secret','module'));
     }
