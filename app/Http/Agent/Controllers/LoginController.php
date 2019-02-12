@@ -9,8 +9,8 @@
 namespace App\Http\Agent\Controllers;
 
 use App\Services\LoginLogoutService;
-use App\Services\UserService;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -22,16 +22,15 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/Agent';
     protected $loginLogoutService;
-    protected $userService;
 
     /**
      * LoginController constructor.
      * @param LoginLogoutService $loginLogoutService
      */
-    public function __construct(LoginLogoutService $loginLogoutService, UserService $userService)
+    public function __construct(LoginLogoutService $loginLogoutService)
     {
         $this->loginLogoutService = $loginLogoutService;
-        $this->userService = $userService;
+
     }
 
 
@@ -43,7 +42,9 @@ class LoginController extends Controller
     {
         $user = Auth::guard('agent')->user();
         if ($user) return redirect('agent');
-        return view('Agent.Login.login');
+
+        $google_auth=isset(Cache()->get('systems')['login_permission_type']->value) && Cache()->get('systems')['login_permission_type']->value == '1';
+        return view('Agent.Login.login',compact('google_auth'));
     }
 
     /**
@@ -51,20 +52,14 @@ class LoginController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $this->validate($request, [
-            'username' => 'required|string',
-            'password' => 'required',
-            'captcha'  => 'required|captcha',
-        ],[
-            'captcha.required' => '验证码不能为空',
-            'captcha.captcha'  => '请输入正确的验证码',
-        ]);
+
         // 添加验证用户登录标识
         $request->merge(['group_type' => '2']);
         $request->merge(['status' => '1']);
-        $check_data = $request->only('username','password','group_type','status');
+        $check_data = $request->only('username','password','group_type','status','auth_code');
+
         $result = $this->loginLogoutService->Login('agent',$check_data);
         if($result)
         {

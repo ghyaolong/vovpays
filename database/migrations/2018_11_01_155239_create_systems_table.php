@@ -16,7 +16,7 @@ class CreateSystemsTable extends Migration
     {
         Schema::create('systems', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->comment('配置键名');
+            $table->string('name')->unique()->comment('配置键名');
             $table->string('value')->comment('配置键值');
             $table->string('remark')->comment('备注');
             $table->timestamps();

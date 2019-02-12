@@ -124,4 +124,14 @@ class AdminsService
         }
 
     }
+    /**
+     * 更新google密钥
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function updateGooleAuth(int $id, array $data)
+    {
+        return $this->adminsRepository->update($id, $data);
+    }
 }

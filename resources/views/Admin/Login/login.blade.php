@@ -28,7 +28,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -38,18 +39,30 @@
         <form action="{{ route('admin.login') }}" method="post" id="logoForm">
             {{ csrf_field() }}
             <div class="form-group">
-                <input type="text" class="form-control" name="username" required value="{{ old('username') }}" placeholder="用户名">
+                <input type="text" class="form-control" name="username" required value="{{ old('username') }}"
+                       placeholder="用户名">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" required value="{{ old('password') }}" placeholder="密码">
+                <input type="password" class="form-control" name="password" required value="{{ old('password') }}"
+                       placeholder="密码">
             </div>
+
+            @if($google_auth)
+                <div class="form-group">
+                    <input type="password" class="form-control" name="auth_code"  value="{{ old('auth_code') }}"
+                           placeholder="google验证码">
+                </div>
+            @endif
+
             <div class="form-group">
                 <div class="row">
                     <div class="col-xs-6">
-                        <input type="text" name="captcha" maxlength="6" required placeholder="请输入验证码" autocomplete="off" class="form-control">
+                        <input type="text" name="captcha" maxlength="6" required placeholder="请输入验证码" autocomplete="off"
+                               class="form-control">
                     </div>
                     <div class="col-xs-6 text-right">
-                        <img src="{{ captcha_src('flat') }}" alt="图形验证码" id="captcha" class="lau-sign-captcha" onclick="this.src='/captcha/flat?'+Math.random()">
+                        <img src="{{ captcha_src('flat') }}" alt="图形验证码" id="captcha" class="lau-sign-captcha"
+                             onclick="this.src='/captcha/flat?'+Math.random()">
                     </div>
                 </div>
             </div>
@@ -116,6 +129,15 @@
                         }
                     }
                 },
+                {{--@if($google_auth)--}}
+                {{--auth_code: {--}}
+                    {{--validators: {--}}
+                        {{--notEmpty: {--}}
+                            {{--message: 'google认证码不能为空!'--}}
+                        {{--}--}}
+                    {{--}--}}
+                {{--},--}}
+                {{--@endif--}}
                 captcha: {
                     validators: {
                         notEmpty: {
@@ -129,24 +151,23 @@
                     }
                 }
             }
-        }).on('success.form.bv', function(e) {
-                e.preventDefault();
-                var $form = $(e.target);
-                $.post($form.attr('action'), $form.serialize(), function(result) {
-                    if(result.status)
-                    {
-                        toastr.success(result.msg);
-                        setInterval(function(){
-                            window.location.href = '/admin';
-                        },500);
-                    }else{
-                        $('#captcha').click();
-                        toastr.error(result.msg);
-                    }
-                }, 'json');
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if (result.status) {
+                    toastr.success(result.msg);
+                    setInterval(function () {
+                        window.location.href = '/admin';
+                    }, 500);
+                } else {
+                    $('#captcha').click();
+                    toastr.error(result.msg);
+                }
+            }, 'json');
 
 
-            });
+        });
     });
 </script>
 </body>

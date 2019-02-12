@@ -9,6 +9,7 @@
 namespace App\Http\Court\Controllers;
 
 use App\Services\LoginLogoutService;
+use App\Http\Requests\LoginRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,8 @@ class LoginController extends Controller
     {
         $user = Auth::guard('court')->user();
         if ($user) return redirect('court');
-        return view('Court.Login.login');
+        $google_auth=isset(Cache()->get('systems')['login_permission_type']->value) && Cache()->get('systems')['login_permission_type']->value == '1';
+        return view('Court.Login.login',compact('google_auth'));
     }
 
     /**
@@ -51,20 +53,13 @@ class LoginController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $this->validate($request, [
-            'username' => 'required|string',
-            'password' => 'required',
-            'captcha'  => 'required|captcha',
-        ],[
-            'captcha.required' => '验证码不能为空',
-            'captcha.captcha'  => '请输入正确的验证码',
-        ]);
+
         // 添加验证用户登录标识
         $request->merge(['group_type' => '3']);
         $request->merge(['status' => '1']);
-        $check_data = $request->only('username','password','group_type','status');
+        $check_data = $request->only('username','password','group_type','status','auth_code');
         $result = $this->loginLogoutService->Login('court',$check_data);
         if($result)
         {

@@ -48,7 +48,7 @@ class ValidatorController extends Controller
             return ajaxError('验证码错误');
         }
 
-        $result = $this->userService->updateGooleAuth(Auth::user()->id, ['google_key'=>$request->input('secret')] );
+        $result = $this->adminsService->updateGooleAuth(Auth::user()->id, ['google_key'=>$request->input('secret')] );
 
         if($result)
         {

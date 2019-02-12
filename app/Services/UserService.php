@@ -81,6 +81,8 @@ class UserService
         return $this->usersRepository->findUser($username);
     }
 
+
+
     /**
      * 根据商户号获取启用的商户
      * @param string $merchant

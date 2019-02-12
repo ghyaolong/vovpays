@@ -2,6 +2,7 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Services\LoginLogoutService;
@@ -26,7 +27,8 @@ class LoginController extends Controller
     {
         $user = Auth::guard('admin')->user();
         if ($user) return redirect('admin');
-        return view('Admin.Login.login');
+        $google_auth=isset(Cache()->get('systems')['login_permission_type']->value) && Cache()->get('systems')['login_permission_type']->value == '1';
+        return view('Admin.Login.login',compact('google_auth'));
     }
 
 
@@ -34,19 +36,11 @@ class LoginController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $this->validate($request, [
-            'username' => 'required|string',
-            'password' => 'required',
-            'captcha'  => 'required|captcha',
-        ],[
-            'captcha.required' => '验证码不能为空',
-            'captcha.captcha'  => '请输入正确的验证码',
-        ]);
 
+        $check_data = $request->only('username','password','auth_code');
 
-        $check_data = $request->only('username','password');
         $result = $this->loginLogoutService->Login('admin',$check_data);
         if($result)
         {

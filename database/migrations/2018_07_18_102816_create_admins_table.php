@@ -21,6 +21,7 @@ class CreateAdminsTable extends Migration
             $table->string('email',20)->unique()->comment('邮箱');
             $table->char('phone',11)->unique()->comment('手机号');
             $table->string('verify',6)->nullable()->comment('验证码');
+            $table->string('google_key')->default(0)->comment('谷歌密钥');
             $table->boolean('status')->default(1)->comment('账号状态');
             $table->rememberToken();
             $table->timestamps();

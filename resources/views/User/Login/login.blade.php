@@ -42,6 +42,13 @@
             <div class="form-group">
                 <input type="password" class="form-control" name="password" required value="{{ old('password') }}" placeholder="密码">
             </div>
+
+            @if($google_auth)
+                <div class="form-group">
+                    <input type="password" class="form-control" name="auth_code"  value="{{ old('auth_code') }}" placeholder="google验证码">
+                </div>
+            @endif
+
             <div class="form-group">
                 <div class="row">
                     <div class="col-xs-6">
@@ -114,6 +121,15 @@
                         }
                     }
                 },
+                @if($google_auth)
+                auth_code: {
+                    validators: {
+                        notEmpty: {
+                            message: 'google认证码不能为空!'
+                        }
+                    }
+                },
+                @endif
                 captcha: {
                     validators: {
                         notEmpty: {

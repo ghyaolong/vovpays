@@ -76,9 +76,9 @@ class WithdrawsService
     public function getWithdrawRule()
     {
         $withdrawRule = [];
-        $withdrawRule['withdraw_downline'] = SystemsRepository::findKey('withdraw_downline');
-        $withdrawRule['withdraw_fee_type'] = SystemsRepository::findKey('withdraw_fee_type');
-        $withdrawRule['withdraw_rate'] = SystemsRepository::findKey('withdraw_rate');
+        $withdrawRule['withdraw_downline']  = SystemsRepository::findKey('withdraw_downline');
+        $withdrawRule['withdraw_fee_type']  = SystemsRepository::findKey('withdraw_fee_type');
+        $withdrawRule['withdraw_rate']      = SystemsRepository::findKey('withdraw_rate');
         return $withdrawRule;
     }
 
