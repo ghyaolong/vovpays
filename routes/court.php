@@ -15,7 +15,7 @@ Route::group([], function ($router) {
     Route::get('signOut', 'LoginController@destroy')->name('court.signOut');
 
     Route::group(['middleware' => 'auth:court'], function () {
-        Route::get('/', 'IndexController@show')->name('court.index');
+        Route::get('/', 'IndexController@show')->name('court');
         Route::get('rate', 'IndexController@rate')->name('court.rate');
         Route::post('editPassword', 'IndexController@editPassword')->name('court.editPassword');
 

@@ -113,7 +113,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-7" style="margin-top:-10px;">
-                                <a href="{{env('QRCOURSE')}}"  target="_blank"  style="margin-left: 150px">二维码链接生成方法</a>
+                                <a href="https://cli.im/deqr"  target="_blank"  style="margin-left: 150px">二维码链接生成方法</a>
                             </div>
                         </div>
                         <div class="form-group">

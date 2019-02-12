@@ -47,7 +47,7 @@ class AccountBankCardsController extends Controller
 
         $bankList=$this->banksService->findAll();
 
-        $module='admin';
+        $module='Admin';
         return view("Common.bank", compact('list', 'bankList','module'));
     }
 

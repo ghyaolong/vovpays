@@ -16,7 +16,7 @@ Route::group([], function ($router) {
 
     Route::group(['middleware' => 'auth:agent'], function () {
 
-        Route::get('/', 'IndexController@show')->name('agent.index');
+        Route::get('/', 'IndexController@show')->name('agent');
         Route::get('extension', 'IndexController@extension')->name('agent.extension');
         Route::get('rate', 'IndexController@rate')->name('agent.rate');
         Route::post('editPassword', 'IndexController@editPassword')->name('agent.editPassword');

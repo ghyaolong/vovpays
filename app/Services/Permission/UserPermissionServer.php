@@ -26,28 +26,25 @@ class UserPermissionServer
                 $result = SmsPermission::check($code);
                 break;
             case 'GOOGLE':
-                $result = app('googleauth')->verifyCode(Auth::user()->google_key,$code);
+                $result = app('googleauth')->verifyCode(Auth::user()->google_key, $code);
                 break;
             case 'PASSWORD':
                 $result = static::checkPasswordPermission($code);
                 break;
             default :
-               throw new  CustomServiceException('不存在的验证方式:'.$PermissionType.',请联系平台管理员!');
+                throw new  CustomServiceException('不存在的验证方式:' . $PermissionType . ',请联系平台管理员!');
         }
         return $result;
     }
 
     /** 支付密码验证
- * @param $code
- * @return boolean
- */
+     * @param $code
+     * @return boolean
+     */
     protected static function checkPasswordPermission($code)
     {
-        $status= password_verify($code,Auth::user()->payPassword ) ? true : false;
-        if(!$status){
-            throw new CustomServiceException('支付密码不匹配');
-        }
-        return true;
+        $status = password_verify($code, Auth::user()->payPassword) ? true : false;
+        return $status ? true : false;
     }
 
 
