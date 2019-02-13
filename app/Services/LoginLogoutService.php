@@ -29,9 +29,9 @@ class LoginLogoutService
         unset($check_data['auth_code']);
 
         if (Auth::guard($table_name)->attempt($check_data)) {
-            return $this->googleAuth($table_name,$auth_code);
+            $this->googleAuth($table_name,$auth_code);
         } else {
-            return false;
+            Throw new CustomServiceException('用户名或密码错误，请重新输入！');
         }
     }
 
@@ -40,7 +40,7 @@ class LoginLogoutService
      * @param Request $request
      * @param string $table_name 看守器名称
      */
-    public function destroy(Request $request, string $table_name)
+    public function destroy(string $table_name)
     {
         Auth::guard($table_name)->logout();
 
@@ -65,11 +65,10 @@ class LoginLogoutService
                     $this->googleAuthFail($table_name);
                 }
             }
-            return true;
-        } catch (CustomServiceException $e) {
-            //程序异常时清除登陆信息,返回失败信息
-            $this->googleAuthFail($table_name);
 
+        }catch (\Throwable $e) {
+            //程序异常或错误时清除登陆信息,返回失败信息
+            $this->googleAuthFail($table_name,'google认证失败');
         }
     }
 
@@ -78,12 +77,10 @@ class LoginLogoutService
      * @param Request $request
      * @param string $table_name 看守器名称
      */
-    public function googleAuthFail(string $table_name)
+    public function googleAuthFail(string $table_name,string $msg='fail')
     {
-        Auth::guard($table_name)->logout();
-        session()->forget(Auth::guard($table_name)->getName());
-        session()->regenerate();
+        $this->destroy($table_name);
 
-        throw new CustomServiceException("google认证失败");
+        throw new CustomServiceException($msg);
     }
 }

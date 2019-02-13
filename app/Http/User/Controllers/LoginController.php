@@ -56,27 +56,23 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-
         // 添加验证用户登录标识
         $request->merge(['group_type' => '1']);
         $request->merge(['status' => '1']);
 
         $check_data = $request->only('username','password','group_type','status','auth_code');
-        $result = $this->loginLogoutService->Login('user',$check_data);
-        if($result)
-        {
-            return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
-        }else{
-            return ajaxError('用户名或密码错误，请重新输入！');
-        }
+        $this->loginLogoutService->Login('user',$check_data);
+
+        return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
+
     }
 
     /*
      * 登出
      */
-    public function destroy(Request $request)
+    public function destroy()
     {
-        $this->loginLogoutService->destroy($request,'user');
+        $this->loginLogoutService->destroy('user');
 
         return redirect()->route('user.login');
     }

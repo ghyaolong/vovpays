@@ -60,13 +60,9 @@ class LoginController extends Controller
         $request->merge(['status' => '1']);
         $check_data = $request->only('username','password','group_type','status','auth_code');
 
-        $result = $this->loginLogoutService->Login('agent',$check_data);
-        if($result)
-        {
-            return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
-        }else{
-            return ajaxError('用户名或密码错误，请重新输入！');
-        }
+        $this->loginLogoutService->Login('agent',$check_data);
+
+        return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
     }
 
     /**
@@ -74,9 +70,9 @@ class LoginController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy()
     {
-        $this->loginLogoutService->destroy($request,'agent');
+        $this->loginLogoutService->destroy('agent');
 
         return redirect()->route('agent.login');
     }

@@ -41,13 +41,9 @@ class LoginController extends Controller
 
         $check_data = $request->only('username','password','auth_code');
 
-        $result = $this->loginLogoutService->Login('admin',$check_data);
-        if($result)
-        {
-            return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
-        }else{
-            return ajaxSuccess('用户名或密码错误，请重新输入！');
-        }
+        $this->loginLogoutService->Login('admin',$check_data);
+
+        return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
 
     }
 
@@ -56,9 +52,9 @@ class LoginController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy()
     {
-        $this->loginLogoutService->destroy($request,'admin');
+        $this->loginLogoutService->destroy('admin');
 
         return redirect()->route('admin.login');
     }
