@@ -229,3 +229,17 @@ function TimeMicroTime()
     list($msec, $sec) = explode(' ', microtime());
     return (float)sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
 }
+
+/**
+ * 顺序取号根据时间权重取号
+ * @param $a
+ * @param $b
+ * @return int
+ */
+function sortWeight($a, $b)
+{
+    if ($a['weight'] == $b['weight']) {
+        return 0;
+    }
+    return ($a['weight'] < $b['weight']) ? -1 : 1;
+}

@@ -163,6 +163,8 @@ class AccountPhoneRepository
             $type = '微信';
         } else if($type == 'cloudpay'){
             $type = '云闪付';
+        } else if($type == 'alipay_packets'){
+            $type = '支付宝';
         }
         return $this->account_phone->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->get();
     }

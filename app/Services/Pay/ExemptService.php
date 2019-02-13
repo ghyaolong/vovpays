@@ -42,7 +42,7 @@ class ExemptService implements PayInterface
         }
 
         Redis::select(1);
-        if($request->pay_code == 'alipay')
+        if($request->pay_code == 'alipay') // 支付宝转账
         {
             $order_date = array(
                 'amount'  => $result->amount,
@@ -62,7 +62,7 @@ class ExemptService implements PayInterface
             Redis::hmset($result->orderNo, $order_date);
             Redis::expire($result->orderNo,600);
 
-        }else if($request->pay_code == 'alipay_bank'){
+        }else if($request->pay_code == 'alipay_bank'){ // 支付宝转网商
             // 存储订单号,以便回调
             $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);
             Redis::set($key,$result->orderNo);
@@ -87,7 +87,7 @@ class ExemptService implements PayInterface
             Redis::hmset($result->orderNo, $order_date);
             Redis::expire($result->orderNo,600);
 
-        }else if($request->pay_code == 'wechat'){
+        }else if($request->pay_code == 'wechat'){// 微信转账
             try{
                 $msg = json_encode([
                     'amount' => $result->amount,
@@ -123,7 +123,7 @@ class ExemptService implements PayInterface
             }catch ( \Exception $e){
                 return json_encode(RespCode::SYS_ERROR,JSON_UNESCAPED_UNICODE);
             }
-        }else if($request->pay_code == 'alipay_bank2'){
+        }else if($request->pay_code == 'alipay_bank2'){// 支付宝转银行卡
             // 存储订单号,以便回调
             // 截取银行卡号后四位
             $card = substr($result['account'],-4);
@@ -152,7 +152,7 @@ class ExemptService implements PayInterface
 
             $request->pay_code = 'alipay_bank';
 
-        }else if($request->pay_code == 'cloudpay'){
+        }else if($request->pay_code == 'cloudpay'){// 云闪付
             try{
                 $msg = json_encode([
                     'amount' => $result->amount,
@@ -189,6 +189,7 @@ class ExemptService implements PayInterface
                 return json_encode(RespCode::SYS_ERROR,JSON_UNESCAPED_UNICODE);
             }
         }else if($request->pay_code == 'alipay_solidcode'||$request->pay_code == 'wechat_solidcode'||$request->pay_code == 'cloudpay_solidcode'){
+            // 固码
             // 存储订单号,以便回调
             // 截取银行卡号后四位
             $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);
@@ -211,8 +212,30 @@ class ExemptService implements PayInterface
 
             Redis::hmset($result->orderNo, $order_date);
             Redis::expire($result->orderNo,600);
-        }
+        }else if($request->pay_code == 'alipay_packets'){ // 支付宝红包
+            $order_date = array(
+                'amount'  => $result->amount,
+                'meme'    => $result->orderNo,
+                'userID'  => $account_array['userId'],
+                'status'  => 0,
+                'type'    => $request->pay_code,
+                'account' => $account_array['account'],
+                'sweep_num' => 0, // 扫码次数
+            );
 
+            $data = [
+                'type'    => $request->pay_code,
+                'username'=> $account_array['username'],
+                'money'   => sprintf('%0.2f',$result->amount),
+                'orderNo' => $result->orderNo,
+                'payurl'  => 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+                'h5url'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+            ];
+            Redis::hmset($result->orderNo, $order_date);
+            Redis::expire($result->orderNo,180);
+            // 为了模板的共用而改变
+            $request->pay_code = 'alipay';
+        }
 
         if( isset($request->json) && $request->json == 'json'){
 

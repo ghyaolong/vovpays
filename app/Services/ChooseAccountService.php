@@ -38,7 +38,7 @@ class ChooseAccountService{
         // 根据挂号方式获取所有开启的账号:1商户后台挂号,2总后台挂号,3代理后台挂号,4三方挂号
         if( $add_account_type == 1 )
         {
-            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
+            if( $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
             {
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,$user->id,1);
             }else if($this->pay_code == 'alipay_bank'){
@@ -50,7 +50,7 @@ class ChooseAccountService{
             }
         }else if( $add_account_type == 2 ){
 
-            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
+            if( $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
             {
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,100000,1);
             }else if($this->pay_code == 'alipay_bank'){
@@ -62,7 +62,7 @@ class ChooseAccountService{
             }
         }else if( $add_account_type == 3 ){
 
-            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay' ) {
+            if( $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay' ) {
 
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type, $user->parentId, 1);
             }else if($this->pay_code == 'alipay_bank'){
@@ -81,7 +81,7 @@ class ChooseAccountService{
                 return RespCode::PARAMETER_ERROR_STOP;
             }
 
-            if($this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
+            if( $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
             {
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndUidarr($type,1,$user_id_array);
             }else if($this->pay_code == 'alipay_bank'){
@@ -99,7 +99,7 @@ class ChooseAccountService{
         }
 
         //根据编码选择对应的账号
-        if($this->pay_code == "alipay"||$this->pay_code =='alipay_solidcode')
+        if( $this->pay_code == 'alipay_packets' || $this->pay_code == "alipay"||$this->pay_code =='alipay_solidcode')
         {
             $valid_account = $this->getValidAlipayAccount($account_list);
         }else if($this->pay_code == "wechat"||$this->pay_code =='wechat_solidcode'){
@@ -157,23 +157,41 @@ class ChooseAccountService{
                     'username'  => $account->alipayusername,
                     'phone_uid' => $account->user_id,
                     'qrcode'    => $account->qrcode,
+                    'weight'    => $get_account['weight'], // 权重
                 ];
             }
         }
-
-        if(!count($valid_account_list))
-        {
-            return [];
-        }
-
-        $rank_key = array_rand($valid_account_list);
-
-
-        $valid_account= $valid_account_list[$rank_key];
-
-
+        if(!count($valid_account_list)) return [];
+        $valid_account = $this->getOrderAccount($valid_account_list);
+        $this->updateAccountWeight($valid_account['phone_id'].'alipay');
         return $this->pay_code=='alipay_solidcode'?$this->chooseaPayAmount($valid_account):$valid_account;
+    }
 
+    /**
+     * 根据时间权重取号
+     * @param array $account_list
+     * @return array
+     */
+    protected function getOrderAccount(array $account_list){
+
+        foreach ($account_list as $k=>$v){
+            // 优先选着初始化的账号
+            if($v['weight'] == 1){
+                return $account_list[$k];
+            }
+        }
+        usort($account_list,"sortWeight");
+        return array_shift($account_list);
+    }
+
+
+
+    /**
+     * 更新账号权重时间
+     * @param string $key
+     */
+    protected function updateAccountWeight(string $key){
+        Redis::hset($key, 'weight', time());
     }
 
     /**
@@ -238,7 +256,6 @@ class ChooseAccountService{
                 // 验证账号是否一致
                 if( $get_account['account'] != $account->account || (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ) )
                 {
-
                     continue;
                 }
                 // 验证账号是否限额
@@ -375,12 +392,7 @@ class ChooseAccountService{
         $valid_account = $valid_account_list[$rank_key];
 
         if(!$valid_account)return [];
-
-
         return $this->chooseaPayAmount($valid_account);
-
-
-
     }
 
 

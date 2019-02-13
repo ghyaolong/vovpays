@@ -26,13 +26,13 @@
     </h1>
     <div class="mod-ct">
         <h1 style="padding-top:15px;color: #FF0000">1.一码一单，多次付款无法到账</h1>
-        <h1 style="padding-top:15px;color: #FF0000">2.需要多次付款，请重新发起订单</h1>
-        <h1 style="padding-top:15px;color: #FF0000">3.请保存二维码支付(当前不支持H5)</h1>
+        <h1 style="color: #FF0000">2.需要多次付款，请重新发起订单</h1>
+        <h1 style="color: #FF0000">3.如无法跳转,请截图保存到手机相册</h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
         <!--支付宝app支付-->
-        {{--<div class="paybtn" style="display: none;padding: 10px;">--}}
-            {{--<a href="{{ $data['h5url'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">打开支付宝</a>--}}
-        {{--</div>--}}
+        <div class="paybtn" style="display: none;padding: 10px;">
+            <a href="{{ $data['h5url'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">启动支付宝</a>
+        </div>
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
@@ -42,7 +42,9 @@
             </div>
         </div>
         <div class="time-item">
-            <dvi class="time-item"><h1 style="color: red">验证姓名：{{$data['username']}}</h1></dvi>
+            @if($data['type'] != 'alipay_packets')
+                <dvi class="time-item"><h1 style="color: red">验证姓名：{{$data['username']}}</h1></dvi>
+            @endif
             <dvi class="time-item" id="msg"><h1>付款即时到账 未到账可联系我们</h1></dvi>
             <div class="time-item"><h1>订单:{{$data['orderNo']}}</h1> </div>
             <strong id="hour_show"><s id="h"></s>0时</strong>
@@ -129,7 +131,8 @@ function checkdata(){
 
 $().ready(function(){
     timer(180);
-    if(isMobile() == 1 && "{{ $data['type'] == 'alipay' }}")
+    var type = '{{ $data['type'] }}';
+    if(isMobile() == 1 && type == 'alipay_packets')
     {
         $('.paybtn').show();
     }
