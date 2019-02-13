@@ -6,10 +6,17 @@ namespace App\Services\Permission;
 use App\Repositories\SystemsRepository;
 use App\Exceptions\CustomServiceException;
 use Illuminate\Support\Facades\Auth;
+use App\Services\Permission\GoogleAuthenticator;
 
 
 class UserPermissionServer
 {
+    static private $googleAuthenticator;
+
+    public function __construct(GoogleAuthenticator $googleAuthenticator)
+    {
+        static::$googleAuthenticator=$googleAuthenticator;
+    }
 
 
     /**操作权限验证
@@ -22,11 +29,11 @@ class UserPermissionServer
         $PermissionType = SystemsRepository::findKey('withdraw_permission_type');
 
         switch ($PermissionType) {
-            case 'SMS':
-                $result = SmsPermission::check($code);
-                break;
+//            case 'SMS':
+//                $result = SmsPermission::check($code);
+//                break;
             case 'GOOGLE':
-                $result = app('googleauth')->verifyCode(Auth::user()->google_key, $code);
+                $result = static::verifyCode($code);
                 break;
             case 'PASSWORD':
                 $result = static::checkPasswordPermission($code);
@@ -45,6 +52,15 @@ class UserPermissionServer
     {
         $status = password_verify($code, Auth::user()->payPassword) ? true : false;
         return $status ? true : false;
+    }
+
+    /**委托调用google验证
+     * @param $auth_code
+     * @return mixed
+     */
+    static  private function verifyCode($auth_code){
+
+        return static::$googleAuthenticator->verifyCode(Auth::user()->google_key, $auth_code);
     }
 
 

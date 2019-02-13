@@ -10,6 +10,7 @@ namespace App\Repositories;
 
 use App\Models\System;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class SystemsRepository
 {
@@ -34,7 +35,18 @@ class SystemsRepository
      */
     static public function findKey(string $name)
     {
-        $systems=Cache::get('systems');
+
+        $systems=Cache::get('systems',function () {
+
+            $system = DB::table('systems')->select('name','value')->get();
+            $system_array = [];
+            foreach ($system as $k=>$v){
+                $system_array[$v->name] = $v;
+            }
+            return $system_array;
+
+        });
+
         return $systems[$name]->value;
     }
 

@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App;
 use  App\Exceptions\CustomServiceException;
+use App\Services\Permission\GoogleAuthenticator;
+use App\Services\Permission\UserPermissionServer;
 
 class WithdrawRequest extends FormRequest
 {
@@ -16,7 +18,8 @@ class WithdrawRequest extends FormRequest
     public function authorize()
     {
 
-         if(!app('permission')->checkPermission($this->auth_code)){
+        $UserPermissionServer=new UserPermissionServer(new GoogleAuthenticator);
+         if(!$UserPermissionServer->checkPermission($this->auth_code)){
              throw new CustomServiceException('认证失败!');
          }
         return true;
