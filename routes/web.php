@@ -8,5 +8,5 @@
  */
 
 Route::get('/', function () {
-    return view('Home/welcome');
+
 });

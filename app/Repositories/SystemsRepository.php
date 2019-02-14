@@ -35,18 +35,15 @@ class SystemsRepository
      */
     static public function findKey(string $name)
     {
-
+        //从缓存获取配置信息若没有在数据库中查找
         $systems=Cache::get('systems',function () {
-
             $system = DB::table('systems')->select('name','value')->get();
             $system_array = [];
             foreach ($system as $k=>$v){
                 $system_array[$v->name] = $v;
             }
             return $system_array;
-
         });
-
         return $systems[$name]->value;
     }
 
