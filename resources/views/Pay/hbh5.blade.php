@@ -111,8 +111,8 @@
         <div class="am-process-up-border"></div>
     </div>
     <footer class="am-footer am-fixed am-fixed-bottom">
-        <div class="am-footer-interlink am-footer-top"><a class="am-footer-link" href="javascript:javascrip()">刷新页面</a>
-        </div>
+        {{--<div class="am-footer-interlink am-footer-top"><a class="am-footer-link" href="javascript:javascrip()">刷新页面</a>--}}
+        {{--</div>--}}
         <div class="am-footer-copyright">Copyright © 2008-2016 AliPay</div>
     </footer>
 </div>
@@ -170,9 +170,9 @@
     document.addEventListener('popMenuClick', function (e) {
     }, false);
 
-    document.addEventListener('resume', function (event) {
-        history.go(0);
-    });
+    // document.addEventListener('resume', function (event) {
+    //     history.go(0);
+    // });
 
     function javascript() {
         AlipayJSBridge.call('alert', {
@@ -209,19 +209,19 @@
     $('body').height(pageHeight);
 </script>
 <script src="{{ asset('Hongbao/alipayjsapi.inc.min.js') }}"></script>
-<script>
-    ap.allowPullDownRefresh(false);
-    ap.onPullDownRefresh(function (res) {
-        if (!res.refreshAvailable) {
-            ap.alert({
-                content: '刷新已禁止',
-                buttonText: '恢复'
-            }, function () {
-                ap.allowPullDownRefresh(true);
-                ap.showToast('刷新已恢复')
-            });
-        }
-    });
-</script>
+{{--<script>--}}
+    {{--ap.allowPullDownRefresh(false);--}}
+    {{--ap.onPullDownRefresh(function (res) {--}}
+        {{--if (!res.refreshAvailable) {--}}
+            {{--ap.alert({--}}
+                {{--content: '刷新已禁止',--}}
+                {{--buttonText: '恢复'--}}
+            {{--}, function () {--}}
+                {{--ap.allowPullDownRefresh(true);--}}
+                {{--ap.showToast('刷新已恢复')--}}
+            {{--});--}}
+        {{--}--}}
+    {{--});--}}
+{{--</script>--}}
 </body>
 </html>
