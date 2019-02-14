@@ -44,7 +44,9 @@ class SystemsRepository
             }
             return $system_array;
         });
-        return $systems[$name]->value;
+
+        //缓存中指定配置不存在返回null
+        return $systems[$name]->value??null;
     }
 
     /**
