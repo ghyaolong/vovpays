@@ -162,7 +162,7 @@
 
     var a = "{{ $data['userID'] }}";
     var e = "亲";
-    var f = "请使用【普通红包】\r\n支付 0.01 元";
+    var f = "请使用【普通红包】\r\n支付 {{ $data['amount'] }} 元";
     var g = "确定";
     var h = "{{ $data['amount'] }}";
     var i = "{{ $data['meme'] }}";
