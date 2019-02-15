@@ -121,15 +121,6 @@
                         }
                     }
                 },
-                @if($google_auth)
-                auth_code: {
-                    validators: {
-                        notEmpty: {
-                            message: 'google认证码不能为空!'
-                        }
-                    }
-                },
-                @endif
                 captcha: {
                     validators: {
                         notEmpty: {
