@@ -14,6 +14,7 @@ Route::group([], function ($router) {
     Route::get('registerShow','LoginController@registerShow')->name('user.registerShow');
     Route::post('register','LoginController@register')->name('user.register');
     Route::get('dropout', 'LoginController@destroy')->name('user.dropout');
+    Route::get('hasGoogleKey','LoginController@hasGoogleKey')->name('user.hasGoogle');
 
     Route::group(['middleware' => 'auth:user'], function () {
         //用户管理，密码

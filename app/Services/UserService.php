@@ -269,4 +269,14 @@ class UserService
     {
         return $this->usersRepository->update($id, $data);
     }
+
+    /**检查用户是否配置google验证
+     * @param string $username
+     * @return bool
+     */
+    public function hasGoogleKey(string $username){
+
+        $res=$this->usersRepository->getUserGoogleKey($username);
+        return $res?true:false;
+    }
 }

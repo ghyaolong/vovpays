@@ -71,7 +71,7 @@ class LoginLogoutService
             if ($user->google_key && $login_permission_type) {
                 if (!$this->verifyCode($user->google_key, $auth_code)) {
                     //验证失败清除登陆信息,返回失败信息
-                    $this->googleAuthFail($table_name,'google认证失败');
+                    throw new CustomServiceException('google认证失败');
                 }
             }
         } catch (\Throwable $e) {

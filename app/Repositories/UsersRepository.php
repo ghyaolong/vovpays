@@ -40,8 +40,7 @@ class UsersRepository
         $sql = ' 1=1 ';
         $where = [];
 
-        if(isset($data['group_type']) && $data['group_type'])
-        {
+        if (isset($data['group_type']) && $data['group_type']) {
             $sql .= ' and group_type = ?';
             $where['group_type'] = $data['group_type'];
         }
@@ -81,7 +80,7 @@ class UsersRepository
      */
     public function getGroupPage(int $group_id, int $page)
     {
-        return $this->user->whereGroupType($group_id)->where('status','<>',2)->orderBy('id', 'desc')->paginate($page);
+        return $this->user->whereGroupType($group_id)->where('status', '<>', 2)->orderBy('id', 'desc')->paginate($page);
     }
 
     /**
@@ -92,7 +91,7 @@ class UsersRepository
      */
     public function getParentIdPage(int $parentId, int $page)
     {
-        return $this->user->whereParentid($parentId)->where('status','<>',2)->orderBy('id', 'desc')->paginate($page);
+        return $this->user->whereParentid($parentId)->where('status', '<>', 2)->orderBy('id', 'desc')->paginate($page);
     }
 
     /**
@@ -102,7 +101,7 @@ class UsersRepository
      */
     public function getGroupAll(int $group_id)
     {
-        return $this->user->whereGroupType($group_id)->where('status','<>',2)->orderBy('id', 'desc')->get();
+        return $this->user->whereGroupType($group_id)->where('status', '<>', 2)->orderBy('id', 'desc')->get();
     }
 
     /**
@@ -139,7 +138,7 @@ class UsersRepository
      * @param int $group_type
      * @return mixed
      */
-    public function findIdAndGrouptype(int $id, int $group_type )
+    public function findIdAndGrouptype(int $id, int $group_type)
     {
         return $this->user->whereId($id)->whereGroupType($group_type)->first();
     }
@@ -241,7 +240,7 @@ class UsersRepository
      * 验证登录密码是否正确
      * @param int $id
      * @param int $password
-     * @return bool 
+     * @return bool
      */
     public function contrastPassword(int $id, string $password)
     {
@@ -254,9 +253,9 @@ class UsersRepository
      * 验证支付密码是否正确
      * @param int $id
      * @param int $password
-     * @return bool 
+     * @return bool
      */
-    public function contrastPaypassword(int $id,String $password)
+    public function contrastPaypassword(int $id, String $password)
     {
         $result = $this->user->whereId($id)->first();
         $oldPassword = $result->payPassword;
@@ -284,18 +283,33 @@ class UsersRepository
      * @param int $type
      * @return mixed
      */
-    public function userAddOrReduceQuota(int $uid,float $quota, int $type)
+    public function userAddOrReduceQuota(int $uid, float $quota, int $type)
     {
-        if($type == 0)
-        {
-            return $this->user->whereId($uid)->increment('quota',$quota);
-        }else{
-            return $this->user->whereId($uid)->decrement('quota',$quota);
+        if ($type == 0) {
+            return $this->user->whereId($uid)->increment('quota', $quota);
+        } else {
+            return $this->user->whereId($uid)->decrement('quota', $quota);
         }
     }
 
+    /**
+     * @param int $status
+     * @param float $amount
+     * @return mixed
+     */
     public function getAllQuotaLargeAmount(int $status, float $amount)
     {
-        return $this->user->whereStatus($status)->whereGroupType(3)->where('quota','>=',$amount)->select('id')->get();
+        return $this->user->whereStatus($status)->whereGroupType(3)->where('quota', '>=', $amount)->select('id')->get();
     }
+
+    /**
+     * @param string $username
+     * @return mixed
+     */
+    public function getUserGoogleKey(string $username)
+    {
+        return $this->user->whereUsername($username)->value('google_key');
+    }
+
+
 }
