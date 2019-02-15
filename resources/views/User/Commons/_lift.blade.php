@@ -43,7 +43,23 @@
             @else
 
             @endif
-            <li><a href="{{route('user.main')}}"><i class="fa fa-circle-o text-red"></i> <span>开发者</span></a>
+
+            <li class="treeview @if(stripos( url()->full(),'doc' )) active menu-open @endif ">
+                <a href="#">
+                    <i class="fa fa-circle-o  text-aqua"></i>
+                    <span>开发者</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{route('user.pay')}}"><i class="fa fa-circle-o"></i> <span>支付接口</span></a>
+                    </li>
+                    <li><a href="{{route('user.withdraw')}}"><i class="fa fa-circle-o"></i>
+                            <span>代付接口</span></a></li>
+                </ul>
+            </li>
+
             </li>
             @if(isset(Cache()->get('systems')['withdraw_permission_type']->value) && Cache()->get('systems')['withdraw_permission_type']->value == 'GOOGLE' )
                 <li><a href="{{route('user.validator')}}"><i class="fa fa-circle-o text-yellow"></i><span>安全设置</span></a></li>

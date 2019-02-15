@@ -22,7 +22,9 @@ Route::group([], function ($router) {
         Route::get('index', 'IndexController@show')->name('user.show');
         Route::any('index/user', 'IndexController@user')->name('user.user');
         Route::post('index/editPassword', 'IndexController@editPassword')->name('user.editPassword');
-        Route::get('index/main','IndexController@main')->name('user.main');
+        Route::get('index/doc/pay','IndexController@pay')->name('user.pay');
+        Route::get('index/doc/withdraw','IndexController@withdraw')->name('user.withdraw');
+
         Route::get('index/validator','IndexController@validator')->name('user.validator');
         Route::get('index/api','IndexController@api')->name('user.api');
         //订单
