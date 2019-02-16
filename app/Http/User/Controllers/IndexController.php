@@ -90,19 +90,14 @@ class IndexController extends Controller
     //开发者文档--支付接口
     public function pay()
     {
-
-        $httpType = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
-        $host = $httpType . $_SERVER['HTTP_HOST'];
-
+        $host = getDomainPort();
         return view('User.Index.pay', compact('host'));
     }
+
     //开发者文档--代付接口
     public function withdraw()
     {
-
-        $httpType = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
-        $host = $httpType . $_SERVER['HTTP_HOST'];
-
+        $host = getDomainPort();
         return view('User.Index.withdraw', compact('host'));
     }
 
