@@ -270,15 +270,13 @@ class ChooseAccountService{
                     'phone_id'          => $account->phone_id,
                     'phone_uid'         => $account->user_id,
                     'qrcode'    => $account->qrcode,
+                    'weight'    => $get_account['weight'],
                 ];
             }
         }
-        if(!count($valid_account_list))return [];
-
-        $rank_key = array_rand($valid_account_list);
-
-        $valid_account= $valid_account_list[$rank_key];
-
+        if(!count($valid_account_list)) return [];
+        $valid_account = $this->getOrderAccount($valid_account_list);
+        $this->updateAccountWeight($valid_account['phone_id'].'wechat');
         return $this->pay_code=='wechat_solidcode'?$this->chooseaPayAmount($valid_account):$valid_account;
     }
 
