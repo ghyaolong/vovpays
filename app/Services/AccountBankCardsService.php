@@ -42,8 +42,16 @@ class AccountBankCardsService
         $bank = explode(",", $data['bank_name']);
         $data['bank_name'] = $bank[0];
         $data['bank_mark'] = $bank[1];
-        $data['accountType'] = '银行卡';
-        $data['channel_payment_id'] = 3;
+
+        if (isset($data['qrcode'])&&!isset($data['chard_index'])){
+            $data['accountType'] = "银行固码";
+            $data['channel_payment_id'] = 6;
+        } else{
+            $data['accountType'] = "银行卡";
+            $data['channel_payment_id'] = 3;
+        }
+
+
         return $this->accountBankCardsRepository->add($data);
     }
 

@@ -1,5 +1,5 @@
 @extends($module.".Commons.layout")
-@section('title','银行卡号')
+@section('title','银行固码')
 @section("css")
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
@@ -17,7 +17,8 @@
                 </div>
                 <div class="box-body" class="col-md-12">
                     <!-- ./col -->
-                    <form class="navbar-form navbar-left" action="{{route(strtolower($module).'.accountBank',[0])}}" method="get">
+                    <form class="navbar-form navbar-left" action="{{route(strtolower($module).'.accountBank',[0])}}"
+                          method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="bank_account" placeholder="账号"
                                    @if(isset($query['bank_account'])) value="{{ $query['bank_account'] }}" @endif>
@@ -55,7 +56,9 @@
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
-                                        <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
+                                        <td>
+                                            <span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span>
+                                        </td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />
@@ -90,7 +93,8 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="addForm" action="{{ route(strtolower($module).'.accountBankAdd') }}" class="form-horizontal" role="form">
+                    <form id="addForm" action="{{ route(strtolower($module).'.accountBankAdd') }}"
+                          class="form-horizontal" role="form">
                         <input type="hidden" id="id" name="id">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -106,7 +110,7 @@
                                 <select class="form-control" id="channelId" name="bank_name">
                                     <option value="">选择银行</option>
                                     @foreach($bankList as $bank)
-                                        <option value="{{$bank->bankName.','.$bank->code}}" >{{$bank->bankName}}</option>
+                                        <option value="{{$bank->bankName.','.$bank->code}}">{{$bank->bankName}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -119,20 +123,24 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">收款链接:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="qrcode" placeholder="请输入任意金额收款链接">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-7" style="margin-top:-10px;">
+                                <a href="https://cli.im/deqr" target="_blank" style="margin-left: 150px">二维码链接生成方法</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">手机标识:</label>
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="phone_id"
                                        placeholder="手机标识">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">索引:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="chard_index"
-                                       placeholder="请输入索引">
-                                <a href="https://www.showdoc.cc/258628029269764" target="_blank">索引获取说明</a> 密码：000000
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">限额:</label>
                             <div class="col-xs-9">
@@ -254,13 +262,24 @@
                             },
                         }
                     },
-                    accountType: {
+                    qrcode: {
                         validators: {
                             notEmpty: {
-                                message: '请输入账户类型!'
+                                message: '请输入任意金额收款链接!'
                             },
-                        }
+                            regexp: {
+                                regexp: /([\S]+)?/i,
+                                message: '请输入格式正确的收款链接'
+                            }
+                        },
                     },
+                    // accountType: {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: '请输入账户类型!'
+                    //         },
+                    //     }
+                    // },
                     bank_name: {
                         validators: {
                             notEmpty: {
@@ -345,14 +364,13 @@
                 success: function (result) {
                     if (result.status == 1) {
                         $("#addForm input[name='bank_account']").val(result.data['bank_account']);
-                        $("input[name='accountType']").val(result.data['accountType']);
 
-                        $("select[name='bank_name']").val(result.data['bank_name']+','+result.data['bank_mark']);
+                        $("select[name='bank_name']").val(result.data['bank_name'] + ',' + result.data['bank_mark']);
 
                         $("input[name='cardNo']").val(result.data['cardNo']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
-                        $("input[name='chard_index']").val(result.data['chard_index']);
+                        $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');

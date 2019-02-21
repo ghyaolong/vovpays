@@ -39,6 +39,10 @@ class AccountBankCardsRepository
             $sql .= ' and pay_account_bank_cards.user_id = ?';
             $where['user_id'] = $data['user_id'];
         }
+        if (isset($data['accountType'])) {
+            $sql .= ' and pay_account_bank_cards.accountType = ?';
+            $where['accountType'] = $data['accountType'];
+        }
 
         if (isset($data['third']) && $data['third']){
             $sql .= ' and pay_account_bank_cards.third = ?';

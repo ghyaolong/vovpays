@@ -29,14 +29,14 @@
                     <ul class="treeview-menu">
                         <li><a href="{{route('court.account',[0])}}"><i class="fa fa-circle-o"></i><span>微信账号</span></a></li>
                         <li><a href="{{route('court.account',[1])}}"><i class="fa fa-circle-o"></i><span>支付宝账号</span></a></li>
-                        <li><a href="{{ route('court.accountBank') }}"><i class="fa fa-circle-o"></i><span>银行卡号</span></a></li>
                         <li><a href="{{ route('court.account',[2]) }}"><i class="fa fa-circle-o"></i><span>云闪付</span></a></li>
+                        <li><a href="{{ route('court.accountBank',[0]) }}"><i class="fa fa-circle-o"></i><span>银行卡号</span></a></li>
+                        <li><a href="{{ route('court.accountBank',[1]) }}"><i class="fa fa-circle-o"></i><span>银行固码</span></a></li>
                     </ul>
                 </li>
             @endif
-            @if(isset(Cache()->get('systems')['withdraw_permission_type']->value) && Cache()->get('systems')['withdraw_permission_type']->value == 'GOOGLE' )
-                <li><a href="{{route('court.validator')}}"><i class="fa fa-circle-o text-yellow"></i><span>安全设置</span></a></li>
-            @endif
+            <li><a href="{{route('court.validator')}}"><i class="fa fa-circle-o text-yellow"></i><span>安全设置</span></a></li>
+
 
         </ul>
     </section>
