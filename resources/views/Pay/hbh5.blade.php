@@ -170,11 +170,53 @@
     document.addEventListener('popMenuClick', function (e) {
     }, false);
 
-    // document.addEventListener('resume', function (event) {
-    //     history.go(0);
-    // });
+    document.addEventListener('resume', function (event) {
+        history.go(0);
+    });
 
     function javascript() {
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+        if (isAndroid) {
+            ap.alert({
+                title: e ,
+                content: f,
+                buttonText: '确定'
+            }, function () {
+                ap.redirectTo({
+                    url: 'alipays://platformapi/startapp?appId=88886666&money=' + h + '&amount=' + h + '&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId=' + a + '&canSearch=false&prevBiz=chat&chatLoginId=qq11224&remark=' + i + '&appLaunchMode=3',
+                    data: {
+
+                    }
+                });
+            });
+        } else {
+            AlipayJSBridge.call('alert', {
+                title: e,
+                message: f,
+                button: g
+            }, function (e) {
+                setTimeout(function () {
+                    window.location.href = "alipays://platformapi/startapp?appId=20000167&forceRequest=0&returnAppId=recent&tLoginId=" + j + "&tUnreadCount=0&tUserId=" + a + "&tUserType=1";
+                }, 1);
+
+                setTimeout(function () {
+
+                    var url = "alipays://platformapi/startapp?appId=88886666&appLaunchMode=3&canSearch=false&chatLoginId=qq11224&chatUserId=" + a + "&chatUserName=x&chatUserType=1&entryMode=personalStage&prevBiz=chat&schemaMode=portalInside&target=personal&money=" + h + "&amount=" + h + "&remark=" + i;
+                    ap.redirectTo({
+                        url: url,
+                        data: {
+
+                        }
+                    });
+
+                }, 888);
+            });
+        }
+
+
+
+
         AlipayJSBridge.call('alert', {
                 title: e,
                 message: f,
@@ -209,19 +251,19 @@
     $('body').height(pageHeight);
 </script>
 <script src="{{ asset('Hongbao/alipayjsapi.inc.min.js') }}"></script>
-{{--<script>--}}
-    {{--ap.allowPullDownRefresh(false);--}}
-    {{--ap.onPullDownRefresh(function (res) {--}}
-        {{--if (!res.refreshAvailable) {--}}
-            {{--ap.alert({--}}
-                {{--content: '刷新已禁止',--}}
-                {{--buttonText: '恢复'--}}
-            {{--}, function () {--}}
-                {{--ap.allowPullDownRefresh(true);--}}
-                {{--ap.showToast('刷新已恢复')--}}
-            {{--});--}}
-        {{--}--}}
-    {{--});--}}
-{{--</script>--}}
+<script>
+    ap.allowPullDownRefresh(false);
+    ap.onPullDownRefresh(function (res) {
+        if (!res.refreshAvailable) {
+            ap.alert({
+                content: '刷新已禁止',
+                buttonText: '恢复'
+            }, function () {
+                ap.allowPullDownRefresh(true);
+                ap.showToast('刷新已恢复')
+            });
+        }
+    });
+</script>
 </body>
 </html>
