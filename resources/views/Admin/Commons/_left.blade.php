@@ -111,7 +111,7 @@
                     <span>系统设置</span>
                 </a>
             </li>
-            @if(isset(Cache()->get('systems')['withdraw_permission_type']->value) && Cache()->get('systems')['withdraw_permission_type']->value == 'GOOGLE' )
+            @if(isset(Cache()->get('systems')['login_permission_type']->value) && Cache()->get('systems')['withdraw_permission_type']->value == 'GOOGLE' )
                 <li><a href="{{route('admin.validator')}}"><i class="fa fa-circle-o text-yellow"></i><span>安全设置</span></a></li>
             @endif
         </ul>
