@@ -220,7 +220,7 @@ class AccountPhoneRepository
         } else if($type == 'cloudpay_solidcode'){
             $type = '云闪付';
         }
-        return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->get();
+        return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->where('qrcode','<>','0')->get();
     }
 
     /**

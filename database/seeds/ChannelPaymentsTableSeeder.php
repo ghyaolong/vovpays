@@ -63,7 +63,7 @@ class ChannelPaymentsTableSeeder extends Seeder
             [
                 'channel_id'   => '1',
                 'paymentName'  => '银行固码',
-                'paymentCode'  => 'bank_solid',
+                'paymentCode'  => 'bank_solidcode',
                 'runRate'      => '0.03',
                 'costRate'     => 0,
                 'created_at'=> $now,

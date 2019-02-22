@@ -15,11 +15,12 @@ class CallbackTest extends TestCase
      */
     public function testCallback()
     {
-        $info='{"phoneid": "862859038280802","type": "wechat","no": "heQnhF8coddhpLS3ADo4h3OvwG0cPv6OPkPgX06lgJi1IBh9baqqj6nqFgE69TnuAlDCQMXF2Rfj7vMUIUkBzA","money": "0.01","mark": "今日第3笔收款，共计￥0.03","dt": "1549078532623","sign": "9ff4a983d8f1718e9fc2021a3cca04a7"}';
+        $info='{"phoneid": "862859038280802","type": "bankmsg","no": "95533","money": "0.01","mark": "您注册的商户收到客户付款1.00元，该款项将于次日到账。详细信息如下，商户名称：河南先迈电子科技有限公司，付款方式：微信支付，付款金额：1.00元。[建设银行]","dt": "1549078532623","sign": "9ff4a983d8f1718e9fc2021a3cca04a7"}';
 
 
         $getOrderCallback=new getOrderCallback();
         $res=$getOrderCallback->orderCallback($info);
+
         $this->assertTrue($res);
     }
 }

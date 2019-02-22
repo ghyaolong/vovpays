@@ -26,8 +26,14 @@ class RegularGetBankInfo
                 preg_match('/\)(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
                 break;
             case "95533"://中国建设银行
-                preg_match('/人民币(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
-                break;
+                if(preg_match('/人民币(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches)) {
+                    break;
+                }else
+                {
+                    preg_match('/\)(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
+                    break;
+                }
+
             case "95599"://中国农业银行
                 preg_match('/人民币(\d+|,\d{3})+(\.\d{0,4})?/',$content,$matches);
                 break;
@@ -77,9 +83,20 @@ class RegularGetBankInfo
                 $cardNo = $matches[1];
                 break;
             case "95533"://中国建设银行
-                preg_match('/尾号([\d]{4})的/',$content,$matches);
-                $cardNo = $matches[1];
-                break;
+                if(preg_match('/尾号([\d]{4})的/',$content,$matches)){
+                    $cardNo = $matches[1];
+                    break;
+                }else{
+                    //商户名称：河南先迈电子科技有限公司
+                    $content = str_replace(':','',$content);
+                    $content = str_replace('：','',$content);
+                    $content = str_replace('，','',$content);
+                    $content = str_replace(',','',$content);
+                    preg_match('/商户名称(.+)付款方式/',$content,$matches);
+                    $cardNo = $matches[1];
+                    break;
+                }
+
             case "95599"://中国农业银行
                 preg_match('/尾号([\d]{4})账户/',$content,$matches);
                 $cardNo = $matches[1];

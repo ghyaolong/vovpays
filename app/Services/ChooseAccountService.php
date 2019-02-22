@@ -43,11 +43,12 @@ class ChooseAccountService{
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,$user->id,1);
             }else if($this->pay_code == 'alipay_bank'){
                 $account_list = $this->accountBankCardsService->getStatusAndUserIdAndBanKMark($user->id,1,'ANTBANK');
-            }else if($this->pay_code == 'alipay_bank2'){
-                $account_list = $this->accountBankCardsService->getStatusAndUserIdAndNotBanKMark($user->id,1,'ANTBANK');
+            }else if($this->pay_code == 'alipay_bank2' || $this->pay_code == 'bank_solidcode'){
+                $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUserIdAndNotBanKMark($user->id,1,'ANTBANK',$type);
             } else if($this->pay_code == 'alipay_solidcode'||$this->pay_code == 'wechat_solidcode'||$this->pay_code == 'cloudpay_solidcode'){
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcode($type,$user->id,1);
             }
+
         }else if( $add_account_type == 2 ){
 
             if( $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay')
@@ -55,8 +56,8 @@ class ChooseAccountService{
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type,100000,1);
             }else if($this->pay_code == 'alipay_bank'){
                 $account_list = $this->accountBankCardsService->getStatusAndUserIdAndBanKMark(100000,1,'ANTBANK');
-            }else if($this->pay_code == 'alipay_bank2'){
-                $account_list = $this->accountBankCardsService->getStatusAndUserIdAndNotBanKMark(100000,1,'ANTBANK');
+            }else if($this->pay_code == 'alipay_bank2' || $this->pay_code == 'bank_solidcode'){
+                $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUserIdAndNotBanKMark(100000,1,'ANTBANK',$type);
             } else if($this->pay_code == 'alipay_solidcode'||$this->pay_code == 'wechat_solidcode'||$this->pay_code == 'cloudpay_solidcode'){
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcode($type,100000,1);
             }
@@ -67,8 +68,8 @@ class ChooseAccountService{
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type, $user->parentId, 1);
             }else if($this->pay_code == 'alipay_bank'){
                 $account_list = $this->accountBankCardsService->getStatusAndUserIdAndBanKMark($user->parentId,1,'ANTBANK');
-            }else if($this->pay_code == 'alipay_bank2'){
-                $account_list = $this->accountBankCardsService->getStatusAndUserIdAndNotBanKMark($user->parentId,1,'ANTBANK');
+            }else if($this->pay_code == 'alipay_bank2' || $this->pay_code == 'bank_solidcode'){
+                $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUserIdAndNotBanKMark($user->parentId,1,'ANTBANK',$type);
             } else if($this->pay_code == 'alipay_solidcode'||$this->pay_code == 'wechat_solidcode'||$this->pay_code == 'cloudpay_solidcode'){
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcode($type,$user->parentId,1);
             }
@@ -86,8 +87,9 @@ class ChooseAccountService{
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndUidarr($type,1,$user_id_array);
             }else if($this->pay_code == 'alipay_bank'){
                 $account_list = $this->accountBankCardsService->getStatusAndUidarrAndBanKMark(1,$user_id_array,'ANTBANK');
-            }else if($this->pay_code == 'alipay_bank2'){
-                $account_list = $this->accountBankCardsService->getStatusAndUidarrAndNotBanKMark(1,$user_id_array,'ANTBANK');
+            }else if($this->pay_code == 'alipay_bank2' || $this->pay_code == 'bank_solidcode'){
+
+                $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUidarrAndNotBanKMark(1,$user_id_array,'ANTBANK',$type);
             }else if($this->pay_code == 'alipay_solidcode'||$this->pay_code == 'wechat_solidcode'||$this->pay_code == 'cloudpay_solidcode'){
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcodeAndUidarr($type,$user_id_array,1);
             }
@@ -107,7 +109,7 @@ class ChooseAccountService{
             $valid_account = $this->getValidWechatAccount($account_list);
         }else if($this->pay_code == "alipay_bank"){
             $valid_account = $this->getValidBankcardAccount($account_list);
-        }else if($this->pay_code == "alipay_bank2"){
+        }else if($this->pay_code == "alipay_bank2" || $this->pay_code == "bank_solidcode"){
             $valid_account = $this->getValidBankcard($account_list);
         }else if($this->pay_code == "cloudpay"||$this->pay_code =='cloudpay_solidcode'){
             $valid_account = $this->getValidCloudpay($account_list);
@@ -295,7 +297,7 @@ class ChooseAccountService{
             {
                 $get_account = Redis::hGetAll($account->phone_id.'bankmsg');
                 // 验证手机心跳是否正常
-                if( (time() > (strtotime($get_account['update'])+35) && $get_account['status'] == 1 ) )
+                if( (time() > (strtotime($get_account['update'])+60) && $get_account['status'] == 1 ) )
                 {
                     continue;
                 }
@@ -308,6 +310,7 @@ class ChooseAccountService{
                 $valid_account_list[$k] = [
                     'type'              => $this->pay_code,
                     'account'           => $account->cardNo,
+                    'bank_account'      => $account->bank_account,
                     'phone_id'          => $account->phone_id,
                     'bank_account_name' => $account->bank_account,
                     'bank_name'         => $account->bank_name,
@@ -315,14 +318,18 @@ class ChooseAccountService{
                     'chard_index'       => $account->chard_index,
                     'phone_uid'         => $account->user_id,
                     'cardNo'            => $account->cardNo,
+                    'qrcode'            => $account->qrcode,
                 ];
             }
         }
+
         if(!count($valid_account_list))return [];
         $rank_key = array_rand($valid_account_list);
         $valid_account = $valid_account_list[$rank_key];
 
         if(!$valid_account)return [];
+
+
         // 截取银行卡号后四位
         $card = substr($valid_account['cardNo'],-4);
 
@@ -336,7 +343,6 @@ class ChooseAccountService{
                 break;
             }else{
                 $this->price = bcsub($this->price,0.01,2);
-
             }
         }
         if(!$flag)
@@ -344,6 +350,7 @@ class ChooseAccountService{
             return [];
         }
         $valid_account['realPrice'] = $this->price;
+
         return $valid_account;
     }
 

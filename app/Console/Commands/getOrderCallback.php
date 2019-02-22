@@ -91,7 +91,6 @@ class getOrderCallback extends Command
             $cardNo = $RegularGetBankInfo->getCardNo($data['no'], $data['mark']);
             $key = $data['phoneid'] . '_' . 'alipay_bank2_' . $cardNo . '_' . $data['money'];
 
-
             if (Redis::exists($key)) {
                 $order_id = Redis::get($key);
             } else {

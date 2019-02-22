@@ -140,11 +140,17 @@ class AccountBankCardsRepository
      * @param int $uid
      * @param int $status
      * @param string $bank_mark
+     * @param $type
      * @return mixed
      */
-    public function getStatusAndUserIdAndNotBanKMark(int $uid, int $status,string $bank_mark)
+    public function getStatusAndAccountTypeAndUserIdAndNotBanKMark(int $uid, int $status,string $bank_mark,$type)
     {
-        return $this->account_bank_cards->whereStatus($status)->whereUserId($uid)->where('bank_mark','<>',$bank_mark)->get();
+        if ($type == 'alipay_bank2' || $type == 'alipay_bank') {
+            $type = '银行卡';
+        } elseif ($type == 'bank_solidcode') {
+            $type = '银行固码';
+        }
+        return $this->account_bank_cards->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->where('bank_mark','<>',$bank_mark)->get();
     }
 
     /**
@@ -164,9 +170,15 @@ class AccountBankCardsRepository
      * @param string $bank_mark
      * @return mixed
      */
-    public function getStatusAndUidarrAndNotBanKMark(int $status, array $uid_arr ,string $bank_mark)
+    public function getStatusAndAccountTypeAndUidarrAndNotBanKMark(int $status, array $uid_arr ,string $bank_mark,$type)
     {
-        return $this->account_bank_cards->whereStatus($status)->whereIn('user_id',$uid_arr)->where('bank_mark','<>',$bank_mark)->get();
+        if ($type == 'alipay_bank2' || $type == 'alipay_bank') {
+            $type = '银行卡';
+        } elseif ($type == 'bank_solidcode') {
+            $type = '银行固码';
+        }
+
+        return $this->account_bank_cards->whereStatus($status)->whereAccounttype($type)->whereIn('user_id',$uid_arr)->where('bank_mark','<>',$bank_mark)->get();
     }
 
     /**
