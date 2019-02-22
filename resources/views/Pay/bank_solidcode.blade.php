@@ -22,17 +22,13 @@
 <body>
 <div class="body">
     <h1 class="mod-title">
-        <span class="ico_log ico-a"></span>
+        <span class="ico_log ico-ccb"></span>
     </h1>
     <div class="mod-ct">
-        <h1 style="padding-top:15px;color: #FF0000">1.一码一单，多次付款无法到账</h1>
-        <h1 style="color: #FF0000">2.需要多次付款，请重新发起订单</h1>
-        <h1 style="color: #FF0000">3.如无法跳转,请截图保存到手机相册</h1>
+        <h1 style="padding-top:15px;color: #FF0000">1.重复扫码不到帐，请只支付一次</h1>
+        <h1 style="padding-top:15px;color: #FF0000">2.需要多次付款，请重新发起订单</h1>
+        <h1 style="padding-top:15px;color: #FF0000">3.请按照以下数值准确输入支付金额!否则无法到账</h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
-        <!--支付宝app支付-->
-        <!--div class="paybtn" style="display: none;padding: 10px;">
-            <a href="{{ $data['h5url'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">启动支付宝</a>
-        </div-->
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
@@ -42,9 +38,6 @@
             </div>
         </div>
         <div class="time-item">
-            @if($data['type'] != 'alipay_packets')
-                <dvi class="time-item"><h1 style="color: red">验证姓名：{{$data['username']}}</h1></dvi>
-            @endif
             <dvi class="time-item" id="msg"><h1>付款即时到账 未到账可联系我们</h1></dvi>
             <div class="time-item"><h1>订单:{{$data['orderNo']}}</h1> </div>
             <strong id="hour_show"><s id="h"></s>0时</strong>
@@ -53,7 +46,6 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('js/jquery.qrcode.min.js') }}"></script>
 <script type="text/javascript">
 var myTimer;
@@ -131,18 +123,16 @@ function checkdata(){
 
 $().ready(function(){
     timer(180);
-    var type = '{{ $data['type'] }}';
-    if(isMobile() == 1 && type == 'alipay_packets')
-    {
-        $('.paybtn').show();
-    }
+
 
     var strcode = toUtf8('{!! $data['payurl'] !!}');
     var qrcode = $('#show_qrcode').qrcode({ text: strcode });
     var canvas = qrcode.find('canvas').get(0);
     $('#show_qrcode').attr('src', canvas.toDataURL('image/jpg'));
     canvas.remove();
+
 })
+
 function toUtf8(str) {
     var out, i, len, c;
     out = "";

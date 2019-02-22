@@ -212,6 +212,33 @@ class ExemptService implements PayInterface
 
             Redis::hmset($result->orderNo, $order_date);
             Redis::expire($result->orderNo,600);
+        }else if($request->pay_code == 'bank_solidcode') {
+            // 固码
+            // 存储订单号,以便回调
+            // 截取银行卡号后四位
+            $account = $account_array['bank_account'];
+
+            $key = $account_array['phone_id'].'_alipay_bank2_'.$account.'_'.sprintf('%0.2f',$account_array['realPrice']);
+            Redis::set($key,$result->orderNo);
+            Redis::expire($key,600);
+
+            $order_date = array(
+                'amount' => $result->amount,
+                'account' => $account_array['bank_account'],
+                'status' => 0,
+                'meme' => $result->orderNo,
+            );
+
+            $data = [
+                'type' => $request->pay_code,
+                'money' => sprintf('%0.2f', $account_array['realPrice']),
+                'orderNo' => $result->orderNo,
+                'h5url' => '',
+                'payurl' => $account_array['qrcode'],
+            ];
+
+            Redis::hmset($result->orderNo, $order_date);
+            Redis::expire($result->orderNo, 600);
         }else if($request->pay_code == 'alipay_packets'){ // 支付宝红包
             $order_date = array(
                 'amount'  => $result->amount,
@@ -246,6 +273,7 @@ class ExemptService implements PayInterface
             ]);
             exit();
         }
+
 
         return view("Pay.{$request->pay_code}",compact('data'));
     }

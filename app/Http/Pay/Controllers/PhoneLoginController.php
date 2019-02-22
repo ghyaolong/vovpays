@@ -44,6 +44,7 @@ class PhoneLoginController extends Controller
 
     public function login(Request $request)
     {
+
         $add_account_type = env('ADD_ACCOUNT_TYPE');
         if($add_account_type == 2)
         {
@@ -141,6 +142,8 @@ class PhoneLoginController extends Controller
                 ['phone' => '95558', 'name' => '中信银行'],
             ],
         );
+
+
         return json_encode($data);
 
     }

@@ -15,6 +15,7 @@ use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\DelPhoneRedisService;
+use Illuminate\Support\Facades\DB;
 
 class AccountBankCardsController extends Controller
 {
@@ -40,14 +41,22 @@ class AccountBankCardsController extends Controller
         $title='银行卡号';
         $data = $request->input();
         $data['user_id'] = Auth::user()->id;
+        if($request->type=='0'){
+            $data['accountType'] = '银行卡';
+            $accountType='bank';
+        }elseif($request->type=='1'){
+            $data['accountType'] = '银行固码';
+            $accountType='banksolid';
+        }
+
 
         $list = $this->accountBankCardsService->getAllPage($data, 10);
-        $data['accountType'] = 'alipay';
         $bankList=$this->banksService->findAll();
+        $channel_payment= DB::table('channel_payments')->where('channel_id',1)->get();
 
         $module='Agent';
         $query = $request->query();
-        return view("Common.bank", compact('list', 'bankList','module','query'));
+        return view("Common.{$accountType}", compact('list', 'bankList','module','query','channel_payment'));
 
     }
 

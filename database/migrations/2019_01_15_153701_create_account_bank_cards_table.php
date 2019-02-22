@@ -31,8 +31,10 @@ class CreateAccountBankCardsTable extends Migration
             $table->unsignedTinyInteger('valid')->default(1)->comment('有效标识：0-无效；1-有效；默认1');
             $table->string('signKey')->comment('密钥与手机通讯时使用');
             $table->timestamps();
-            $table->string('chard_index')->default(0)->comment('银行卡在支付宝里的id');
+            $table->string('chard_index')->nullable()->default(0)->comment('银行卡在支付宝里的id');
+            $table->string('qrcode')->nullable()->default(0)->comment('银行任意金额码链接');
         });
+
         DB::statement("ALTER TABLE `pay_account_bank_cards` comment '银行卡实时码配置表'");
     }
 

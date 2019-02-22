@@ -8,6 +8,7 @@
 
 namespace App\Http\User\Controllers;
 
+use App\Http\Requests\AccountBankCardRequest;
 use App\Services\AccountBankCardsService;
 use App\Services\AccountPhoneService;
 use App\Services\BanksService;
@@ -15,6 +16,7 @@ use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\DelPhoneRedisService;
+use Illuminate\Support\Facades\DB;
 
 class AccountBankCardsController extends Controller
 {
@@ -39,14 +41,22 @@ class AccountBankCardsController extends Controller
     {
         $data = $request->input();
         $data['user_id'] = Auth::user()->id;
+        if($request->type=='0'){
+            $data['accountType'] = '银行卡';
+            $accountType='bank';
+        }elseif($request->type=='1'){
+            $data['accountType'] = '银行固码';
+            $accountType='banksolid';
+        }
 
         $list = $this->accountBankCardsService->getAllPage($data, 10);
-        $data['accountType'] = 'alipay';
         $bankList = $this->banksService->findAll();
+
+        $channel_payment= DB::table('channel_payments')->where('channel_id',1)->get();
 
         $module='User';
         $query = $request->query();
-        return view("Common.bank", compact('list', 'bankList','module','query'));
+        return view("Common.{$accountType}", compact('list', 'bankList','module','query','channel_payment'));
 
 
     }
@@ -56,14 +66,9 @@ class AccountBankCardsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(AccountBankCardRequest $request)
     {
         $id = $request->id ?? '';
-        $this->validate($request, [
-            'cardNo' => 'required|unique:account_bank_cards,cardNo,' . $id,
-        ], [
-            'cardNo.unique' => '卡号已存在',
-        ]);
 
         if (!empty($id)) {
             $result = $this->accountBankCardsService->update($id, Auth::user()->id, $request->input());
@@ -73,7 +78,6 @@ class AccountBankCardsController extends Controller
                 return ajaxError('编辑失败！');
             }
         } else {
-
             $request->merge(['user_id' => Auth::user()->id]);
             $result = $this->accountBankCardsService->add($request->input());
             if ($result) {
@@ -82,7 +86,6 @@ class AccountBankCardsController extends Controller
                 return ajaxError('账号添加失败！');
             }
         }
-
     }
 
     /**
@@ -90,7 +93,7 @@ class AccountBankCardsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveStatus(Request $request)
+    public function saveStatus(AccountBankCardRequest $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
         $result = $this->accountBankCardsService->update($request->id, auth()->user()->id, $data);

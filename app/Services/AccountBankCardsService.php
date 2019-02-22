@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 use App\Repositories\AccountBankCardsRepository;
 
 class AccountBankCardsService
@@ -42,8 +41,13 @@ class AccountBankCardsService
         $bank = explode(",", $data['bank_name']);
         $data['bank_name'] = $bank[0];
         $data['bank_mark'] = $bank[1];
-        $data['accountType'] = '银行卡';
-        $data['channel_payment_id'] = 3;
+
+        if (isset($data['qrcode'])&&!isset($data['chard_index'])){
+            $data['accountType'] = "银行固码";
+        } else{
+            $data['accountType'] = "银行卡";
+        }
+
         return $this->accountBankCardsRepository->add($data);
     }
 
@@ -82,9 +86,9 @@ class AccountBankCardsService
      * @param string $bank_mark
      * @return mixed
      */
-    public function getStatusAndUserIdAndNotBanKMark(int $uid, int $status, string $bank_mark)
+    public function getStatusAndAccountTypeAndUserIdAndNotBanKMark(int $uid, int $status, string $bank_mark,$type)
     {
-        return $this->accountBankCardsRepository->getStatusAndUserIdAndNotBanKMark($uid, $status, $bank_mark);
+        return $this->accountBankCardsRepository->getStatusAndAccountTypeAndUserIdAndNotBanKMark($uid, $status, $bank_mark,$type);
     }
 
     /**
@@ -106,9 +110,9 @@ class AccountBankCardsService
      * @param string $bank_mark
      * @return mixed
      */
-    public function getStatusAndUidarrAndNotBanKMark(int $status, array $uid_arr, string $bank_mark)
+    public function getStatusAndAccountTypeAndUidarrAndNotBanKMark(int $status, array $uid_arr, string $bank_mark,$type)
     {
-        return $this->accountBankCardsRepository->getStatusAndUidarrAndNotBanKMark($status, $uid_arr,$bank_mark);
+        return $this->accountBankCardsRepository->getStatusAndAccountTypeAndUidarrAndNotBanKMark($status, $uid_arr,$bank_mark,$type);
     }
 
     /**

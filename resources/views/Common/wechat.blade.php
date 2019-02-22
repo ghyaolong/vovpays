@@ -117,6 +117,19 @@
                                 <a href="https://cli.im/deqr"  target="_blank"  style="margin-left: 150px">二维码链接生成方法</a>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">支付方式:</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" id="channel_payment_id" name="channel_payment_id">
+                                    <option value="">选择支付方式</option>
+                                    @foreach($channel_payment as $payment)
+                                        <option value="{{$payment->id}}">{{$payment->paymentName}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">限额:</label>
                             <div class="col-xs-9">
@@ -265,6 +278,13 @@
                             },
                         },
                     },
+                    channel_payment_id: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择支付类型!'
+                            },
+                        }
+                    },
                     phone_id: {
                         validators: {
                             notEmpty: {
@@ -329,6 +349,8 @@
                 success: function (result) {
                     if (result.status == 1) {
                         $("#addForm input[name='account']").val(result.data['account']);
+                        $("select[name='channel_payment_id']").val(result.data['channel_payment_id']);
+
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);

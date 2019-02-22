@@ -92,8 +92,9 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.account',[0]) }}"><i class="fa fa-circle-o"></i>微信账号</a></li>
                     <li><a href="{{ route('admin.account',[1]) }}"><i class="fa fa-circle-o"></i>支付宝账号</a></li>
-                    <li><a href="{{ route('admin.accountBank') }}"><i class="fa fa-circle-o"></i>银行卡号</a></li>
                     <li><a href="{{ route('admin.account',[2]) }}"><i class="fa fa-circle-o"></i>云闪付</a></li>
+                    <li><a href="{{ route('admin.accountBank',[0]) }}"><i class="fa fa-circle-o"></i><span>银行卡号</span></a></li>
+                    <li><a href="{{ route('admin.accountBank',[1]) }}"><i class="fa fa-circle-o"></i><span>银行固码</span></a></li>
                 </ul>
             </li>
             @else
@@ -111,9 +112,7 @@
                     <span>系统设置</span>
                 </a>
             </li>
-            @if(isset(Cache()->get('systems')['withdraw_permission_type']->value) && Cache()->get('systems')['withdraw_permission_type']->value == 'GOOGLE' )
-                <li><a href="{{route('admin.validator')}}"><i class="fa fa-circle-o text-yellow"></i><span>安全设置</span></a></li>
-            @endif
+            <li><a href="{{route('admin.validator')}}"><i class="fa fa-circle-o text-yellow"></i><span>安全设置</span></a></li>
         </ul>
     </section>
 </aside>

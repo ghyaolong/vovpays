@@ -33,7 +33,7 @@ Route::group([], function ($router) {
         Route::post('account/check', 'AccountPhoneController@checkUnique')->name('court.check');
         //银行卡账号
         Route::post('accountBank', 'AccountBankCardsController@store')->name('court.accountBankAdd');
-        Route::get('accountBank', 'AccountBankCardsController@index')->name('court.accountBank');
+        Route::get('accountBank/{type}','AccountBankCardsController@index')->name('court.accountBank');
         Route::get('accountBank/{id}/edit', 'AccountBankCardsController@edit')->name('court.accountBankEdit');
         Route::post('accountBank/saveStatus', 'AccountBankCardsController@saveStatus')->name('court.accountBankStatus');
         Route::delete('accountBank', 'AccountBankCardsController@destroy')->name('court.accountBankDel');

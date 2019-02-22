@@ -91,7 +91,6 @@ class getOrderCallback extends Command
             $cardNo = $RegularGetBankInfo->getCardNo($data['no'], $data['mark']);
             $key = $data['phoneid'] . '_' . 'alipay_bank2_' . $cardNo . '_' . $data['money'];
 
-
             if (Redis::exists($key)) {
                 $order_id = Redis::get($key);
             } else {
@@ -117,10 +116,11 @@ class getOrderCallback extends Command
         $ordersService = app(OrdersService::class);
         $order = $ordersService->findOrderNo($order_id);
         if (!$order){
-
             return 2;
         }
+
         if ($order->status != 0) return 3;
+
         if (floatval($order->amount) != floatval($data['money'])) return 4;
 
         $userService = app(UserService::class);
@@ -209,6 +209,7 @@ class getOrderCallback extends Command
             ];
             $quotalogService->add($quota_array);
         }
+
         SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
     }
 

@@ -146,6 +146,11 @@ body, .body {
     background-size:cover;
 }
 
+.ico-ccb {
+    background: url("../../images/Pay/logo_ccb.jpg") no-repeat;
+    background-size:cover;
+}
+
 .mod-title .text {
     font-size: 20px;
     color: #333;

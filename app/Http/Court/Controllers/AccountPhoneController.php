@@ -14,6 +14,7 @@ use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AccountPhoneRequest;
+use Illuminate\Support\Facades\DB;
 
 class AccountPhoneController extends Controller
 {
@@ -44,10 +45,11 @@ class AccountPhoneController extends Controller
         }
 
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
+        $channel_payment= DB::table('channel_payments')->where('channel_id',1)->get();
 
         $module='Court';
         $query = $request->query();
-        return view("Common.{$data['accountType']}", compact('list','module','query'));
+        return view("Common.{$data['accountType']}", compact('list','module','query','channel_payment'));
     }
 
     /**
