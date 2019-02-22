@@ -13,6 +13,7 @@ Route::group([], function ($router) {
     Route::get('login', 'LoginController@show')->name('agent.login');
     Route::post('login', 'LoginController@login')->name('agent.login');
     Route::get('signOut', 'LoginController@destroy')->name('agent.signOut');
+    Route::get('hasGoogleKey','UserController@hasGoogleKey')->name('agent.hasGoogle');
 
     Route::group(['middleware' => 'auth:agent'], function () {
 

@@ -1,5 +1,5 @@
 @extends("User.Commons.layout")
-@section('title','开发者')
+@section('title','支付接口文档')
 {{--@section("css")--}}
     {{--<link rel="stylesheet"--}}
           {{--href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">--}}

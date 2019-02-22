@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+
 use App\Repositories\AdminsRepository;
 
 class AdminsService
@@ -29,15 +30,14 @@ class AdminsService
      */
     public function update(int $id, array $data)
     {
-        $data = array_except($data, ['id','_token','password_confirmation']);
-        $exists = $this->adminsRepository->findIdPasswordExists($id,$data['password']);
-        if($exists)
-        {
+        $data = array_except($data, ['id', '_token', 'password_confirmation']);
+        $exists = $this->adminsRepository->findIdPasswordExists($id, $data['password']);
+        if ($exists) {
             $data = array_except($data, 'password');
-        }else{
+        } else {
             $data['password'] = bcrypt($data['password']);
         }
-        $this->adminsRepository->syncUpdateAdminsRole($id,[$data['role_id']]);
+        $this->adminsRepository->syncUpdateAdminsRole($id, [$data['role_id']]);
 
         $data = array_except($data, 'role_id');
         return $this->adminsRepository->update($id, $data);
@@ -51,7 +51,7 @@ class AdminsService
      */
     public function updateStatus(int $id, array $data)
     {
-        return $this->adminsRepository->update($id,$data);
+        return $this->adminsRepository->update($id, $data);
     }
 
     /**
@@ -62,11 +62,11 @@ class AdminsService
     public function add(array $data)
     {
         $role_id = $data['role_id'];
-        $data = array_except($data,['password_confirmation','role_id']);
+        $data = array_except($data, ['password_confirmation', 'role_id']);
         $data['password'] = bcrypt($data['password']);
 
         $admins = $this->adminsRepository->add($data);
-        $this->adminsRepository->syncUpdateAdminsRole($admins->id,[$role_id]);
+        $this->adminsRepository->syncUpdateAdminsRole($admins->id, [$role_id]);
         return $admins;
     }
 
@@ -77,8 +77,8 @@ class AdminsService
      */
     public function findIdRole(int $id)
     {
-        $rule           = $this->adminsRepository->findId($id);
-        $rule_array     = $rule->toArray();
+        $rule = $this->adminsRepository->findId($id);
+        $rule_array = $rule->toArray();
         $roles_id_array = $rule->roles()->pluck('roles.id')->toArray();
         $rule_array['role_id'] = $roles_id_array[0];
         return $rule_array;
@@ -100,7 +100,7 @@ class AdminsService
      */
     public function destroy($id)
     {
-        $this->adminsRepository->syncUpdateAdminsRole($id,[]);
+        $this->adminsRepository->syncUpdateAdminsRole($id, []);
         return $this->adminsRepository->del($id);
     }
 
@@ -124,6 +124,7 @@ class AdminsService
         }
 
     }
+
     /**
      * 更新google密钥
      * @param int $id
@@ -133,5 +134,16 @@ class AdminsService
     public function updateGooleAuth(int $id, array $data)
     {
         return $this->adminsRepository->update($id, $data);
+    }
+
+
+    /**检查用户是否配置google验证
+     * @param string $username
+     * @return bool
+     */
+    public function hasGoogleKey(string $username)
+    {
+        $res=$this->adminsRepository->getAdminGoogleKey($username);
+        return $res?true:false;
     }
 }

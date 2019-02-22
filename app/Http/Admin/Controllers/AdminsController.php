@@ -146,4 +146,19 @@ class AdminsController extends Controller
         }
     }
 
+    /**检查用户是否配置google验证
+     * @param Request $request
+     */
+    public function hasGoogleKey(Request $request){
+
+        $result=$this->adminsService->hasGoogleKey($request->username);
+
+        if($result)
+        {
+            return ajaxSuccess('用户已配置google_key');
+        }else{
+            return ajaxError('用户未配置google_key！');
+        }
+    }
+
 }

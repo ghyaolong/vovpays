@@ -147,4 +147,13 @@ class AdminsRepository
         return Hash::check($password, $oldPassword);
     }
 
+    /**
+     * @param string $username
+     * @return mixed
+     */
+    public function getAdminGoogleKey(string $username)
+    {
+        return $this->admin->whereUsername($username)->value('google_key');
+    }
+
 }

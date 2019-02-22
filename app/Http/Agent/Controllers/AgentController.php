@@ -18,4 +18,6 @@ class AgentController extends Controller
     {
         return view('Agent.Agents.info');
     }
+
+
 }

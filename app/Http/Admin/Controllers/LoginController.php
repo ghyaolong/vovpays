@@ -28,6 +28,7 @@ class LoginController extends Controller
         $user = Auth::guard('admin')->user();
         if ($user) return redirect('admin');
         $google_auth=isset(Cache()->get('systems')['login_permission_type']->value) && Cache()->get('systems')['login_permission_type']->value == '1';
+
         return view('Admin.Login.login',compact('google_auth'));
     }
 
@@ -38,13 +39,10 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-
         $check_data = $request->only('username','password','auth_code');
-
         $this->loginLogoutService->Login('admin',$check_data);
 
         return ajaxSuccess('登录成功，欢迎来到后台管理系统。');
-
     }
 
 

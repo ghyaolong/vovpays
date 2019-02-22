@@ -243,3 +243,12 @@ function sortWeight($a, $b)
     }
     return ($a['weight'] < $b['weight']) ? -1 : 1;
 }
+
+/**获取本站域名端口
+ * @return string
+ */
+function getDomainPort()
+{
+    $httpType = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
+    return $httpType . $_SERVER['HTTP_HOST'];
+}

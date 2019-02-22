@@ -37,14 +37,17 @@
         <form action="{{ route('agent.login') }}" method="post" id="logoForm">
             {{ csrf_field() }}
             <div class="form-group">
-                <input type="text" class="form-control" name="username" required value="{{ old('username') }}" placeholder="用户名">
+                <input type="text" class="form-control" name="username" required value="{{ old('username') }}" placeholder="用户名"
+                       @if($google_auth)
+                       onchange="checkGoogle(this)"
+                        @endif>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" name="password" required value="{{ old('password') }}" placeholder="密码">
             </div>
 
             @if($google_auth)
-                <div class="form-group">
+                <div class="form-group"  style="display: none" id="google-auth">
                     <input type="password" class="form-control" name="auth_code"  value="{{ old('auth_code') }}" placeholder="google验证码">
                 </div>
             @endif
@@ -108,7 +111,6 @@
             },
             fields: {
                 username: {
-                    message: '用户名不能为空',
                     validators: {
                         notEmpty: {
                             message: '用户名不能为空！'
@@ -148,12 +150,51 @@
                 }else{
                     $('#captcha').click();
                     toastr.error(result.msg);
+                    $('#submit-login').attr('disabled',false);
                 }
             }, 'json');
 
 
         });
     });
+
+
+    /**
+     * 检查Googlekey是否配置
+     * @param element
+     */
+    function checkGoogle(element) {
+
+        username = $(element).val();
+        $.ajax({
+            type: 'get',
+            url: "{{route('agent.hasGoogle')}}",
+            data: 'username=' + username,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (result) {
+                if (result.status == 1) {
+                    $('#google-auth').slideDown(200);
+                    $('#logoForm').bootstrapValidator("addField", "auth_code", {
+                        validators: {
+                            notEmpty: {
+                                message: 'google认证码不能为空!'
+                            }
+                        }
+                    });
+                }else{
+
+                    $('#logoForm').bootstrapValidator('removeField','auth_code');
+                    $('#google-auth').slideUp(200);
+
+                }
+            },
+            error: function (XMLHttpRequest, textStatus) {
+                toastr.error('通信失败');
+            }
+        })
+    }
 </script>
 </body>
 </html>
