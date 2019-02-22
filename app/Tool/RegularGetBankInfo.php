@@ -30,7 +30,7 @@ class RegularGetBankInfo
                     break;
                 }else
                 {
-                    preg_match('/\)(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
+                    preg_match('/客户付款(\d+|,\d{3})+(\.\d{0,4})?元/',$content,$matches);
                     break;
                 }
 
