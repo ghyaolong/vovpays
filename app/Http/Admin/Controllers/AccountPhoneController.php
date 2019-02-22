@@ -13,6 +13,7 @@ use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use App\Services\DelPhoneRedisService;
 use App\Http\Requests\AccountPhoneRequest;
+use Illuminate\Support\Facades\DB;
 
 class AccountPhoneController extends Controller
 {
@@ -36,18 +37,18 @@ class AccountPhoneController extends Controller
         $data['user_id'] = 100000;
         if ($request->type == '0') {
             $data['accountType'] = 'wechat';
-
         } elseif ($request->type == '1') {
             $data['accountType'] = 'alipay';
-
         } elseif ($request->type == '2') {
             $data['accountType'] = 'cloudpay';
-
         }
+
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
+        $channel_payment= DB::table('channel_payments')->where('channel_id',1)->get();
+
         $module='Admin';
         $query = $request->query();
-        return view("Common.{$data['accountType']}", compact('list','module','query'));
+        return view("Common.{$data['accountType']}", compact('list','module','query','channel_payment'));
 
     }
 

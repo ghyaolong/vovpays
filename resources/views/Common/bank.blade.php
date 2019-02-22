@@ -133,6 +133,19 @@
                                 <a href="https://www.showdoc.cc/258628029269764" target="_blank">索引获取说明</a> 密码：000000
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">支付方式:</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" id="channel_payment_id" name="channel_payment_id">
+                                    <option value="">选择支付方式</option>
+                                    @foreach($channel_payment as $payment)
+                                        <option value="{{$payment->id}}">{{$payment->paymentName}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">限额:</label>
                             <div class="col-xs-9">
@@ -268,6 +281,13 @@
                             },
                         },
                     },
+                    channel_payment_id: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择支付类型!'
+                            },
+                        }
+                    },
                     cardNo: {
                         validators: {
                             notEmpty: {
@@ -348,6 +368,7 @@
                         $("input[name='accountType']").val(result.data['accountType']);
 
                         $("select[name='bank_name']").val(result.data['bank_name']+','+result.data['bank_mark']);
+                        $("select[name='channel_payment_id']").val(result.data['channel_payment_id']);
 
                         $("input[name='cardNo']").val(result.data['cardNo']);
                         $("input[name='phone_id']").val(result.data['phone_id']);

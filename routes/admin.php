@@ -91,7 +91,7 @@ Route::group([], function () {
         Route::delete('account','AccountPhoneController@destroy')->name('admin.accountDel');
         Route::post('account/check','AccountPhoneController@checkUnique')->name('admin.check');
         //银行卡账号
-        Route::get('accountBank','AccountBankCardsController@index')->name('admin.accountBank');
+        Route::get('accountBank/{type}','AccountBankCardsController@index')->name('admin.accountBank');
         Route::post('accountBank','AccountBankCardsController@store')->name('admin.accountBankAdd');
         Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('admin.accountBankEdit');
         Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('admin.accountBankStatus');

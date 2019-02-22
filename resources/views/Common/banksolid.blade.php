@@ -142,6 +142,18 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">支付方式:</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" id="channel_payment_id" name="channel_payment_id">
+                                    <option value="">选择支付方式</option>
+                                    @foreach($channel_payment as $payment)
+                                        <option value="{{$payment->id}}">{{$payment->paymentName}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="" class="col-xs-3 control-label">限额:</label>
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
@@ -273,13 +285,13 @@
                             }
                         },
                     },
-                    // accountType: {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: '请输入账户类型!'
-                    //         },
-                    //     }
-                    // },
+                    channel_payment_id: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择支付类型!'
+                            },
+                        }
+                    },
                     bank_name: {
                         validators: {
                             notEmpty: {
@@ -366,6 +378,7 @@
                         $("#addForm input[name='bank_account']").val(result.data['bank_account']);
 
                         $("select[name='bank_name']").val(result.data['bank_name'] + ',' + result.data['bank_mark']);
+                        $("select[name='channel_payment_id']").val(result.data['channel_payment_id']);
 
                         $("input[name='cardNo']").val(result.data['cardNo']);
                         $("input[name='phone_id']").val(result.data['phone_id']);

@@ -16,6 +16,7 @@ use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\DelPhoneRedisService;
+use Illuminate\Support\Facades\DB;
 
 class AccountBankCardsController extends Controller
 {
@@ -51,9 +52,11 @@ class AccountBankCardsController extends Controller
         $list = $this->accountBankCardsService->getAllPage($data, 10);
         $bankList = $this->banksService->findAll();
 
+        $channel_payment= DB::table('channel_payments')->where('channel_id',1)->get();
+
         $module='User';
         $query = $request->query();
-        return view("Common.{$accountType}", compact('list', 'bankList','module','query'));
+        return view("Common.{$accountType}", compact('list', 'bankList','module','query','channel_payment'));
 
 
     }

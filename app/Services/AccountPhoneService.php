@@ -100,13 +100,10 @@ class AccountPhoneService
         $data['qrcode']= $data['qrcode']?:'0';
         if (isset($data['accountType']) && $data['accountType'] == 'cloudpay'){
             $data['accountType'] = "云闪付";
-            $data['channel_payment_id'] = 5;
         } elseif (isset($data['alipayusername']) && isset($data['alipayuserid'])) {
             $data['accountType'] = "支付宝";
-            $data['channel_payment_id'] = 1;
         } else{
             $data['accountType'] = "微信";
-            $data['channel_payment_id'] = 2;
         }
 
         return $this->accountPhoneRepository->add($data);

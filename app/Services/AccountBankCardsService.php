@@ -44,10 +44,8 @@ class AccountBankCardsService
 
         if (isset($data['qrcode'])&&!isset($data['chard_index'])){
             $data['accountType'] = "银行固码";
-            $data['channel_payment_id'] = 6;
         } else{
             $data['accountType'] = "银行卡";
-            $data['channel_payment_id'] = 3;
         }
 
         return $this->accountBankCardsRepository->add($data);

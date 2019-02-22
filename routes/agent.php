@@ -65,7 +65,7 @@ Route::group([], function ($router) {
         Route::post('account/check','AccountPhoneController@checkUnique')->name('agent.check');
         //银行卡账号
         Route::post('accountBank','AccountBankCardsController@store')->name('agent.accountBankAdd');
-        Route::get('accountBank','AccountBankCardsController@index')->name('agent.accountBank');
+        Route::get('accountBank/{type}','AccountBankCardsController@index')->name('agent.accountBank');
         Route::get('accountBank/{id}/edit','AccountBankCardsController@edit')->name('agent.accountBankEdit');
         Route::post('accountBank/saveStatus','AccountBankCardsController@saveStatus')->name('agent.accountBankStatus');
         Route::delete('accountBank','AccountBankCardsController@destroy')->name('agent.accountBankDel');
