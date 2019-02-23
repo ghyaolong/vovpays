@@ -91,7 +91,14 @@ class WithdrawsRepository
         return $this->withdraw->where('id',$id)->first();
     }
 
-
+    /**
+     * 获取为处理的结算
+     * return mixed
+     */
+    public function getCount(int $status = 0)
+    {
+        return $this->withdraw->whereStatus($status)->count();
+    }
 
 
 }

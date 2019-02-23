@@ -68,6 +68,36 @@
 <script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
 <script src="{{ asset('plugins/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ asset('js/iNotify.js') }}"></script>
+
+<script>
+    var iNotify = new iNotify({
+        message: '有消息了。',//标题
+        effect: 'flash', // flash | scroll 闪烁还是滚动
+        interval: 300,
+        audio:{
+            //file: ['/Public/sound/msg.mp4','/Public/sound/msg.mp3','/Public/sound/msg.wav']
+            file:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=有客户申请提现啦'
+        }
+    });
+    setInterval(function() {
+        $.ajax({
+            type: "post",
+            url: "{{ route('withdraw.checkNotice') }}",
+            data:{_token:"{{ csrf_token() }}"},
+            cache: false,
+            success: function (res) {
+                if (res.data.count > 0) {
+                    iNotify.setFavicon(res.data.count).setTitle('提现通知').notify({
+                        title: "新通知",
+                        body: "有客户，提现啦..."
+                    }).player();
+                }
+            }
+        });
+    },10000);
+</script>
+
 <script>
     $(function () {
         toastr.options = {

@@ -115,4 +115,11 @@ class WithdrawsController extends Controller
         }
     }
 
+
+    //查询是否存在申请
+    public function checkNotice()
+    {
+        $count = $this->withdrawsService->checkNotice();
+        return ajaxSuccess('获取成功',['count'=>$count]);
+    }
 }
