@@ -178,7 +178,7 @@
     function javascript() {
         var u = navigator.userAgent, app = navigator.appVersion;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
-        if (isAndroid) {
+        // if (isAndroid) {
             ap.alert({
                 title: e ,
                 content: f,
@@ -191,29 +191,29 @@
                     }
                 });
             });
-        } else {
-            AlipayJSBridge.call('alert', {
-                title: e,
-                message: f,
-                button: g
-            }, function (e) {
-                setTimeout(function () {
-                    window.location.href = "alipays://platformapi/startapp?appId=20000167&forceRequest=0&returnAppId=recent&tLoginId=" + j + "&tUnreadCount=0&tUserId=" + a + "&tUserType=1";
-                }, 1);
-
-                setTimeout(function () {
-
-                    var url = "alipays://platformapi/startapp?appId=88886666&appLaunchMode=3&canSearch=false&chatLoginId=qq11224&chatUserId=" + a + "&chatUserName=x&chatUserType=1&entryMode=personalStage&prevBiz=chat&schemaMode=portalInside&target=personal&money=" + h + "&amount=" + h + "&remark=" + i;
-                    ap.redirectTo({
-                        url: url,
-                        data: {
-
-                        }
-                    });
-
-                }, 888);
-            });
-        }
+        // } else {
+        //     AlipayJSBridge.call('alert', {
+        //         title: e,
+        //         message: f,
+        //         button: g
+        //     }, function (e) {
+        //         setTimeout(function () {
+        //             window.location.href = "alipays://platformapi/startapp?appId=20000167&forceRequest=0&returnAppId=recent&tLoginId=" + j + "&tUnreadCount=0&tUserId=" + a + "&tUserType=1";
+        //         }, 1);
+        //
+        //         setTimeout(function () {
+        //
+        //             var url = "alipays://platformapi/startapp?appId=88886666&appLaunchMode=3&canSearch=false&chatLoginId=qq11224&chatUserId=" + a + "&chatUserName=x&chatUserType=1&entryMode=personalStage&prevBiz=chat&schemaMode=portalInside&target=personal&money=" + h + "&amount=" + h + "&remark=" + i;
+        //             ap.redirectTo({
+        //                 url: url,
+        //                 data: {
+        //
+        //                 }
+        //             });
+        //
+        //         }, 888);
+        //     });
+        // }
 
         ap.onAppResume(function(event) {
             AlipayJSBridge.call( "exitApp");
