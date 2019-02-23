@@ -79,7 +79,7 @@
     <div id="xxx" class="aui-flex aui-flex-text">
         <div class="aui-flex-box">
             <h2>充值金额</h2>
-            <h2>已经扫码 {{ $data['sweep_num'] }} 次</h2>
+            <h5>已经扫码 {{ $data['sweep_num'] }} 次</h5>
             <h3>￥{{ $data['amount'] }}</h3>
             <p>充单号：{{ $data['meme'] }}</p>
         </div>
