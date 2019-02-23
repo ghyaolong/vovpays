@@ -295,4 +295,12 @@ class WithdrawsService
     {
         return 'W' . date('YmdHis') . mt_rand(10000, 99999);
     }
+    /**
+     * 查询是否存在申请
+     * return mixed
+     */
+    public function checkNotice()
+    {
+        return $this->withdrawsRepository->getCount();
+    }
 }

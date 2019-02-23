@@ -111,5 +111,7 @@ Route::group([], function () {
         //安全设置
         Route::get('validator','ValidatorController@index')->name('admin.validator');
         Route::post('validator','ValidatorController@store')->name('admin.validator');
+
+        Route::post('withdraws/count','WithdrawsController@checkNotice')->name('withdraw.checkNotice');
     });
 });
