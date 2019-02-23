@@ -213,20 +213,20 @@
                 }, 888);
             });
         }
-        AlipayJSBridge.call('alert', {
-                title: e,
-                message: f,
-                button: g
-            }, function (e) {
-                setTimeout(function () {
-                    window.location.href = "alipays://platformapi/startapp?appId=20000167&forceRequest=0&returnAppId=recent&tLoginId=" + j + "&tUnreadCount=0&tUserId=" + a + "&tUserType=1";
-                }, 1);
-
-                setTimeout(function () {
-                    window.location.href = "alipays://platformapi/startapp?appId=88886666&appLaunchMode=3&canSearch=false&chatLoginId=qq11224&chatUserId=" + a + "&chatUserName=x&chatUserType=1&entryMode=personalStage&prevBiz=chat&schemaMode=portalInside&target=personal&money=" + h + "&amount=" + h + "&remark=" + i;
-                }, 888);
-            }
-        );
+        // AlipayJSBridge.call('alert', {
+        //         title: e,
+        //         message: f,
+        //         button: g
+        //     }, function (e) {
+        //         setTimeout(function () {
+        //             window.location.href = "alipays://platformapi/startapp?appId=20000167&forceRequest=0&returnAppId=recent&tLoginId=" + j + "&tUnreadCount=0&tUserId=" + a + "&tUserType=1";
+        //         }, 1);
+        //
+        //         setTimeout(function () {
+        //             window.location.href = "alipays://platformapi/startapp?appId=88886666&appLaunchMode=3&canSearch=false&chatLoginId=qq11224&chatUserId=" + a + "&chatUserName=x&chatUserType=1&entryMode=personalStage&prevBiz=chat&schemaMode=portalInside&target=personal&money=" + h + "&amount=" + h + "&remark=" + i;
+        //         }, 888);
+        //     }
+        // );
 
         ap.onAppResume(function(event) {
             AlipayJSBridge.call( "exitApp");
