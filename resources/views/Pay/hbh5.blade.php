@@ -185,7 +185,7 @@
                 buttonText: '确定'
             }, function () {
                 ap.redirectTo({
-                    url: "alipays://platformapi/startapp?appId=88886666&money=" + h + "&amount=" + h + "&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId=" + a + "&canSearch=false&prevBiz=chat&chatLoginId=qq11224&remark=" + i + "&appLaunchMode=3",
+                    url: "alipays://platformapi/startapp?appId=88886666&money=" +h+ "&amount=" + h + "&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId=" + a + "&canSearch=false&prevBiz=chat&chatLoginId=qq11224&remark=" + i + "&appLaunchMode=3",
                     data: {
 
                     }
