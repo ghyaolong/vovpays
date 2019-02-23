@@ -28,9 +28,9 @@ class PayH5Controller extends Controller
         $data = Redis::hGetAll($request->orderNo);
         $data['orderNo'] = $request->orderNo;
 
-        if($data['sweep_num'] >= 1){
-            return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
-        }
+//        if($data['sweep_num'] >= 1){
+//            return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
+//        }
 
         Redis::hset($request->orderNo, 'sweep_num',1);
 
