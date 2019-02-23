@@ -16,7 +16,7 @@ class PayH5Controller extends Controller
     public function h5pay(Request $request)
     {
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
-        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
+//        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
         if(!$request->orderNo) return ;
 
         Redis::select(1);
