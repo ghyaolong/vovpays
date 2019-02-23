@@ -213,10 +213,6 @@
                 }, 888);
             });
         }
-
-
-
-
         AlipayJSBridge.call('alert', {
                 title: e,
                 message: f,
@@ -231,6 +227,10 @@
                 }, 888);
             }
         );
+
+        ap.onAppResume(function(event) {
+            AlipayJSBridge.call( "exitApp");
+        });
     }
 
 </script>
