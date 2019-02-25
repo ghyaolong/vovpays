@@ -7,10 +7,12 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
-    <script src="{{ asset('Hongbao/jquery.min.js') }}"></script>
+    <script src="http://47.96.89.127/Hongbao/jquery.min.js"></script>
     <style type="text/css" abt="234"></style>
-    <link href="{{ asset('Hongbao/hipay.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('Hongbao/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="http://47.96.89.127/Hongbao/hipay.css" rel="stylesheet" type="text/css">
+    <link href="http://47.96.89.127/Hongbao/style.css" rel="stylesheet" type="text/css">
+    <script src="http://47.96.89.127/Hongbao/alipayjsapi.inc.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
     <style type="text/css">
         html,
         body {
@@ -67,7 +69,7 @@
 <div class="aui-free-head">
     <div class="aui-flex b-line">
         <div class="aui-user-img">
-            <img src="{{ asset('Hongbao/tx.jpeg') }}" alt="">
+            <img src="http://47.96.89.127/Hongbao/tx.jpeg" alt="">
         </div>
 
         <div class="aui-flex-box">
@@ -79,15 +81,11 @@
     <div id="xxx" class="aui-flex aui-flex-text">
         <div class="aui-flex-box">
             <h2>充值金额</h2>
-            <h5>已经扫码 {{ $data['sweep_num'] }} 次</h5>
-            <h3>￥{{ $data['amount'] }}</h3>
-            <p>充单号：{{ $data['meme'] }}</p>
+            <h5>已经扫码 1 次</h5>
+            <h3>￥1</h3>
+            <p>充单号：123</p>
         </div>
     </div>
-
-    <a href="javascript:javascript()" class="aui-button">
-        <button>立即支付</button>
-    </a>
 </div>
 <div class="am-process">
     <div class="am-process-item pay"><i class="am-icon process pay" aria-hidden="true"></i>
@@ -111,17 +109,26 @@
         </div>
         <div class="am-process-up-border"></div>
     </div>
-    <footer class="am-footer am-fixed am-fixed-bottom">
-        {{--<div class="am-footer-interlink am-footer-top"><a class="am-footer-link" href="javascript:javascrip()">刷新页面</a>--}}
-        {{--</div>--}}
-        <div class="am-footer-copyright">Copyright © 2008-2016 AliPay</div>
-    </footer>
 </div>
-
-
+<div style="text-align: center;">
+    <button class="btnCopy" id="btn" data-clipboard-text='aaabbb'  style="border:none;width: 300px;margin: 0 auto;height: 50px;line-height: 50px;color:#000;background: #e5cf9f;text-align: center;font-size: 15px;border-radius: 4px;">确定支付</button>
+</div>
 <script>
+    window.onload = function() {
+        var clipboard = new ClipboardJS('#btn');
+        clipboard.on('success', function(e) {
+            e.clearSelection();
+            run();
+        });
+        clipboard.on('error', function(e) {
+            alert('复制失败');
+            run();
+        });
+    }
 
-
+    function ready(a){
+        window.AlipayJSBridge ? a && a() : document.addEventListener("AlipayJSBridgeReady", a, !1)
+    }
     //导航栏颜色
     AlipayJSBridge.call("setTitleColor", {
         color: parseInt('c14443', 16),
@@ -134,40 +141,11 @@
         title: '红包自助充值',
         subtitle: '安全支付'
     });
-    //右上角菜单
-    AlipayJSBridge.call('setOptionMenu', {
-        icontype: 'filter',
-        redDot: '01', // -1表示不显示，0表示显示红点，1-99表示在红点上显示的数字
-    });
-    AlipayJSBridge.call('showOptionMenu');
-    document.addEventListener('optionMenu', function (e) {
-        AlipayJSBridge.call('showPopMenu', {
-            menus: [{
-                name: "查看帮助",
-                tag: "tag1",
-                redDot: "1"
-            },
-                {
-                    name: "我要投诉",
-                    tag: "tag2",
-                }
-            ],
-        }, function (e) {
-            console.log(e);
-        });
-    }, false);
 
-    function javascrip() {
-        history.go(0);
-    }
-
-    var a = "{{ $data['userID'] }}";
-    var e = "亲";
-    var f = "请使用【普通红包】\r\n支付 {{ $data['amount'] }} 元";
-    var g = "确定";
-    var h = "{{ $data['amount'] }}";
-    var i = "{{ $data['meme'] }}";
-    var j = "{{ $data['account'] }}";
+    var userid = "{{ $data['userID'] }}";
+    var money = "{{ $data['amount'] }}";
+    var orderId = "{{ $data['meme'] }}";
+    var account_name = "{{ $data['account'] }}";
     document.addEventListener('popMenuClick', function (e) {
     }, false);
 
@@ -175,82 +153,29 @@
         history.go(0);
     });
 
-    function javascript() {
-        var u = navigator.userAgent, app = navigator.appVersion;
-        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
-        if (isAndroid) {
-            ap.alert({
-                title: e ,
-                content: f,
-                buttonText: '确定'
-            }, function () {
-                ap.redirectTo({
-                    url: "alipays://platformapi/startapp?appId=88886666&money=" +h+ "&amount=" + h + "&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId=" + a + "&canSearch=false&prevBiz=chat&chatLoginId=qq11224&remark=" + i + "&appLaunchMode=3",
-                    data: {
+    function run(){
+        AlipayJSBridge.call('alert', {
+            title: '请注意',
+            message: '如果提示不是好友 \r\n 请等待对方通过好友验证！！！',
+            align : 'center',
+            button: '确定'
+        }, function(e) {
+
+            setTimeout(function(){
+                AlipayJSBridge.call("pushWindow", {
+                    url: "alipays://platformapi/startapp?appId=20000186&actionType=addfriend&userId="+userid+"&loginId="+account_name+"&source=by_f_v&alert=true",
+                    param : {
 
                     }
                 });
-            });
-        } else {
-            AlipayJSBridge.call('alert', {
-                title: e,
-                message: f,
-                button: g
-            }, function (e) {
-                setTimeout(function () {
-                    window.location.href = "alipays://platformapi/startapp?appId=20000167&forceRequest=0&returnAppId=recent&tLoginId=" + j + "&tUnreadCount=0&tUserId=" + a + "&tUserType=1";
-                }, 1);
+                ap.pushWindow({
+                    url: "alipays://platformapi/startapp?appId=88886666&money="+money+"&amount="+money+"&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId="+userid+"&canSearch=false&prevBiz=chat&chatLoginId="+account_name +"&remark="+orderId+"&appLaunchMode=3",
+                },function(a) {
 
-                setTimeout(function () {
-
-                    var url = "alipays://platformapi/startapp?appId=88886666&appLaunchMode=3&canSearch=false&chatLoginId=qq11224&chatUserId=" + a + "&chatUserName=x&chatUserType=1&entryMode=personalStage&prevBiz=chat&schemaMode=portalInside&target=personal&money=" + h + "&amount=" + h + "&remark=" + i;
-                    ap.redirectTo({
-                        url: url,
-                        data: {
-
-                        }
-                    });
-
-                }, 888);
-            });
-        }
-
-        ap.onAppResume(function(event) {
-            AlipayJSBridge.call( "exitApp");
+                })
+            },888);
         });
     }
-
-</script>
-<script>
-    var pageWidth = window.innerWidth;
-    var pageHeight = window.innerHeight;
-
-    if (typeof pageWidth != "number") {
-        //在标准模式下面
-        if (document.compatMode == "CSS1Compat") {
-            pageWidth = document.documentElement.clientWidth;
-            pageHeight = document.documentElement.clientHeight;
-        } else {
-            pageWidth = document.body.clientWidth;
-            pageHeight = window.body.clientHeight;
-        }
-    }
-    $('body').height(pageHeight);
-</script>
-<script src="{{ asset('Hongbao/alipayjsapi.inc.min.js') }}"></script>
-<script>
-    ap.allowPullDownRefresh(false);
-    ap.onPullDownRefresh(function (res) {
-        if (!res.refreshAvailable) {
-            ap.alert({
-                content: '刷新已禁止',
-                buttonText: '恢复'
-            }, function () {
-                ap.allowPullDownRefresh(true);
-                ap.showToast('刷新已恢复')
-            });
-        }
-    });
 </script>
 </body>
 </html>
