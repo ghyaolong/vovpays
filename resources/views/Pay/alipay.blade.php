@@ -30,9 +30,9 @@
         <h1 style="color: #FF0000">3.截图保存到手机相册,打开支付宝扫一扫,选着相册</h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
         <!--支付宝app支付-->
-        <div class="paybtn" style="display: none;padding: 10px;">
-            <a href="{{ $data['h5url'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">启动支付宝</a>
-        </div>
+        {{--<div class="paybtn" style="display: none;padding: 10px;">--}}
+            {{--<a href="{{ $data['h5url'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">启动支付宝</a>--}}
+        {{--</div>--}}
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>

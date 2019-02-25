@@ -157,70 +157,27 @@
     });
 
     function run(){
-        // AlipayJSBridge.call('alert', {
-        //     title: '请注意',
-        //     message: '如果提示不是好友 \r\n 请等待对方通过好友验证！！！',
-        //     align : 'center',
-        //     button: '确定'
-        // }, function(e) {
-        //
-        //     setTimeout(function(){
-        //         AlipayJSBridge.call("pushWindow", {
-        //             url: "alipays://platformapi/startapp?appId=20000186&actionType=addfriend&userId="+userid+"&loginId="+account_name+"&source=by_f_v&alert=true",
-        //             param : {
-        //
-        //             }
-        //         });
-        //         ap.pushWindow({
-        //             url: "alipays://platformapi/startapp?appId=88886666&money="+money+"&amount="+money+"&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId="+userid+"&canSearch=false&prevBiz=chat&chatLoginId="+account_name +"&remark="+orderId+"&appLaunchMode=3",
-        //         },function(a) {
-        //
-        //         })
-        //     },888);
-        // });
+        AlipayJSBridge.call('alert', {
+            title: '请注意',
+            message: '如果提示不是好友 \r\n 请等待对方通过好友验证！！！',
+            align : 'center',
+            button: '确定'
+        }, function(e) {
 
-        if(isiOS){
-            ap.pushWindow({
-                url: "alipays://platformapi/startapp?appId=20000186&actionType=addfriend&userId="+userid+"&loginId="+account_name+"&source=by_f_v&alert=true"
-            },function(a) {
-                AlipayJSBridge.call('alert', {
-                    title: '亲',
-                    message: '如果提示不是好友 \n 请等待对方通过好友验证！！！',
-                    align : 'center',
-                    button: '确定'
-                }, function(e) {
-                    ap.pushWindow({
-                        url: "alipays://platformapi/startapp?appId=20000167&targetAppId=back&tUserId="+userid+"&tUserType=1&tLoginId="+account_name+"&autoFillContent="+orderId+"&autoFillBiz="+orderId
-                    },function(a) {
-                        //alert(2)
-                    })
+            setTimeout(function(){
+                AlipayJSBridge.call("pushWindow", {
+                    url: "alipays://platformapi/startapp?appId=20000186&actionType=addfriend&userId="+userid+"&loginId="+account_name+"&source=by_f_v&alert=true",
+                    param : {
+
+                    }
                 });
+                ap.pushWindow({
+                    url: "alipays://platformapi/startapp?appId=88886666&money="+money+"&amount="+money+"&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId="+userid+"&canSearch=false&prevBiz=chat&chatLoginId="+account_name +"&remark="+orderId+"&appLaunchMode=3",
+                },function(a) {
 
-            })
-        }else{
-            AlipayJSBridge.call('alert', {
-                title: '请注意',
-                message: '如果提示不是好友 \n 请等待对方通过好友验证！！！',
-                align : 'center',
-                button: '确定'
-            }, function(e) {
-                setTimeout(function(){
-                    AlipayJSBridge.call("pushWindow", {
-                        url: "alipays://platformapi/startapp?appId=20000186&actionType=addfriend&userId="+userid+"&loginId="+account_name+"&source=by_f_v&alert=true",
-                        param : {
-                            //closeAllWindow : true
-                        }
-                    });
-                    ap.pushWindow({
-                        url: "alipays://platformapi/startapp?appId=88886666&money="+money+"&amount="+money+"&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId="+userid+"&canSearch=false&prevBiz=chat&chatLoginId="+account_name +"&remark="+orderId+"&appLaunchMode=3",
-                    },function(a) {
-
-                    })
-                },888);
-
-            });
-        }
-
+                })
+            },888);
+        });
     }
 </script>
 </body>
