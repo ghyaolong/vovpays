@@ -114,7 +114,7 @@
     <button class="btnCopy" id="btn" data-clipboard-text='aaabbb'  style="border:none;width: 300px;margin: 0 auto;height: 50px;line-height: 50px;color:#000;background: #e5cf9f;text-align: center;font-size: 15px;border-radius: 4px;">确定支付</button>
 </div>
 <script>
-
+    var u = navigator.userAgent, app = navigator.appVersion;
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
     window.onload = function() {
