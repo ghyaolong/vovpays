@@ -108,7 +108,7 @@
                                 <td> string(1000)</td>
                                 <td>回调时将会根据传入内容原样返回（为防止乱码情况，请尽量不填写中文）</td>
                                 <td>有值时加入</td>
-                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-remove"></span></td>
                             </tr>
                             <tr>
                                 <td>9.</td>
@@ -126,7 +126,7 @@
                                 <td>string(50)</td>
                                 <td>商户名下的能表示用户的标识，方便对账，回调时原样返回</td>
                                 <td>有值时加入</td>
-                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                <td><span class="glyphicon glyphicon-remove"></span></td>
                             </tr>
                             <tr>
                                 <td>11.</td>
@@ -481,7 +481,7 @@
 
                 <div class="box-body">
                     <div style="background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
-                        待签名数据为必须加入签名的和非空参数，以ASCII码升序(字典序)排序，然后以key=value&key1=value1......&key=密钥，生成签名串。具体MD5签名源串及格式如下： amount=10.01&merchant=HPWBCimj4e&notify_rul=http://baidu.com&order_no=20190104055920&order_time=2018-12-0813:46:01&pay_code=alipay&return_url=http://baidu.com&key=$2y$10$YCJ1PkNmlBzm1Fm0r9wfpPu8oH4WnoSevO1ir249kHgBSkQDYPa5oa<br><br>
+                        待签名数据为必须加入签名的和非空参数，以ASCII码升序(字典序)排序，然后以key=value&key1=value1......&key=密钥，生成签名串。具体MD5签名源串及格式如下： amount=10.01&merchant=HPWBCimj4e&<ampnotify_rul></ampnotify_rul>=http://baidu.com&order_no=20190104055920&order_time=2018-12-0813:46:01&pay_code=alipay&return_url=http://baidu.com&key=$2y$10$YCJ1PkNmlBzm1Fm0r9wfpPu8oH4WnoSevO1ir249kHgBSkQDYPa5oa<br><br>
                     </div>
                 </div>
             </div>
