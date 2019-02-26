@@ -28,13 +28,13 @@ class PayH5Controller extends Controller
         $data = Redis::hGetAll($request->orderNo);
         $data['orderNo'] = $request->orderNo;
 
-//        if($data['sweep_num'] >= 1){
-//            return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
-//        }
-        $num = $data['sweep_num']+1;
-        Redis::hset($request->orderNo, 'sweep_num',$num);
+        if($data['sweep_num'] >= 1){
+            return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
+        }
+//        $num = $data['sweep_num']+1;
+//        Redis::hset($request->orderNo, 'sweep_num',$num);
 
-        $data['sweep_num'] = $num;
+//        $data['sweep_num'] = $num;
         if($data['type'] == 'alipay_packets'){
             return view('Pay.hbh5',compact('data'));
         }

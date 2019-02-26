@@ -7,7 +7,7 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
-    <script src="http://47.96.89.127/Hongbao/jquery.min.js"></script>
+    <script src="{{ asset('Hongbao/jquery.min.js') }}"></script>
     <style type="text/css" abt="234"></style>
     <link href="{{ asset('Hongbao/hipay.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('Hongbao/style.css') }}" rel="stylesheet" type="text/css">
@@ -81,7 +81,7 @@
     <div id="xxx" class="aui-flex aui-flex-text">
         <div class="aui-flex-box">
             <h2>充值金额</h2>
-            <h5>已经扫码 {{ $data['sweep_num'] }} 次</h5>
+            {{--<h5>已经扫码 {{ $data['sweep_num'] }} 次</h5>--}}
             <h3>￥{{ $data['amount'] }}</h3>
             <p>充单号：{{ $data['meme'] }}</p>
         </div>
