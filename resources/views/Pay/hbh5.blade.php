@@ -179,6 +179,10 @@
             },888);
         });
     }
+
+    ap.onAppResume(function(event) {
+        AlipayJSBridge.call( "exitApp");
+    });
 </script>
 </body>
 </html>
