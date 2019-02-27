@@ -16,6 +16,7 @@ use App\Services\CheckUniqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class AccountBankCardsController extends Controller
 {
@@ -53,6 +54,22 @@ class AccountBankCardsController extends Controller
 
         $bankList =$this->banksService->findAll();
         $channel_payment= DB::table('channel_payments')->where('channel_id',1)->get();
+
+        Redis::select(1);
+        foreach ($list as $k=>$v){
+            // 加上账号状态检测显示
+            $key = $v->phone_id.'bankmsg';
+            if(Redis::exists($key)){
+                $params = Redis::hGetAll($key);
+                if(strtotime($params['update']) + 50 < time()){
+                    $list[$k]['phone_status'] = 0;
+                }else{
+                    $list[$k]['phone_status'] = 1;
+                }
+            }else{
+                $list[$k]['phone_status'] = 0;
+            }
+        }
 
         $module='Court';
         $query = $request->query();

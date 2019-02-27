@@ -38,6 +38,7 @@
                                 <th>今日订单量</th>
                                 <th>今日成功订单量</th>
                                 <th>今日成功率</th>
+                                <th>手机状态</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -57,6 +58,7 @@
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
                                         <td><span style="color: green">{{$v->success_rate?$v->success_rate.'%':'---'}}</span></td>
+                                        <td>@if($v->phone_status == 1) <span class="btn btn-success btn-sm">正常</span> @else <span class="btn btn-danger btn-sm">异常</span> @endif</td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
                                                    @if($v['status'] == 1) checked @endif />

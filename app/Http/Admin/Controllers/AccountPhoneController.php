@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Services\DelPhoneRedisService;
 use App\Http\Requests\AccountPhoneRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class AccountPhoneController extends Controller
 {
@@ -45,6 +46,22 @@ class AccountPhoneController extends Controller
 
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);
         $channel_payment= DB::table('channel_payments')->where('channel_id',1)->get();
+
+        Redis::select(1);
+        foreach ($list as $k=>$v){
+            // 加上账号状态检测显示
+            $key = $v->phone_id.$data['accountType'];
+            if(Redis::exists($key)){
+                $params = Redis::hGetAll($key);
+                if(strtotime($params['update']) + 50 < time()){
+                    $list[$k]['phone_status'] = 0;
+                }else{
+                    $list[$k]['phone_status'] = 1;
+                }
+            }else{
+                $list[$k]['phone_status'] = 0;
+            }
+        }
 
         $module='Admin';
         $query = $request->query();
