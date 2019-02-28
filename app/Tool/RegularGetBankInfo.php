@@ -58,6 +58,9 @@ class RegularGetBankInfo
             case "95558":// 中信银行
                 preg_match('/人民币(\d+)+(\.\d{0,4})?元/',$content,$matches);
                 break;
+            case "1378501":// 河北农信
+                preg_match('/汇兑来账(\d+)+(\.\d{0,4})?元/',$content,$matches);
+                break;
             default:
                 return $amount;
         }
@@ -127,6 +130,10 @@ class RegularGetBankInfo
                 break;
             case "95558"://中信银行
                 preg_match('/尾号([\d]{4})的/',$content,$matches);
+                $cardNo = $matches[1];
+                break;
+            case "1378501"://河北农信
+                preg_match('/尾号([\d]{4})/',$content,$matches);
                 $cardNo = $matches[1];
                 break;
             default:
