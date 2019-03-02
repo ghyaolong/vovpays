@@ -17,6 +17,7 @@
     <title>在线支付</title>
     <link href="{{ asset('css/Pay/pay.css') }}" rel="stylesheet" media="screen">
     <script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 </head>
 
 <body>
@@ -25,13 +26,16 @@
         <span class="ico_log ico-a"></span>
     </h1>
     <div class="mod-ct">
-        <h1 style="padding-top:15px;color: #FF0000">1.一码一单，多次付款无法到账</h1>
-        <h1 style="padding-top:15px;color: #FF0000">2.需要多次付款，请重新发起订单</h1>
+        <h1></h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
         <!--支付宝app支付-->
-        {{--<div class="paybtn" style="display: none;padding: 10px;">--}}
-            {{--<a href="{{ $data['h5url'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">打开支付宝</a>--}}
-        {{--</div>--}}
+        <div class="app_items">
+            <div class="paybtn" style="display: none;">
+                <a href="javascript:void(0);" data-clipboard-text='{{ $data['h5url'] }}' id="alipaybtn" class="btn btn-primary" target="_blank">1.点击此处复制付款链接</a>
+            </div>
+            <h1 style="padding-top:15px;color: #FF0000">2.打开支付宝，把复制的链接发给任意"通讯录好友"</h1>
+            <h1 style="color: #FF0000">3.点击发送给好友的付款链接</h1>
+        </div>
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
@@ -123,22 +127,29 @@ function checkdata(){
     })
 }
 
-
-
-
 $().ready(function(){
     timer(300);
+
+    var clipboard = new ClipboardJS('#alipaybtn');
+    clipboard.on('success', function(e) {
+        alert('请打开支付宝，按提示操作');
+    });
+    clipboard.on('error', function(e) {
+        alert('请打开支付宝，按提示操作');
+    });
+
     if(isMobile() == 1 )
     {
         $('.paybtn').show();
+        $('.qrcode-img-wrapper').hide();
+    }else{
+        $('.app_items').hide();
     }
     var strcode = toUtf8("{!! $data['payurl'] !!}");
     var qrcode = $('#show_qrcode').qrcode({ text: strcode });
     var canvas = qrcode.find('canvas').get(0);
     $('#show_qrcode').attr('src', canvas.toDataURL('image/jpg'));
     canvas.remove();
-
-
 })
 
 function toUtf8(str) {
