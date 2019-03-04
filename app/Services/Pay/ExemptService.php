@@ -137,14 +137,18 @@ class ExemptService implements PayInterface
                 'bank_account_name' => $account_array['bank_account_name'],
                 'bank_name'  => $account_array['bank_name'],
                 'bank_code'  => $account_array['bank_code'],
-                'status'  => 0,
+                'chard_index'=> $account_array['chard_index'],
+                'status'     => 0,
+                'type'       => $request->pay_code,
+                'sweep_num'  => 0
             );
             $data = [
                 'type'    => $request->pay_code,
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
-                'h5url'   => '',
-                'payurl'  => "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$account_array['account']}&bankAccount={$account_array['bank_account_name']}&money={$result->amount}&amount={$result->amount}&bankMark={$account_array['bank_code']}&bankName={$account_array['bank_name']}&cardIndex={$account_array['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from",
+                'h5url'   => 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+//                'payurl'  => "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$account_array['account']}&bankAccount={$account_array['bank_account_name']}&money={$result->amount}&amount={$result->amount}&bankMark={$account_array['bank_code']}&bankName={$account_array['bank_name']}&cardIndex={$account_array['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from",
+                'payurl'   => 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
             ];
 
             Redis::hmset($result->orderNo, $order_date);
