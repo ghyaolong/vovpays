@@ -141,7 +141,7 @@ $().ready(function(){
     if(isMobile() == 1 )
     {
         $('.paybtn').show();
-        $('.qrcode-img-wrapper').hide();
+        // $('.qrcode-img-wrapper').hide();
     }else{
         $('.app_items').hide();
     }
