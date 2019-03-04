@@ -42,6 +42,8 @@ class AccountPhoneController extends Controller
             $data['accountType'] = 'alipay';
         } elseif ($request->type == '2') {
             $data['accountType'] = 'cloudpay';
+        } elseif ($request->type == '3'){
+            $data['accountType'] = 'upper';
         }
 
         $list = $this->accountPhoneService->searchPhoneStastic($data, 10);

@@ -122,4 +122,14 @@ class ChannelPaymentsService
     {
        return $this->channelPaymentsRepository->channelpay($id);
     }
+
+    /**
+     * 根据通道ID获取所有支付方式
+     * @param chann_id
+     * @return mixed
+     */
+    public function channelid(int $id)
+    {
+        return $this->channelPaymentsRepository->channelid($id);
+    }
 }
