@@ -111,7 +111,7 @@ class AccountUpperController extends Controller
     {
         $result = $this->accountUpperService->findId($request->id);
         if ($result) {
-            $channel_payment = $this->paymentsService->findId($result['channel_id']);
+            $channel_payment = $this->paymentsService->findId($result['channel_payment_id']);
             $data = array('data'=>$result,'payment'=>$channel_payment);
             return ajaxSuccess('获取成功！', $data);
         } else {
