@@ -27,7 +27,7 @@
                                 <th>通道商户名</th>
                                 <th>通道秘钥</th>
                                 <th>通道名称</th>
-                                <th>通道编码</th>
+                                <th>支付方式</th>
                                 <th>今日订单量</th>
                                 <th>状态</th>
                                 <th>操作</th>
@@ -42,8 +42,8 @@
                                         <td>{{ $v->id }}</td>
                                         <td>{{ $v->account }}</td>
                                         <td style="color: red">{{ $v->signkey }}</td>
-                                        <td style="color: #00c0ef">{{ $v->accountType }}</td>
-                                        <td><span style="color: green">{{$v->account_amount}}</span></td>
+                                        <td>{{ @$v->Channel()->pluck('channelName')[0] }}</td>
+                                        <td>{{ @$v->Channel_payment()->pluck('paymentName')[0] }}</td>
                                         <td>{{ $v['num'] }}</td>
                                         <td>
                                             <input class="switch-state" data-id="{{ $v['id'] }}" type="checkbox"
