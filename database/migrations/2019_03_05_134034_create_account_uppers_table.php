@@ -22,7 +22,7 @@ class CreateAccountUppersTable extends Migration
             $table->unsignedInteger('channel_id')->comment('通道id');
             $table->unsignedInteger('channel_payment_id')->comment('支付方式id');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态：0禁用。1启用');
-            $table->unsignedInteger('num')->comment('订单量');
+            $table->unsignedInteger('num')->comment('订单量 ');
             $table->unsignedInteger('dayQuota')->default(0)->comment('限额');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
