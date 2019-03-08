@@ -27,6 +27,7 @@ class DownNotifyContentService{
         $result = sendCurl($orders->notifyUrl,$paraBuild);
 
         if(strtolower($result) == 'success'){
+            Log::info('orderAsyncSuccess:', ['content' => json_encode($paraBuild),'callback'=>$result]);
             return true;
         }else{
             Log::info('orderAsyncNotify:', ['content' => json_encode($paraBuild),'callback'=>$result]);

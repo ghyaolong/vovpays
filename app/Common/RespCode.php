@@ -16,12 +16,12 @@ class RespCode
     const RESOURCE_NOT_FOUND = ['respCode'=>'404',   'msg'=>'资源未找到'];
     const ACCOUNT_NOT_START  = ['respCode'=>'20002', 'msg'=>'账号未配置'];
     const APP_ERROR          = ['respCode'=>'20003', 'msg'=>'APP或账号已限额'];
-    const FAILED             = ['respCode'=>'500', 'msg'=>'处理失败'];
     const TRADE_ORDER_NOT_EXIST = ['respCode'=>'20004', 'msg'=>'交易订单不存在'];
     const SYS_ERROR          = ['respCode'=>'20005','msg'=>'系统错误' ];
     const PARAMETER_ERROR_STOP = ['respCode'=>'10008','msg'=>'交易已被终止'];
     const ORDER_REPEAT       = ['respCode'=>'10009','msg'=>'订单已重复'];
     const QRCODE_ERROR       = ['respCode'=>'10010','msg'=>'二维码获取失败'];
+    const FAILED             = ['respCode'=>'200011', 'msg'=>'余额不足以完成此次交易'];
 
 
     const SUCCESS = ['respCode'=>'200', 'msg'=>'请求成功'];

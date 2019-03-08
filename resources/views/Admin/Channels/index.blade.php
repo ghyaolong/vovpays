@@ -10,6 +10,7 @@
         <div class="box">
             <div class="box-header">
                 <button type="button" class="btn btn-primary" onclick="showModel('添加通道')">添加通道</button>
+                <button type="button" class="btn btn-primary" onclick="addChannel()">添加通道池</button>
                 <a href="{{ route('channels.index') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
             </div>
             <!-- /.box-header -->
@@ -386,6 +387,9 @@
                     }
                 })
             });
+        }
+        function addChannel(){
+            location.href="{{ route('admin.accountupper') }}";
         }
     </script>
 @endsection

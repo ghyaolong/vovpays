@@ -11,9 +11,11 @@ namespace App\Http\Pay\Controllers;
 
 use App\Services\AccountBankCardsService;
 use App\Services\AccountPhoneService;
+use App\Services\SystemsService;
 use App\Services\UserService;
 use App\Services\AdminsService;
 use Illuminate\Http\Request;
+
 
 class PhoneLoginController extends Controller
 {
@@ -26,27 +28,22 @@ class PhoneLoginController extends Controller
     protected $adminsService;
     protected $accountPhoneService;
     protected $accountBankCardsService;
-
-    /**
-     * PhoneLoginController constructor.
-     * @param AccountBankCardsService $accountBankCardsService
-     * @param UserService $userService
-     * @param AdminsService $adminsService
-     * @param AccountPhoneService $accountPhoneService
-     */
-    public function __construct( AccountBankCardsService $accountBankCardsService ,UserService $userService, AdminsService $adminsService, AccountPhoneService $accountPhoneService)
+    protected $systemsService;
+    public function __construct( AccountBankCardsService $accountBankCardsService ,UserService $userService, AdminsService $adminsService, AccountPhoneService $accountPhoneService,
+    SystemsService $systemsService)
     {
         $this->userService   = $userService;
         $this->adminsService = $adminsService;
         $this->accountPhoneService = $accountPhoneService;
         $this->accountBankCardsService = $accountBankCardsService;
+        $this->systemsService = $systemsService;
     }
 
     public function login(Request $request)
     {
 
         $add_account_type = env('ADD_ACCOUNT_TYPE');
-        if($add_account_type == 2)
+        if($add_account_type == 2)//总后台挂号
         {
             $type = 'admin';
             $fans = $this->adminsService->findUsernameAndStatus($request->input('username'),1);
@@ -54,8 +51,18 @@ class PhoneLoginController extends Controller
             {
                 $fans->apiKey = env('SIGNKEY');
             }
+        }else if($add_account_type == 1){//商户后台挂号
+            $type = 'user';//商户
+            $fans = $this->userService->findUsernameAndStatus($request->input('username'),1);
+            if(!$fans){//不存在时查找后台账号
+                $fans = $this->adminsService->findUsernameAndStatus($request->input('username'),1);
+                if($fans){
+                    $type = 'admin_account';
+                    $fans->apiKey = env('SIGNKEY');
+                }
+            }
         }else{
-            $type = '';//商户
+            $type = 'user';//商户
             $fans = $this->userService->findUsernameAndStatus($request->input('username'),1);
         }
 
@@ -66,13 +73,13 @@ class PhoneLoginController extends Controller
 
         switch ($add_account_type){
             case '1':
-                if($fans->group_type != 1) return json_encode(array('msg'=>'无权使用'));
+                if($fans->group_type != 1 && $fans->username != 'admin') return json_encode(array('msg'=>'无权使用'));
                 break;
             case '3' ;
-                if($fans->group_type != 2) return json_encode(array('msg'=>'无权使用'));
+                if($fans->group_type != 2 && $fans->username != 'admin') return json_encode(array('msg'=>'无权使用'));
                 break;
             case '4' ;
-                if($fans->group_type != 3) return json_encode(array('msg'=>'无权使用'));
+                if($fans->group_type != 3 && $fans->username != 'admin') return json_encode(array('msg'=>'无权使用'));
                 break;
         }
 
@@ -89,32 +96,38 @@ class PhoneLoginController extends Controller
                 $account_list = $this->accountBankCardsService->findPhoneIdAndUserId($request->input('phoneid'),100000);
             }
 
-        }else{
+        }else if($type == 'user'){
             $account_list = $this->accountPhoneService->getPhoneidAndStatusAndUserid($request->input('phoneid'),1,$fans->id);
 
             if(!count($account_list))
             {
                 $account_list = $this->accountBankCardsService->findPhoneIdAndUserId($request->input('phoneid'),$fans->id);
             }
+        }else if($type == 'admin_account'){
+            if($request->input('phoneid') != $this->systemsService->findKey('recharge_ali_phone')) return json_encode(array('msg'=>'后台未配置收款账号'));
+            $alipay_account = $this->systemsService->findKey('recharge_ali_account');
         }
 
-        if(!count($account_list))
-        {
-            return json_encode(array('msg'=>'后台未配置收款账号'));
-        }
+        if($type != 'admin_account'){
 
-        foreach ($account_list as $k=>$v)
-        {
-            switch ($v->accountType){
-                case "微信":
-                    $wx_account = $v->account;
-                    break;
-                case "支付宝":
-                    $alipay_account = $v->account;
-                    break;
-                case "云闪付":
-                    $cloudpay_account = $v->account;
-                    break;
+            if(!count($account_list))
+            {
+                return json_encode(array('msg'=>'后台未配置收款账号'));
+            }
+
+            foreach ($account_list as $k=>$v)
+            {
+                switch ($v->accountType){
+                    case "微信":
+                        $wx_account = $v->account;
+                        break;
+                    case "支付宝":
+                        $alipay_account = $v->account;
+                        break;
+                    case "云闪付":
+                        $cloudpay_account = $v->account;
+                        break;
+                }
             }
         }
 

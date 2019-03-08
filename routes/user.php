@@ -30,8 +30,10 @@ Route::group([], function ($router) {
         //订单
         Route::get('order','OrderController@index')->name('user.order');
         Route::get('order/{id}/show', 'OrderController@show')->name('order.show');
-        Route::get('order/invoice','OrderController@invoice')->name('user.invoice');
-        Route::get('order/recharge','OrderController@recharge')->name('user.recharge');
+        //充值
+        Route::get('order/recharge','RechargeController@index')->name('user.recharge');
+        Route::post('order/recharge','RechargeController@store')->name('user.recharge');
+        Route::get('order/callback','RechargeController@callback')->name('user.callback');
         //银行卡管理
         Route::post('bankCard/store','BankCardController@store')->name('user.store');
         Route::get('bankCard','BankCardController@bankCard')->name('user.bankCard');

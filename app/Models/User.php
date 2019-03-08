@@ -104,4 +104,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Quota_log');
     }
+
+    public function Recharge()
+    {
+        return $this->hasMany('App\Models\Recharge');
+    }
 }

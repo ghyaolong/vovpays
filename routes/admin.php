@@ -98,6 +98,13 @@ Route::group([], function () {
         Route::delete('accountBank','AccountBankCardsController@destroy')->name('admin.accountBankDel');
         Route::post('accountBank/checkBank','AccountBankCardsController@checkUnique')->name('admin.checkBank');
 
+        //通道池管理
+        Route::get('accountupper','AccountUpperController@index')->name('admin.accountupper');
+        Route::post('accountupper/paymentGet','AccountUpperController@paymentget')->name('admin.paymentget');
+        Route::post('accountUpper','AccountUpperController@store')->name('admin.accountUpperAdd');
+        Route::post('accountUpper/saveStatus','AccountUpperController@saveStatus')->name('admin.accountUpperStatus');
+        Route::get('accountUpper/{id}/edit','AccountUpperController@edit')->name('admin.accountUpperedit');
+        Route::delete('accountUpper','AccountUpperController@destroy')->name('admin.accountUpperDel');
 
         //系统配置
         Route::get('system','SystemController@index')->name('system.index');

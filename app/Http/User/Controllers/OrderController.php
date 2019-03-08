@@ -71,14 +71,4 @@ class OrderController extends Controller
         }
 
     }
-
-    public function recharge()
-    {
-        return view('User.Recharge.recharge');
-    }
-
-    public function invoice()
-    {
-        return view('User.invoice');
-    }
 }

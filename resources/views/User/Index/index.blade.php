@@ -31,6 +31,10 @@
                                     <td style="color: red"><b>￥ @if(isset($statistical->handlingFeeBalance)) {{$statistical->handlingFeeBalance}} @else 0.00 @endif</b></td>
                                 </tr>
                                 <tr>
+                                    <td>预存手续费余额</td>
+                                    <td style="color: red"><b>￥ @if(isset($statistical->balance)) {{$statistical->balance}} @else 0.00 @endif</b></td>
+                                </tr>
+                                <tr>
                                     <td>手机</td>
                                     <td>{{$user->phone}}</td>
                                 </tr>

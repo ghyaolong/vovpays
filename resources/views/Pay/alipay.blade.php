@@ -43,9 +43,9 @@
         </div>
         <div class="time-item">
             @if($data['type'] != 'alipay_packets')
-                <dvi class="time-item"><h1 style="color: red">验证姓名：{{$data['username']}}</h1></dvi>
+                <div class="time-item"><h1 style="color: red">验证姓名：{{$data['username']}}</h1></div>
             @endif
-            <dvi class="time-item" id="msg"><h1>付款即时到账 未到账可联系我们</h1></dvi>
+            <div class="time-item" id="msg"><h1>付款即时到账 未到账可联系我们</h1></div>
             <div class="time-item"><h1>订单:{{$data['orderNo']}}</h1> </div>
             <strong id="hour_show"><s id="h"></s>0时</strong>
             <strong id="minute_show"><s></s>0分</strong>

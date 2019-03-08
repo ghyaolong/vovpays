@@ -111,4 +111,14 @@ class ChannelPaymentsRepository
     {
         return $this->channel_payment->whereId($id)->whereStatus(1)->first();
     }
+
+    /**
+     * 根据通道ID获取支付方式
+     * @param int $id;
+     * @return mixed;
+     */
+    public function channelid($id)
+    {
+        return $this->channel_payment->whereChannelId($id)->whereStatus(1)->get();
+    }
 }
