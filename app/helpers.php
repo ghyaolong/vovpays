@@ -140,7 +140,7 @@ function sendHttpPost(string $url, array $data)
     $str .= '<script>';
     $str .= 'document.Form1.submit();';
     $str .= '</script>';
-    exit();
+    exit($str);
 }
 
 /**
@@ -182,6 +182,7 @@ function sendCurl(string $url, array $data = [], array $header = [], string $ref
     curl_close($ch);
     return $res;
 }
+
 
 /**
  * 将数据库中查出的列表以指定的 id 作为数组的键名
