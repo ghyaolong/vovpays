@@ -99,7 +99,7 @@ class getOrderCallback extends Command
                 return 1;
             }
 
-        } else if ( $data['mark'] == '固码') {
+        } else if ( stripos($data['mark'], '收款') ) {
 
             $key = $data['phoneid'] . '_' . $data['type'].'_solidcode_' . $data['money'];
 
