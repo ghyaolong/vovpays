@@ -62,7 +62,7 @@
                             <label for="" class="col-xs-3 control-label">配置键名</label>
                             <div class="col-xs-9">
                                 <input type="text" class="form-control" name="name" placeholder="配置键名">
-                                <span class="help-block" style="font-size: 12px;"><i class="fa fa-info-circle"></i>只能是字母,且唯一</span>
+                                <span class="help-block" style="font-size: 12px;"><i class="fa fa-info-circle"></i>只能是字母、下划线,且唯一</span>
                             </div>
                         </div>
                         <div class="form-group">

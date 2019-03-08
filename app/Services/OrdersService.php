@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\CustomServiceException;
 use App\Models\User;
 use App\Models\Channel;
 use App\Models\Channel_payment;
@@ -48,6 +49,11 @@ class OrdersService
             'cuid'      => $request->cuid ? $request->cuid : '',
             'realPrice' => $request->amount,
         );
+
+        // 商户挂号时，验证预存手续费是否足够
+        if(env('ADD_ACCOUNT_TYPE') == 1){
+            if($order_amount_array['orderFee'] > $user->Statistical->balance) return false;
+        }
 
         $param = array(
             'user_id'       => $user->id,

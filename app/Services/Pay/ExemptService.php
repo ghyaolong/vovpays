@@ -49,6 +49,8 @@ class ExemptService implements PayInterface
                 'meme'    => $result->orderNo,
                 'userID'  => $account_array['userId'],
                 'status'  => 0,
+                'type'    => $request->pay_code,
+                'sweep_num'  => 0
             );
 
             $data = [

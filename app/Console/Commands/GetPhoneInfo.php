@@ -73,7 +73,9 @@ class GetPhoneInfo extends Command
             if($data['account']){
                 Redis::hset($key, 'account',$data['account']);
             }
-            Redis::hset($key, 'userid',$data['alipayuserid']);
+            if($data['alipayuserid']){
+                Redis::hset($key, 'userid',$data['alipayuserid']);
+            }
             Redis::hset($key, 'comment',$data['comment']);
         }else{
             $params = array(

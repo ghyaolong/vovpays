@@ -45,6 +45,13 @@ class PayH5Controller extends Controller
             $num = $data['sweep_num']+1;
             Redis::hset($request->orderNo, 'sweep_num',$num);
             header('Location:'. "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$data['account']}&bankAccount={$data['bank_account_name']}&money={$data['amount']}&amount={$data['amount']}&bankMark={$data['bank_code']}&bankName={$data['bank_name']}&cardIndex={$data['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from");
+        }else if($data['type'] == 'alipay'){
+            if($data['sweep_num'] >= 1){
+                return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
+            }
+            $num = $data['sweep_num']+1;
+            Redis::hset($request->orderNo, 'sweep_num',$num);
+            return view('Pay.android',compact('data'));
         }
     }
 

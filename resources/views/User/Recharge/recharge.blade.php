@@ -5,169 +5,138 @@
           href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endsection
 @section('content')
-    <div class="row" style="margin-top: 20px">
-
-        <div class="col-md-6">
-            <div class="box box-primary box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">数据统计</h3>
-
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="box-body">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="info-box bg-aqua">
-                            <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
-
-                            <div class="info-box-content">
-
-						<span class="progress-description" style="padding-top: 10px;">
-							充值金额 </span>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 100%"></div>
-                                </div>
-                                <span class="info-box-number">0.00 元</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="info-box bg-aqua">
-                            <span class="info-box-icon"><i class="fa fa-line-chart"></i></span>
-
-                            <div class="info-box-content">
-
-						<span class="progress-description" style="padding-top: 10px;">
-							充值记录 </span>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 100%"></div>
-                                </div>
-                                <span class="info-box-number">0 笔</span>
-                            </div>
-                        </div>
-                    </div>
-
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-3">
+        <div class="box box-primary box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">充值</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-
-
-        <div class="col-md-6">
-            <div class="box box-primary box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">充值</h3>
-
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
+            <div class="box-body">
+                <div>预存手续费余额：{{ auth()->user()->Statistical->balance }}</div>
+                <form class="form-horizontal" id="form" action="{{ route('user.recharge') }}" style="margin: auto 60px" method="post">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label class="col-xs-5 control-label">充值金额:</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" name="money" value="0">
+                        </div>
                     </div>
-                </div>
-
-
-                <div class="box-body" style="font-size: 15px">
-
-                    <form class="form-inline" style="margin: auto 60px">
-                        <div class="form-group">
-                            <label for="exampleInputName2">充值金额:</label>&emsp;
-                            <select name="" class="form-control">
-                                <option value="100">100</option>
-                                <option value="200">200</option>
-                                <option value="500">500</option>
-                                <option value="1000">1000</option>
-                                <option value="2000">2000</option>
-                                <option value="5000">5000</option>
-                                <option value="10000">10000</option>
-                            </select>
+                    <br>
+                    <div class="form-group" style="margin-left: 50px">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" onclick="save($(this))" class="btn btn-reddit">立即支付</button>
                         </div>
-                        <br>
-                        <br>
-                        <div class="form-group">
-                            <label for="exampleInputName2">支付方式:</label>&emsp;
-                            <input class="flat-red" id="alipayradio" type="radio" name="paytype" checked>
-                            <img src="/AdminLTE/dist/img/ico_zfb.png" alt="">&emsp;
-                            {{--<input class="flat-red" id="alipayradio" type="radio" name="paytype">--}}
-                            {{--<img src="/AdminLTE/dist/img/ico_wx.png" alt="">--}}
-                        </div>
-                        <br>
-                        <br>
-
-                        <div class="form-group" style="margin-left: 50px">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-reddit">立即支付</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
 
-        <div class="col-md-12">
-            <div class="box box-primary box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">充值记录</h3>
+    <div class="col-md-9">
+        <div class="box box-primary box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">充值记录</h3>
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
                 </div>
-                <div class="box-body">
-                    <form class="navbar-form navbar-left" action="">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
-                                   placeholder="订单时间" name="orderTime"
-                                   @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" id="paymentId" name="paymentId">
-                                <option value="-1">支付方式</option>
-                                <option value="">支付宝</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="underOrderNo" placeholder="订单号">
-                        </div>
-                        <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
-                    </form>
-                    <br>
-                    <br>
-                    <br>
+            </div>
+            <div class="box-body">
+                <form class="navbar-form navbar-left" action="">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <input type="text" class="form-control"  @if(isset($query['order_no'])) value="{{ $query['order_no'] }}" @endif name="order_no" placeholder="订单号">
+                    </div>
+                    <button type="submit" class="btn btn-info">搜索</button>&nbsp;&nbsp;
+                </form>
+                <br>
+                <br>
+                <br>
 
-                    <div class="container-fluid">
-                        <table id="example2" class="table table-condensed table-bordered table-hover">
-                            <tr style="color: #999999">
-                                <th>支付通道</th>
-                                <th>订单号</th>
-                                <th>商户号</th>
-                                <th>实付金额</th>
-                                <th>支付时间</th>
-                                <th>订单状态</th>
-                                <th>操作</th>
-                            </tr>
-
+                <div class="container-fluid">
+                    <table id="example2" class="table table-condensed table-bordered table-hover">
+                        <tr style="color: #999999">
+                            <th>订单号</th>
+                            <th>实付金额</th>
+                            <th>支付时间</th>
+                            <th>订单状态</th>
+                        </tr>
+                        @if(count($list))
+                            @foreach($list as $k=>$v)
                             <tr>
-                                <td colspan="7" style="text-align: center">没有找到匹配数据</td>
+                                <td>{{ $v->orderNo }}</td>
+                                <td>{{ $v->actual_amount }}</td>
+                                <td>{{ $v['updated_at'] }}</td>
+                                <td>
+                                    @if($v['pay_status'] == 2)
+                                        <span style="color:#dd4b39;font-weight: bold">异常</span>
+                                    @elseif($v['pay_status'] == 0)
+                                        <span style="color:orange;font-weight: bold">未支付</span>
+                                    @elseif($v['pay_status'] == 1)
+                                        <span style="color:#008d4c;font-weight: bold">已支付</span>
+                                    @endif
+                                </td>
                             </tr>
-                        </table>
-                    </div>
-
+                            @endforeach
+                        @else
+                        <tr>
+                            <td colspan="7" style="text-align: center">没有找到匹配数据</td>
+                        </tr>
+                        @endif
+                    </table>
+                    @include('User.Commons._page')
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="AvatarModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" style="height: auto;">
+    <div class="modal-dialog" style="width: 400px;margin: 30px auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addModalLabel" style="text-align: center;"></h4>
+            </div>
+            <div class="modal-body iqrcode" style="overflow-y: auto; text-align: center; background-color: #01a9f4;">
+                <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+                    <div class="row">
+                        <div class="col-md-12" style="overflow: hidden;">
+                            <img id="show_qrcode" src="/image/pay/app.png" style=" padding: 20px; margin:0px; background-color: #fff;">
+                            <div id="qrcode"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="time-item">
+                    <div class="time-item" id="msg">付款即时到账 未到账可联系我们</div>
+                    <strong id="hour_show"><s id="h"></s>0时</strong>
+                    <strong id="minute_show"><s></s>0分</strong>
+                    <strong id="second_show"><s></s>0秒</strong>
+                    <input type="hidden" name="orderNo" id="orderNo">
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center;">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭对话框</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section("scripts")
     <script src="{{ asset('AdminLTE/bower_components/moment/moment.js') }}"></script>
     <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('js/jquery.qrcode.min.js') }}"></script>
     <script>
         $(function () {
             $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
@@ -208,6 +177,112 @@
                     $('#daterange-btn').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'))
                 });
         })
+
+        /**
+         *提交
+         */
+        function save(_this) {
+            _this.removeAttr('onclick');
+
+            var m = $("input[name='money']").val();
+            if(m < 100){
+                toastr.error('充值金额最小100');
+                _this.attr("onclick", "save($(this))");
+                return false;
+            }
+
+            var $form = $('#form');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                if (result.status) {
+                    showAvatar(result.data.h5url);
+                    $('#addModalLabel').html('订单金额：'+result.data.money);
+                    $('#orderNo').val(result.data.orderNo);
+                    _this.attr("onclick", "save($(this))");
+                    timer(180);
+                } else {
+                    _this.attr("onclick", "save($(this))");
+                    toastr.error(result.msg);
+                }
+            }, 'json');
+
+        }
+
+        // 模态关闭
+        $('#AvatarModal').on('hidden.bs.modal', function () {
+            $('#addModalLabel').html('');
+            $("#orderNo").val('');
+            $("#msg").html('');
+        });
+
+        function showAvatar(strcode) {
+            if (strcode) {
+                qrshow(strcode);
+            }
+            $('#AvatarModal').modal('show');
+        }
+
+        function qrshow(strcode) {
+            var qrcode = $('#qrcode').qrcode({ text: strcode }).hide();
+            var canvas = qrcode.find('canvas').get(0);
+            $('#show_qrcode').attr('src', canvas.toDataURL('image/jpg'));
+            canvas.remove();
+        }
+
+        function timer(intDiff) {
+            var i = 0;
+            myTimer = window.setInterval(function () {
+                i++;
+                var day = 0,
+                    hour = 0,
+                    minute = 0,
+                    second = 0;//时间默认值
+                if (intDiff > 0) {
+                    day = Math.floor(intDiff / (60 * 60 * 24));
+                    hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                    minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                    second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+                }
+                if (minute <= 9) minute = '0' + minute;
+                if (second <= 9) second = '0' + second;
+                $('#hour_show').html('<s id="h"></s>' + hour + '时');
+                $('#minute_show').html('<s></s>' + minute + '分');
+                $('#second_show').html('<s></s>' + second + '秒');
+                if (hour <= 0 && minute <= 0 && second <= 0) {
+                    qrcode_timeout()
+                    clearInterval(myTimer);
+                }
+                intDiff--;
+                checkdata();
+            }, 1000);
+        }
+
+        function checkdata(){
+            $.ajax({
+                url: '{{ route('user.callback') }}',
+                data: {"trade_no": $("#orderNo").val()},
+                type:'get',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType:'json',
+                success: function (data) {
+                    if (data.status == 'success'){
+                        window.clearInterval(timer);
+                        $("#show_qrcode").attr("src","{{ asset('images/Pay/pay_ok.png') }}");
+                        $("#money").text("支付成功");
+                        $("#msg").html("<h1>订单已支付成功</h1>");
+                        $(".paybtn").hide();
+                        clearInterval(myTimer);
+                    }
+                }
+            })
+        }
+
+        function qrcode_timeout(){
+            $('#show_qrcode').attr("src","{{ asset('images/Pay/qrcode_timeout.png') }}");
+            $('.paybtn').hide();
+            $('#msg').html("<h1>订单已过期,请重新支付</h1>");
+        }
 
     </script>
 @endsection
