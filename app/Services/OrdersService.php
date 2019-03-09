@@ -36,7 +36,7 @@ class OrdersService
         if( $request->pay_code == "alipay_bank" || $request->pay_code == 'bank_gm' )
         {
             $amount = $account_array['realPrice'];
-        }else if($request->pay_code == "alipay_bank2" ||$request->pay_code == "bank_solidcode"){
+        }else if($request->pay_code == "alipay_bank2" || stripos($request->pay_code, 'solidcode') ){
             $amount = $account_array['realPrice'];
         }else{
             $amount = $request->amount;
