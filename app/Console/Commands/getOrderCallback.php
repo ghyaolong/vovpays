@@ -110,6 +110,14 @@ class getOrderCallback extends Command
                 return 1;
             }
 
+        }else if($data['type'] == 'bank_gm'){ // 银行、公众号固码
+            $key = $data['phoneid'] . "_" . $data['type'] . '_' . sprintf("%.2f", $data['money']);
+            if (Redis::exists($key)) {
+                $order_id = Redis::get($key);
+            } else {
+                Log::info('orderCallback_getOrderno_fail:', [$key]);
+                return 1;
+            }
         } else {
             $order_id = $data['mark'];
         }
@@ -231,6 +239,8 @@ class getOrderCallback extends Command
                 if (isset($key)) {
                     Redis::del($key);
                 }
+            }else if ($data['type'] == 'bank_gm') {
+                if (isset($key)) Redis::del($key);
             } else {
                 if (Redis::exists($data['phoneid'] . $data['type'])) {
                     $pahone_info = Redis::hGetAll($data['phoneid'] . $data['type']);

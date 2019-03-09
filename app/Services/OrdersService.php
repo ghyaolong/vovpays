@@ -33,7 +33,7 @@ class OrdersService
      */
     public function add(User $user, Channel $channel, Channel_payment $Channel_payment, Request $request, User_rates $user_rates, array $account_array)
     {
-        if( $request->pay_code == "alipay_bank" )
+        if( $request->pay_code == "alipay_bank" || $request->pay_code == 'bank_gm' )
         {
             $amount = $account_array['realPrice'];
         }else if($request->pay_code == "alipay_bank2" ||$request->pay_code == "bank_solidcode"){

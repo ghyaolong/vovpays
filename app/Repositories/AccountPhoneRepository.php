@@ -178,7 +178,7 @@ class AccountPhoneRepository
     {
         if ($type == 'alipay_solidcode') {
             $type = '支付宝';
-        } elseif ($type == 'wechat_solidcode') {
+        } elseif ($type == 'wechat_solidcode' || $type == 'bank_gm') {
             $type = '微信';
         } else if($type == 'cloudpay_solidcode'){
             $type = '云闪付';

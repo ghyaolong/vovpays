@@ -45,7 +45,7 @@ class ChooseAccountService{
                 $account_list = $this->accountBankCardsService->getStatusAndUserIdAndBanKMark($user->id,1,'ANTBANK');
             }else if($this->pay_code == 'alipay_bank2' || $this->pay_code == 'bank_solidcode'){
                 $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUserIdAndNotBanKMark($user->id,1,'ANTBANK',$type);
-            } else if($this->pay_code == 'alipay_solidcode'||$this->pay_code == 'wechat_solidcode'||$this->pay_code == 'cloudpay_solidcode'){
+            } else if($this->pay_code == 'bank_gm' || $this->pay_code == 'alipay_solidcode'||$this->pay_code == 'wechat_solidcode'||$this->pay_code == 'cloudpay_solidcode'){
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcode($type,$user->id,1);
             }
 
@@ -104,7 +104,7 @@ class ChooseAccountService{
         if( $this->pay_code == 'alipay_packets' || $this->pay_code == "alipay"||$this->pay_code =='alipay_solidcode')
         {
             $valid_account = $this->getValidAlipayAccount($account_list);
-        }else if($this->pay_code == "wechat"||$this->pay_code =='wechat_solidcode'){
+        }else if($this->pay_code == "wechat" || $this->pay_code =='wechat_solidcode' || $this->pay_code == 'bank_gm'){
 
             $valid_account = $this->getValidWechatAccount($account_list);
         }else if($this->pay_code == "alipay_bank"){
@@ -279,7 +279,13 @@ class ChooseAccountService{
         if(!count($valid_account_list)) return [];
         $valid_account = $this->getOrderAccount($valid_account_list);
         $this->updateAccountWeight($valid_account['phone_id'].'wechat');
-        return $this->pay_code=='wechat_solidcode'?$this->chooseaPayAmount($valid_account):$valid_account;
+        if($this->pay_code=='wechat_solidcode'){
+            return $this->chooseaPayAmount($valid_account);
+        }else if($this->pay_code == 'bank_gm'){
+            return $this->chooseaPayAmount($valid_account);
+        }else{
+            return $valid_account;
+        }
     }
 
     /**
