@@ -128,7 +128,7 @@ function checkdata(){
 
 $().ready(function(){
     timer(180);
-    if(isMobile() == 1 && "{{ $data['type'] == 'alipay' }}")
+    if(isMobile() == 1)
     {
         $('.paybtn').show();
     }
