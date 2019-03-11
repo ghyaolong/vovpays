@@ -212,7 +212,7 @@ class ExemptService implements PayInterface
                 'type'    => $request->pay_code,
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
-                'h5url'   => '',
+                'h5url'   => $account_array['qrcode'],
                 'payurl'  => $account_array['qrcode'],
             ];
 
