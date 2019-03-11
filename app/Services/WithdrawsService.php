@@ -56,7 +56,7 @@ class WithdrawsService
 
         DB::connection('mysql')->transaction(function () use ($data) {
             //账户余额更新
-            $status = $this->statisticalRepository->updateUseridBalanceDecrement($data['user_id'], $data['withdrawAmount']);
+            $status = $this->statisticalRepository->updateUseridHandlingFeeBalanceDecrement($data['user_id'], $data['withdrawAmount']);
             //添加结算信息
             $status && ($status = $this->withdrawsRepository->add($data));
 
