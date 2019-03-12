@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Pay\DmfService;
 use App\Services\Pay\ExemptService;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +31,10 @@ class PayServiceProvider extends ServiceProvider
         $this->app->singleton('exempt', function () {
             return new ExemptService();
         });
+
+        $this->app->singleton('dmf', function () {
+            return new DmfService();
+        });
     }
 
     /**
@@ -39,6 +44,6 @@ class PayServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['exempt'];
+        return ['exempt','dmf'];
     }
 }

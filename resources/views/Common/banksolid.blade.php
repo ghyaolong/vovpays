@@ -161,6 +161,18 @@
                                 <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">单笔订单最低金额:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="minQuota" placeholder="请输入单笔订单最低金额">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">单笔订单最高金额:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="maxQuota" placeholder="请输入单笔订单最高金额">
+                            </div>
+                        </div>
 
 
                         <div class="modal-footer">
@@ -385,6 +397,8 @@
                         $("input[name='cardNo']").val(result.data['cardNo']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
+                        $("input[name='minQuota']").val(result.data['minQuota']);
+                        $("input[name='maxQuota']").val(result.data['maxQuota']);
                         $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);

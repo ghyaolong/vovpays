@@ -10,14 +10,17 @@ namespace App\Repositories;
 
 
 use App\Models\Account_upper;
+use App\Models\Channel_payment;
 
 class AccountUpperRepository
 {
     protected $account_upper;
+    protected $channel_payment;
 
-    public function __construct(Account_upper $account_upper)
+    public function __construct(Account_upper $account_upper, Channel_payment $channel_payment)
     {
         $this->account_upper = $account_upper;
+        $this->channel_payment=$channel_payment;
     }
 
     /**
@@ -70,6 +73,17 @@ class AccountUpperRepository
     public function findId(string $id)
     {
         return $this->account_upper->whereId($id)->first();
+    }
+
+    /**
+     * @param int $status
+     * @param $type
+     * @return mixed
+     */
+    public function getStatusAndAccountType(int $status, $type)
+    {
+        $channel_payment_id=$this->channel_payment->wherePaymentcode($type)->select('id')->first()->id;
+        return $this->account_upper->whereStatus($status)->whereChannelPaymentId($channel_payment_id)->get();
     }
 
 }
