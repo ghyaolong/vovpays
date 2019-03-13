@@ -8,4 +8,5 @@ Route::group([], function () {
     Route::get('demo','PayController@demo')->name('pay.demo');
     Route::post('demo','PayController@demoStore')->name('pay.demo');
     Route::get('h5pay/{orderNo}','PayH5Controller@h5pay')->name('pay.h5pay');
+    Route::get('alipayauth/{orderNo}','PayH5Controller@alipayAuthNotify')->name('pay.alipayauth');
 });

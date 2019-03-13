@@ -72,4 +72,14 @@ class AccountUpperRepository
         return $this->account_upper->whereId($id)->first();
     }
 
+    public function findChannelId(int $channel_id)
+    {
+        return $this->account_upper->whereChannelId($channel_id)->whereStatus(1)->get();
+    }
+
+    public function findChannelPaymentId(int $channel_payment_id)
+    {
+        return $this->account_upper->whereChannelPaymentId($channel_payment_id)->whereStatus(1)->get();
+    }
+
 }

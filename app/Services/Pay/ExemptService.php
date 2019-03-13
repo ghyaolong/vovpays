@@ -268,6 +268,30 @@ class ExemptService implements PayInterface
             Redis::expire($result->orderNo,180);
             // 为了模板的共用而改变
             $request->pay_code = 'alipay';
+        }else if($request->pay_code == 'alipay_receipt'){ // 收款码
+            $order_date = array(
+                'amount'  => $result->amount,
+                'meme'    => $result->orderNo,
+                'userID'  => $account_array['userId'],
+                'status'  => 0,
+                'type'    => $request->pay_code,
+                'account' => $account_array['account'],
+                'sweep_num' => 0, // 扫码次数
+                'channel_payment_id' => $Channel_payment->id,
+                'phone_id'=> $account_array['phone_id'],
+            );
+            $data = [
+                'type'    => $request->pay_code,
+                'username'=> $account_array['username'],
+                'money'   => sprintf('%0.2f',$result->amount),
+                'orderNo' => $result->orderNo,
+                'payurl'  => 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+                'h5url'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+            ];
+            Redis::hmset($result->orderNo, $order_date);
+            Redis::expire($result->orderNo,180);
+            // 为了模板的共用而改变
+            $request->pay_code = 'alipay';
         }
 
         if( isset($request->json) && $request->json == 'json'){
