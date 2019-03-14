@@ -33,7 +33,7 @@ class StatisticalRepository
     }
 
     /**
-     * 用户余额增加
+     * 用户充值余额增加
      * @param int $uid
      * @param float $amount
      * @return mixed
@@ -44,7 +44,7 @@ class StatisticalRepository
     }
 
     /**
-     * 用户充值余额增加
+     * 用户余额增加
      * @param int $uid
      * @param float $amount
      * @return mixed

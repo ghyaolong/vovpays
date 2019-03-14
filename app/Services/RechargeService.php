@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\RechargeRepository;
 use App\Exceptions\CustomServiceException;
+use App\Repositories\StatisticalRepository;
 use App\Repositories\UsersRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -157,10 +158,11 @@ class RechargeService
 
         DB::connection('mysql')->transaction(function () use ($recharge) {
 
-            $result = $this->rechargeRepository->update($recharge->id, ['pay_status' => 1]);
-            $statisticalService = app(StatisticalService::class);
+            $result = $this->rechargeRepository->update($recharge->id, ['pay_status' => 1,'orderMk'=>'总后台手动补单']);
+            $statisticalrepository = app(StatisticalRepository::class);
             // 商户充值金额增加
-            $result && $result = $statisticalService->updateUseridBalanceIncrement($recharge->user_id, $recharge->actual_amount);
+            $result && $result = $statisticalrepository->updateUseridBalanceIncrement($recharge->user_id, $recharge->actual_amount);
+
             if (!$result) {
                 throw new CustomServiceException('系统故障,修改状态失败');
             }

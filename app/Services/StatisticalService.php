@@ -61,7 +61,6 @@ class StatisticalService
         return $this->statisticalRepository->updateUseridHandlingFeeBalanceIncrement($uid,$amount);
     }
 
-
     /**
      * 用户充值余额减少
      * @param int $uid
