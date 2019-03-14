@@ -257,7 +257,6 @@ class WithdrawsService
             //获取结算详情
             $withdrawInfo = $this->withdrawsRepository->findById($id);
             //账户余额更新
-
             $status = $this->statisticalRepository->updateUseridHandlingFeeBalanceIncrement($withdrawInfo->user_id, $withdrawInfo->withdrawAmount);
             //资金变动记录
 //          $this->addMoneyDetail($data);
