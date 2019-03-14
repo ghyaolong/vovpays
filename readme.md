@@ -57,6 +57,8 @@
 ``echo_supervisord_conf > /etc/supervisord.conf``
 
 ``vim /etc/supervisord.conf`` 拉到最底下开启
+
+
 #####[include]
 #####files = /etc/supervisord.d/*.conf
 
