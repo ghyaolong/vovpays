@@ -17,7 +17,7 @@
                         <thead>
                         <tr style="font-size: 15px;height: 38px">
                             <th>ID</th>
-                            <th>银行名称</th>
+                            {{--<th>银行名称</th>--}}
                             <th>支行名称</th>
                             <th>开户名</th>
                             <th>银行卡号</th>
@@ -30,7 +30,7 @@
                         @foreach($lists as $list)
                             <tr>
                                 <td>{{$list->id}}</td>
-                                <td>{{$list->bank->bankName}}</td>
+                                {{--<td>{{$list->bank->bankName}}</td>--}}
                                 <td>{{$list->branchName}}</td>
                                 <td>{{$list->accountName}}</td>
                                 <td>{{$list->bankCardNo}}</td>

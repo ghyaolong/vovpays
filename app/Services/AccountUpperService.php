@@ -85,14 +85,5 @@ class AccountUpperService
         return $this->accountUpperRepository->del($id);
     }
 
-    /**
-     * @param int $status
-     * @param $type
-     * @return mixed
-     */
-    public function getStatusAndAccountType(int $status, $type)
-    {
-        return $this->accountUpperRepository->getStatusAndAccountType($status,$type);
-    }
 
 }

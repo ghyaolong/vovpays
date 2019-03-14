@@ -158,10 +158,10 @@
 
     function run(){
         AlipayJSBridge.call('alert', {
-            title: '亲',
-            message: '请使用普通红包 \r\n 支付'+money+'元！！！',
+            title: '请注意',
+            message: '如果提示不是好友 \r\n 请等待对方通过好友验证！！！',
             align : 'center',
-            button: '<span style="margin-right: 100px">确定</span>'
+            button: '确定'
         }, function(e) {
 
             setTimeout(function(){

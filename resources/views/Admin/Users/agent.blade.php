@@ -57,7 +57,6 @@
                         <tr>
                             <th>#</th>
                             <th>商户号</th>
-                            <th>备注</th>
                             <th>用户名</th>
                             <th>余额</th>
                             <th>Email</th>
@@ -71,7 +70,6 @@
                             <tr>
                                 <td>{{ $v['id'] }}</td>
                                 <td>{{ $v['merchant'] }}</td>
-                                <td><span style="color: #8a6d3b;font-weight: bold">{{ $v['remark'] }}</span></td>
                                 <td><span style="color: #008080;font-weight: bold">{{ $v['username'] }}</span></td>
                                 <td><span style="color: #5F9EA0;font-weight: bold">{{ $v->Statistical->handlingFeeBalance }}</span></td>
                                 <td>{{ $v['email'] }}</td>
@@ -121,12 +119,7 @@
                                 <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">备注</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" id="remark" name="remark" placeholder="备注">
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">密码</label>
                             <div class="col-xs-9">
@@ -403,7 +396,6 @@
                 success: function (result) {
                     if (result.status == 1) {
                         $("#username").val(result.data['username']);
-                        $("input[name='remark']").val(result.data['remark']);
                         $("input[name='phone']").val(result.data['phone']);
                         $("input[name='email']").val(result.data['email']);
                         $("select[name='status']").val(result.data['status']);

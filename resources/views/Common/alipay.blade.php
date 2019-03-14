@@ -154,18 +154,6 @@
                                 <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">单笔订单最低金额:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="minQuota" placeholder="请输入单笔订单最低金额">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-xs-3 control-label">单笔订单最高金额:</label>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="maxQuota" placeholder="请输入单笔订单最高金额">
-                            </div>
-                        </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -402,14 +390,11 @@
                     if (result.status == 1) {
                         $("#addForm input[name='account']").val(result.data['account']);
                         $("select[name='channel_payment_id']").val(result.data['channel_payment_id']);
-                        
                         $("input[name='alipayusername']").val(result.data['alipayusername']);
                         $("input[name='alipayuserid']").val(result.data['alipayuserid']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
                         $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
-                        $("input[name='minQuota']").val(result.data['minQuota']);
-                        $("input[name='maxQuota']").val(result.data['maxQuota']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');

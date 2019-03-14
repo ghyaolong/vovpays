@@ -73,7 +73,6 @@ class WithdrawsController extends Controller
         $search = $this->withdrawsService->searchPage($data, 10);
         $clearings = $search['list'];
         $info = $search['info'];
-//        dd($clearings);
         $banks = $this->banksService->findAll();
         $WithdrawRule = $this->withdrawsService->getWithdrawRule();
         $statistical = $this->statisticalService->findUserId($uid);

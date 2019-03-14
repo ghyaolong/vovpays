@@ -32,9 +32,6 @@ class PayServiceProvider extends ServiceProvider
             return new ExemptService();
         });
 
-        $this->app->singleton('dmf', function () {
-            return new DmfService();
-        });
     }
 
     /**
@@ -44,6 +41,6 @@ class PayServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['exempt','dmf'];
+        return ['exempt'];
     }
 }
