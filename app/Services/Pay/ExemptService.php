@@ -222,9 +222,10 @@ class ExemptService implements PayInterface
             // 固码
             // 存储订单号,以便回调
             // 截取银行卡号后四位
-            $account = $account_array['bank_account'];
+            $account = $account_array['account'];
+            $card = substr($account,-4);
 
-            $key = $account_array['phone_id'].'_alipay_bank2_'.$account.'_'.sprintf('%0.2f',$account_array['realPrice']);
+            $key = $account_array['phone_id'].'_alipay_bank2_'.$card.'_'.sprintf('%0.2f',$account_array['realPrice']);
             Redis::set($key,$result->orderNo);
             Redis::expire($key,600);
 
