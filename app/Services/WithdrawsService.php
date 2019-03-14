@@ -76,9 +76,9 @@ class WithdrawsService
     public function getWithdrawRule()
     {
         $withdrawRule = [];
-        $withdrawRule['withdraw_downline'] = SystemsRepository::findKey('withdraw_downline');
-        $withdrawRule['withdraw_fee_type'] = SystemsRepository::findKey('withdraw_fee_type');
-        $withdrawRule['withdraw_rate'] = SystemsRepository::findKey('withdraw_rate');
+        $withdrawRule['withdraw_downline']  = SystemsRepository::findKey('withdraw_downline');
+        $withdrawRule['withdraw_fee_type']  = SystemsRepository::findKey('withdraw_fee_type');
+        $withdrawRule['withdraw_rate']      = SystemsRepository::findKey('withdraw_rate');
         return $withdrawRule;
     }
 
@@ -242,7 +242,7 @@ class WithdrawsService
             $this->cancelWithdraw($id, $info);
             $status = true;
         }
-        return isset($status) ? $status : false;
+        return isset($status)?$status:false;
     }
 
     /**取消结算
@@ -280,8 +280,8 @@ class WithdrawsService
         if (env('ADD_ACCOUNT_TYPE') != 3) {
             throw new CustomServiceException('非法操作!');
         }
-        $withdrawInfo = $this->withdrawsRepository->findById($withdraw_id);
-        if ($withdrawInfo->agent_id != $agent_id) {
+        $withdrawInfo=$this->withdrawsRepository->findById($withdraw_id);
+        if($withdrawInfo->agent_id!=$agent_id){
 
             throw new CustomServiceException('非法操作!');
         }
@@ -295,7 +295,6 @@ class WithdrawsService
     {
         return 'W' . date('YmdHis') . mt_rand(10000, 99999);
     }
-
     /**
      * 查询是否存在申请
      * return mixed
