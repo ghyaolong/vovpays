@@ -83,6 +83,7 @@ Route::group([], function () {
         Route::delete('withdraws','WithdrawsController@destroy')->name('withdraw.destroy');
         Route::post('withdraws/saveStatus','WithdrawsController@saveStatus')->name('withdraw.saveStatus');
         Route::post('withdraws/update','WithdrawsController@update')->name('withdraw.update');
+        Route::post('withdraws/count','WithdrawsController@checkNotice')->name('withdraw.checkNotice');
         //账号管理
         Route::get('account/{type}','AccountPhoneController@index')->name('admin.account');
         Route::post('account','AccountPhoneController@store')->name('admin.accountAdd');
@@ -118,7 +119,9 @@ Route::group([], function () {
         //安全设置
         Route::get('validator','ValidatorController@index')->name('admin.validator');
         Route::post('validator','ValidatorController@store')->name('admin.validator');
+        //充值
+        Route::get('recharge','RechargesController@index')->name('recharge.index');
+        Route::post('recharge/saveStatus','RechargesController@saveStatus')->name('recharge.saveStatus');
 
-        Route::post('withdraws/count','WithdrawsController@checkNotice')->name('withdraw.checkNotice');
     });
 });

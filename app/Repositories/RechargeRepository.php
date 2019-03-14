@@ -50,8 +50,18 @@ class RechargeRepository
         return $this->recharge->whereUserId($uid)->orderBy('id','desc')->paginate($page);
     }
 
+    public function findId(int $id)
+    {
+        return $this->recharge->whereId($id)->first();
+    }
+
     public function update(int $id, array $data)
     {
         return $this->recharge->whereId($id)->update($data);
+    }
+
+    public function getAllPage($sql, $where,$page){
+
+        return $this->recharge->whereRaw($sql,$where)->paginate($page);
     }
 }

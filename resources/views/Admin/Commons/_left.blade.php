@@ -48,6 +48,9 @@
                     <span>商户管理</span>
                 </a>
             </li>
+            @if(env('ADD_ACCOUNT_TYPE') == 1)
+                <li><a href="{{route('recharge.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>商户充值</span></a></li>
+            @endif
             @if(env('ADD_ACCOUNT_TYPE') == 4)
             <li>
                 <a href="{{ route('users.index',['court']) }}">
@@ -74,6 +77,7 @@
                     <span>订单管理</span>
                 </a>
             </li>
+
             <li>
                 <a href="{{ route('withdraws.index') }}">
                     <i class="fa fa-reorder"></i>
