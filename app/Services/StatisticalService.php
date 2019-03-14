@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Repositories\StatisticalRepository;
+use App\Models\Recharge;
+use Illuminate\Support\Facades\DB;
 
 class StatisticalService
 {
@@ -29,9 +31,23 @@ class StatisticalService
      * @param float $amount
      * @return mixed
      */
-    public function updateUseridBalanceIncrement(int $uid, float $amount)
+    public function updateUseridBalanceIncrement(array $data)
     {
-        return $this->statisticalRepository->updateUseridBalanceIncrement($uid,$amount);
+        DB::connection('mysql')->transaction(function () use ($data) {
+
+            if ($data['balance_type'] == 0) {
+                $result=$this->statisticalRepository->updateUseridBalanceIncrement($data['uid'], $data['amount']);
+            }elseif($data['balance_type'] == 1) {
+                $result=$this->statisticalRepository->updateUseridBalanceDecrement($data['uid'], $data['amount']);
+                $data['amount']=-$data['amount'];
+            }
+            $result&&$result=Recharge::create(['user_id'=>$data['uid'],'recharge_amount'=>$data['amount'],'actual_amount'=>$data['amount'],
+                                                   'merchant'=>$data['merchant'],'orderNo'=>'C' . getOrderId(),'orderMk'=>'总后台手动充值','pay_status'=>1 ]);
+            if (!$result) {
+                throw new CustomServiceException('系统故障,充值失败');
+            }
+        });
+        return true;
     }
 
     /**
@@ -45,16 +61,6 @@ class StatisticalService
         return $this->statisticalRepository->updateUseridHandlingFeeBalanceIncrement($uid,$amount);
     }
 
-    /**
-     * 用户余额减少
-     * @param int $uid
-     * @param float $amount
-     * @return mixed
-     */
-    public function updateUseridBalanceDecrement(int $uid, float $amount)
-    {
-        return $this->statisticalRepository->updateUseridBalanceDecrement($uid,$amount);
-    }
 
     /**
      * 用户充值余额减少

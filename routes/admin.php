@@ -48,6 +48,7 @@ Route::group([], function () {
         Route::post('users/quota','UsersController@quotaStore')->name('users.quotaStore');
         Route::get('users/{id}/quotaLog','UsersController@quotaLog')->name('users.quotaLog');
         Route::post('users/balance','UsersController@balance')->name('users.balance');
+        Route::post('users/handlingfeebalance','UsersController@handlingfeebalance')->name('users.handlingfeebalance');
 
         //会员通道设置
         Route::get('users/{id}/channel', 'UsersController@channel')->name('users.channel');

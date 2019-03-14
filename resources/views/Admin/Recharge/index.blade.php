@@ -10,6 +10,7 @@
 
         <div class="col-xs-12">
             <div class="box">
+
                 <a href="{{ route('recharge.index') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
                 <div class="box-body">
                     <form action="{{ route('recharge.index') }}" method="get">

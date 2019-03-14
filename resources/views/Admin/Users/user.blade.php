@@ -94,6 +94,11 @@
                                     {{--<button type="button" class="btn btn-danger btn-sm"--}}
                                             {{--onclick="del($(this),{{ $v['id'] }})">删除--}}
                                     {{--</button>--}}
+                                    @if(env('ADD_ACCOUNT_TYPE') == 1)
+                                        <button type="button" class="btn btn-warning btn-sm"
+                                                onclick="editBlance('充值',{{ $v['id'] }})">充值余额
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -193,7 +198,7 @@
                     <h4 class="modal-title quota_modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="balanceForm" action="{{ route('users.balance') }}" class="form-horizontal" role="form">
+                    <form id="balanceForm" action="" class="form-horizontal" role="form">
                         <input type="hidden" name="uid">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -280,6 +285,14 @@
          * 余额加减
          */
         function editBlance(title,id) {
+            $form=$('#balanceForm');
+            if(title=='充值'){
+                $form.attr('action',"{{ route('users.handlingfeebalance') }}");
+
+            }else{
+                $form.attr('action',"{{ route('users.balance') }}");
+            }
+
             $("input[name='uid']").val(id);
             $('.quota_modal-title').html(title);
             $('#balanceModel').modal('show');
@@ -289,9 +302,9 @@
          * 余额修改提交
          */
         function balancsave(_this) {
-
+            title=$('.quota_modal-title').html();
             swal({
-                title: "您确定要改为成功吗？",
+                title: "您确定要"+title+"吗？",
                 text: "修改后不能恢复！",
                 type: "warning",
                 showCancelButton: true,
@@ -301,11 +314,12 @@
                 var $form = $('#balanceForm');
                 _this.removeAttr('onclick');
                 $.post($form.attr('action'), $form.serialize(), function (result) {
+
                     if (result.status) {
                         $('#balanceModel').modal('hide');
                         setInterval(function () {
                             window.location.reload();
-                        }, 1000);
+                        }, 1500);
 
                         toastr.success(result.msg);
                     } else {

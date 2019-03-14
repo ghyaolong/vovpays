@@ -62,6 +62,6 @@ class RechargeRepository
 
     public function getAllPage($sql, $where,$page){
 
-        return $this->recharge->whereRaw($sql,$where)->paginate($page);
+        return $this->recharge->whereRaw($sql,$where)->orderBy('id','desc')->paginate($page);
     }
 }
