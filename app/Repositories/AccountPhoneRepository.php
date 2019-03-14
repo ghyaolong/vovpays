@@ -163,7 +163,7 @@ class AccountPhoneRepository
             $type = '微信';
         } else if($type == 'cloudpay'){
             $type = '云闪付';
-        } else if($type == 'alipay_packets'){
+        } else if($type == 'alipay_packets' || $type == 'alipay_receipt'){
             $type = '支付宝';
         }
         return $this->account_phone->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->get();
@@ -200,7 +200,7 @@ class AccountPhoneRepository
             $type = '微信';
         } else if($type == 'cloudpay'){
             $type = '云闪付';
-        } else if($type == 'alipay_packets'){
+        } else if($type == 'alipay_packets' || $type == 'alipay_receipt' ){
             $type = '支付宝';
         }
         return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->get();

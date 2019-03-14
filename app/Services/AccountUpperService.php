@@ -65,6 +65,16 @@ class AccountUpperService
         return $this->accountUpperRepository->findId($id);
     }
 
+    public function findChannelId(int $channel_id)
+    {
+        return $this->accountUpperRepository->findChannelId($channel_id);
+    }
+
+    public function findChannelPaymentId(int $channel_payment_id)
+    {
+        return $this->accountUpperRepository->findChannelPaymentId($channel_payment_id);
+    }
+
     /**
      * 伪删除
      * @param int $id

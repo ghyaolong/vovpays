@@ -113,7 +113,7 @@
                                 <select class="form-control" id="channel_id" name="channel_id" onchange="channel_payment(this.value)">
                                     <option value="">选择支付方式</option>
                                     @foreach($channel as $payment)
-                                        <option value="{{$payment->id}}" @if($payment->id == 1)disabled="disabled"@endif>{{$payment->channelName}}</option>
+                                        <option value="{{$payment->id}}" >{{$payment->channelName}}</option>
                                     @endforeach
                                 </select>
                             </div>
