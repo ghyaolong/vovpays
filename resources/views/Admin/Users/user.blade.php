@@ -55,6 +55,9 @@
                             <th>商户号</th>
                             <th>用户名</th>
                             <th>余额</th>
+                            @if(env('ADD_ACCOUNT_TYPE') == 1)
+                                <th>充值余额</th>
+                            @endif
                             <th>上级代理</th>
                             <th>Email</th>
                             <th>电话</th>
@@ -69,6 +72,9 @@
                                 <td>{{ $v['merchant'] }}</td>
                                 <td><span style="color: #4682B4;font-weight: bold">{{ $v['username'] }}</span></td>
                                 <td><span style="color: #5F9EA0;font-weight: bold">{{ $v->Statistical->handlingFeeBalance }}</span></td>
+                                @if(env('ADD_ACCOUNT_TYPE') == 1)
+                                    <td><span style="color: #ff9c3d;font-weight: bold">{{ $v->Statistical->balance }}</span></td>
+                                @endif
                                 <td><span style="color: #008080;font-weight: bold">{{ $v['agentName'] }}</span></td>
                                 <td>{{ $v['email'] }}</td>
                                 <td>{{ $v['phone'] }}</td>

@@ -26,6 +26,7 @@ class CreateRechargesTable extends Migration
             $table->timestamps();
         });
         DB::statement("ALTER TABLE `pay_recharges` comment '充值表'");
+        DB::statement("ALTER TABLE `pay_recharges` ENGINE=InnoDB");
     }
 
     /**
