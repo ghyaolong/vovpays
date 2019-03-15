@@ -197,13 +197,15 @@ class getOrderCallback extends Command
             $result = $ordersService->update($order->id, $params);
             if (!$result) return 6;
 
-            SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
+
 
             // 更新redis订单状态,前端查询
             if (Redis::exists($order->orderNo)) {
                 Redis::hmset($order->orderNo, ['status' => 1]);
                 Redis::expire($order->orderNo, 180);
             }
+
+            SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
 
             $statisticalService = app(StatisticalService::class);
             // 商户收益增加
