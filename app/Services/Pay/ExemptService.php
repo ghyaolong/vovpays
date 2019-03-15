@@ -194,7 +194,7 @@ class ExemptService implements PayInterface
             }catch ( \Exception $e){
                 return json_encode(RespCode::SYS_ERROR,JSON_UNESCAPED_UNICODE);
             }
-        }else if($request->pay_code == 'bank_gm' || $request->pay_code == 'alipay_solidcode'||$request->pay_code == 'wechat_solidcode'||$request->pay_code == 'cloudpay_solidcode'){
+        }else if($this->pay_code == 'alipay_paper' || $request->pay_code == 'bank_gm' || $request->pay_code == 'alipay_solidcode'||$request->pay_code == 'wechat_solidcode'||$request->pay_code == 'cloudpay_solidcode'){
             // 固码
             // 存储订单号,以便回调
             // 截取银行卡号后四位
