@@ -131,9 +131,11 @@ class ChooseAccountService
                 $get_account = Redis::hGetAll($account->phone_id . 'alipay');
 
                 //检查改固码id是否存在订单
+                if ($this->pay_code == 'alipay_solidcode'){
                 $key = Redis::get($get_account['phoneid'] . '_alipay_solidcode_' . sprintf('%0.2f', $this->price));
                 if (isset($key)) {
                     continue;
+                }
                 }
                 //检查心跳
                 if ((time() > (strtotime($get_account['update']) + 50) && $get_account['status'] == 1)) {
