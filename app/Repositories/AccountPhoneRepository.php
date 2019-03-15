@@ -177,7 +177,7 @@ class AccountPhoneRepository
      */
     public function getStatusAndAccountTypeAndSolidcode(string $type, int $uid, int $status)
     {
-        if ($type == 'alipay_solidcode' || $type == 'alipay_paper') {
+        if ($type == 'alipay_solidcode') {
             $type = '支付宝';
         } elseif ($type == 'wechat_solidcode' || $type == 'bank_gm') {
             $type = '微信';
@@ -215,7 +215,7 @@ class AccountPhoneRepository
      */
     public function getStatusAndAccountTypeAndSolidcodeAndUidarr(string $type, int $status, array $uid_arr)
     {
-        if ($type == 'alipay_solidcode' || $type == 'alipay_paper') {
+        if ($type == 'alipay_solidcode') {
             $type = '支付宝';
         } elseif ($type == 'wechat_solidcode') {
             $type = '微信';
