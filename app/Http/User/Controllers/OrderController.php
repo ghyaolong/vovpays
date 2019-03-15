@@ -104,6 +104,8 @@ class OrderController extends Controller
         {
             $this->statisticalService->updateUseridHandlingFeeBalanceIncrement($order->agent_id,$order->agentAmount);
         }
+        //扣除预充值手续费
+        $this->statisticalService->updateUseridBalanceDecrement($uid,$order->orderRate);
 
         SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
         return ajaxSuccess('修改成功！');
