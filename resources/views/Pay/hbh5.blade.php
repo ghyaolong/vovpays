@@ -12,7 +12,6 @@
     <link href="{{ asset('Hongbao/hipay.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('Hongbao/style.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ asset('Hongbao/alipayjsapi.inc.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
     <style type="text/css">
         html,
         body {
@@ -66,7 +65,7 @@
     </script>
 </head>
 <body style="height: 723px;">
-<div class="aui-free-head">
+<div class="aui-free-head" style="height: 328px;">
     <div class="aui-flex b-line">
         <div class="aui-user-img">
             <img src="{{ asset('Hongbao/tx.jpeg') }}" alt="">
@@ -86,6 +85,9 @@
             <p>充单号：{{ $data['meme'] }}</p>
         </div>
     </div>
+    <a href="javascript: berforPay();" class="aui-button">
+        <button id="gopay">立即支付</button>
+    </a>
 </div>
 <div class="am-process">
     <div class="am-process-item pay"><i class="am-icon process pay" aria-hidden="true"></i>
@@ -110,28 +112,30 @@
         <div class="am-process-up-border"></div>
     </div>
 </div>
-<div style="text-align: center;">
-    <button class="btnCopy" id="btn" data-clipboard-text='aaabbb'  style="border:none;width: 300px;margin: 0 auto;height: 50px;line-height: 50px;color:#000;background: #e5cf9f;text-align: center;font-size: 15px;border-radius: 4px;">确定支付</button>
-</div>
+</body>
 <script>
-    var u = navigator.userAgent, app = navigator.appVersion;
-    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
-    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-    window.onload = function() {
-        var clipboard = new ClipboardJS('#btn');
-        clipboard.on('success', function(e) {
-            e.clearSelection();
-            run();
-        });
-        clipboard.on('error', function(e) {
-            alert('复制失败');
-            run();
-        });
-    }
+    var can_pay = false;
+    var count   = 120;
+    //gopay
+    window.setInterval(function () {
+        if(count<=0){
+            can_pay = true;
+            $('#gopay').disabled=false;
+            $('#gopay').text("立即支付");
+            return true;
+        }
+        can_pay = false;
+        $('#gopay').disabled=true;
+        $('#gopay').text("支付宝授权中,请稍后("+count+")");
+        count--;
+    }, 1000);    AlipayJSBridge.call("setTitleColor", {
+        color: parseInt('c14443', 16),
+        reset: false
+    });
 
-    function ready(a){
-        window.AlipayJSBridge ? a && a() : document.addEventListener("AlipayJSBridgeReady", a, !1)
-    }
+
+
+
     //导航栏颜色
     AlipayJSBridge.call("setTitleColor", {
         color: parseInt('c14443', 16),
@@ -144,45 +148,107 @@
         title: '红包自助充值',
         subtitle: '安全支付'
     });
-
-    var userid = "{{ $data['userID'] }}";
-    var money = "{{ $data['amount'] }}";
-    var orderId = "{{ $data['meme'] }}";
-    var account_name = "{{ $data['account'] }}";
-    document.addEventListener('popMenuClick', function (e) {
+    //右上角菜单
+    AlipayJSBridge.call('setOptionMenu', {
+        icontype: 'filter',
+        redDot: '01', // -1表示不显示，0表示显示红点，1-99表示在红点上显示的数字
+    });
+    AlipayJSBridge.call('showOptionMenu');
+    document.addEventListener('optionMenu', function(e) {
+        AlipayJSBridge.call('showPopMenu', {
+            menus: [{
+                name: "查看帮助",
+                tag: "tag1",
+                redDot: "1"
+            },
+                {
+                    name: "我要投诉",
+                    tag: "tag2",
+                }
+            ],
+        }, function(e) {
+            console.log(e);
+        });
     }, false);
 
-    document.addEventListener('resume', function (event) {
-        history.go(0);
-    });
-
-    function run(){
-        AlipayJSBridge.call('alert', {
-            title: '请注意',
-            message: '如果提示不是好友 \r\n 请等待对方通过好友验证！！！',
-            align : 'center',
-            button: '确定'
-        }, function(e) {
-
-            setTimeout(function(){
-                AlipayJSBridge.call("pushWindow", {
-                    url: "alipays://platformapi/startapp?appId=20000186&actionType=addfriend&userId="+userid+"&loginId="+account_name+"&source=by_f_v&alert=true",
-                    param : {
-
-                    }
-                });
-                ap.pushWindow({
-                    url: "alipays://platformapi/startapp?appId=88886666&money="+money+"&amount="+money+"&chatUserType=1chatUserName=x&entryMode=personalStage&schemaMode=portalInside&target=personal&chatUserId="+userid+"&canSearch=false&prevBiz=chat&chatLoginId="+account_name +"&remark="+orderId+"&appLaunchMode=3",
-                },function(a) {
-
-                })
-            },888);
-        });
+    function javascrip(){
+        // history.go(0);
     }
 
-    ap.onAppResume(function(event) {
-        AlipayJSBridge.call( "exitApp");
+    var a = "{{ $data['userID'] }}";//支付宝userId
+    var e = "亲";
+    var f = "请使用红包支付"+"{{ $data['amount'] }}"+"\r\n禁止修改红包金额和备注，否则不会到账";
+
+    var g = "确定";
+    var h = "{{ $data['amount'] }}";
+    var i = "{{ $data['meme'] }}";//备注 订单号
+    var j = "{{ $data['account'] }}";
+    document.addEventListener('popMenuClick', function(e) {
+        // alert(JSON.stringify(e.data));
+    }, false);
+
+    document.addEventListener('resume', function(event) {
+        // history.go(0);
+    });
+
+    function berforPay(){
+        goPay();
+
+    }
+    function goPay() {
+
+        if(can_pay==false){
+            ap.showToast('请稍后');
+            return false;
+        }
+
+        AlipayJSBridge.call('alert', {
+                title: e,
+                message: f,
+                button: g
+            }, function(e) {
+                AlipayJSBridge.call('pushWindow', {
+                    url: "alipays://platformapi/startapp?appId=20000186&actionType=addfriend&userId=" + a + "&loginId=" + j + "&source=by_home"
+                });
+                setTimeout(function() {
+                    window.location.href = "alipays://platformapi/startapp?appId=88886666&appLaunchMode=3&canSearch=false&chatLoginId=qq11224&chatUserId=" + a + "&chatUserName=x&chatUserType=1&entryMode=personalStage&prevBiz=chat&schemaMode=portalInside&target=personal&money="+h+"&amount=" + h + "&remark=" + i;
+                }, 300);
+            }
+        );
+
+
+
+    }
+</script>
+<script>
+    var pageWidth = window.innerWidth;
+    var pageHeight = window.innerHeight;
+
+    if (typeof pageWidth != "number") {
+        //在标准模式下面
+        if (document.compatMode == "CSS1Compat") {
+            pageWidth = document.documentElement.clientWidth;
+            pageHeight = document.documentElement.clientHeight;
+        } else {
+            pageWidth = document.body.clientWidth;
+            pageHeight = window.body.clientHeight;
+        }
+    }
+    $('body').height(pageHeight);
+</script>
+<script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.inc.min.js"></script>
+<script>
+    ap.allowPullDownRefresh(false);
+    ap.onPullDownRefresh(function(res){
+        if(!res.refreshAvailable){
+            ap.alert({
+                content: '刷新已禁止',
+                buttonText: '恢复'
+            }, function(){
+                ap.allowPullDownRefresh(true);
+                ap.showToast('刷新已恢复')
+            });
+        }
     });
 </script>
-</body>
 </html>

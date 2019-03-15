@@ -28,20 +28,40 @@
     <div class="mod-ct">
         <h1></h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
-        <!--支付宝app支付-->
-        <div class="app_items">
-            <div class="paybtn" style="display: none;">
-                <a href="javascript:void(0);" data-clipboard-text='{{ $data['h5url'] }}' id="alipaybtn" class="btn btn-primary" target="_blank">1.点击此处复制付款链接</a>
-            </div>
-            <h1 style="padding-top:15px;color: #FF0000">2.打开支付宝，把复制的链接发给任意"通讯录好友"</h1>
-            <h1 style="color: #FF0000">3.点击发送给好友的付款链接</h1>
-        </div>
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
                 <div style="position: relative;display: inline-block;">
                     <img id="show_qrcode" width="200">
                 </div>
+            </div>
+        </div>
+        <div class="time-item">
+            <a onclick="updateTaobao()" href="javascript:;" style="font-size: 20px;" data-clipboard-text='{{ $data['h5url'] }}'  class="btn btn-primary" target="_blank">方法1:点击下载淘宝</a>
+            <p id="text_alipay_qrcode" style="font-size:16px;color:red;text-align:left;">
+                <br>
+                注意，安装完淘宝，直接点击下面按钮启动，如有安装过的无需再次安装
+            </p>
+        </div>
+        <div class="time-item">
+            <a  onclick="goalipay()" href="javascript:void(0);" style="font-size: 20px;" data-clipboard-text='{{ $data['h5url'] }}'  class="btn btn-primary" target="_blank">安装完淘宝点我启动支付</a>
+        </div>
+        <br>
+        <!--支付宝app支付-->
+        <div class="app_items">
+            <div class="paybtn" style="display: none;">
+                <a href="javascript:void(0);"  style="font-size: 20px;" data-clipboard-text='{{ $data['h5url'] }}' id="alipaybtn" class="btn btn-primary" target="_blank">方法2:点击复制付款链接</a>
+                <br>
+                <p id="text_alipay_qrcode" style="font-size:16px;color:red;text-align:left;">
+                    <br>
+                    <span style="color:blue;">1:</span>点击复制链接<br>
+                    <span style="color:blue;">2:</span>打开支付宝点击[朋友]<br>
+                    <span style="color:blue;">3:</span>搜索自己的姓名,然后找到自己,点击进入聊天窗<br>
+                    <span style="color:blue;">4:</span>粘贴付款链接后,点击发送<br>
+                    <span style="color:blue;">5:</span>点击聊天窗的链接进行付款<br>
+                    <span style="color:blue;">注:</span>请勿修改付款金额,否则不能到账<br>
+                </p>
+                <br>
             </div>
         </div>
         <div class="time-item">
@@ -55,6 +75,23 @@
 <script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('js/jquery.qrcode.min.js') }}"></script>
 <script type="text/javascript">
+var u = navigator.userAgent;
+var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+var orderUrl = "{{ $data['h5url'] }}";
+var alipayUrl = 'alipays://platformapi/startapp?appId=20000067&url=' + orderUrl;
+function updateTaobao() {
+    if (isiOS) {
+        location.href = 'http://itunes.apple.com/app/id387682726?sprefer=php056&mt=8';
+    } else if (isAndroid) {
+        location.href = 'http://ma.taobao.com/ZhEm81';
+    }
+}
+
+function goalipay() {
+    location.href = alipayUrl;
+}
+
 var myTimer;
 function timer(intDiff) {
     var i = 0;

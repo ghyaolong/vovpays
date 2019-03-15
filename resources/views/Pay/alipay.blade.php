@@ -18,7 +18,47 @@
     <link href="{{ asset('css/Pay/pay.css') }}" rel="stylesheet" media="screen">
     <script src="{{ asset('AdminLTE/bower_components/jquery/dist/jquery.min.js') }}"></script>
 </head>
-
+<style>
+    .form-control {
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        /* line-height: 1.42857143; */
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+    .btnsmall {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background-color: #00c0ef;
+        border-color: #00acd6;
+    }
+</style>
 <body>
 <div class="body">
     <h1 class="mod-title">
@@ -30,9 +70,9 @@
         <h1 style="color: #FF0000">3.截图保存到手机相册,打开支付宝扫一扫,选着相册</h1>
         <div class="amount" id="money">￥{{ $data['money'] }}</div>
         <!--支付宝app支付-->
-        {{--<div class="paybtn" style="display: none;padding: 10px;">--}}
-            {{--<a href="{{ $data['h5url'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">启动支付宝</a>--}}
-        {{--</div>--}}
+        <div class="paybtn" style="display: none;padding: 10px;">
+            <a href="{{ $data['h5url'] }}" id="alipaybtn" class="btn btn-primary" target="_blank">启动支付宝</a>
+        </div>
         <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
             <div data-role="qrPayImg" class="qrcode-img-area">
                 <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;"></div>
@@ -41,6 +81,15 @@
                 </div>
             </div>
         </div>
+        @if($data['type'] == 'alipay_receipt')
+        <div class="time-item">
+            <input type="text" class="form-control" id="useraccount" placeholder="请输入您付款的支付宝账号">
+            <button type="button" class="btnsmall" onclick="sub()" >确定</button>
+            <p style="font-size: 20px;color: #FF0000;">1.请输入您付款的支付宝账号</p>
+            <p style="font-size: 20px;color: #FF0000;">2.点击确定，截图保存二维码</p>
+            <p style="font-size: 20px;color: #FF0000;">3.启动支付宝扫一扫，选着相册</p>
+        </div>
+        @endif
         <div class="time-item">
             @if($data['type'] != 'alipay_packets')
                 <div class="time-item"><h1 style="color: red">验证姓名：{{$data['username']}}</h1></div>
@@ -129,10 +178,32 @@ function checkdata(){
     })
 }
 
+function sub()
+{
+    var useraccount = $('#useraccount').val();
+    if(useraccount == '' || useraccount.length <= 0){
+        alert('账户不能为空');
+        return false;
+    }
+    var strcode = toUtf8('{!! $data['payurl'] !!}'+ '?useraccount='+useraccount);
+    var qrcode = $('#show_qrcode').qrcode({ text: strcode });
+    var canvas = qrcode.find('canvas').get(0);
+    $('#show_qrcode').attr('src', canvas.toDataURL('image/jpg'));
+    canvas.remove();
+    $('.qrcode-img-wrapper').show();
+}
+
 $().ready(function(){
     timer(180);
     var type = '{{ $data['type'] }}';
-    if(isMobile() == 1 && type == 'alipay_packets')
+
+    if(  type == 'alipay_receipt'){
+        $('.qrcode-img-wrapper').hide();
+    }
+
+
+
+    if(isMobile() == 1 && (type == 'alipay_packets') )
     {
         $('.paybtn').show();
     }

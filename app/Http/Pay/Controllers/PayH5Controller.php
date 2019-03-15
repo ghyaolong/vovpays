@@ -20,8 +20,8 @@ class PayH5Controller extends Controller
     public function h5pay(Request $request)
     {
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
-//        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
-//        if(!$request->orderNo) return ;
+        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
+        if(!$request->orderNo) return ;
 
 
         Redis::select(1);
@@ -49,8 +49,10 @@ class PayH5Controller extends Controller
             }
             $num = $data['sweep_num']+1;
             Redis::hset($request->orderNo, 'sweep_num',$num);
-            header('Location:'. "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$data['account']}&bankAccount={$data['bank_account_name']}&money={$data['amount']}&amount={$data['amount']}&bankMark={$data['bank_code']}&bankName={$data['bank_name']}&cardIndex={$data['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from");
+//            header('Location:'. "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$data['account']}&bankAccount={$data['bank_account_name']}&money={$data['amount']}&amount={$data['amount']}&bankMark={$data['bank_code']}&bankName={$data['bank_name']}&cardIndex={$data['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from");
+            $data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode("alipays://platformapi/startapp?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$data['account']}&bankAccount={$data['bank_account_name']}&money={$data['amount']}&amount={$data['amount']}&bankMark={$data['bank_code']}&cardIndex={$data['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from");
 
+            return view('Pay.h5alipay_bank',compact('data'));
         }else if($data['type'] == 'alipay'){
 
             if($data['sweep_num'] >= 1){
@@ -61,19 +63,36 @@ class PayH5Controller extends Controller
             return view('Pay.android',compact('data'));
 
         }else if($data['type'] == 'alipay_receipt'){
-
-            $accountUpperService = app(AccountUpperService::class);
-            $account_list = $accountUpperService->findChannelId(1);
-
-            if(!$account_list){
-                return json_encode('系统未配置',JSON_UNESCAPED_UNICODE);
+            if($data['sweep_num'] >= 1){
+                return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
             }
-            $account_array = $account_list->toArray();
+            $num = $data['sweep_num']+1;
+            Redis::hset($request->orderNo, 'sweep_num',$num);
+            try{
+                $msg = json_encode([
+                    'amount' => $data['amount'],
+                    'mark'   => $data['meme'],
+                    'type'   => 'alipay_receipt',
+                    'uid'  => $request->useraccount,
+                    'sendtime' => TimeMicroTime(),
+                ]);
+                $rabbitMqService = app(RabbitMqService::class);
+                $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
+            }catch ( \Exception $e){
+                return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
+            }
+//            $accountUpperService = app(AccountUpperService::class);
+//            $account_list = $accountUpperService->findChannelId(1);
+//
+//            if(!$account_list){
+//                return json_encode('系统未配置',JSON_UNESCAPED_UNICODE);
+//            }
+//            $account_array = $account_list->toArray();
 
-            $rank_key  = array_rand($account_array);
-            $redirect_uri = urlencode ('http://'.$_SERVER['HTTP_HOST'].'/pay/alipayauth/'.$request->orderNo); //授权回调地址
-            $url ="https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id={$account_array[$rank_key]['account']}&scope=auth_base&redirect_uri={$redirect_uri}";
-            $data['url'] = $url;
+//            $rank_key  = array_rand($account_array);
+//            $redirect_uri = urlencode ('http://'.$_SERVER['HTTP_HOST'].'/pay/alipayauth/'.$request->orderNo); //授权回调地址
+//            $url ="https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id={$account_array[$rank_key]['account']}&scope=auth_base&redirect_uri={$redirect_uri}";
+//            $data['url'] = $url;
             return view('Pay.alipay_receipt',compact('data'));
         }
     }
