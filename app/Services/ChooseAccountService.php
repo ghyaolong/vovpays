@@ -323,14 +323,23 @@ class ChooseAccountService
 
         if (!$valid_account) return [];
 
+        if($this->pay_code == 'bank_solidcode'){
+            return $this->bankPriceOne($valid_account,$valid_account['bank_account']);
+        }else if($this->pay_code == 'alipay_bank2'){
+            // 截取银行卡号后四位
+            $card = substr($valid_account['cardNo'], -4);
+            return $this->bankPriceOne($valid_account,$card);
+        }
+    }
 
-        // 截取银行卡号后四位
-        $card = substr($valid_account['cardNo'], -4);
+    protected function bankPriceOne(array $valid_account,string $account)
+    {
+
 
         // 实现金额唯一;
         $flag = false;
         for ($i = 10; $i >= 0; $i--) {
-            $key = $valid_account['phone_id'] . '_' . $this->pay_code . '_' . $card . '_' . sprintf('%0.2f', $this->price);
+            $key = $valid_account['phone_id'] . '_' . $this->pay_code . '_' . $account . '_' . sprintf('%0.2f', $this->price);
             if ($this->existsAmount($key)) {
                 $flag = true;
                 break;
