@@ -165,6 +165,10 @@ class OrdersService
             $sql .= ' and account = ?';
             $where['account'] = $data['account'];
         }
+        if(isset($data['amount']) && $data['amount']){
+            $sql .= ' and amount = ?';
+            $where['amount'] = $data['amount'];
+        }
 
         if (isset($data['orderTime']) && $data['orderTime']) {
             $time = explode(" - ", $data['orderTime']);

@@ -86,6 +86,14 @@
                                            @if(isset($query['underOrderNo'])) value="{{ $query['underOrderNo'] }}" @endif />
                                 </div>
                                 <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="收款账号" name="account"
+                                           @if(isset($query['account'])) value="{{ $query['account'] }}" @endif />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="订单金额" name="amount"
+                                           @if(isset($query['amount'])) value="{{ $query['amount'] }}" @endif />
+                                </div>
+                                <div class="form-group">
                                     <input type="text" class="form-control" style="min-width:300px;" id="daterange-btn"
                                            placeholder="订单时间" name="orderTime"
                                            @if(isset($query['orderTime'])) value="{{ $query['orderTime'] }}" @endif />
@@ -134,7 +142,7 @@
                         <table id="example2" class="table table-condensed table-bordered table-hover">
                             <tr style="color: #999999">
                                 <th>#</th>
-                                <th>商户号</th>
+                                <th>收款号</th>
                                 <th>系统订单</th>
                                 <th>商户订单</th>
                                 <th>订单金额</th>
@@ -150,7 +158,7 @@
                                 @foreach($list as $v)
                                     <tr>
                                         <td>{{ $v['id'] }}</td>
-                                        <td>{{ $v['merchant'] }}</td>
+                                        <td><span style="color: red">{{ $v['account'] }}</span></td>
                                         <td>{{ $v['orderNo'] }}</td>
                                         <td>{{ $v['underOrderNo'] }}</td>
                                         <td><span style="color: #e56c69">{{ $v['amount'] }}</span></td>
