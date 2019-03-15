@@ -91,7 +91,7 @@ class getOrderCallback extends Command
             $data['money'] = $RegularGetBankInfo->getAmount($data['no'], $data['mark']);
             $cardNo = $RegularGetBankInfo->getCardNo($data['no'], $data['mark']);
             $key = $data['phoneid'] . '_' . 'alipay_bank2_' . $cardNo . '_' . $data['money'];
-
+            $key1 = $data['phoneid'] . '_' . 'bank_solidcode_' . $cardNo . '_' . $data['money'];
             if (Redis::exists($key)) {
                 $order_id = Redis::get($key);
             } else {
@@ -242,6 +242,7 @@ class getOrderCallback extends Command
                 }
                 if (isset($key)) {
                     Redis::del($key);
+                    Redis::del($key1);
                 }
             }else if ($data['type'] == 'bank_gm') {
                 if (isset($key)) Redis::del($key);
