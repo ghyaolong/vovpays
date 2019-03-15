@@ -209,7 +209,7 @@ class AccountPhoneRepository
 
     /**
      * 查询账户指定用户名下的所有账户
-     * @param string $type
+     * @param string $type.
      * @param int $status
      * @return mixed
      */
