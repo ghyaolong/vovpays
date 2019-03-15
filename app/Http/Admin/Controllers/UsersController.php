@@ -348,7 +348,7 @@ class UsersController extends Controller
         }
         $data['merchant'] = $user->merchant;
 
-        $result = $this->statisticalService->updateUseridBalanceIncrement($data);
+        $result = $this->statisticalService->updateUseridBalance($data);
 
         if ($result) {
             return ajaxSuccess('修改成功');

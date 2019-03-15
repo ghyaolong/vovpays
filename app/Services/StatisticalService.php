@@ -31,23 +31,9 @@ class StatisticalService
      * @param float $amount
      * @return mixed
      */
-    public function updateUseridBalanceIncrement(array $data)
+    public function updateUseridBalanceIncrement(int $uid, float $amount)
     {
-        DB::connection('mysql')->transaction(function () use ($data) {
-
-            if ($data['balance_type'] == 0) {
-                $result=$this->statisticalRepository->updateUseridBalanceIncrement($data['uid'], $data['amount']);
-            }elseif($data['balance_type'] == 1) {
-                $result=$this->statisticalRepository->updateUseridBalanceDecrement($data['uid'], $data['amount']);
-                $data['amount']=-$data['amount'];
-            }
-            $result&&$result=Recharge::create(['user_id'=>$data['uid'],'recharge_amount'=>$data['amount'],'actual_amount'=>$data['amount'],
-                                                   'merchant'=>$data['merchant'],'orderNo'=>'C' . getOrderId(),'orderMk'=>'总后台手动充值','pay_status'=>1 ]);
-            if (!$result) {
-                throw new CustomServiceException('系统故障,充值失败');
-            }
-        });
-        return true;
+        return $this->statisticalRepository->updateUseridBalanceIncrement($uid,$amount);
     }
 
     /**
@@ -62,6 +48,17 @@ class StatisticalService
     }
 
     /**
+     * 用户余额减少
+     * @param int $uid
+     * @param float $amount
+     * @return mixed
+     */
+    public function updateUseridBalanceDecrement(int $uid, float $amount)
+    {
+        return $this->statisticalRepository->updateUseridBalanceDecrement($uid,$amount);
+    }
+
+    /**
      * 用户充值余额减少
      * @param int $uid
      * @param float $amount
@@ -70,5 +67,29 @@ class StatisticalService
     public function updateUseridHandlingFeeBalanceDecrement(int $uid, float $amount)
     {
         return $this->statisticalRepository->updateUseridHandlingFeeBalanceDecrement($uid,$amount);
+    }
+
+/**
+* @param int $uid
+* @param float $amount
+* @return mixed
+*/
+    public function updateUseridBalance(array $data)
+    {
+        DB::connection('mysql')->transaction(function () use ($data) {
+
+            if ($data['balance_type'] == 0) {
+                $result=$this->statisticalRepository->updateUseridBalanceIncrement($data['uid'], $data['amount']);
+            }elseif($data['balance_type'] == 1) {
+                $result=$this->statisticalRepository->updateUseridBalanceDecrement($data['uid'], $data['amount']);
+                $data['amount']=-$data['amount'];
+            }
+            $result&&$result=Recharge::create(['user_id'=>$data['uid'],'recharge_amount'=>$data['amount'],'actual_amount'=>$data['amount'],
+                'merchant'=>$data['merchant'],'orderNo'=>'C' . getOrderId(),'orderMk'=>'总后台手动充值','pay_status'=>1 ]);
+            if (!$result) {
+                throw new CustomServiceException('系统故障,充值失败');
+            }
+        });
+        return true;
     }
 }
