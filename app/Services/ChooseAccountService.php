@@ -129,6 +129,12 @@ class ChooseAccountService
         foreach ($account_list as $k => $account) {
             if (Redis::exists($account->phone_id . 'alipay')) {
                 $get_account = Redis::hGetAll($account->phone_id . 'alipay');
+
+                //检查改固码id是否存在订单
+                $key = Redis::get($get_account['phoneid'] . '_' . $this->pay_code . '_' . sprintf('%0.2f', $this->price));
+                if (isset($key)) {
+                    continue;
+                }
                 //检查心跳
                 if ((time() > (strtotime($get_account['update']) + 50) && $get_account['status'] == 1)) {
                     continue;
@@ -200,6 +206,12 @@ class ChooseAccountService
         foreach ($account_list as $k => $account) {
             if (Redis::exists($account->phone_id . 'cloudpay')) {
                 $get_account = Redis::hGetAll($account->phone_id . 'cloudpay');
+
+                //检查改固码id是否存在订单
+                $key = Redis::get($get_account['phoneid'] . '_' . $this->pay_code . '_' . sprintf('%0.2f', $this->price));
+                if (isset($key)) {
+                    continue;
+                }
                 // 验证手机和支付宝id是否一致
                 if ($get_account['account'] != $account->account || (time() > (strtotime($get_account['update']) + 35) && $get_account['status'] == 1)) {
                     continue;
@@ -240,6 +252,12 @@ class ChooseAccountService
         foreach ($account_list as $k => $account) {
             if (Redis::exists($account->phone_id . 'wechat')) {
                 $get_account = Redis::hGetAll($account->phone_id . 'wechat');
+
+                //检查改固码id是否存在订单
+                $key = Redis::get($get_account['phoneid'] . '_' . $this->pay_code . '_' . sprintf('%0.2f', $this->price));
+                if (isset($key)) {
+                    continue;
+                }
                 // 验证账号是否一致
                 if ($get_account['account'] != $account->account || (time() > (strtotime($get_account['update']) + 35) && $get_account['status'] == 1)) {
                     continue;
@@ -283,6 +301,12 @@ class ChooseAccountService
         foreach ($account_list as $k => $account) {
             if (Redis::exists($account->phone_id . 'bankmsg')) {
                 $get_account = Redis::hGetAll($account->phone_id . 'bankmsg');
+
+                //检查改固码id是否存在订单
+                $key = Redis::get($get_account['phoneid'] . '_' . $this->pay_code . '_' . sprintf('%0.2f', $this->price));
+                if (isset($key)) {
+                    continue;
+                }
                 // 验证手机心跳是否正常
                 if ((time() > (strtotime($get_account['update']) + 60) && $get_account['status'] == 1)) {
                     continue;
