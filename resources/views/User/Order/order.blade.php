@@ -177,6 +177,16 @@
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-success btn-sm" onclick="info('订单详情',{{ $v['id'] }})">详情</button>
+                                            @if(env('ADD_ACCOUNT_TYPE') == 1)
+                                            @if($v['status'] == 1)
+                                                <button type="button" class="btn btn-sm" onclick="send({{ $v['id'] }})">补发通知
+                                                </button>
+                                            @elseif($v['status'] == 0)
+                                                <button type="button" class="btn btn-warning btn-sm"
+                                                        onclick="orderSave({{ $v['id'] }})">改为成功
+                                                </button>
+                                            @endif
+                                                @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -359,6 +369,60 @@
                     }
                 },
                 error:function(XMLHttpRequest,textStatus){
+                    toastr.error('通信失败');
+                }
+            })
+        }
+
+        function orderSave(id) {
+            swal({
+                title: "您确定要改为成功吗？",
+                text: "修改后不能恢复！",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            }, function(){
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('orders.saveStatus') }}',
+                    dataType: 'json',
+                    data: {'id': id},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (result) {
+                        if (result.status == 1) {
+                            toastr.success(result.msg);
+                            window.location.reload();
+                        } else {
+                            toastr.error(result.msg);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus) {
+                        toastr.error('通信失败');
+                    }
+                })
+            });
+        }
+
+        function send(id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ route('orders.reissue') }}',
+                dataType: 'json',
+                data: {'id': id},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (result) {
+                    if (result.status == 1) {
+                        toastr.success(result.msg);
+                    } else {
+                        toastr.error(result.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus) {
                     toastr.error('通信失败');
                 }
             })

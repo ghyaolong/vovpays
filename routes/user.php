@@ -30,6 +30,8 @@ Route::group([], function ($router) {
         //订单
         Route::get('order','OrderController@index')->name('user.order');
         Route::get('order/{id}/show', 'OrderController@show')->name('order.show');
+        Route::post('orders/saveStatus','OrderController@saveStatus')->name('orders.saveStatus');
+        Route::post('orders/reissue','OrderController@reissue')->name('orders.reissue');
         //充值
         Route::get('order/recharge','RechargeController@index')->name('user.recharge');
         Route::post('order/recharge','RechargeController@store')->name('user.recharge');
