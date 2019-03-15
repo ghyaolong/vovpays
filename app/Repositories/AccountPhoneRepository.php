@@ -134,8 +134,8 @@ class AccountPhoneRepository
      */
     public function findIdAndUserId(int $id, int $uid)
     {
-        $data=$this->account_phone->whereId($id)->whereUserId($uid)->first();
-        $data->qrcode=$data->qrcode=='0'?'':$data->qrcode;
+        $data = $this->account_phone->whereId($id)->whereUserId($uid)->first();
+        $data->qrcode = $data->qrcode == '0' ? '' : $data->qrcode;
         return $data;
     }
 
@@ -161,13 +161,14 @@ class AccountPhoneRepository
             $type = '支付宝';
         } elseif ($type == 'wechat') {
             $type = '微信';
-        } else if($type == 'cloudpay'){
+        } else if ($type == 'cloudpay') {
             $type = '云闪付';
-        } else if($type == 'alipay_packets' || $type == 'alipay_receipt'){
+        } else if ($type == 'alipay_packets' || $type == 'alipay_receipt') {
             $type = '支付宝';
         }
         return $this->account_phone->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->get();
     }
+
     /**
      * @param string $type
      * @param int $uid
@@ -176,14 +177,14 @@ class AccountPhoneRepository
      */
     public function getStatusAndAccountTypeAndSolidcode(string $type, int $uid, int $status)
     {
-        if ($type == 'alipay_solidcode') {
+        if ($type == 'alipay_solidcode' || $type == 'alipay_paper') {
             $type = '支付宝';
         } elseif ($type == 'wechat_solidcode' || $type == 'bank_gm') {
             $type = '微信';
-        } else if($type == 'cloudpay_solidcode'){
+        } else if ($type == 'cloudpay_solidcode') {
             $type = '云闪付';
         }
-        return $this->account_phone->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->where('qrcode','<>','0')->get();
+        return $this->account_phone->whereStatus($status)->whereUserId($uid)->whereAccounttype($type)->where('qrcode', '<>', '0')->get();
     }
 
     /**
@@ -198,13 +199,14 @@ class AccountPhoneRepository
             $type = '支付宝';
         } elseif ($type == 'wechat') {
             $type = '微信';
-        } else if($type == 'cloudpay'){
+        } else if ($type == 'cloudpay') {
             $type = '云闪付';
-        } else if($type == 'alipay_packets' || $type == 'alipay_receipt' ){
+        } else if ($type == 'alipay_packets' || $type == 'alipay_receipt') {
             $type = '支付宝';
         }
         return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->get();
     }
+
     /**
      * 查询账户指定用户名下的所有账户
      * @param string $type
@@ -213,14 +215,14 @@ class AccountPhoneRepository
      */
     public function getStatusAndAccountTypeAndSolidcodeAndUidarr(string $type, int $status, array $uid_arr)
     {
-        if ($type == 'alipay_solidcode') {
+        if ($type == 'alipay_solidcode' || $type == 'alipay_paper') {
             $type = '支付宝';
         } elseif ($type == 'wechat_solidcode') {
             $type = '微信';
-        } else if($type == 'cloudpay_solidcode'){
+        } else if ($type == 'cloudpay_solidcode') {
             $type = '云闪付';
         }
-        return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->where('qrcode','<>','0')->get();
+        return $this->account_phone->whereStatus($status)->whereIn('user_id', $uid_arr)->whereAccounttype($type)->where('qrcode', '<>', '0')->get();
     }
 
     /**
