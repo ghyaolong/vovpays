@@ -69,7 +69,7 @@ class StatisticalService
         return $this->statisticalRepository->updateUseridHandlingFeeBalanceDecrement($uid,$amount);
     }
 
-/**
+/**后台余额操作
 * @param int $uid
 * @param float $amount
 * @return mixed

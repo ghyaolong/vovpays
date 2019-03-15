@@ -30,4 +30,8 @@ class Channel extends Model
     {
         return $this->hasMany('App\Models\Channel_payment');
     }
+
+    public function AccountUpper(){
+        return $this->hasMany('App\Models\Account_upper');
+    }
 }
