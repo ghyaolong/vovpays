@@ -253,3 +253,27 @@ function getDomainPort()
     $httpType = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
     return $httpType . $_SERVER['HTTP_HOST'];
 }
+
+/**获取挂号用户类型--group_type
+ * @return int
+ */
+ function getAddAccountGroupType(){
+    $add_account_type=env('ADD_ACCOUNT_TYPE');
+    switch ($add_account_type) {
+        case 1:
+            return 1;
+            break;
+        case 2:
+            return 0;
+            break;
+        case 3:
+            return 2;
+            break;
+        case 4:
+            return 3;
+            break;
+        default:
+            throw new App\Exceptions\CustomServiceException('ADD_ACCOUNT_TYPE配置有误');
+    }
+
+}

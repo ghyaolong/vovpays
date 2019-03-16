@@ -62,6 +62,14 @@ class RechargeRepository
 
     public function getAllPage($sql, $where,$page){
 
-        return $this->recharge->whereRaw($sql,$where)->orderBy('id','desc')->paginate($page);
+        $gtoup_type=getAddAccountGroupType();
+
+        return $this->recharge->whereRaw($sql,$where)
+                ->whereHas('user',function ($query)use($gtoup_type){
+                    $query->where('group_type',$gtoup_type);
+                })
+                 ->orderBy('id','desc')->paginate($page);
     }
+
+
 }

@@ -48,7 +48,7 @@
                     <span>商户管理</span>
                 </a>
             </li>
-            @if(env('ADD_ACCOUNT_TYPE') == 1)
+            @if(in_array(env('ADD_ACCOUNT_TYPE'),[1,3]))
                 <li><a href="{{route('recharge.index')}}"><i class="fa fa-circle-o text-aqua"></i> <span>商户充值</span></a></li>
             @endif
             @if(env('ADD_ACCOUNT_TYPE') == 4)

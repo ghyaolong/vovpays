@@ -308,7 +308,7 @@
                 text: "修改后不能恢复！",
                 type: "warning",
                 showCancelButton: true,
-                closeOnConfirm: false,
+                closeOnConfirm: true,
                 showLoaderOnConfirm: true,
             }, function(){
                 var $form = $('#balanceForm');

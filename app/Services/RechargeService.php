@@ -66,14 +66,14 @@ class RechargeService
         ];
         if (!$result = $this->rechargeRepository->add($data)) throw new CustomServiceException('充值订单添加失败');
 
-        $ali_uid = $this->systemsService->findKey('recharge_ali_uid');
-        $name = $this->systemsService->findKey('recharge_ali_name');
+        $ali_uid    = $this->systemsService->findKey('recharge_ali_uid');
+        $name       = $this->systemsService->findKey('recharge_ali_name');
         $order_date = array(
-            'amount' => $result->actual_amount,
-            'meme' => $result->orderNo,
-            'userID' => $ali_uid,
-            'status' => 0,
-            'type' => 'alipay',
+            'amount'    => $result->actual_amount,
+            'meme'      => $result->orderNo,
+            'userID'    => $ali_uid,
+            'status'    => 0,
+            'type'      => 'alipay',
             'sweep_num' => 0
         );
 
@@ -81,12 +81,12 @@ class RechargeService
         Redis::expire($result->orderNo, 1800);
 
         $data = [
-            'type' => 'alipay',
-            'username' => $name,
-            'money' => sprintf('%0.2f', $result->actual_amount),
-            'orderNo' => $result->orderNo,
-            'payurl' => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "' . $ali_uid . '","a": "' . $result->amount . '","m": "' . $result->orderNo . '"}',
-            'h5url' => 'alipays://platformapi/startapp?appId=20000067&url=' . 'http://' . $_SERVER['HTTP_HOST'] . '/pay/h5pay/' . $result->orderNo,
+            'type'      => 'alipay',
+            'username'  => $name,
+            'money'     => sprintf('%0.2f', $result->actual_amount),
+            'orderNo'   => $result->orderNo,
+            'payurl'    => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "' . $ali_uid . '","a": "' . $result->amount . '","m": "' . $result->orderNo . '"}',
+            'h5url'     => 'alipays://platformapi/startapp?appId=20000067&url=' . 'http://' . $_SERVER['HTTP_HOST'] . '/pay/h5pay/' . $result->orderNo,
         ];
 
         return $data;
@@ -111,6 +111,7 @@ class RechargeService
     {
         $sql = "1=1 ";
         $where = [];
+
 
 
         if (isset($data['created_at'])) {
