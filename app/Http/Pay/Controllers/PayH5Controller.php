@@ -43,7 +43,8 @@ class PayH5Controller extends Controller
             return view('Pay.hbh5',compact('data'));
 
         }else if($data['type'] == 'alipay'){
-            $data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode('alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$data['userID'].'","a": "'.$data['amount'].'","m": "'.$data['meme'].'"}');
+            //$data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode('alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$data['userID'].'","a": "'.$data['amount'].'","m": "'.$data['meme'].'"}');
+            $data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode("alipays://platformapi/startapp?appId=20000116&actionType=toAccount&goBack=NO&amount={$data['amount']}&userId={$data['userID']}&memo={$data['meme']}");
             return view('Pay.h5alipay_bank',compact('data'));
         }else if($data['type'] == 'alipay_bank2'){
 
