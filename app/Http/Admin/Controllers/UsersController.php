@@ -341,10 +341,14 @@ class UsersController extends Controller
      */
     public function handlingfeebalance(Request $request)
     {
+
         $data = $request->input();
         $user = $this->userService->findId($data['uid']);
         if (!$user) {
             return ajaxError('商户不存在！');
+        }
+        if(getAddAccountGroupType()!=$user->group_type){
+            return ajaxError('非法操作！');
         }
         $data['merchant'] = $user->merchant;
 

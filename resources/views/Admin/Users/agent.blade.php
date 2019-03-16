@@ -59,6 +59,9 @@
                             <th>商户号</th>
                             <th>用户名</th>
                             <th>余额</th>
+                            @if(env('ADD_ACCOUNT_TYPE') == 3)
+                                <th>充值余额</th>
+                            @endif
                             <th>Email</th>
                             <th>电话</th>
                             <th>状态</th>
@@ -72,6 +75,9 @@
                                 <td>{{ $v['merchant'] }}</td>
                                 <td><span style="color: #008080;font-weight: bold">{{ $v['username'] }}</span></td>
                                 <td><span style="color: #5F9EA0;font-weight: bold">{{ $v->Statistical->handlingFeeBalance }}</span></td>
+                                @if(env('ADD_ACCOUNT_TYPE') == 3)
+                                    <td><span style="color: #ff9c3d;font-weight: bold">{{ $v->Statistical->balance }}</span></td>
+                                @endif
                                 <td>{{ $v['email'] }}</td>
                                 <td>{{ $v['phone'] }}</td>
                                 <td>
@@ -87,6 +93,11 @@
                                     <button type="button" class="btn btn-danger btn-sm"
                                             onclick="del($(this),{{ $v['id'] }})">删除
                                     </button>
+                                    @if(env('ADD_ACCOUNT_TYPE') == 3)
+                                        <button type="button" class="btn btn-warning btn-sm"
+                                                onclick="editBlance('充值',{{ $v['id'] }})">充值余额
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -167,6 +178,45 @@
         </div>
     </div>
 
+
+
+    {{--余额--}}
+    <div class="modal fade" id="balanceModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         data-backdrop="static">
+        <div class="modal-dialog" style="margin-top: 123px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title quota_modal-title"></h4>
+                </div>
+                <div class="modal-body" style="overflow: auto;">
+                    <form id="balanceForm" action="{{ route('users.handlingfeebalance') }}" class="form-horizontal" role="form">
+                        <input type="hidden" name="uid">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">金额</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="amount" name="amount" placeholder="金额">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">修改类型</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" name="balance_type">
+                                    <option value="0">增加</option>
+                                    <option value="1">减少</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="balancsave($(this))">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection('content')
 @section("scripts")
     <script src="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
@@ -213,6 +263,13 @@
                 $('#usersForm').get(0).reset();
                 $("input[name='id']").val('');
                 formValidator();
+            });
+
+
+            // 模态关闭
+            $('#balanceModel').on('hidden.bs.modal', function () {
+                $('#balanceForm').get(0).reset();
+                $("input[name='uid']").val('');
             });
 
         })
@@ -369,6 +426,49 @@
                         }
                     }
                 }
+            });
+        }
+
+        /**
+         * 余额加减
+         */
+        function editBlance(title,id) {
+
+        $("input[name='uid']").val(id);
+        $('.quota_modal-title').html(title);
+        $('#balanceModel').modal('show');
+        }
+
+        /**
+         * 余额修改提交
+         */
+        function balancsave(_this) {
+            title=$('.quota_modal-title').html();
+            swal({
+                title: "您确定要"+title+"吗？",
+                text: "修改后不能恢复！",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true,
+            }, function(){
+                var $form = $('#balanceForm');
+                _this.removeAttr('onclick');
+                $.post($form.attr('action'), $form.serialize(), function (result) {
+
+                    if (result.status) {
+                        $('#balanceModel').modal('hide');
+                        setInterval(function () {
+                            window.location.reload();
+                        }, 1500);
+
+                        toastr.success(result.msg);
+                    } else {
+                        $('#balanceModel').modal('hide');
+                        _this.attr("onclick", "balancsave($(this))");
+                        toastr.error(result.msg);
+                    }
+                }, 'json');
             });
         }
 

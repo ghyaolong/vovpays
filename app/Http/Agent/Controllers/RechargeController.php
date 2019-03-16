@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\User\Controllers;
+namespace App\Http\Agent\Controllers;
 
 use App\Services\RechargeService;
 use Illuminate\Http\Request;
@@ -24,8 +24,7 @@ class RechargeController extends Controller
         }else{
             $list  = $this->rechargeService->findUserIdAll(Auth::user()->id,15);
         }
-
-        $module='user';
+        $module='agent';
         return view('Common.recharge',compact('list','query','module'));
     }
 

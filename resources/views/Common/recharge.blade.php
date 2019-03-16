@@ -1,5 +1,5 @@
-@extends("User.Commons.layout")
-@section('title','用户充值')
+@extends($module.".Commons.layout")
+@section('title','账户充值')
 @section('css')
     <link rel="stylesheet"
           href="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
@@ -18,7 +18,7 @@
             </div>
             <div class="box-body">
                 <div>预存手续费余额：{{ auth()->user()->Statistical->balance }}</div>
-                <form class="form-horizontal" id="form" action="{{ route('user.recharge') }}" style="margin: auto 60px" method="post">
+                <form class="form-horizontal" id="form" action="{{ route($module.'.recharge') }}" style="margin: auto 60px" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label class="col-xs-5 control-label">充值金额:</label>
@@ -92,7 +92,7 @@
                         </tr>
                         @endif
                     </table>
-                    @include('User.Commons._page')
+                    @include($module.'.Commons._page')
                 </div>
             </div>
         </div>
@@ -258,7 +258,7 @@
 
         function checkdata(){
             $.ajax({
-                url: '{{ route('user.callback') }}',
+                url: '{{ route($module.'.callback') }}',
                 data: {"trade_no": $("#orderNo").val()},
                 type:'get',
                 headers: {
