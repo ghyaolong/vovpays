@@ -59,11 +59,12 @@ class ExemptService implements PayInterface
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
                 'payurl'  => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$account_array['userId'].'","a": "'.$result->amount.'","m": "'.$result->orderNo.'"}',
-                'h5url'   => 'alipays://platformapi/startapp?appId=20000067&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+                'h5url'   => 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
             ];
             Redis::hmset($result->orderNo, $order_date);
             Redis::expire($result->orderNo,600);
 
+            $request->pay_code = 'alipay_taobao';
         }else if($request->pay_code == 'alipay_bank'){ // 支付宝转网商
             // 存储订单号,以便回调
             $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);
