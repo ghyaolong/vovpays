@@ -96,9 +96,6 @@ class OrderController extends Controller
         $result = $this->ordersService->updateStatus($request->id, $data);
         if(!$result)return ajaxError('修改失败！');
 
-        // 商户收益增加
-        $this->statisticalService->updateUseridHandlingFeeBalanceIncrement($order->user_id,$order->userAmount);
-
         // 代理收益增加
         if($order->agentAmount > 0)
         {
