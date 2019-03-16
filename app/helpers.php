@@ -151,7 +151,7 @@ function sendHttpPost(string $url, array $data)
  * @param string $referer
  * @return mixed
  */
-function sendCurl(string $url, array $data = [], array $header = [], string $referer = '')
+function sendCurl(string $url,  $data = [], array $header = [], string $referer = '')
 {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
