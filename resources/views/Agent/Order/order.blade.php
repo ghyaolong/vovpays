@@ -393,7 +393,7 @@
         function send(id, agent_id) {
             $.ajax({
                 type: 'post',
-                url: '{{ route('order.reissue') }}',
+                url: '{{ route('agent.orderreissue"') }}',
                 dataType: 'json',
                 data: {'id': id, 'agent_id': agent_id},
                 headers: {

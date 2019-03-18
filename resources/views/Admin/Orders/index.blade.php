@@ -439,7 +439,7 @@
         function send(id) {
             $.ajax({
                 type: 'post',
-                url: '{{ route('orders.reissue') }}',
+                url: '{{ route('admin.orderreissue"') }}',
                 dataType: 'json',
                 data: {'id': id},
                 headers: {
