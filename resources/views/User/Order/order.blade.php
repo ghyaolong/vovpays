@@ -380,7 +380,7 @@
                 text: "修改后不能恢复！",
                 type: "warning",
                 showCancelButton: true,
-                closeOnConfirm: false,
+                closeOnConfirm: true,
                 showLoaderOnConfirm: true,
             }, function(){
                 $.ajax({
@@ -394,7 +394,9 @@
                     success: function (result) {
                         if (result.status == 1) {
                             toastr.success(result.msg);
-                            window.location.reload();
+                            setInterval(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error(result.msg);
                         }

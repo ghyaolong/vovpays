@@ -25,7 +25,7 @@ class RechargeController extends Controller
             $list  = $this->rechargeService->findUserIdAll(Auth::user()->id,15);
         }
 
-        $module='user';
+        $module='User';
         return view('Common.recharge',compact('list','query','module'));
     }
 
