@@ -31,10 +31,10 @@ Route::group([], function ($router) {
         Route::get('order','OrderController@index')->name('user.order');
         Route::get('order/{id}/show', 'OrderController@show')->name('order.show');
         Route::post('orders/saveStatus','OrderController@saveStatus')->name('user.ordersaveStatus');
-        Route::post('orders/reissue','OrderController@reissue')->name('orders.reissue');
+        Route::post('orders/reissue','OrderController@reissue')->name('user.orderreissue"');
         //充值
         Route::get('order/recharge','RechargeController@index')->name('user.recharge');
-        Route::post('order/recharge','RechargeController@store')->name('user.recharge');
+        Route::post('order/recharge','RechargeController@store')->name('user.addrecharge');
         Route::get('order/callback','RechargeController@callback')->name('user.callback');
         //银行卡管理
         Route::post('bankCard/store','BankCardController@store')->name('user.store');

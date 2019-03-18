@@ -35,7 +35,7 @@ Route::group([], function ($router) {
         Route::get('user/order/{id}', 'OrderController@userOrder')->name('agent.userOrder');
         Route::get('order/{id}/show', 'OrderController@show')->name('order.show');
         Route::post('order/saveStatus','OrderController@saveStatus')->name('agent.ordersaveStatus');
-        Route::post('order/reissue','OrderController@reissue')->name('order.reissue');
+        Route::post('order/reissue','OrderController@reissue')->name('agent.orderreissue"');
 
 
         //银行卡管理
@@ -48,8 +48,8 @@ Route::group([], function ($router) {
 
         //充值
         Route::get('order/recharge','RechargeController@index')->name('agent.recharge');
-        Route::post('order/recharge','RechargeController@store')->name('agent.recharge');
-        Route::get('order/callback','RechargeController@callback')->name('user.callback');
+        Route::post('order/recharge','RechargeController@store')->name('agent.addrecharge');
+        Route::get('order/callback','RechargeController@callback')->name('agent.callback');
         //提现
         Route::any('withdraws','WithdrawsController@index')->name('agent.withdraws');
         Route::get('withdraws/clearing','WithdrawsController@clearing')->name('agent.clearing');

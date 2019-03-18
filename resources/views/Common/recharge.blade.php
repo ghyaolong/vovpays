@@ -18,7 +18,7 @@
             </div>
             <div class="box-body">
                 <div>预存手续费余额：{{ auth()->user()->Statistical->balance }}</div>
-                <form class="form-horizontal" id="form" action="{{ route($module.'.recharge') }}" style="margin: auto 60px" method="post">
+                <form class="form-horizontal" id="form" action="{{ route(strtolower($module).'.addrecharge') }}" style="margin: auto 60px" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label class="col-xs-5 control-label">充值金额:</label>
@@ -258,7 +258,7 @@
 
         function checkdata(){
             $.ajax({
-                url: '{{ route($module.'.callback') }}',
+                url: '{{ route(strtolower($module).'.callback') }}',
                 data: {"trade_no": $("#orderNo").val()},
                 type:'get',
                 headers: {

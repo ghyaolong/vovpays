@@ -26,6 +26,7 @@ class RechargeController extends Controller
         }
 
         $module='User';
+
         return view('Common.recharge',compact('list','query','module'));
     }
 
