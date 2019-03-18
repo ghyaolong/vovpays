@@ -413,7 +413,7 @@
             }, function(){
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('orders.saveStatus') }}',
+                    url: '{{ route('admin.ordersaveStatus') }}',
                     dataType: 'json',
                     data: {'id': id},
                     headers: {

@@ -367,7 +367,7 @@
             }, function () {
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('order.saveStatus') }}',
+                    url: '{{ route('agent.ordersaveStatus') }}',
                     dataType: 'json',
                     data: {'id': id, 'agent_id': agent_id},
                     headers: {

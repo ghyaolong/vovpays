@@ -192,10 +192,10 @@ $().ready(function(){
 
 
 
-    if(isMobile() == 1 && (type == 'alipay_packets') )
-    {
-        $('.paybtn').show();
-    }
+    // if(isMobile() == 1 && (type == 'alipay_packets') )
+    // {
+    //     $('.paybtn').show();
+    // }
 
     var strcode = toUtf8('{!! $data['payurl'] !!}');
     var qrcode = $('#show_qrcode').qrcode({ text: strcode });

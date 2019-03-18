@@ -76,7 +76,7 @@ Route::group([], function () {
         Route::get('orders','OrdersController@index')->name('orders.index');
         Route::get('orders/{id}/show', 'OrdersController@show')->name('orders.show');
         Route::delete('orders','OrdersController@destroy')->name('orders.destroy');
-        Route::post('orders/saveStatus','OrdersController@saveStatus')->name('orders.saveStatus');
+        Route::post('orders/saveStatus','OrdersController@saveStatus')->name('admin.ordersaveStatus');
         Route::post('orders/reissue','OrdersController@reissue')->name('orders.reissue');
         //结算管理
         Route::get('withdraws','WithdrawsController@index')->name('withdraws.index');
