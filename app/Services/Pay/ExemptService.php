@@ -201,7 +201,7 @@ class ExemptService implements PayInterface
             // 截取银行卡号后四位
             $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);
             Redis::set($key,$result->orderNo);
-            Redis::expire($key,600);
+            Redis::expire($key,240);
 
             $order_date = array(
                 'amount'  => $result->amount,
@@ -218,7 +218,7 @@ class ExemptService implements PayInterface
             ];
 
             Redis::hmset($result->orderNo, $order_date);
-            Redis::expire($result->orderNo,600);
+            Redis::expire($result->orderNo,240);
         }else if($request->pay_code == 'bank_solidcode') {
             // 固码
             // 存储订单号,以便回调
