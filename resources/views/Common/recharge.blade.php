@@ -212,6 +212,7 @@
             $('#addModalLabel').html('');
             $("#orderNo").val('');
             $("#msg").html('');
+            clearInterval(myTimer);
         });
 
         function showAvatar(strcode) {
