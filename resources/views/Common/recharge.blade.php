@@ -194,7 +194,7 @@
             var $form = $('#form');
             $.post($form.attr('action'), $form.serialize(), function (result) {
                 if (result.status) {
-                    showAvatar(result.data.h5url);
+                    showAvatar(result.data.payurl);
                     $('#addModalLabel').html('订单金额：'+result.data.money);
                     $('#orderNo').val(result.data.orderNo);
                     _this.attr("onclick", "save($(this))");
