@@ -18,7 +18,7 @@
             </div>
             <div class="box-body">
                 <div>预存手续费余额：{{ auth()->user()->Statistical->balance }}</div>
-                <form class="form-horizontal" id="form" action="{{ route($module.'.recharge') }}" style="margin: auto 60px" method="post">
+                <form class="form-horizontal" id="form" action="{{ route(strtolower($module).'.addrecharge') }}" style="margin: auto 60px" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label class="col-xs-5 control-label">充值金额:</label>
@@ -194,7 +194,7 @@
             var $form = $('#form');
             $.post($form.attr('action'), $form.serialize(), function (result) {
                 if (result.status) {
-                    showAvatar(result.data.h5url);
+                    showAvatar(result.data.payurl);
                     $('#addModalLabel').html('订单金额：'+result.data.money);
                     $('#orderNo').val(result.data.orderNo);
                     _this.attr("onclick", "save($(this))");
@@ -212,6 +212,7 @@
             $('#addModalLabel').html('');
             $("#orderNo").val('');
             $("#msg").html('');
+            clearInterval(myTimer);
         });
 
         function showAvatar(strcode) {
@@ -258,7 +259,7 @@
 
         function checkdata(){
             $.ajax({
-                url: '{{ route($module.'.callback') }}',
+                url: '{{ route(strtolower($module).'.callback') }}',
                 data: {"trade_no": $("#orderNo").val()},
                 type:'get',
                 headers: {

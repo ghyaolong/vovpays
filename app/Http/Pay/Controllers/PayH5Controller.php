@@ -63,31 +63,19 @@ class PayH5Controller extends Controller
             }
             $num = $data['sweep_num']+1;
             Redis::hset($request->orderNo, 'sweep_num',$num);
-            try{
-                $msg = json_encode([
-                    'amount' => $data['amount'],
-                    'mark'   => $data['meme'],
-                    'type'   => 'alipay_receipt',
-                    'uid'  => $request->useraccount,
-                    'sendtime' => TimeMicroTime(),
-                ]);
-                $rabbitMqService = app(RabbitMqService::class);
-                $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
-            }catch ( \Exception $e){
-                return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
-            }
-//            $accountUpperService = app(AccountUpperService::class);
-//            $account_list = $accountUpperService->findChannelId(1);
-//
-//            if(!$account_list){
-//                return json_encode('系统未配置',JSON_UNESCAPED_UNICODE);
-//            }
-//            $account_array = $account_list->toArray();
 
-//            $rank_key  = array_rand($account_array);
-//            $redirect_uri = urlencode ('http://'.$_SERVER['HTTP_HOST'].'/pay/alipayauth/'.$request->orderNo); //授权回调地址
-//            $url ="https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id={$account_array[$rank_key]['account']}&scope=auth_base&redirect_uri={$redirect_uri}";
-//            $data['url'] = $url;
+            $accountUpperService = app(AccountUpperService::class);
+            $account_list = $accountUpperService->findChannelId(1);
+
+            if(!$account_list){
+                return json_encode('系统未配置',JSON_UNESCAPED_UNICODE);
+            }
+            $account_array = $account_list->toArray();
+
+            $rank_key  = array_rand($account_array);
+            $redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/pay/alipayauth/'.$request->orderNo; //授权回调地址
+            $url ="https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id={$account_array[$rank_key]['account']}&scope=auth_base&redirect_uri={$redirect_uri}";
+            $data['url'] = $url;
             return view('Pay.alipay_receipt',compact('data'));
         }
     }
@@ -95,7 +83,6 @@ class PayH5Controller extends Controller
     // 支付宝收款发起预下单
     public function alipayAuthNotify(Request $request)
     {
-
         Redis::select(1);
         if(!Redis::exists($request->orderNo))
         {
@@ -104,7 +91,7 @@ class PayH5Controller extends Controller
 
         $data = Redis::hGetAll($request->orderNo);
 
-        if($data['sweep_num'] >= 1){
+        if($data['sweep_num'] >= 2){
             return json_encode('二维码已使用，请重新发起支付',JSON_UNESCAPED_UNICODE);
         }
 
@@ -147,13 +134,13 @@ class PayH5Controller extends Controller
             return json_encode('获取access_token失败',JSON_UNESCAPED_UNICODE);
         }
 
-        $uid= $resultData['user_id'];
+        $uid = $resultData['user_id'];
 
         try{
             $msg = json_encode([
                 'amount' => $data['amount'],
                 'mark'   => $data['meme'],
-                'type'   => 'alipay_receipt',
+                'type'   => 'alipay_order',
                 'uid'    => $uid,
                 'sendtime' => TimeMicroTime(),
             ]);
@@ -164,6 +151,20 @@ class PayH5Controller extends Controller
             return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
         }
 
+    }
+
+    /**
+     * 查询支付宝收款返回的订单
+     * @param Request $request
+     * @return array
+     */
+    public function getAlipayNorderNo(Request $request)
+    {
+        Redis::select(1);
+        $orders = Redis::get($request->orderNo."order");
+        if(!$orders) return json_encode(array('tradeNo'=>''));
+        $orders = json_decode($orders, true);
+        return json_encode(array('tradeNo'=>$orders['payurl']));
     }
 
     /**

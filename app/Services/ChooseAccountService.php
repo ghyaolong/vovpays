@@ -87,7 +87,7 @@ class ChooseAccountService
 
                 $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUidarrAndNotBanKMark(1, $user_id_array, 'ANTBANK', $type);
             } else if ($this->pay_code == 'alipay_solidcode' || $this->pay_code == 'wechat_solidcode' || $this->pay_code == 'cloudpay_solidcode') {
-                $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcodeAndUidarr($type, $user_id_array, 1);
+                $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcodeAndUidarr($type, 1,$user_id_array);
             }
         }
 

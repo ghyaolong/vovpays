@@ -81,15 +81,6 @@
                 </div>
             </div>
         </div>
-        @if($data['type'] == 'alipay_receipt')
-        <div class="time-item">
-            <input type="text" class="form-control" id="useraccount" placeholder="请输入您付款的支付宝账号">
-            <button type="button" class="btnsmall" onclick="sub()" >确定</button>
-            <p style="font-size: 20px;color: #FF0000;">1.请输入您付款的支付宝账号</p>
-            <p style="font-size: 20px;color: #FF0000;">2.点击确定，截图保存二维码</p>
-            <p style="font-size: 20px;color: #FF0000;">3.启动支付宝扫一扫，选着相册</p>
-        </div>
-        @endif
         <div class="time-item">
             @if($data['type'] != 'alipay_packets')
                 <div class="time-item"><h1 style="color: red">验证姓名：{{$data['username']}}</h1></div>
@@ -196,11 +187,6 @@ function sub()
 $().ready(function(){
     timer(180);
     var type = '{{ $data['type'] }}';
-
-    if(  type == 'alipay_receipt'){
-        $('.qrcode-img-wrapper').hide();
-    }
-
 
 
     if(isMobile() == 1 && (type == 'alipay_packets') )

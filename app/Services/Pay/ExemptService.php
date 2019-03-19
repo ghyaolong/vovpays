@@ -101,7 +101,7 @@ class ExemptService implements PayInterface
                 $rabbitMqService = app(RabbitMqService::class);
                 $rabbitMqService->send('qr_'.$account_array['phone_id'].'test',$msg);
                 for ($i=0;$i<10;$i++){
-                    $qrcode = Redis::get($result->orderNo);
+                    $qrcode = Redis::get($result->orderNo."order");
                     if($qrcode)
                     {
                         break;
@@ -109,7 +109,7 @@ class ExemptService implements PayInterface
                     sleep(1);
                 }
                 if(!$qrcode) return json_encode(RespCode::QRCODE_ERROR,JSON_UNESCAPED_UNICODE);
-                Redis::del($result->orderNo);
+                Redis::del($result->orderNo."order");
                 $oRcode = json_decode($qrcode, true);
 
                 $data = [
@@ -170,7 +170,7 @@ class ExemptService implements PayInterface
                 $rabbitMqService = app(RabbitMqService::class);
                 $rabbitMqService->send('qr_'.$account_array['phone_id'].'test',$msg);
                 for ($i=0;$i<10;$i++){
-                    $qrcode = Redis::get($result->orderNo);
+                    $qrcode = Redis::get($result->orderNo."order");
                     if($qrcode)
                     {
                         break;
@@ -178,7 +178,7 @@ class ExemptService implements PayInterface
                     sleep(1);
                 }
                 if(!$qrcode) return json_encode(RespCode::QRCODE_ERROR,JSON_UNESCAPED_UNICODE);
-                Redis::del($result->orderNo);
+                Redis::del($result->orderNo."order");
                 $oRcode = json_decode($qrcode, true);
 
                 $data = [
@@ -201,7 +201,7 @@ class ExemptService implements PayInterface
             // 截取银行卡号后四位
             $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);
             Redis::set($key,$result->orderNo);
-            Redis::expire($key,600);
+            Redis::expire($key,240);
 
             $order_date = array(
                 'amount'  => $result->amount,
@@ -218,7 +218,7 @@ class ExemptService implements PayInterface
             ];
 
             Redis::hmset($result->orderNo, $order_date);
-            Redis::expire($result->orderNo,600);
+            Redis::expire($result->orderNo,240);
         }else if($request->pay_code == 'bank_solidcode') {
             // 固码
             // 存储订单号,以便回调

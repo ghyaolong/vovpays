@@ -60,7 +60,7 @@ class GetWechatQrcode extends Command
     {
         $data = json_decode($json_str, true);
 
-        Redis::set($data['mark'],$json_str);
-        Redis::expire($data['mark'],180);
+        Redis::set($data['mark']."order",$json_str);
+        Redis::expire($data['mark']."order",180);
     }
 }

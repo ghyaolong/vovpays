@@ -422,7 +422,9 @@
                     success: function (result) {
                         if (result.status == 1) {
                             toastr.success(result.msg);
-                            window.location.reload();
+                            setInterval(function () {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.error(result.msg);
                         }
@@ -437,7 +439,7 @@
         function send(id) {
             $.ajax({
                 type: 'post',
-                url: '{{ route('orders.reissue') }}',
+                url: '{{ route('admin.orderreissue"') }}',
                 dataType: 'json',
                 data: {'id': id},
                 headers: {
