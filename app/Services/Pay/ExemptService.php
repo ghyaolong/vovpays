@@ -170,7 +170,7 @@ class ExemptService implements PayInterface
                 $rabbitMqService = app(RabbitMqService::class);
                 $rabbitMqService->send('qr_'.$account_array['phone_id'].'test',$msg);
                 for ($i=0;$i<10;$i++){
-                    $qrcode = Redis::get($result->orderNo);
+                    $qrcode = Redis::get($result->orderNo."order");
                     if($qrcode)
                     {
                         break;
@@ -178,7 +178,7 @@ class ExemptService implements PayInterface
                     sleep(1);
                 }
                 if(!$qrcode) return json_encode(RespCode::QRCODE_ERROR,JSON_UNESCAPED_UNICODE);
-                Redis::del($result->orderNo);
+                Redis::del($result->orderNo."order");
                 $oRcode = json_decode($qrcode, true);
 
                 $data = [
