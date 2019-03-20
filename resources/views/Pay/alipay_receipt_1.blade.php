@@ -19,7 +19,7 @@
         .tips span{vertical-align: top;color:#1e9fff;padding-left: 10px;padding-top:0px;}
         .action{background:#15d447;padding: 10px 0;color:#ffffff;text-align: center;font-size:14pt;border-radius: 10px 10px; margin: 15px;}
         .action:focus{background:#4cb131;}
-        .action.disabled{background-color:#aeaeae;}
+        .action.disabled{background-color:#FF0000;}
         .footer{position: absolute;bottom:0;left:0;right:0;text-align: center;padding-bottom: 20px;font-size:10pt;color:#aeaeae;}
         .footer .ct-if{margin-top:6px;font-size:8pt;}
         .jieguo{top:20px;line-height:26px;max-width: 260px;padding:8px 20px;   margin: 0 auto;position: relative;border: 1px #ddd dashed;box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);}
@@ -43,7 +43,7 @@
     </div>
     <br><br>
     <div id='okpay' class='action '>确认支付</div><div class='footer'><div class='ct-if'></div></div>
-    <div id='appexit' class='action disabled ' style="display:none;">关闭页面</div>
+    <div id='appexit' class='action disabled' style="display:none;">关闭页面</div>
     <div class='footer'>
         <div class='ct-if'></div>
     </div>
@@ -55,6 +55,7 @@
     var tradeNOInRedis;
     var queryTradeNOTimer,queryTradeSucTimer;
     var queryTradeNOUrl = "{{ route('pay.getAlipayNorderNo',[$data['meme']]) }}";
+    var flag = false;
     $(document).ready(function() {
         //查支付
         function queryTradeSuc() {
@@ -81,6 +82,15 @@
             });
         }
 
+        var out = 15;
+        setInterval(function(){
+            if(out == 0){
+                $("#appexit").show();
+            }else{
+                out--;
+            }
+        },1000);
+
         //查订单号
 
         function queryTradeNO() {
@@ -89,6 +99,7 @@
                     clearTimeout(queryTradeNOTimer);
                     //alert("拿到订单号："+JSON.stringify(result));
                     tradeNOInRedis = result.tradeNo;
+                    flag = true;
                     //alert("拿到订单号："+tradeNOInRedis);
                     $("#tips").html(tradeNOInRedis)
                     $("#okpay").show();
@@ -116,13 +127,15 @@
             AlipayJSBridge.call('exitApp');
         }
 
-        okpay.onclick = function() {
-            var  gopayUrl= 'alipays://platformapi/startapp?appId=20000003&actionType=toBillDetails&tradeNO=' + tradeNOInRedis;
-            AlipayJSBridge.call('pushWindow', {
-                url : gopayUrl
-            });
-        }
 
+        okpay.onclick = function() {
+            if(tradeNOInRedis){
+                var  gopayUrl= 'alipays://platformapi/startapp?appId=20000003&actionType=toBillDetails&tradeNO=' + tradeNOInRedis;
+                AlipayJSBridge.call('pushWindow', {
+                    url : gopayUrl
+                });
+            }
+        }
     });
 
     function ready(a) {
