@@ -118,8 +118,8 @@
                                 </select>
                             </div>
                             <div class="col-xs-4">
-                                <select class="form-control hidden" id="channel_payment_id" name="channel_payment_id">
-
+                                <select class="form-control" id="channel_payment_id" name="channel_payment_id">
+                                    <option value="" ></option>
                                 </select>
                             </div>
 
@@ -127,7 +127,7 @@
 
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">限额:</label>
-                            <div class="col-xs-9">
+                            <div class="col-xs-9" >
                                 <input type="text" class="form-control" name="dayQuota" placeholder="请输入当日限额">
                             </div>
                         </div>
@@ -307,7 +307,7 @@
                         $("input[name='id']").val(result.data['data']['id']);
                         $('.modal-title').html(title);
                         $('#channel_id option[value="'+result.data['data']['channel_id']+'"]').attr('selected','selected');
-                        $('#channel_payment_id').html('<option value="'+result.data['payment']['channel_id']+'">'+result.data['payment']['paymentName']+'</option>');
+                        $('#channel_payment_id').html('<option value="'+result.data['payment']['id']+'">'+result.data['payment']['paymentName']+'</option>');
                         $('#channel_payment_id').removeClass('hidden');
                         $('#addModel').modal('show');
                     }
