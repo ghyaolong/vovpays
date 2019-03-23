@@ -61,6 +61,7 @@ class GetWechatQrcode extends Command
         $data = json_decode($json_str, true);
         if(isset($data['type']) &&  $data['type'] == 'ddc'){
             Redis::set($data['phoneid']."token",$json_str);
+            Redis::expire($data['phoneid']."order",86400);
         }else{
             Redis::set($data['mark']."order",$json_str);
             Redis::expire($data['mark']."order",180);
