@@ -38,7 +38,7 @@ class ChooseAccountService
 
         // 根据挂号方式获取所有开启的账号:1商户后台挂号,2总后台挂号,3代理后台挂号,4三方挂号
         if ($add_account_type == 1) {
-            if ($this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay') {
+            if ($this->pay_code == 'ddc' || $this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay') {
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type, $user->id, 1);
             } else if ($this->pay_code == 'alipay_bank') {
                 $account_list = $this->accountBankCardsService->getStatusAndUserIdAndBanKMark($user->id, 1, 'ANTBANK');
@@ -50,7 +50,7 @@ class ChooseAccountService
 
         } else if ($add_account_type == 2) {
 
-            if ($this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay') {
+            if ($this->pay_code == 'ddc' || $this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay') {
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type, 100000, 1);
             } else if ($this->pay_code == 'alipay_bank') {
                 $account_list = $this->accountBankCardsService->getStatusAndUserIdAndBanKMark(100000, 1, 'ANTBANK');
@@ -61,7 +61,7 @@ class ChooseAccountService
             }
         } else if ($add_account_type == 3) {
 
-            if ($this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay') {
+            if ($this->pay_code == 'ddc' || $this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay') {
 
                 $account_list = $this->accountPhoneService->getStatusAndAccountType($type, $user->parentId, 1);
             } else if ($this->pay_code == 'alipay_bank') {
@@ -79,7 +79,7 @@ class ChooseAccountService
                 return RespCode::PARAMETER_ERROR_STOP;
             }
 
-            if ($this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay') {
+            if ($this->pay_code == 'ddc' || $this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == 'alipay' || $this->pay_code == 'wechat' || $this->pay_code == 'cloudpay') {
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndUidarr($type, 1, $user_id_array);
             } else if ($this->pay_code == 'alipay_bank') {
                 $account_list = $this->accountBankCardsService->getStatusAndUidarrAndBanKMark(1, $user_id_array, 'ANTBANK');
@@ -96,7 +96,7 @@ class ChooseAccountService
         }
 
         //根据编码选择对应的账号
-        if ($this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == "alipay" || $this->pay_code == 'alipay_solidcode') {
+        if ($this->pay_code == 'ddc' || $this->pay_code == 'alipay_receipt' || $this->pay_code == 'alipay_packets' || $this->pay_code == "alipay" || $this->pay_code == 'alipay_solidcode') {
             $valid_account = $this->getValidAlipayAccount($account_list);
         } else if ($this->pay_code == "wechat" || $this->pay_code == 'wechat_solidcode' || $this->pay_code == 'bank_gm') {
 

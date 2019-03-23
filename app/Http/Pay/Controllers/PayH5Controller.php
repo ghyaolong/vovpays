@@ -77,6 +77,115 @@ class PayH5Controller extends Controller
             $url ="https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id={$account_array[$rank_key]['account']}&scope=auth_base&redirect_uri={$redirect_uri}";
             $data['url'] = $url;
             return view('Pay.alipay_receipt',compact('data'));
+        }else if($data['type'] == 'ddc'){
+            if($data['sweep_num'] >= 1){
+                return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
+            }
+
+            // token不存在，发送获取token
+            if(!Redis::exists($data['phone_id'].'token'))
+            {
+                try{
+                    $msg = json_encode([
+                        'amount' => $data['amount'],
+                        'mark'   => $data['meme'],
+                        'type'   => 'ddc',
+                        'sendtime' => TimeMicroTime(),
+                        'uid'    => '',
+                    ]);
+
+                    $rabbitMqService = app(RabbitMqService::class);
+                    $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
+                }catch ( \Exception $e){
+                    return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
+                }
+
+                return json_encode('app不在线！',JSON_UNESCAPED_UNICODE);
+            }
+
+            $token_array = json_decode(Redis::get($data['phone_id'].'token'),true);
+            $sender      = explode('_',$token_array['payurl']);
+
+            $param = array(
+                'size'          => '1',
+                'appkey'        => '21603258',
+                'congratulations'=> '恭喜发财',
+                'amount'        => $data['amount'],
+                '_v_'           => '3',
+                't'             => time(),
+                'imei'          => time(),
+                'type'          => '0',
+                'imsi'          => time(),
+                'sender'        => $sender[1],
+                'access_token'  => $token_array['payurl'],
+            );
+
+            $url = 'https://redenvelop.laiwang.com/v2/redenvelop/send/doGenerate';
+            $ddc_result = json_decode(sendCurl($url,$param),true);
+            if(isset($ddc_result['error'])) {
+                // token 过期重新发送
+                if($ddc_result['error'] == 'expired_token'){
+                    try{
+                        $msg = json_encode([
+                            'amount' => $data['amount'],
+                            'mark'   => $data['meme'],
+                            'type'   => 'ddc',
+                            'sendtime' => TimeMicroTime(),
+                            'uid'    => '',
+                        ]);
+
+                        $rabbitMqService = app(RabbitMqService::class);
+                        $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
+                    }catch ( \Exception $e){
+                        return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
+                    }
+                }else{
+                    return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
+                }
+            }
+
+            try{
+                $msg = json_encode([
+                    'amount' => $data['amount'],
+                    'mark'   => $data['meme'],
+                    'type'   => 'ddc',
+                    'clusterId'=> $ddc_result['clusterId'],
+                    'sendtime' => TimeMicroTime(),
+                    'uid'    => '',
+                ]);
+
+                $rabbitMqService = app(RabbitMqService::class);
+                $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
+            }catch ( \Exception $e){
+                return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
+            }
+
+            $get_pay_url = "http://api.laiwang.com/v2/internal/act/alipaygift/getPayParams?tradeNo={$ddc_result['businessId']}&bizType=biz_account_transfer&access_token={$param['access_token']}";
+            $ddc_pay_server = json_decode(sendCurl($get_pay_url),true);
+            if(!$ddc_pay_server){
+                // token 过期重新发送
+                if($ddc_result['error'] == 'expired_token'){
+                    try{
+                        $msg = json_encode([
+                            'amount' => $data['amount'],
+                            'mark'   => $data['meme'],
+                            'type'   => 'ddc',
+                            'sendtime' => TimeMicroTime(),
+                            'uid'    => '',
+                        ]);
+
+                        $rabbitMqService = app(RabbitMqService::class);
+                        $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
+                    }catch ( \Exception $e){
+                        return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
+                    }
+                }else{
+                    return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
+                }
+            }
+
+            $data['server'] = $ddc_pay_server['value'];
+            return view('Pay.ddc',compact('data'));
         }
     }
 

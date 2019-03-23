@@ -157,7 +157,7 @@ class AccountPhoneRepository
      */
     public function getStatusAndAccountType(string $type, int $uid, int $status)
     {
-        if ($type == 'alipay') {
+        if ($type == 'alipay' || $type == 'ddc') {
             $type = '支付宝';
         } elseif ($type == 'wechat') {
             $type = '微信';
@@ -195,7 +195,7 @@ class AccountPhoneRepository
      */
     public function getStatusAndAccountTypeAndUidarr(string $type, int $status, array $uid_arr)
     {
-        if ($type == 'alipay') {
+        if ($type == 'alipay' || $type == 'ddc') {
             $type = '支付宝';
         } elseif ($type == 'wechat') {
             $type = '微信';

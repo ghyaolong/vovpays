@@ -59,8 +59,11 @@ class GetWechatQrcode extends Command
     protected function phoneStatusCheck($json_str)
     {
         $data = json_decode($json_str, true);
-
-        Redis::set($data['mark']."order",$json_str);
-        Redis::expire($data['mark']."order",180);
+        if(isset($data['type']) &&  $data['type'] == 'ddc'){
+            Redis::set($data['phoneid']."token",$json_str);
+        }else{
+            Redis::set($data['mark']."order",$json_str);
+            Redis::expire($data['mark']."order",180);
+        }
     }
 }
