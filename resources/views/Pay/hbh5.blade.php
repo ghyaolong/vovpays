@@ -115,7 +115,7 @@
 </body>
 <script>
     var can_pay = false;
-    var count   = 120;
+    var count   = 60;
     //gopay
     window.setInterval(function () {
         if(count<=0){
@@ -128,7 +128,9 @@
         $('#gopay').disabled=true;
         $('#gopay').text("支付宝授权中,请稍后("+count+")");
         count--;
-    }, 1000);    AlipayJSBridge.call("setTitleColor", {
+    }, 1000);
+
+    AlipayJSBridge.call("setTitleColor", {
         color: parseInt('c14443', 16),
         reset: false
     });
