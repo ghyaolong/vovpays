@@ -56,7 +56,7 @@ class ChooseAccountService
                 $account_list = $this->accountBankCardsService->getStatusAndUserIdAndBanKMark(100000, 1, 'ANTBANK');
             } else if ($this->pay_code == 'alipay_bank2' || $this->pay_code == 'bank_solidcode') {
                 $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUserIdAndNotBanKMark(100000, 1, 'ANTBANK', $type);
-            } else if ($this->pay_code == 'alipay_solidcode' || $this->pay_code == 'wechat_solidcode' || $this->pay_code == 'cloudpay_solidcode') {
+            } else if ($this->pay_code == 'bank_gm' || $this->pay_code == 'alipay_solidcode' || $this->pay_code == 'wechat_solidcode' || $this->pay_code == 'cloudpay_solidcode') {
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcode($type, 100000, 1);
             }
         } else if ($add_account_type == 3) {
@@ -68,7 +68,7 @@ class ChooseAccountService
                 $account_list = $this->accountBankCardsService->getStatusAndUserIdAndBanKMark($user->parentId, 1, 'ANTBANK');
             } else if ($this->pay_code == 'alipay_bank2' || $this->pay_code == 'bank_solidcode') {
                 $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUserIdAndNotBanKMark($user->parentId, 1, 'ANTBANK', $type);
-            } else if ($this->pay_code == 'alipay_solidcode' || $this->pay_code == 'wechat_solidcode' || $this->pay_code == 'cloudpay_solidcode') {
+            } else if ($this->pay_code == 'bank_gm' || $this->pay_code == 'alipay_solidcode' || $this->pay_code == 'wechat_solidcode' || $this->pay_code == 'cloudpay_solidcode') {
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcode($type, $user->parentId, 1);
             }
         } else if ($add_account_type == 4) {
@@ -86,7 +86,7 @@ class ChooseAccountService
             } else if ($this->pay_code == 'alipay_bank2' || $this->pay_code == 'bank_solidcode') {
 
                 $account_list = $this->accountBankCardsService->getStatusAndAccountTypeAndUidarrAndNotBanKMark(1, $user_id_array, 'ANTBANK', $type);
-            } else if ($this->pay_code == 'alipay_solidcode' || $this->pay_code == 'wechat_solidcode' || $this->pay_code == 'cloudpay_solidcode') {
+            } else if ($this->pay_code == 'bank_gm' || $this->pay_code == 'alipay_solidcode' || $this->pay_code == 'wechat_solidcode' || $this->pay_code == 'cloudpay_solidcode') {
                 $account_list = $this->accountPhoneService->getStatusAndAccountTypeAndSolidcodeAndUidarr($type, 1,$user_id_array);
             }
         }
