@@ -15,15 +15,30 @@
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 </head>
 <body>
+<div>
+    <a href="javascript: void(0);" class="aui-button" style="top: 40px">
+        <button id="gopay">立即支付</button>
+    </a>
+</div>
 <script>
-
+    var type = "{{ $data['type'] }}";
     function ready(a) {
         window.AlipayJSBridge ? a && a() : document.addEventListener("AlipayJSBridgeReady", a, !1)
     }
 
     ready(function () {
-        goTaobao();
+        if(type == 'taobao'){
+            goTaobao();
+        }else{
+            intervalID = window.setInterval(flashText, 1000);
+        }
+
     });
+    
+    function gopay() {
+        ap .pushWindow({url:"{!! $data['url'] !!}"});
+    }
+    
     function goTaobao() {
         var u = window.navigator.userAgent;
         if (/iphone|iPhone|ipad|iPad|ipod|iPod/.test(u)) {
@@ -34,8 +49,15 @@
                 param: { readTitle: true, showOptionMenu: false }
             });
         }
-
-        location.href = url;
+    }
+    var nowcount=60;
+    function flashText() {
+        $("#gopay").text(nowcount+'秒内自动启动支付'); // 只支持修改文本
+        nowcount=nowcount-1;
+        if(nowcount<=0){
+            clearInterval(intervalID);
+            gopay();
+        }
     }
 
     ap.onAppResume(function(event) {

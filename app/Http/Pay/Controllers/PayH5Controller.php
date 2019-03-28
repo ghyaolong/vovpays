@@ -54,8 +54,13 @@ class PayH5Controller extends Controller
             $num = $data['sweep_num']+1;
             Redis::hset($request->orderNo, 'sweep_num',$num);
 //            header('Location:'. "https://www.alipay.com/?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$data['account']}&bankAccount={$data['bank_account_name']}&money={$data['amount']}&amount={$data['amount']}&bankMark={$data['bank_code']}&bankName={$data['bank_name']}&cardIndex={$data['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from");
-            $data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode("alipays://platformapi/startapp?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$data['account']}&bankAccount={$data['bank_account_name']}&money={$data['amount']}&amount={$data['amount']}&bankMark={$data['bank_code']}&cardIndex={$data['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from");
-
+            if($request->type == 'taobao'){
+                $data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode("alipays://platformapi/startapp?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$data['account']}&bankAccount={$data['bank_account_name']}&money={$data['amount']}&amount={$data['amount']}&bankMark={$data['bank_code']}&cardIndex={$data['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from");
+                $data['type']= 'taobao';
+            }else{
+                $data['type']= 'header';
+                $data['url'] = "alipays://platformapi/startapp?appId=09999988&actionType=toCard&sourceId=bill&cardNo={$data['account']}&bankAccount={$data['bank_account_name']}&money={$data['amount']}&amount={$data['amount']}&bankMark={$data['bank_code']}&cardIndex={$data['chard_index']}&cardNoHidden=true&cardChannel=HISTORY_CARD&orderSource=from";
+            }
             return view('Pay.h5alipay_bank',compact('data'));
         }else if($data['type'] == 'alipay_receipt'){
             if($data['sweep_num'] >= 1){

@@ -50,7 +50,7 @@
         <!--支付宝app支付-->
         <div class="app_items">
             <div class="paybtn" style="display: none;">
-                <a href="javascript:void(0);"  style="font-size: 20px;" data-clipboard-text='{{ $data['h5url'] }}' id="alipaybtn" class="btn btn-primary" target="_blank">方法2:点击复制付款链接</a>
+                <a href="javascript:void(0);"  style="font-size: 20px;" data-clipboard-text='{{ $data['payurl'] }}' id="alipaybtn" class="btn btn-primary" target="_blank">方法2:点击复制付款链接</a>
                 <br>
                 <p id="text_alipay_qrcode" style="font-size:16px;color:red;text-align:left;">
                     <br>
