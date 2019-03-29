@@ -300,7 +300,7 @@ class PayH5Controller extends Controller
                 return view('Pay.alipay_receipt_1', compact('data'));
             }
         }catch ( \Exception $e){
-            return json_encode($e->getMessage(),JSON_UNESCAPED_UNICODE);
+            return json_encode('网络异常，请重新发起支付',JSON_UNESCAPED_UNICODE);
         }
 
     }
