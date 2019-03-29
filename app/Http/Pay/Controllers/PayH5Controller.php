@@ -280,27 +280,27 @@ class PayH5Controller extends Controller
         }
 
         try{
-            $msg = json_encode([
+            $msg = [
                 'amount' => $data['amount'],
                 'mark'   => $data['meme'],
                 'type'   => 'alipay_order',
                 'uid'    => $resultData['user_id'],
                 'sendtime' => TimeMicroTime(),
-            ]);
+            ];
 
             if($request->type == 'alipay'){
                 $msg['type'] = 'alipay_qr';
                 $rabbitMqService = app(RabbitMqService::class);
-                $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
+                $rabbitMqService->send('qr_'.$data['phone_id'].'test',json_encode($msg));
                 $url = 'alipays://platformapi/startapp?appId=09999988&actionType=toAccount&goBack=NO&userId='.$data['userID'].'&amount='.$data['amount'];
                 return view('Pay.android', compact('url'));
             }else{
                 $rabbitMqService = app(RabbitMqService::class);
-                $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
+                $rabbitMqService->send('qr_'.$data['phone_id'].'test',json_encode($msg));
                 return view('Pay.alipay_receipt_1', compact('data'));
             }
         }catch ( \Exception $e){
-            return json_encode('请重新发起支付',JSON_UNESCAPED_UNICODE);
+            return json_encode($e->getMessage(),JSON_UNESCAPED_UNICODE);
         }
 
     }
