@@ -146,7 +146,16 @@ class getOrderCallback extends Command
             $userService = app(UserService::class);
             $user = $userService->findId($order->user_id);
             if (!$user) return 5;
-            $signkey = env('SIGNKEY');
+
+            //代理挂号时，获取账号拥有着key
+            if ($add_account_type == 3) {
+                $court = $userService->findId($order->phone_uid);
+                if (!$court) return 6;
+                $signkey = $court->apiKey;
+            } else {
+                $signkey = env('SIGNKEY');
+            }
+
             if (!$this->checkSign($data, $signkey)) {
                 Log::info('recharge_orderCallback_sign_error:', [$json_str]);
                 return 7;
