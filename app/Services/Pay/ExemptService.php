@@ -50,7 +50,8 @@ class ExemptService implements PayInterface
                 'userID'  => $account_array['userId'],
                 'status'  => 0,
                 'type'    => $request->pay_code,
-                'sweep_num'  => 0
+                'sweep_num'  => 0,
+                'phone_id'=> $account_array['phone_id'],
             );
 
             $data = [
@@ -58,13 +59,14 @@ class ExemptService implements PayInterface
                 'username'=> $account_array['username'],
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
-                'payurl'  => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$account_array['userId'].'","a": "'.$result->amount.'","m": "'.$result->orderNo.'"}',
-                'h5url'   => 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+                'payurl'  => 'https://ds.alipay.com/?from=mobilecodec&scheme='.urlencode("alipays://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode=http://".$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo),
+                //'payurl'  => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$account_array['userId'].'","a": "'.$result->amount.'","m": "'.$result->orderNo.'"}',
+                'h5url'   => 'https://ds.alipay.com/?from=mobilecodec&scheme='.urlencode("alipays://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode=http://".$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo),
             ];
             Redis::hmset($result->orderNo, $order_date);
             Redis::expire($result->orderNo,600);
 
-            $request->pay_code = 'alipay_taobao';
+            $request->pay_code = 'alipay';
         }else if($request->pay_code == 'alipay_bank'){ // 支付宝转网商
             // 存储订单号,以便回调
             $key = $account_array['phone_id'].'_'.$request->pay_code.'_'.sprintf('%0.2f',$result['amount']);

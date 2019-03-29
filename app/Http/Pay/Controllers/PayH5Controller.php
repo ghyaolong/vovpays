@@ -42,10 +42,37 @@ class PayH5Controller extends Controller
             Redis::hset($request->orderNo, 'sweep_num',$num);
             return view('Pay.hbh5',compact('data'));
 
+
+
+
         }else if($data['type'] == 'alipay'){
+
+            if($data['sweep_num'] >= 1){
+                return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
+            }
+
+            $accountUpperService = app(AccountUpperService::class);
+            $account_list = $accountUpperService->findChannelId(1);
+            if(!$account_list){
+                return json_encode('系统未配置',JSON_UNESCAPED_UNICODE);
+            }
+
+            $account_array = $account_list->toArray();
+
+            $rank_key  = array_rand($account_array);
+            $redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/pay/alipayauth/'.$request->orderNo.'?type=alipay'; //授权回调地址
+            $url ="https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id={$account_array[$rank_key]['account']}&scope=auth_base&redirect_uri={$redirect_uri}";
+            $data['url'] = $url;
+            header("Location:".$url);
+
+//            return view('Pay.android',compact('data'));
             //$data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode('alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "'.$data['userID'].'","a": "'.$data['amount'].'","m": "'.$data['meme'].'"}');
-            $data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode("alipays://platformapi/startapp?appId=20000116&actionType=toAccount&goBack=NO&amount={$data['amount']}&userId={$data['userID']}&memo={$data['meme']}");
-            return view('Pay.h5alipay_bank',compact('data'));
+//            $data['url'] = "taobao://render.alipay.com/p/s/i?scheme=".urlencode("alipays://platformapi/startapp?appId=20000116&actionType=toAccount&goBack=NO&amount={$data['amount']}&userId={$data['userID']}&memo={$data['meme']}");
+//            return view('Pay.h5alipay_bank',compact('data'));
+
+
+
+
         }else if($data['type'] == 'alipay_bank2'){
 
             if($data['sweep_num'] >= 2){
@@ -236,33 +263,41 @@ class PayH5Controller extends Controller
         $aop->charset = 'UTF-8';
         $aop->signType = 'RSA2';
         $aop->apiVersion = '1.0';
-        $request = new AlipaySystemOauthTokenRequest();
-        $request->setGrantType("authorization_code");
-        $request->setCode($code);
+        $requests = new AlipaySystemOauthTokenRequest();
+        $requests->setGrantType("authorization_code");
+        $requests->setCode($code);
 
-        $result = $aop->execute($request);
+        $result = $aop->execute($requests);
 
-        $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
+        $responseNode = str_replace(".", "_", $requests->getApiMethodName()) . "_response";
         $resultData = (array) $result->$responseNode;
         if (empty($resultData['access_token'])) {
             return json_encode('获取access_token失败',JSON_UNESCAPED_UNICODE);
         }
 
-        $uid = $resultData['user_id'];
+        if(!$resultData['user_id']){
+            return json_encode('无法获取授权',JSON_UNESCAPED_UNICODE);
+        }
 
         try{
             $msg = json_encode([
                 'amount' => $data['amount'],
                 'mark'   => $data['meme'],
-                'type'   => 'alipay_order',
-                'uid'    => $uid,
+                'type'   => 'alipay_qr',
+                'uid'    => $resultData['user_id'],
                 'sendtime' => TimeMicroTime(),
             ]);
             $rabbitMqService = app(RabbitMqService::class);
             $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
-            return view('Pay.alipay_receipt_1', compact('data'));
+            if($request->type == 'alipay'){
+
+                $url = 'alipays://platformapi/startapp?appId=09999988&actionType=toAccount&goBack=NO&userId='.$data['userID'].'&amount='.$data['amount'];
+                return view('Pay.android', compact('url'));
+            }else{
+                return view('Pay.alipay_receipt_1', compact('data'));
+            }
         }catch ( \Exception $e){
-            return json_encode('系统错误',JSON_UNESCAPED_UNICODE);
+            return json_encode('请重新发起支付',JSON_UNESCAPED_UNICODE);
         }
 
     }
