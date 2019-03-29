@@ -283,17 +283,20 @@ class PayH5Controller extends Controller
             $msg = json_encode([
                 'amount' => $data['amount'],
                 'mark'   => $data['meme'],
-                'type'   => 'alipay_qr',
+                'type'   => 'alipay_order',
                 'uid'    => $resultData['user_id'],
                 'sendtime' => TimeMicroTime(),
             ]);
-            $rabbitMqService = app(RabbitMqService::class);
-            $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
-            if($request->type == 'alipay'){
 
+            if($request->type == 'alipay'){
+                $msg['type'] = 'alipay_qr';
+                $rabbitMqService = app(RabbitMqService::class);
+                $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
                 $url = 'alipays://platformapi/startapp?appId=09999988&actionType=toAccount&goBack=NO&userId='.$data['userID'].'&amount='.$data['amount'];
                 return view('Pay.android', compact('url'));
             }else{
+                $rabbitMqService = app(RabbitMqService::class);
+                $rabbitMqService->send('qr_'.$data['phone_id'].'test',$msg);
                 return view('Pay.alipay_receipt_1', compact('data'));
             }
         }catch ( \Exception $e){
