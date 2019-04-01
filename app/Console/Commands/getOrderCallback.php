@@ -214,8 +214,6 @@ class getOrderCallback extends Command
                 Redis::expire($order->orderNo, 180);
             }
 
-            SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
-
             $statisticalService = app(StatisticalService::class);
             // 商户收益增加
             if ($add_account_type != 1) {
@@ -280,10 +278,9 @@ class getOrderCallback extends Command
                 ];
                 $quotalogService->add($quota_array);
             }
-
-
-
         }
+        Redis::select(0);
+        SendOrderAsyncNotify::dispatch($order)->onQueue('orderNotify');
     }
 
     /**
