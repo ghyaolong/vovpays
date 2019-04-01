@@ -230,9 +230,9 @@ class getOrderCallback extends Command
                 $statisticalService->updateUseridBalanceDecrement($user->id,$order->orderRate);
             }
 
-            //代理后台挂号时：扣除预充值手续费
+            //代理后台挂号时：按照代理费率扣除预充值手续费
             if($add_account_type == 3 && $order->orderRate > 0){
-                $statisticalService->updateUseridBalanceDecrement($order->agent_id,$order->orderRate);
+                $statisticalService->updateUseridBalanceDecrement($order->agent_id,$order->agentAmount);
             }
 
 
