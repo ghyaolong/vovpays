@@ -161,7 +161,7 @@
                     <div style="height: 80px;background: #F5F5F5;margin:15px 10px;padding: 15px 20px;line-height: 30px">
                         <b>传参方式：</b> Post<br>
                         <b></b>
-                        用户付款成功后，我们会向您在发起付款接口传入的notify_url网址发送通知(POST)。您的服务器只要返回小写字符串“success”（不包括引号），就表示回调成功。通知内容(json)如下:<br>
+                        用户付款成功后，我们会向您在发起付款接口传入的notify_url网址发送通知(POST)。您的服务器只要返回小写字符串“success”（不包括引号），就表示回调成功。通知内容如下:<br>
                     </div>
 
 
@@ -178,9 +178,9 @@
                             <tr>
                                 <td>1.</td>
                                 <td>merchant</td>
-                                <td>您的自定义订单号</td>
+                                <td>商户号</td>
                                 <td>string(50)</td>
-                                <td>上行过程中商户系统传入的orderid</td>
+                                <td>平台提供的商户号</td>
                                 <td><span class="glyphicon glyphicon-ok"></span></td>
                             </tr>
                             <tr>
