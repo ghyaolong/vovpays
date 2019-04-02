@@ -295,7 +295,7 @@ class ExemptService implements PayInterface
             Redis::expire($result->orderNo,180);
             // 为了模板的共用而改变
             $request->pay_code = 'alipay';
-        }else if($request->pay_code == 'ddc'){
+        }else if($request->pay_code == 'thb'){
 
             $order_date = array(
                 'amount'  => $result->amount,
@@ -305,7 +305,6 @@ class ExemptService implements PayInterface
                 'type'    => $request->pay_code,
                 'sweep_num' => 0, // 扫码次数
                 'phone_id'=> $account_array['phone_id'],
-                'service' => $user->apiKey,
             );
             $data = [
                 'type'    => $request->pay_code,

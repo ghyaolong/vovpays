@@ -46,7 +46,6 @@ class GetWechatQrcode extends Command
         $channel = $connection->channel();
         $channel->queue_declare($queue, false, false, false, false);
         $callback = function ($msg) {
-
             echo $msg->body."\n";
             $this->phoneStatusCheck($msg->body);
         };
@@ -58,11 +57,13 @@ class GetWechatQrcode extends Command
 
     protected function phoneStatusCheck($json_str)
     {
-        $data = json_decode($json_str, true);
-        if(isset($data['type']) &&  $data['type'] == 'ddc'){
-            Redis::set($data['phoneid']."token",$json_str);
-            Redis::expire($data['phoneid']."token",86400);
-        }else{
+        if(stripos($json_str,'alipay.fund.stdtrustee.order.create.pay')){
+
+            $param = explode("||",$json_str);
+            Redis::set($param[1]."thb","'".$param[0]."'");
+            Redis::expire($param[1]."thb",180);
+        }else {
+            $data = json_decode($json_str, true);
             Redis::set($data['mark']."order",$json_str);
             Redis::expire($data['mark']."order",180);
         }
