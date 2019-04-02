@@ -312,7 +312,7 @@ class ExemptService implements PayInterface
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
                 'payurl'  => 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
-                'h5url'   => 'alipays://platformapi/startapp?appId=66666722&appClearTop=false&startMultApp=YES&&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+                'h5url'   => 'alipays://platformapi/startapp?appId=66666722&appClearTop=false&startMultApp=YES&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
             ];
 
             Redis::hmset($result->orderNo, $order_date);
