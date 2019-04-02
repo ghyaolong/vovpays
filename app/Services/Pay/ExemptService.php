@@ -311,7 +311,7 @@ class ExemptService implements PayInterface
                 'username'=> $account_array['username'],
                 'money'   => sprintf('%0.2f',$result->amount),
                 'orderNo' => $result->orderNo,
-                'payurl'  => 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
+                'payurl'  => 'alipays://platformapi/startapp?appId=66666722&appClearTop=false&startMultApp=YES&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
                 'h5url'   => 'alipays://platformapi/startapp?appId=66666722&appClearTop=false&startMultApp=YES&url='. 'http://'.$_SERVER['HTTP_HOST'].'/pay/h5pay/'. $result->orderNo,
             ];
 
