@@ -20,7 +20,7 @@ class PayH5Controller extends Controller
     public function h5pay(Request $request)
     {
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
-//        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
+        if(strpos( $userAgent, 'AlipayClient' ) === false) return ;
         if(!$request->orderNo) return ;
 
 
@@ -113,7 +113,8 @@ class PayH5Controller extends Controller
             if($data['sweep_num'] >= 1){
                 return json_encode('二维码已使用，请重新发起支付！',JSON_UNESCAPED_UNICODE);
             }
-
+            $num = $data['sweep_num']+1;
+            Redis::hset($request->orderNo, 'sweep_num',$num);
             try{
                 $msg = json_encode([
                     'amount' => $data['amount'],
