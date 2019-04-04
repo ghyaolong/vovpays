@@ -270,7 +270,7 @@
         msglist[5] = '小哥哥小姐姐马上就授权完';
         msglist[6] = '如果提示【商户异常】请尝试手动点击支付';
         var timecount = 1;
-        var timenum = 40;
+        var timenum = 30;
         timeid = window.setInterval(function () {
             if (timecount >= timenum) {
                 $("#payBtn").attr("disabled",false);
