@@ -85,7 +85,7 @@ class RechargeService
             'username'  => $name,
             'money'     => sprintf('%0.2f', $result->actual_amount),
             'orderNo'   => $result->orderNo,
-            'payurl'    => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "' . $ali_uid . '","a": "' . $result->amount . '","m": "' . $result->orderNo . '"}',
+            'payurl'    => 'alipays://platformapi/startapp?appId=20000123&actionType=scan&biz_data={"s": "money","u": "' . $ali_uid . '","a": "' . $result->actual_amount . '","m": "' . $result->orderNo . '"}',
             'h5url'     => 'alipays://platformapi/startapp?appId=20000067&url=' . 'http://' . $_SERVER['HTTP_HOST'] . '/pay/h5pay/' . $result->orderNo,
         ];
 
