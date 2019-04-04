@@ -210,7 +210,7 @@ class getOrderCallback extends Command
 
             // 更新redis订单状态,前端查询
             if (Redis::exists($order->orderNo)) {
-                Redis::hmset($order->orderNo, ['status' => 1]);
+                Redis::hmset($order->orderNo, ['status' => 1,'return_url'=>$order->successUrl]);
                 Redis::expire($order->orderNo, 180);
             }
 
