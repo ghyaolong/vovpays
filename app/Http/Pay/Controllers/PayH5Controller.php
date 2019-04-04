@@ -226,7 +226,7 @@ class PayH5Controller extends Controller
     public function getAlipayNorderNo(Request $request)
     {
         Redis::select(1);
-        $orders = Redis::get($request->orderNo."thb");
+        $orders = Redis::get($request->orderNo."order");
         if(!$orders) return json_encode(array('tradeNo'=>''));
         $orders = str_replace("'",'',$orders);
         return json_encode(array('tradeNo'=>$orders));
