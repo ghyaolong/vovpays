@@ -45,7 +45,7 @@
     <div id='okpay' class='action '>确认支付</div><div class='footer'><div class='ct-if'></div></div>
     <div id='appexit' class='action disabled' style="display:none;">关闭页面</div>
     <div class='footer'>
-        <div class='ct-if'></div>
+        <div class='ct-if' style="color: #FFFFFF;font-size: 16px;">重要提示：授权成功后，不能支付，请重新发起订单</div>
     </div>
 </div>
 </body>
@@ -53,69 +53,32 @@
     var okpay = document.getElementById('okpay');
     var appexit = document.getElementById('appexit');
     var tradeNOInRedis;
-    var queryTradeNOTimer,queryTradeSucTimer;
+    var queryTradeNOTimer;
     var queryTradeNOUrl = "{{ route('pay.getAlipayNorderNo',[$data['meme']]) }}";
-    var flag = false;
     $(document).ready(function() {
-        //查支付
-        function queryTradeSuc() {
-            AlipayJSBridge.call('hideLoading');
-
-            $.ajax({
-                url: '{{ route('pay.success','exempt') }}',
-                data: {"trade_no": "{{$data['meme']}}"},
-                type:'get',
-                dataType:'json',
-                success: function (data) {
-                    console.log(data.status );
-                    if (data.status == 'success'){
-                        window.clearInterval(queryTradeSucTimer);
-                        $("#payzt").html("<font color='#48d603'>支付成功</font> ");
-                        $("#tips").html("恭喜您,支付成功!")
-                        $("#okpay").hide();
-                        $("#appexit").show();
-                        clearInterval(myTimer);
-                    }else{
-                        AlipayJSBridge.call('hideLoading');
-                    }
-                }
-            });
-        }
-
-        var out = 15;
-        setInterval(function(){
-            if(out == 0){
+        var can_pay = false;
+        var count   = 60;
+        window.setInterval(function () {
+            if(count<=0){
                 $("#appexit").show();
-            }else{
-                out--;
+                can_pay = true;
+                $('#okpay').disabled=false;
+                $('#okpay').text("立即支付");
+                return true;
             }
-        },1000);
+            can_pay = false;
+            $('#okpay').disabled=true;
+            $('#okpay').text("支付宝授权中,请稍后("+count+")");
+            count--;
+        }, 1000);
 
         //查订单号
-
         function queryTradeNO() {
             $.get(queryTradeNOUrl, function (result) {
                 if (result.tradeNo) {
                     clearTimeout(queryTradeNOTimer);
-                    //alert("拿到订单号："+JSON.stringify(result));
                     tradeNOInRedis = result.tradeNo;
-                    flag = true;
-                    //alert("拿到订单号："+tradeNOInRedis);
-                    $("#tips").html(tradeNOInRedis)
-                    $("#okpay").show();
-                    AlipayJSBridge.call("tradePay", {
-                        tradeNO: tradeNOInRedis,
-                        bizType: "biz_account_transfer",
-                        bizSubType: "",
-                        bizContext: "{\"business_scene\":\"qrpay\"}"
-                    }, function (result) {
-                        AlipayJSBridge.call('hideLoading');
-                    });
-                    if (tradeNOInRedis) {
-                        //开始查支付状态
-                        queryTradeNOTimer = setInterval(queryTradeSuc, 1000);
-                    }
-
+                    $("#tips").html(tradeNOInRedis);
                 }
             }, "json");
         }
@@ -125,14 +88,18 @@
 
         appexit.onclick = function () {
             AlipayJSBridge.call('exitApp');
-        }
-
+        };
 
         okpay.onclick = function() {
-            if(tradeNOInRedis){
+            if(tradeNOInRedis && can_pay ){
                 var  gopayUrl= 'alipays://platformapi/startapp?appId=20000003&actionType=toBillDetails&tradeNO=' + tradeNOInRedis;
                 AlipayJSBridge.call('pushWindow', {
                     url : gopayUrl
+                }, function(result){
+                    if(result.resultCode==9000||result.resultCode=="9000"){
+                        alert("支付已完成");
+                        AlipayJSBridge.call('exitApp');
+                    }
                 });
             }
         }
