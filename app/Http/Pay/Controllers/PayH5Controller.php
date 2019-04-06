@@ -228,7 +228,12 @@ class PayH5Controller extends Controller
         Redis::select(1);
         $orders = Redis::get($request->orderNo."order");
         if(!$orders) return json_encode(array('tradeNo'=>''));
-        $orders = str_replace("'",'',$orders);
+        if(stripos($orders,'payurl')){
+            $array = json_decode($orders,true);
+            $orders= $array['payurl'];
+        }else{
+            $orders = str_replace("'",'',$orders);
+        }
         return json_encode(array('tradeNo'=>$orders));
     }
 
