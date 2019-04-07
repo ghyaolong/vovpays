@@ -64,6 +64,7 @@
                             <tr style="font-size: 15px;text-align: center;color: #999999;background: #f5f6f9">
                                 <th>商户号</th>
                                 <th>用户名</th>
+                                <th>余额</th>
                                 <th>用户类型</th>
                                 <th>状态</th>
                                 <th>注册时间</th>
@@ -76,6 +77,7 @@
                                     <tr>
                                         <td>{{$v->merchant}}</td>
                                         <td>{{$v->username}}</td>
+                                        <td><span style="color: #5F9EA0;font-weight: bold">{{ $v->Statistical->handlingFeeBalance }}</span></td>
                                         <td>普通商户</td>
                                         <td>
                                             <input class="switch-state" name="status" data-id="{{$v->id}}"
