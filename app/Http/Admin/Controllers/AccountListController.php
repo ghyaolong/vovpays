@@ -21,7 +21,7 @@ class AccountListController extends Controller
 
     public function __construct(AccountPhoneService $accountPhoneService, AccountBankCardsService $accountBankCardsService)
     {
-        $this->accountPhoneService     = $accountPhoneService;
+        $this->accountPhoneService = $accountPhoneService;
         $this->accountBankCardsService = $accountBankCardsService;
     }
 
@@ -34,15 +34,14 @@ class AccountListController extends Controller
         $query = $request->query();
         $title = '所有账号';
 
-        if(count($query) && (isset($query['accountType']) &&  $query['accountType'] == 'alipay_bank'))
-        {
+        if (count($query) && (isset($query['accountType']) && $query['accountType'] == 'alipay_bank')) {
             $query['accountType'] = '银行卡';
-            $account_list = $this->accountBankCardsService->getAllPage($query,20);
-        }else{
-            $account_list = $this->accountPhoneService->searchPhoneStastic($query,20);
+            $account_list = $this->accountBankCardsService->getAllPage($query, 20);
+        } else {
+            $account_list = $this->accountPhoneService->searchPhoneStastic($query, 20);
         }
         $account_list->appends($request->query());
-        return view("Admin.Account.index", compact('account_list','title','query'));
+        return view("Admin.Account.index", compact('account_list', 'title', 'query'));
     }
 
     /**
@@ -53,11 +52,11 @@ class AccountListController extends Controller
     public function saveAllStatus(Request $request)
     {
         $data['status'] = $request->status == 'true' ? '1' : '0';
-        $accountType    = $request->accountType;
+        $accountType = $request->accountType;
 
-        if($accountType == '银行卡'){
+        if ($accountType == '银行卡') {
             $result = $this->accountBankCardsService->update($request->id, auth()->user()->id, $data);
-        }else{
+        } else {
             $result = $this->accountPhoneService->update($request->id, auth()->user()->id, $data);
         }
 
