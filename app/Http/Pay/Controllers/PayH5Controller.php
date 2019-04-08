@@ -206,7 +206,8 @@ class PayH5Controller extends Controller
                 $rabbitMqService = app(RabbitMqService::class);
                 $rabbitMqService->send('qr_'.$data['phone_id'].'test',json_encode($msg));
                 $url = 'alipays://platformapi/startapp?appId=09999988&actionType=toAccount&goBack=NO&userId='.$data['userID'].'&amount='.$data['amount'];
-                return view('Pay.android', compact('url'));
+                $data['url'] = $url;
+                return view('Pay.android', compact('data'));
             }else{
                 $rabbitMqService = app(RabbitMqService::class);
                 $rabbitMqService->send('qr_'.$data['phone_id'].'test',json_encode($msg));

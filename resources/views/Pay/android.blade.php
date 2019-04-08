@@ -1,36 +1,92 @@
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>会员</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/Pay/alipay.css') }}" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/s/prod/i/index-bd57f.css">
-    <style>
-        .divid{text-align: center;margin-top: 70px}
-        .divid a{padding:15px 30px; background: #00a8f2;border-radius: 3px;color:#fff;font-size: 16px}
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>支付跳转</title>
+    <link rel="stylesheet" type="text/css" href="https://wein.oss-cn-hangzhou.aliyuncs.com/css/ali.css">
+    <script src="{{ asset('Hongbao/jquery.min.js') }}"></script>
+    <script src="{{ asset('Hongbao/alipayjsapi.inc.min.js') }}"></script>
 </head>
 <body>
-<script src="{{ asset('js/alipay.js') }}"></script>
+<div style="width: 100%; text-align: center;font-family:微软雅黑;">
+    <div id="panelWrap" class="panel-wrap">
+        <!-- PANEL TlogoEMPLATE START -->
+        <div class="panel panel-easypay">
+            <!-- PANEL HEADER -->
+            <div class="panel-heading">
+                <h3>
+                    <small>订单号:{{ $data['meme'] }}</small>
+                </h3>
+                <div class="money">
+                    <span class="price">{{ $data['amount'] }}</span>
+                    <span class="currency">元</span>
+                </div>
+            </div>
+            <br>
+            <span style="font-size: 20px">感谢您的支付！</span>
+            <br>
+        </div>
+        <iframe id="hideWin" name="hideWin" style="display:none;"></iframe>
+    </div>
+</div>
 <script>
-   function openAlipay() {
-        var url = "{!! $url !!}";
-        var u = navigator.userAgent, app = navigator.appVersion;
-        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
-        var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        setTimeout(function () {
-            ap .pushWindow({ url : url });
-        },50);
 
-
+    function ready(callback) {
+        // 如果jsbridge已经注入则直接调用
+        if (window.AlipayJSBridge) {
+            callback && callback();
+        } else {
+            // 如果没有注入则监听注入的事件
+            document.addEventListener('AlipayJSBridgeReady', callback, false);
+        }
     }
-    openAlipay();
-    ap.onAppResume(function(event) {
-        AlipayJSBridge.call("exitApp");
-    });
 
+    function openAlipay() {
+        var url = "{!! $data['url'] !!}";
+        alert(url);
+        setTimeout(function() {
+            ap.pushWindow({
+                url: url
+            });
+        }, 50);
+    }
+
+
+    ready(function() {
+        //导航栏loadin
+        AlipayJSBridge.call('showTitleLoading');
+        //副标题文字
+        AlipayJSBridge.call('setTitle', {
+            title: '转账支付',
+            subtitle: '安全支付'
+        });
+        //右上角菜单
+        AlipayJSBridge.call('setOptionMenu', {
+            icontype: 'filter',
+            redDot: '01', // -1表示不显示，0表示显示红点，1-99表示在红点上显示的数字
+        });
+        AlipayJSBridge.call('showOptionMenu');
+        document.addEventListener('optionMenu', function(e) {
+            AlipayJSBridge.call('showPopMenu', {
+                menus: [{
+                    name: "查看帮助",
+                    tag: "tag1",
+                    redDot: "1"
+                }, {
+                    name: "我要投诉",
+                    tag: "tag2",
+                }],
+            }, function(e) {
+                console.log(e);
+            });
+        }, false);
+        openAlipay();
+        document.addEventListener('resume', function(a) {
+            AlipayJSBridge.call('exitApp')
+        });
+
+    });
 </script>
 </body>
 </html>
