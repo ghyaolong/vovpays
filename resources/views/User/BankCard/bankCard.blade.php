@@ -4,68 +4,68 @@
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
 @endsection
 @section('content')
-<div class="row">
-    <div class="col-xs-12 col-md-12">
-        <div class="box">
-            <div class="box-header">
-                <button type="button" class="btn btn-primary" onclick="showModel('添加银行卡')">添加银行卡</button>
-                <a href="{{ route('user.bankCard') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
-            </div>
-            <div class="box-body">
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <button type="button" class="btn btn-primary" onclick="showModel('添加银行卡')">添加银行卡</button>
+                    <a href="{{ route('user.bankCard') }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
+                </div>
                 <div class="box-body">
-                    <table id="example2" class="table table-condensed table-bordered table-hover">
-                        <thead>
-                        <tr style="font-size: 15px;height: 38px">
-                            <th>ID</th>
-                            {{--<th>银行名称</th>--}}
-                            <th>支行名称</th>
-                            <th>开户名</th>
-                            <th>银行卡号</th>
-                            <th>状态</th>
-                            <th>备注</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($lists as $list)
-                            <tr>
-                                <td>{{$list->id}}</td>
-                                {{--<td>{{$list->bank->bankName}}</td>--}}
-                                <td>{{$list->branchName}}</td>
-                                <td>{{$list->accountName}}</td>
-                                <td>{{$list->bankCardNo}}</td>
-                                <td>
-                                    <input class="switch-state" data-id="{{ $list['id'] }}"
-                                           data-user_id="{{ $list['user_id'] }}" type="checkbox"
-                                           @if($list['status'] == 1) checked @endif>
-                                </td>
-                                <td>上次修改:{{$list->updated_at}}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-primary btn-sm"
-                                                onclick="edit('编辑',{{$list->id}})">编辑
-                                        </button>
-                                        <button class="btn btn-primary btn-sm"
-                                                onclick="del($(this),{{$list->id}})">
-                                            删除
-                                        </button>
-                                    </div>
-                                </td>
+                    <div class="box-body">
+                        <table id="example2" class="table table-condensed table-bordered table-hover">
+                            <thead>
+                            <tr style="font-size: 15px;height: 38px">
+                                <th>ID</th>
+                                {{--<th>银行名称</th>--}}
+                                <th>支行名称</th>
+                                <th>开户名</th>
+                                <th>银行卡号</th>
+                                <th>状态</th>
+                                <th>备注</th>
+                                <th>操作</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    <br>
-                    <b style="color: firebrick">
-                        注： 只能有一张卡为 启用 状态 ！
-                    </b>
+                            </thead>
+                            <tbody>
+                            @foreach($lists as $list)
+                                <tr>
+                                    <td>{{$list->id}}</td>
+                                    {{--<td>{{$list->bank->bankName}}</td>--}}
+                                    <td>{{$list->branchName}}</td>
+                                    <td>{{$list->accountName}}</td>
+                                    <td>{{$list->bankCardNo}}</td>
+                                    <td>
+                                        <input class="switch-state" data-id="{{ $list['id'] }}"
+                                               data-user_id="{{ $list['user_id'] }}" type="checkbox"
+                                               @if($list['status'] == 1) checked @endif>
+                                    </td>
+                                    <td>上次修改:{{$list->updated_at}}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm"
+                                                    onclick="edit('编辑',{{$list->id}})">编辑
+                                            </button>
+                                            <button class="btn btn-primary btn-sm"
+                                                    onclick="del($(this),{{$list->id}})">
+                                                删除
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <br>
+                        <b style="color: firebrick">
+                            注： 只能有一张卡为 启用 状态 ！
+                        </b>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     {{--模态框--}}
-@include('User.Commons._bank_modal')
+    @include('User.Commons._bank_modal')
 @endsection('content')
 
 @section("scripts")
@@ -136,6 +136,14 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
+                    bank_id: {
+                        validators: {
+                            regexp: {
+                                regexp: /^(?!0\d|0$)\d{1,3}$/,
+                                message: '请选择银行!'
+                            },
+                        }
+                    },
                     branchName: {
                         validators: {
                             notEmpty: {
