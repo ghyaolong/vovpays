@@ -136,6 +136,14 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
+                    bank_id: {
+                        validators: {
+                            regexp: {
+                                regexp: /^(?!0\d|0$)\d{1,3}$/,
+                                message: '请选择银行!'
+                            },
+                        }
+                    },
                     branchName: {
                         validators: {
                             notEmpty: {
