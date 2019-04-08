@@ -44,7 +44,6 @@
 
     function openAlipay() {
         var url = "{!! $data['url'] !!}";
-        alert(url);
         setTimeout(function() {
             ap.pushWindow({
                 url: url
