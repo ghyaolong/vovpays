@@ -189,7 +189,7 @@ $().ready(function(){
     var type = '{{ $data['type'] }}';
 
 
-    if(isMobile() == 1 && (type == 'alipay_packets' || type == 'thb') )
+    if(isMobile() == 1 && (type == 'alipay_packets' || type == 'thb' || type == 'alipay') )
     {
         $('.paybtn').show();
     }
