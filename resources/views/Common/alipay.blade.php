@@ -128,7 +128,7 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">收款链接:</label>
                             <div class="col-xs-9">
-                                <textarea name="qrcode" id="" cols="30" rows="10"></textarea>
+                                <input type="text" name="qrcode" class="form-control" placeholder="收款链接">
                             </div>
                         </div>
                         <div class="form-group">
@@ -383,7 +383,7 @@
                         $("input[name='alipayusername']").val(result.data['alipayusername']);
                         $("input[name='alipayuserid']").val(result.data['alipayuserid']);
                         $("input[name='phone_id']").val(result.data['phone_id']);
-                        $("textarea[name='qrcode']").val(result.data['qrcode']);
+                        $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
