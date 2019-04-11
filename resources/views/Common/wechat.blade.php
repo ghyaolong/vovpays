@@ -33,7 +33,7 @@
                                 <th>手机标识</th>
                                 <th>账号</th>
                                 <th>账号类型</th>
-                                {{--<th>备注</th>--}}
+                                <th>备注</th>
                                 <th>单日交易额</th>
                                 <th>今日订单量</th>
                                 <th>今日成功订单量</th>
@@ -53,7 +53,7 @@
                                         <td>{{ $v->phone_id }}</td>
                                         <td style="color: red">{{ $v->account }}</td>
                                         <td style="color: #00c0ef">{{ $v->accountType }}</td>
-                                        {{--<td>备注</td>--}}
+                                        <td style="color: dimgrey">{{ $v->alipayusername }}</td>
                                         <td><span style="color: green">{{$v->account_amount}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_count}}</span></td>
                                         <td><span style="color: green">{{$v->account_order_suc_count}}</span></td>
@@ -129,6 +129,13 @@
                                         <option value="{{$payment->id}}">{{$payment->paymentName}}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="col-xs-3 control-label">备注:</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" name="alipayusername" placeholder="请输入备注">
                             </div>
                         </div>
 
@@ -349,6 +356,7 @@
                         $("input[name='qrcode']").val(result.data['qrcode']);
                         $("input[name='dayQuota']").val(result.data['dayQuota']);
                         $("input[name='status']").val(result.data['status']);
+                        $("input[name='alipayusername']").val(result.data['alipayusername']);
                         $("input[name='id']").val(result.data['id']);
                         $('.modal-title').html(title);
                         $('#addModel').modal('show');

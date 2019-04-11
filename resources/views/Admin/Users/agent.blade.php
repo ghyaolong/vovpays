@@ -10,7 +10,8 @@
             <div class="box">
                 <div class="box-header">
                     <button type="button" class="btn btn-primary" onclick="showModel('添加代理')">添加代理</button>
-                    <a href="{{ route('users.index',['agent']) }}" class="btn pull-right"><i class="fa fa-undo"></i>刷新</a>
+                    <a href="{{ route('users.index',['agent']) }}" class="btn pull-right"><i
+                                class="fa fa-undo"></i>刷新</a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box box-primary">
@@ -74,9 +75,13 @@
                                 <td>{{ $v['id'] }}</td>
                                 <td>{{ $v['merchant'] }}</td>
                                 <td><span style="color: #008080;font-weight: bold">{{ $v['username'] }}</span></td>
-                                <td><span style="color: #5F9EA0;font-weight: bold">{{ $v->Statistical->handlingFeeBalance }}</span></td>
+                                <td>
+                                    <span style="color: #5F9EA0;font-weight: bold">{{ $v->Statistical->handlingFeeBalance }}</span>
+                                </td>
                                 @if(env('ADD_ACCOUNT_TYPE') == 3)
-                                    <td><span style="color: #ff9c3d;font-weight: bold">{{ $v->Statistical->balance }}</span></td>
+                                    <td>
+                                        <span style="color: #ff9c3d;font-weight: bold">{{ $v->Statistical->balance }}</span>
+                                    </td>
                                 @endif
                                 <td>{{ $v['email'] }}</td>
                                 <td>{{ $v['phone'] }}</td>
@@ -98,6 +103,9 @@
                                                 onclick="editBlance('充值',{{ $v['id'] }})">充值余额
                                         </button>
                                     @endif
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                            onclick="editBlance('余额加减',{{ $v['id'] }})">余额加减
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -181,7 +189,8 @@
 
 
     {{--余额--}}
-    <div class="modal fade" id="balanceModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    <div class="modal fade" id="balanceModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true"
          data-backdrop="static">
         <div class="modal-dialog" style="margin-top: 123px">
             <div class="modal-content">
@@ -189,7 +198,8 @@
                     <h4 class="modal-title quota_modal-title"></h4>
                 </div>
                 <div class="modal-body" style="overflow: auto;">
-                    <form id="balanceForm" action="{{ route('users.handlingfeebalance') }}" class="form-horizontal" role="form">
+                    <form id="balanceForm" action="{{ route('users.handlingfeebalance') }}" class="form-horizontal"
+                          role="form">
                         <input type="hidden" name="uid">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -432,26 +442,33 @@
         /**
          * 余额加减
          */
-        function editBlance(title,id) {
+        function editBlance(title, id) {
+            $form = $('#balanceForm');
+            if (title == '充值') {
+                $form.attr('action', "{{ route('users.handlingfeebalance') }}");
 
-        $("input[name='uid']").val(id);
-        $('.quota_modal-title').html(title);
-        $('#balanceModel').modal('show');
+            } else {
+                $form.attr('action', "{{ route('users.balance') }}");
+            }
+
+            $("input[name='uid']").val(id);
+            $('.quota_modal-title').html(title);
+            $('#balanceModel').modal('show');
         }
 
         /**
          * 余额修改提交
          */
         function balancsave(_this) {
-            title=$('.quota_modal-title').html();
+            title = $('.quota_modal-title').html();
             swal({
-                title: "您确定要"+title+"吗？",
+                title: "您确定要" + title + "吗？",
                 text: "修改后不能恢复！",
                 type: "warning",
                 showCancelButton: true,
                 closeOnConfirm: true,
                 showLoaderOnConfirm: true,
-            }, function(){
+            }, function () {
                 var $form = $('#balanceForm');
                 _this.removeAttr('onclick');
                 $.post($form.attr('action'), $form.serialize(), function (result) {
