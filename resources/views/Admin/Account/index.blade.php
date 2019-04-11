@@ -33,6 +33,10 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <input type="text" class="form-control" placeholder="搜索账号" name="account"
+                                   @if(isset($query['account'])) value="{{ $query['account'] }}" @endif />
+                        </div>
+                        <div class="form-group">
                             <input type="text" autocomplete="off" class="form-control" style="min-width:300px;" id="daterange-btn"
                                    placeholder="统计时间" name="searchTime"
                                    @if(isset($query['searchTime'])) value="{{ $query['searchTime'] }}" @endif />

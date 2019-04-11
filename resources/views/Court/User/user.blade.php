@@ -73,18 +73,27 @@
                                         </form>
                                     </div>
                                 </div>
-                                {{--<div class="box box-primary">--}}
-                                    <div class="info-box bg-aqua">
-                                        <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
-                                        <div class="info-box-content">
-                                            <span class="progress-description" style="padding-top: 10px;">订单金额 （今日统计）</span>
-                                            <div class="progress">
-                                                <div class="progress-bar" style="width: 100%"></div>
-                                            </div>
-                                            <span class="info-box-number">{{$orderInfoSum[0]['amountSum'] ?: 0}} 元</span>
+
+                                <div class="info-box bg-aqua">
+                                    <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="progress-description" style="font-size:18px;padding-top: 10px;">增加分数 （统计）</span>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%"></div>
                                         </div>
+                                        <span class="info-box-number" style="font-size:25px;">{{$data['add_num']}} 分</span>
                                     </div>
-                                {{--</div>--}}
+                                </div>
+                                <div class="info-box bg-aqua">
+                                    <span class="info-box-icon"><i class="fa fa-rmb"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="progress-description" style="font-size:18px;padding-top: 10px;">减少分数 （统计）</span>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                        <span class="info-box-number" style="font-size:25px;">{{$data['reduce_num']}} 分</span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-md-8">
@@ -111,10 +120,10 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="box-body">
-                                        增加分数：<span style="color: #FF0000;">{{ $data['add_num'] }}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        减少分数：<span style="color: #FF0000;">{{ $data['reduce_num'] }}</span>
-                                    </div>
+                                    <!--                                    <div class="box-body">-->
+                                <!--                                        增加分数：<span style="color: #FF0000;">{{ $data['add_num'] }}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                <!--                                        减少分数：<span style="color: #FF0000;">{{ $data['reduce_num'] }}</span>-->
+                                    <!--                                    </div>-->
                                     <div class="box-body">
                                         <table class="table table-bordered table-hover">
                                             <tr style="color: #999999;background:#f5f6f9">
@@ -125,25 +134,25 @@
                                                 <th>操作时间</th>
                                             </tr>
                                             @foreach($list as $v)
-                                            <tr>
-                                                <td>#</td>
-                                                <td>{{ $v['quota'] }}</td>
-                                                <td>
-                                                    @if($v['quota_type'] == 0)
-                                                    <span class="btn btn-success btn-sm">增加</span>
-                                                    @else
-                                                    <span class="btn btn-danger btn-sm">减少</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($v['action_type'] == 0)
-                                                    <span class="btn btn-success btn-sm">手动</span>
-                                                    @else
-                                                    <span class="btn btn-primary btn-sm">订单</span>
-                                                    @endif
-                                                </td>
-                                                <td>{{ $v['created_at'] }}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>#</td>
+                                                    <td>{{ $v['quota'] }}</td>
+                                                    <td>
+                                                        @if($v['quota_type'] == 0)
+                                                            <span class="btn btn-success btn-sm">增加</span>
+                                                        @else
+                                                            <span class="btn btn-danger btn-sm">减少</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($v['action_type'] == 0)
+                                                            <span class="btn btn-success btn-sm">手动</span>
+                                                        @else
+                                                            <span class="btn btn-primary btn-sm">订单</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $v['created_at'] }}</td>
+                                                </tr>
                                             @endforeach
                                         </table>
                                         {{$list->links()}}
@@ -172,7 +181,7 @@
     <script src="{{ asset('AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
         $(function(){
-            // $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+            $('#daterange-btn').val(moment().startOf('day').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
 
             $('#daterange-btn').daterangepicker(
                 {
